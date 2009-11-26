@@ -1,0 +1,126 @@
+set nocompatible
+
+function MapToggle(key, opt)
+  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+  exec 'nnoremap '.a:key.' '.cmd
+  exec 'inoremap '.a:key." \<C-O>".cmd
+endfunction
+command -nargs=+ MapToggle call MapToggle(<f-args>)
+
+function! ToggleScratch()
+  if expand('%') == g:ScratchBufferName
+    quit
+  else
+    Sscratch
+  endif
+endfunction
+
+
+" View **********************
+syntax on
+set number
+set guicursor=a:blinkon0
+set visualbell t_vb=
+set spell
+
+set laststatus=2
+set ruler
+set rulerformat=%25(%n%m%r:\ %Y\ [%l,%v]\ %p%%%)
+
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,latin1,default
+
+autocmd FileType html set filetype=xhtml
+autocmd BufRead *.css.php set filetype=css
+autocmd BufRead *.less set filetype=css
+autocmd BufRead *.js.php set filetype=javascript
+
+let php_sql_query=1
+let php_htmlInStrings=1
+
+set wildmode=list:longest
+set wildmenu
+"set wildignore=*~
+
+
+" Indentation ********************
+set autoindent
+set smartindent
+set smarttab
+set tabstop=4 
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+
+" Buffers ************************
+set hidden
+
+
+" Search ************************* 
+set ignorecase
+set hlsearch
+"set incsearch
+
+
+" Editing ************************
+set backspace=indent,eol,start
+map <S-Enter> O<ESC>
+map <Enter> o<ESC>
+set fo-=r
+
+let loaded_matchparen = 1
+
+autocmd FileType ruby set omnifunc=rubycomplete#Complete
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+
+
+" Movement ***********************
+set nostartofline
+set mouse=a
+
+
+" Custom Hotkeys *****************
+let mapleader = ","
+
+map <C-h> <C-w>h
+map <C-l> <C-w>l
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-q> <C-w>q
+
+map <leader>t :NERDTreeToggle<CR>
+map <leader>F :FufFile<CR>
+map <leader>/ :FufFileRecursive<CR>
+map <leader>f :FufFileWithCurrentBufferDir<CR>
+map <leader>d :FufDir<CR>
+map <leader>b :FufBuffer<CR>
+map <C-c> :cd %:p:h<CR>
+map <leader>s :call ToggleScratch()<CR>
+
+nnoremap Y y$
+
+MapToggle <F1> hlsearch
+MapToggle <F2> wrap
+MapToggle <F3> list
+MapToggle <F13> hlsearch
+MapToggle <F14> wrap
+MapToggle <F15> list
+
+" Plugin Settings ****************
+let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
+
+
+" GUI Settings *******************
+if has("gui_running")
+  set guioptions=egmrt
+  set guifont=Monaco:h12
+  colorscheme darkspectrum
+  set lines=40 columns=100
+endif
