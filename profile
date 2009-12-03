@@ -46,6 +46,7 @@ alias ss='script/server'
 alias sc='script/console'
 alias dcommit='git svn dcommit'
 alias to='cdb'
+alias mysqld='sudo /opt/local/share/mysql5/mysql/mysql.server'
 stty erase ˆH
 
 source /opt/local/etc/bash_completion.d/git-completion
