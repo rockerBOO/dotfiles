@@ -1,8 +1,9 @@
 [user]
 	name = Brett Buddin
-	email = brett.buddin@mckinney.com
+	email = brett@intraspirit.net
 [core]
 	excludesfile = /Users/bbuddin/.gitignore
+	editor = mvim -f
 
 [color]
   branch = auto

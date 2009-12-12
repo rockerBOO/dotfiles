@@ -29,7 +29,7 @@ COLOR_GRAY="\[\033[0;90m\]"
 COLOR_DEFAULT="\[\033[0;0m\]"
 export PS1="$COLOR_GREEN\w $COLOR_TAN\$(parse_git_branch)\n$COLOR_GRAY>$COLOR_DEFAULT "
 
-export EDITOR=mate
+export EDITOR=mvim
 
 alias ..='cd ..'
 alias ...='cd ../..'
