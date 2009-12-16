@@ -52,10 +52,3 @@ stty erase ˆH
 source /opt/local/etc/bash_completion.d/git-completion
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-
-# Google Go Lang Vars
-export GOROOT=$HOME/go
-export GOOS=darwin
-export GOARCH=386
-export GOBIN=$HOME/bin
-export PATH=$GOBIN:$PATH
