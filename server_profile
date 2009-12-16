@@ -1,4 +1,6 @@
-source profile
+export DOTFILES="$HOME/.dotfiles"
+
+source "$DOTFILES/profile"
 
 export PS1="$COLOR_TAN[\h] $COLOR_GREEN\w $COLOR_TAN\$(parse_git_branch)\n$COLOR_GRAY>$COLOR_DEFAULT "
 

@@ -1,3 +1,4 @@
+export DOTFILES="$HOME/.dotfiles"
 
 # Moves the file specified in argument 1 to the directory specified in argument 2 and
 # creates a symlink from the old file's location to the new one. Useful when you want to move
@@ -49,6 +50,6 @@ alias to='cdb'
 alias mysqld='sudo /opt/local/share/mysql5/mysql/mysql.server'
 stty erase ˆH
 
-source /opt/local/etc/bash_completion.d/git-completion
+source "$DOTFILES/bash_completion/git-completion"
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
