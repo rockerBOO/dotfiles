@@ -103,6 +103,7 @@ map <leader>d :FufDir<CR>
 map <leader>b :FufBuffer<CR>
 map <C-c> :cd %:p:h<CR>
 map <leader>s :call ToggleScratch()<CR>
+map <leader>p "0p
 
 nnoremap Y y$
 
