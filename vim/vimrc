@@ -52,7 +52,6 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-
 " Buffers ************************
 set hidden
 
@@ -113,6 +112,9 @@ MapToggle <F3> list
 MapToggle <F13> hlsearch
 MapToggle <F14> wrap
 MapToggle <F15> list
+
+:vnoremap < <gv
+:vnoremap > >gv
 
 " Plugin Settings ****************
 let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
