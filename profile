@@ -48,6 +48,7 @@ alias sc='script/console'
 alias dcommit='git svn dcommit'
 alias to='cdb'
 alias mysqld='sudo /opt/local/share/mysql5/mysql/mysql.server'
+alias rmswp='find . -name "*.swp" -type f | xargs rm -f'
 stty erase ˆH
 
 source "$DOTFILES/bash_completion/git-completion"
