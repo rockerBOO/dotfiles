@@ -9,6 +9,3 @@
   branch = auto
   diff = auto
   status = auto
-
-[branch]
-  autosetuprebase = always
