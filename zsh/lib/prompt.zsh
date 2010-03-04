@@ -12,7 +12,6 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
 }
 
-colors
 COLOR_TAN=$'\e[0;33m'
 COLOR_GREEN=$'\e[0;32m'
 COLOR_GRAY=$'\e[0;90m'
