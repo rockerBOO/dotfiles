@@ -123,7 +123,7 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 " GUI Settings *******************
 if has("gui_running")
   set guioptions=egmrt
-  set guifont=Inconsolata:h16
+  set guifont=DejaVu_Sans_Mono:h14
   colorscheme github
   set lines=40 columns=100
 endif
