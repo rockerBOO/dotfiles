@@ -18,11 +18,11 @@
 
 **Use ZSH settings for a local machine (desktop or laptop):**
 
-    ln -s ~/.dotfiles/zsh/templates/local.zsh-template
+    ln -s ~/.dotfiles/zsh/templates/local.zsh-template ~/.zshrc
 
 **Use ZSH settings for a remote server:**
 
-    ln -s ~/.dotfiles/zsh/templates/server.zsh-template
+    ln -s ~/.dotfiles/zsh/templates/server.zsh-template ~/.zshrc
 
 **Use Rubygems settings:**
 
