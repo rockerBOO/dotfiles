@@ -1,5 +1,5 @@
 export ZSH=$HOME/.dotfiles/zsh
-export ZSH_THEME="server"
+export ZSH_THEME="simple-with-hostname"
 
 source $ZSH/profile.sh
 
