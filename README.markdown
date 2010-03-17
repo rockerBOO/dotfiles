@@ -6,14 +6,15 @@
 
 ## Setup configuration
 
-**Use Rubygems settings:**
-
-    ln -s ~/.dotfiles/gemrc ~/.gemrc
-
 **Use Vim settings:**
 
     ln -s ~/.dotfiles/vim ~/.vim
     ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
+
+**Use Git settings:**
+
+    ln -s ~/.dotfiles/git/gitignore ~/.gitignore
+    ln -s ~/.dotfiles/git/gitconfig ~/.gitconfig
 
 **Use ZSH settings for a local machine (desktop or laptop):**
 
@@ -22,3 +23,7 @@
 **Use ZSH settings for a remote server:**
 
     ln -s ~/.dotfiles/zsh/templates/server.zsh-template
+
+**Use Rubygems settings:**
+
+    ln -s ~/.dotfiles/gemrc ~/.gemrc
