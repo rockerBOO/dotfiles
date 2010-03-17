@@ -1,0 +1,9 @@
+export ZSH=$HOME/.dotfiles/zsh
+export ZSH_THEME="local"
+
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export EDITOR=mvim
+
+source $ZSH/profile.sh
+
+stty erase ˆH

@@ -3,9 +3,6 @@ alias ...='cd ../..'
 alias l='ls -lah'
 alias la='ls -AF'
 alias ll='ls -lFh'
-alias m='mvim'
-
-alias mysqld='sudo /opt/local/share/mysql5/mysql/mysql.server'
 
 alias rmswp='find . -name "*.swp" -type f | xargs rm -f'
 
