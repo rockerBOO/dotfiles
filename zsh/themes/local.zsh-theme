@@ -9,7 +9,7 @@ function parse_git_dirty {
 }
 
 function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/(\1$(parse_git_dirty))/"
 }
 
 COLOR_TAN=$'\e[0;33m'
@@ -18,5 +18,5 @@ COLOR_GRAY=$'\e[0;90m'
 COLOR_DEFAULT=$'\e[0;0m'
 
 setopt prompt_subst
-PROMPT='${COLOR_GREEN}%~ ${COLOR_TAN}($(parse_git_branch))
+PROMPT='${COLOR_GREEN}%~ ${COLOR_TAN}$(parse_git_branch)
 ${COLOR_GRAY}>${COLOR_DEFAULT} '
