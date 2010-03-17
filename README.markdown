@@ -2,23 +2,25 @@
 
 ## Installation
 
-1. **Get the code:**
+### Get the files
 
-        git clone git://github.com/brettbuddin/dotfiles.git ~/.dotfiles
+    git clone git://github.com/brettbuddin/dotfiles.git ~/.dotfiles
 
-2. **Use Rubygems settings:**
+### Setup configuration
 
-        ln -s ~/.dotfiles/gemrc ~/.gemrc
+**Use Rubygems settings:**
 
-3. **Use Vim settings:**
+    ln -s ~/.dotfiles/gemrc ~/.gemrc
 
-        ln -s ~/.dotfiles/vim ~/.vim
-        ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
+**Use Vim settings:**
 
-4. **Use ZSH settings for a local machine (desktop or laptop):**
+    ln -s ~/.dotfiles/vim ~/.vim
+    ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
 
-        ln -s ~/.dotfiles/zsh/templates/local.zsh-template
+**Use ZSH settings for a local machine (desktop or laptop):**
 
-   **Use ZSH settings for a remote server:**
+    ln -s ~/.dotfiles/zsh/templates/local.zsh-template
 
-        ln -s ~/.dotfiles/zsh/templates/server.zsh-template
+**Use ZSH settings for a remote server:**
+
+    ln -s ~/.dotfiles/zsh/templates/server.zsh-template
