@@ -19,4 +19,4 @@ COLOR_DEFAULT=$'\e[0;0m'
 
 setopt prompt_subst
 PROMPT='${COLOR_GREEN}%~ ${COLOR_TAN}$(parse_git_branch)
-${COLOR_GRAY}>${COLOR_DEFAULT} '
+${COLOR_GRAY}→${COLOR_DEFAULT} '

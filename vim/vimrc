@@ -128,6 +128,6 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 if has("gui_running")
   set guioptions=egmrt
   set guifont=Panic_Sans:h14
-  colorscheme jellybeans
+  colorscheme github
   set lines=40 columns=100
 endif
