@@ -19,5 +19,5 @@ function parse_git_branch {
 }
 
 setopt prompt_subst
-PROMPT='%{$fg_bold[black]%}%m[%~] %{$fg_bold[yellow]%}$(parse_git_branch)
+PROMPT='%{$fg_bold[black]%}%m[%~] $(parse_git_branch)
 %{$fg_bold[black]%}→ %{$reset_color%}'
