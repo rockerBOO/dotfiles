@@ -7,14 +7,6 @@ function MapToggle(key, opt)
 endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
-function! ToggleScratch()
-  if expand('%') == g:ScratchBufferName
-    quit
-  else
-    Sscratch
-  endif
-endfunction
-
 
 " View **********************
 syntax on
@@ -56,6 +48,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
+
 " Buffers ************************
 set hidden
 
@@ -88,15 +81,25 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 set nostartofline
 set mouse=a
 
-
-" Custom Hotkeys *****************
-let mapleader = ","
-
 map <C-h> <C-w>h
 map <C-l> <C-w>l
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-q> <C-w>q
+
+
+" Custom Hotkeys *****************
+let mapleader = ","
+
+" splitting
+nmap <leader>swh  :topleft  vnew<CR>
+nmap <leader>swl :botright vnew<CR>
+nmap <leader>swk    :topleft  new<CR>
+nmap <leader>swj  :botright new<CR>
+nmap <leader>sh   :leftabove  vnew<CR>
+nmap <leader>sl  :rightbelow vnew<CR>
+nmap <leader>sk     :leftabove  new<CR>
+nmap <leader>sj   :rightbelow new<CR>
 
 map <leader>t :NERDTreeToggle<CR>
 map <leader>F :FufFile<CR>
@@ -105,7 +108,6 @@ map <leader>f :FufFileWithCurrentBufferDir<CR>
 map <leader>d :FufDir<CR>
 map <leader>b :FufBuffer<CR>
 map <C-c> :cd %:p:h<CR>
-map <leader>s :call ToggleScratch()<CR>
 map <leader>p "0p
 
 nnoremap Y y$
@@ -113,12 +115,10 @@ nnoremap Y y$
 MapToggle <F1> hlsearch
 MapToggle <F2> wrap
 MapToggle <F3> list
-MapToggle <F13> hlsearch
-MapToggle <F14> wrap
-MapToggle <F15> list
 
 :vnoremap < <gv
 :vnoremap > >gv
+
 
 " Plugin Settings ****************
 let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
@@ -129,5 +129,5 @@ if has("gui_running")
   set guioptions=egmrt
   set guifont=Panic_Sans:h14
   colorscheme github
-  set lines=40 columns=100
+  set lines=40 columns=120
 endif
