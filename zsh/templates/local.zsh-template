@@ -1,10 +1,10 @@
 export ZSH=$HOME/.dotfiles/zsh
 export ZSH_THEME="simple"
 
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=/usr/local/bin:$PATH
 export EDITOR=mvim
 
-source $ZSH/profile.sh
+source $ZSH/zshrc
 
 stty erase ˆH
 

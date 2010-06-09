@@ -34,8 +34,10 @@ autocmd BufRead *.god set filetype=ruby
 let php_sql_query=1
 let php_htmlInStrings=1
 
-set wildmode=list:longest
+set completeopt=longest,menu
+set wildmode=list:longest,list:full
 set wildmenu
+set complete=.,t
 "set wildignore=*~
 
 
@@ -51,6 +53,9 @@ set expandtab
 
 " Buffers ************************
 set hidden
+set nobackup
+set nowritebackup
+set noswapfile
 
 
 " Search ************************* 
@@ -114,7 +119,7 @@ nnoremap Y y$
 
 MapToggle <F1> hlsearch
 MapToggle <F2> wrap
-MapToggle <F3> list
+MapToggle <F3> number
 
 :vnoremap < <gv
 :vnoremap > >gv

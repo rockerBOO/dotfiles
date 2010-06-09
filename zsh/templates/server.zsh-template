@@ -1,6 +1,6 @@
 export ZSH=$HOME/.dotfiles/zsh
 export ZSH_THEME="simple-with-hostname"
 
-source $ZSH/profile.sh
+source $ZSH/zshrc
 
 export EDITOR=vim
