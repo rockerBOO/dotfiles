@@ -40,6 +40,8 @@ set wildmenu
 set complete=.,t
 "set wildignore=*~
 
+match ErrorMsg /\%81v.\+/
+
 
 " Indentation ********************
 set autoindent
@@ -133,6 +135,6 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 if has("gui_running")
   set guioptions=egmrt
   set guifont=Panic_Sans:h14
-  colorscheme github
+  colorscheme jellybeans
   set lines=40 columns=120
 endif
