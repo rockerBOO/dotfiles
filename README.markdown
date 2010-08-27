@@ -24,6 +24,7 @@
 
     ln -s ~/.dotfiles/zsh/templates/server.zsh-template ~/.zshrc
 
-**Use Rubygems settings:**
+**Use Ruby settings:**
 
-    ln -s ~/.dotfiles/gemrc ~/.gemrc
+    ln -s ~/.dotfiles/ruby/gemrc ~/.gemrc
+    ln -s ~/.dotfiles/ruby/irbrc ~/.irbrc
