@@ -18,5 +18,7 @@ alias gcam='git commit --amend'
 alias gri='git rebase --interactive'
 alias gdc='git svn dcommit'
 
-alias ss='script/server'
-alias sc='script/console'
+alias rs='rails server'
+alias rc='rails console'
+
+alias mysql_start='cd /usr/local/Cellar/mysql/5.1.48 && /usr/local/Cellar/mysql/5.1.48/bin/mysqld_safe'
