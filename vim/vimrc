@@ -44,8 +44,6 @@ set wildmenu
 set complete=.,t
 "set wildignore=*~
 
-match ErrorMsg /\%81v.\+/
-
 
 " Indentation ********************
 set autoindent
