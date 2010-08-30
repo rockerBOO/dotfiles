@@ -14,7 +14,7 @@ endif
 
 " View **********************
 syntax on
-set number
+set nonumber
 set guicursor=a:blinkon0
 set visualbell t_vb=
 set spell
@@ -88,6 +88,8 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 set undofile
 set undodir=~/.undo
 
+set listchars=tab:▸\ ,eol:¬
+
 
 " Movement ***********************
 set nostartofline
@@ -142,4 +144,14 @@ if has("gui_running")
   set guifont=Panic_Sans:h14
   colorscheme jellybeans
   set lines=40 columns=120
+
+  set go-=T
+  set bg=dark
+    
+  if &background == "dark"
+    hi normal guibg=black
+    set transp=7
+  end
+
+  set go-=r
 endif
