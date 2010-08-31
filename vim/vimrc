@@ -141,17 +141,13 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 " GUI Settings *******************
 if has("gui_running")
   set guioptions=egmrt
-  set guifont=Panic_Sans:h14
-  colorscheme jellybeans
+  set guifont=Monaco:h14
+  colorscheme oceandeep
   set lines=40 columns=120
 
   set go-=T
-  set bg=dark
     
-  if &background == "dark"
-    hi normal guibg=black
-    set transp=7
-  end
+  set transp=3
 
   set go-=r
 endif
