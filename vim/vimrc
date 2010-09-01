@@ -22,6 +22,7 @@ set spell
 set laststatus=2
 set ruler
 set rulerformat=%25(%n%m%r:\ %Y\ [%l,%v]\ %p%%%)
+let g:rails_statusline=0
 
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1,default
