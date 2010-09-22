@@ -1,0 +1,6 @@
+startup_message   off
+
+hardstatus on
+hardstatus alwayslastline
+
+hardstatus string '%{= dK}%-Lw%{= dW}%50>%n%f* %t%{= dK}%+Lw%<'
