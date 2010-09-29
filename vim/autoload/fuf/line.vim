@@ -13,49 +13,32 @@ endif
 " GLOBAL FUNCTIONS {{{1
 
 "
-function fuf#callbackitem#createHandler(base)
+function fuf#line#createHandler(base)
   return a:base.concretize(copy(s:handler))
 endfunction
 
 "
-function fuf#callbackitem#getSwitchOrder()
-  return -1
+function fuf#line#getSwitchOrder()
+  return g:fuf_line_switchOrder
 endfunction
 
 "
-function fuf#callbackitem#getEditableDataNames()
+function fuf#line#getEditableDataNames()
   return []
 endfunction
 
 "
-function fuf#callbackitem#renewCache()
+function fuf#line#renewCache()
 endfunction
 
 "
-function fuf#callbackitem#requiresOnCommandPre()
+function fuf#line#requiresOnCommandPre()
   return 0
 endfunction
 
 "
-function fuf#callbackitem#onInit()
-endfunction
-
-"
-function fuf#callbackitem#launch(initialPattern, partialMatching, prompt, listener, items, forPath)
-  let s:prompt = (empty(a:prompt) ? '>' : a:prompt)
-  let s:listener = a:listener
-  let s:forPath = a:forPath
-  let s:items = copy(a:items)
-  if s:forPath
-    call map(s:items, 'fuf#makePathItem(v:val, "", 1)')
-    call fuf#mapToSetSerialIndex(s:items, 1)
-    call fuf#mapToSetAbbrWithSnippedWordAsPath(s:items)
-  else
-    call map(s:items, 'fuf#makeNonPathItem(v:val, "")')
-    call fuf#mapToSetSerialIndex(s:items, 1)
-    call map(s:items, 'fuf#setAbbrWithFormattedWord(v:val, 1)')
-  endif
-  call fuf#launch(s:MODE_NAME, a:initialPattern, a:partialMatching)
+function fuf#line#onInit()
+  call fuf#defineLaunchCommand('FufLine', s:MODE_NAME, '""', [])
 endfunction
 
 " }}}1
@@ -63,6 +46,7 @@ endfunction
 " LOCAL FUNCTIONS/VARIABLES {{{1
 
 let s:MODE_NAME = expand('<sfile>:t:r')
+let s:OPEN_TYPE_DELETE = -1
 
 " }}}1
 "=============================================================================
@@ -77,15 +61,12 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(s:prompt, self.partialMatching, '')
+  return fuf#formatPrompt(g:fuf_line_prompt, self.partialMatching, '')
 endfunction
 
 "
 function s:handler.getPreviewHeight()
-  if s:forPath
-    return g:fuf_previewHeight
-  endif
-  return 0
+  return g:fuf_previewHeight
 endfunction
 
 "
@@ -95,28 +76,36 @@ endfunction
 
 "
 function s:handler.makePatternSet(patternBase)
-  let parser = (s:forPath
-        \       ? 's:interpretPrimaryPatternForPath'
-        \       : 's:interpretPrimaryPatternForNonPath')
-  return fuf#makePatternSet(a:patternBase, parser, self.partialMatching)
+  return fuf#makePatternSet(a:patternBase, 's:interpretPrimaryPatternForNonPath',
+        \                   self.partialMatching)
 endfunction
 
 "
 function s:handler.makePreviewLines(word, count)
-  if s:forPath
-    return fuf#makePreviewLinesForFile(a:word, a:count, self.getPreviewHeight())
+  let items = filter(copy(self.items), 'v:val.word ==# a:word')
+  if empty(items)
+    return []
   endif
-  return []
+  let lines = fuf#getFileLines(self.bufNrPrev)
+  return fuf#makePreviewLinesAround(
+        \ lines, [items[0].index - 1], a:count, self.getPreviewHeight())
 endfunction
 
 "
 function s:handler.getCompleteItems(patternPrimary)
-  return s:items
+  return self.items
 endfunction
 
 "
 function s:handler.onOpen(word, mode)
-  call s:listener.onComplete(a:word, a:mode)
+  call fuf#prejump(a:mode)
+  call filter(self.items, 'v:val.word ==# a:word')
+  if empty(self.items)
+    return
+    execute 'cc ' . self.items[0].index
+  endif
+  call cursor(self.items[0].index, 0)
+  normal! zvzz
 endfunction
 
 "
@@ -125,13 +114,20 @@ endfunction
 
 "
 function s:handler.onModeEnterPost()
+  let tab = repeat(' ', getbufvar(self.bufNrPrev, '&tabstop'))
+  let self.items = getbufline(self.bufNrPrev, 1, '$')
+  let lnumFormat = '%' . len(string(len(self.items) + 1)) . 'd|'
+  for i in range(len(self.items))
+    let self.items[i] = printf(lnumFormat, i + 1)
+          \ . substitute(self.items[i], "\t", tab, 'g')
+  endfor
+  call map(self.items, 'fuf#makeNonPathItem(v:val, "")')
+  call fuf#mapToSetSerialIndex(self.items, 1)
+  call map(self.items, 'fuf#setAbbrWithFormattedWord(v:val, 0)')
 endfunction
 
 "
 function s:handler.onModeLeavePost(opened)
-  if !a:opened && exists('s:listener.onAbort()')
-    call s:listener.onAbort()
-  endif
 endfunction
 
 " }}}1

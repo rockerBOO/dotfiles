@@ -1,13 +1,12 @@
 "=============================================================================
-" Copyright (c) 2007-2009 Takeshi NISHIDA
+" Copyright (c) 2007-2010 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if exists('g:loaded_autoload_fuf_givenfile') || v:version < 702
+if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
   finish
 endif
-let g:loaded_autoload_fuf_givenfile = 1
 
 " }}}1
 "=============================================================================
@@ -21,6 +20,11 @@ endfunction
 "
 function fuf#givenfile#getSwitchOrder()
   return -1
+endfunction
+
+"
+function fuf#givenfile#getEditableDataNames()
+  return []
 endfunction
 
 "
@@ -41,7 +45,7 @@ function fuf#givenfile#launch(initialPattern, partialMatching, prompt, items)
   let s:prompt = (empty(a:prompt) ? '>' : a:prompt)
   let s:items = map(copy(a:items), 'fuf#makePathItem(v:val, "", 0)')
   call fuf#mapToSetSerialIndex(s:items, 1)
-  call map(s:items, 'fuf#setAbbrWithFormattedWord(v:val)')
+  call map(s:items, 'fuf#setAbbrWithFormattedWord(v:val, 1)')
   call fuf#launch(s:MODE_NAME, a:initialPattern, a:partialMatching)
 endfunction
 
@@ -65,23 +69,38 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return s:prompt
+  return fuf#formatPrompt(s:prompt, self.partialMatching, '')
 endfunction
 
 "
-function s:handler.targetsPath()
+function s:handler.getPreviewHeight()
+  return g:fuf_previewHeight
+endfunction
+
+"
+function s:handler.isOpenable(enteredPattern)
   return 1
 endfunction
 
 "
-function s:handler.onComplete(patternSet)
-  return fuf#filterMatchesAndMapToSetRanks(
-        \ s:items, a:patternSet, self.getFilteredStats(a:patternSet.raw))
+function s:handler.makePatternSet(patternBase)
+  return fuf#makePatternSet(a:patternBase, 's:interpretPrimaryPatternForPath',
+        \                   self.partialMatching)
 endfunction
 
 "
-function s:handler.onOpen(expr, mode)
-  call fuf#openFile(a:expr, a:mode, g:fuf_reuseWindow)
+function s:handler.makePreviewLines(word, count)
+  return fuf#makePreviewLinesForFile(a:word, a:count, self.getPreviewHeight())
+endfunction
+
+"
+function s:handler.getCompleteItems(patternPrimary)
+  return s:items
+endfunction
+
+"
+function s:handler.onOpen(word, mode)
+  call fuf#openFile(a:word, a:mode, g:fuf_reuseWindow)
 endfunction
 
 

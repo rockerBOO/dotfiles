@@ -1,13 +1,12 @@
 "=============================================================================
-" Copyright (c) 2007-2009 Takeshi NISHIDA
+" Copyright (c) 2007-2010 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if exists('g:loaded_autoload_fuf_changelist') || v:version < 702
+if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
   finish
 endif
-let g:loaded_autoload_fuf_changelist = 1
 
 " }}}1
 "=============================================================================
@@ -24,6 +23,11 @@ function fuf#changelist#getSwitchOrder()
 endfunction
 
 "
+function fuf#changelist#getEditableDataNames()
+  return []
+endfunction
+
+"
 function fuf#changelist#renewCache()
 endfunction
 
@@ -34,7 +38,7 @@ endfunction
 
 "
 function fuf#changelist#onInit()
-  call fuf#defineLaunchCommand('FufChangeList', s:MODE_NAME, '""')
+  call fuf#defineLaunchCommand('FufChangeList', s:MODE_NAME, '""', [])
 endfunction
 
 " }}}1
@@ -61,6 +65,7 @@ function s:parseChangesLine(line)
   return  {
         \   'prefix': elements[1],
         \   'count' : elements[2],
+        \   'lnum'  : elements[3],
         \   'text'  : printf('|%d:%d|%s', elements[3], elements[4], elements[5]),
         \ }
 endfunction
@@ -73,6 +78,7 @@ function s:makeItem(line)
   endif
   let item = fuf#makeNonPathItem(parsed.text, '')
   let item.abbrPrefix = parsed.prefix
+  let item.lnum = parsed.lnum
   return item
 endfunction
 
@@ -89,22 +95,43 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return g:fuf_changelist_prompt
+  return fuf#formatPrompt(g:fuf_changelist_prompt, self.partialMatching, '')
 endfunction
 
 "
-function s:handler.targetsPath()
-  return 0
+function s:handler.getPreviewHeight()
+  return g:fuf_previewHeight
 endfunction
 
 "
-function s:handler.onComplete(patternSet)
-  return fuf#filterMatchesAndMapToSetRanks(
-        \ self.items, a:patternSet, self.getFilteredStats(a:patternSet.raw))
+function s:handler.isOpenable(enteredPattern)
+  return 1
 endfunction
 
 "
-function s:handler.onOpen(expr, mode)
+function s:handler.makePatternSet(patternBase)
+  return fuf#makePatternSet(a:patternBase, 's:interpretPrimaryPatternForNonPath',
+        \                   self.partialMatching)
+endfunction
+
+"
+function s:handler.makePreviewLines(word, count)
+  let items = filter(copy(self.items), 'v:val.word ==# a:word')
+  if empty(items)
+    return []
+  endif
+  let lines = fuf#getFileLines(self.bufNrPrev)
+  return fuf#makePreviewLinesAround(
+        \ lines, [items[0].lnum - 1], a:count, self.getPreviewHeight())
+endfunction
+
+"
+function s:handler.getCompleteItems(patternPrimary)
+  return self.items
+endfunction
+
+"
+function s:handler.onOpen(word, mode)
   call fuf#prejump(a:mode)
   let older = 0
   for line in reverse(s:getChangesLines())
@@ -112,7 +139,7 @@ function s:handler.onOpen(expr, mode)
       let older = 1
     endif
     let parsed = s:parseChangesLine(line)
-    if !empty(parsed) && parsed.text ==# a:expr
+    if !empty(parsed) && parsed.text ==# a:word
       if parsed.count != 0
         execute 'normal! ' . parsed.count . (older ? 'g;' : 'g,') . 'zvzz'
       endif
@@ -132,7 +159,7 @@ function s:handler.onModeEnterPost()
   call filter(self.items, '!empty(v:val)')
   call reverse(self.items)
   call fuf#mapToSetSerialIndex(self.items, 1)
-  call map(self.items, 'fuf#setAbbrWithFormattedWord(v:val)')
+  call map(self.items, 'fuf#setAbbrWithFormattedWord(v:val, 1)')
 endfunction
 
 "
