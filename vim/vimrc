@@ -122,7 +122,7 @@ map <leader>/ :FufFile **/<CR>
 map <leader>f :FufFileWithCurrentBufferDir<CR>
 map <leader>d :FufDir<CR>
 map <leader>b :FufBuffer<CR>
-map <C-c> :cd %:p:h<CR>
+map <leader>cd :cd %:p:h<CR>
 map <leader>p "0p
 
 nnoremap Y y$
