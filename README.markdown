@@ -6,25 +6,10 @@
 
 ## Setup configuration
 
-**Use Vim settings:**
+To use these dotfiles:
 
-    ln -s ~/.dotfiles/vim ~/.vim
-    ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
+    rake
 
-**Use Git settings:**
+To remove these dotfiles:
 
-    ln -s ~/.dotfiles/git/gitignore ~/.gitignore
-    ln -s ~/.dotfiles/git/gitconfig ~/.gitconfig
-
-**Use ZSH settings for a local machine (desktop or laptop):**
-
-    ln -s ~/.dotfiles/zsh/templates/local.zsh-template ~/.zshrc
-
-**Use ZSH settings for a remote server:**
-
-    ln -s ~/.dotfiles/zsh/templates/server.zsh-template ~/.zshrc
-
-**Use Ruby settings:**
-
-    ln -s ~/.dotfiles/ruby/gemrc ~/.gemrc
-    ln -s ~/.dotfiles/ruby/irbrc ~/.irbrc
+    rake unlink
