@@ -118,7 +118,7 @@ nmap <leader>sj   :rightbelow new<CR>
 
 map <leader>t :NERDTreeToggle<CR>
 map <leader>F :FufFile<CR>
-map <leader>/ :FufFileRecursive<CR>
+map <leader>/ :FufFile **/<CR>
 map <leader>f :FufFileWithCurrentBufferDir<CR>
 map <leader>d :FufDir<CR>
 map <leader>b :FufBuffer<CR>
