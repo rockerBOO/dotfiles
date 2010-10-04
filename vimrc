@@ -147,8 +147,5 @@ if has("gui_running")
   set lines=40 columns=120
 
   set go-=T
-    
-  set transp=3
-
   set go-=r
 endif
