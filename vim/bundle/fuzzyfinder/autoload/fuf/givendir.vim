@@ -13,35 +13,41 @@ endif
 " GLOBAL FUNCTIONS {{{1
 
 "
-function fuf#dir#createHandler(base)
+function fuf#givendir#createHandler(base)
   return a:base.concretize(copy(s:handler))
 endfunction
 
 "
-function fuf#dir#getSwitchOrder()
-  return g:fuf_dir_switchOrder
+function fuf#givendir#getSwitchOrder()
+  return -1
 endfunction
 
 "
-function fuf#dir#getEditableDataNames()
+function fuf#givendir#getEditableDataNames()
   return []
 endfunction
 
 "
-function fuf#dir#renewCache()
-  let s:cache = {}
+function fuf#givendir#renewCache()
 endfunction
 
 "
-function fuf#dir#requiresOnCommandPre()
+function fuf#givendir#requiresOnCommandPre()
   return 0
 endfunction
 
 "
-function fuf#dir#onInit()
-  call fuf#defineLaunchCommand('FufDir'                    , s:MODE_NAME, '""', [])
-  call fuf#defineLaunchCommand('FufDirWithFullCwd'         , s:MODE_NAME, 'fnamemodify(getcwd(), '':p'')', [])
-  call fuf#defineLaunchCommand('FufDirWithCurrentBufferDir', s:MODE_NAME, 'expand(''%:~:.'')[:-1-len(expand(''%:~:.:t''))]', [])
+function fuf#givendir#onInit()
+endfunction
+
+"
+function fuf#givendir#launch(initialPattern, partialMatching, prompt, items)
+  let s:prompt = (empty(a:prompt) ? '>' : a:prompt)
+  let s:items = map(copy(a:items), 'substitute(v:val, ''[/\\]\?$'', "", "")')
+  let s:items = map(s:items, 'fuf#makePathItem(v:val, "", 0)')
+  call fuf#mapToSetSerialIndex(s:items, 1)
+  call fuf#mapToSetAbbrWithSnippedWordAsPath(s:items)
+  call fuf#launch(s:MODE_NAME, a:initialPattern, a:partialMatching)
 endfunction
 
 " }}}1
@@ -49,21 +55,6 @@ endfunction
 " LOCAL FUNCTIONS/VARIABLES {{{1
 
 let s:MODE_NAME = expand('<sfile>:t:r')
-
-"
-function s:enumItems(dir)
-  let key = getcwd() . g:fuf_ignoreCase . g:fuf_dir_exclude . "\n" . a:dir
-  if !exists('s:cache[key]')
-    let s:cache[key] = fuf#enumExpandedDirsEntries(a:dir, g:fuf_dir_exclude)
-    call filter(s:cache[key], 'v:val.word =~# ''[/\\]$''')
-    if isdirectory(a:dir)
-      call insert(s:cache[key], fuf#makePathItem(a:dir . '.', '', 0))
-    endif
-    call fuf#mapToSetSerialIndex(s:cache[key], 1)
-    call fuf#mapToSetAbbrWithSnippedWordAsPath(s:cache[key])
-  endif
-  return s:cache[key]
-endfunction
 
 " }}}1
 "=============================================================================
@@ -78,7 +69,7 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(g:fuf_dir_prompt, self.partialMatching, '')
+  return fuf#formatPrompt(s:prompt, self.partialMatching, '')
 endfunction
 
 "
@@ -88,26 +79,26 @@ endfunction
 
 "
 function s:handler.isOpenable(enteredPattern)
-  return a:enteredPattern =~# '[^/\\]$'
+  return 1
 endfunction
 
 "
 function s:handler.makePatternSet(patternBase)
-  return fuf#makePatternSet(a:patternBase, 's:interpretPrimaryPatternForPathTail',
+  return fuf#makePatternSet(a:patternBase, 's:interpretPrimaryPatternForPath',
         \                   self.partialMatching)
 endfunction
 
 "
 function s:handler.makePreviewLines(word, count)
   return fuf#makePreviewLinesAround(
-        \ split(glob(fnamemodify(a:word, ':p') . '*'), "\n"),
+        \ fuf#glob(fnamemodify(a:word, ':p') . '*'),
         \ [], a:count, self.getPreviewHeight())
   return 
 endfunction
 
 "
 function s:handler.getCompleteItems(patternPrimary)
-  return s:enumItems(fuf#splitPath(a:patternPrimary).head)
+  return s:items
 endfunction
 
 "

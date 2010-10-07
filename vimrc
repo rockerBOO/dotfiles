@@ -1,5 +1,7 @@
 set nocompatible
 
+call pathogen#runtime_append_all_bundles()
+
 function MapToggle(key, opt)
   let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
   exec 'nnoremap '.a:key.' '.cmd
@@ -149,3 +151,4 @@ if has("gui_running")
   set go-=T
   set go-=r
 endif
+
