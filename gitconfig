@@ -12,3 +12,6 @@
   status = auto
 [help]
   autocorrect = 1
+[alias]
+  lol=log --oneline --graph --decorate
+	human = name-rev --name-only
