@@ -1,11 +1,18 @@
 for config_file ($ZSH/lib/*.zsh) source $config_file
 
+setopt AUTO_CD
 setopt CORRECT
 setopt CORRECTALL
 setopt COMPLETE_IN_WORD
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+setopt ALWAYS_TO_END
+setopt PROMPT_SUBST
+setopt INTERACTIVE_COMMENTS
+
+unsetopt MENU_COMPLETE
+setopt AUTO_MENU
 
 setopt HIST_IGNORE_DUPS
+setopt HIST_FIND_NO_DUPS
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_SPACE
 setopt APPEND_HISTORY
@@ -13,8 +20,8 @@ setopt EXTENDED_HISTORY
 setopt HIST_REDUCE_BLANKS
 
 HISTFILE=~/.zsh_history
-SAVEHIST=10000
-HISTSIZE=10000
+SAVEHIST=5000
+HISTSIZE=5000
 
 REPORTTIME=10
 LISTMAX=0
@@ -22,7 +29,4 @@ LISTMAX=0
 autoload url-quote-magic
 zle -N self-insert url-quote-magic
 
-autoload compinit
-compinit
-
-bindkey -e
+bindkey -v

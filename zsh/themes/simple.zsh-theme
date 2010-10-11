@@ -18,6 +18,5 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/$color(\1$(parse_git_dirty))/"
 }
 
-setopt prompt_subst
 PROMPT='%{$fg_bold[cyan]%}%~ $(parse_git_branch)
 %{$fg_bold[cyan]%}→ %{$reset_color%}'
