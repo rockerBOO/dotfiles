@@ -68,7 +68,7 @@ set noswapfile
 " Search ************************* 
 set ignorecase
 set hlsearch
-"set incsearch
+set incsearch
 
 
 " Editing ************************
