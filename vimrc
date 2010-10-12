@@ -118,7 +118,6 @@ nmap <leader>sl  :rightbelow vnew<CR>
 nmap <leader>sk     :leftabove  new<CR>
 nmap <leader>sj   :rightbelow new<CR>
 
-map <leader>t :NERDTreeToggle<CR>
 map <leader>F :FufFile<CR>
 map <leader>/ :FufFile **/<CR>
 map <leader>f :FufFileWithCurrentBufferDir<CR>
