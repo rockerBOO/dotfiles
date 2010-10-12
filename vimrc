@@ -145,7 +145,7 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 if has("gui_running")
   set guioptions=egmrt
   set guifont=Monaco:h14
-  colorscheme oceandeep
+  colorscheme topfunky-light
   set lines=40 columns=120
 
   set go-=T
