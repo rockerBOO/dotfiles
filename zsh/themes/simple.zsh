@@ -2,12 +2,8 @@ function machine_name {
   [ -f ~/.machine_name ] && cat ~/.machine_name || hostname -s
 }
 
-function virtualenv_info {
-  [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
-}
-
 PROMPT='%{$fg[yellow]%}$(machine_name)%{$reset_color%} in %{$fg[green]%}${PWD/#$HOME/~}%{$reset_color%}$(git_prompt_info)
-$(virtualenv_info)$ '
+$ '
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[magenta]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
