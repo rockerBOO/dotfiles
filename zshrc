@@ -3,13 +3,12 @@
 source $HOME/.profile 2&> /dev/null
 
 export ZSH=$HOME/.zsh
+export ZSH_THEME="simple"
 
 if [ "$ZSH_ENV" = "server" ]
 then
-  export ZSH_THEME="simple-with-hostname"
   export EDITOR=vim
 else
-  export ZSH_THEME="simple"
   export PATH=/usr/local/bin:/usr/local/sbin:$PATH
   export EDITOR=mvim
   stty erase ˆH
