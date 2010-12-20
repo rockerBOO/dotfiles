@@ -2,12 +2,12 @@ set nocompatible
 
 call pathogen#runtime_append_all_bundles()
 
-function MapToggle(key, opt)
+function! MapToggle(key, opt)
   let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
   exec 'nnoremap '.a:key.' '.cmd
   exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
-command -nargs=+ MapToggle call MapToggle(<f-args>)
+command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 " Auto-apply .vimrc settings after saving
 if has("autocmd")
@@ -142,9 +142,11 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 
 " GUI Settings *******************
 if has("gui_running")
+  let g:zenesque_colors=1
   set guioptions=egmrt
   set guifont=Dejavu_Sans_Mono:h14
-  colorscheme jellybeans
+  colorscheme zenesque
+
   set lines=40 columns=120
 
   set go-=T
