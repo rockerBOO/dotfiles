@@ -19,7 +19,7 @@ syntax on
 set nonumber
 set guicursor=a:blinkon0
 set visualbell t_vb=
-set spell
+set nospell
 
 set laststatus=2
 set ruler
