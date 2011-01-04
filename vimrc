@@ -37,6 +37,7 @@ autocmd BufRead *.jsx set filetype=javascript
 autocmd BufRead *.mkd set filetype=mkd
 autocmd BufRead *.markdown set filetype=mkd
 autocmd BufRead *.god set filetype=ruby
+autocmd BufRead *.as set filetype=actionscript
 
 let php_sql_query=1
 let php_htmlInStrings=1
