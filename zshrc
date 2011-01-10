@@ -5,14 +5,11 @@ source $HOME/.profile 2&> /dev/null
 export ZSH=$HOME/.zsh
 export ZSH_THEME="simple"
 
-if [ "$ZSH_ENV" = "server" ]
-then
-  export EDITOR=vim
-else
-  export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-  export EDITOR=mvim
-  stty erase ˆH
-  alias m=mvim
-fi
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export EDITOR=mvim
+stty erase ˆH
+alias m=mvim
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 source $ZSH/zshrc
