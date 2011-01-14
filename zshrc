@@ -10,6 +10,8 @@ export EDITOR=mvim
 stty erase ˆH
 alias m=mvim
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then 
+  source "$HOME/.rvm/scripts/rvm"
+fi
 
 source $ZSH/zshrc
