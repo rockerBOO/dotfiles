@@ -5,7 +5,7 @@ setopt CORRECT
 setopt CORRECTALL
 setopt COMPLETE_IN_WORD
 setopt ALWAYS_TO_END
-setopt PROMPT_SUBST
+setopt PROMPT_SUBST #We will also use the expansions-in-prompt feature
 setopt INTERACTIVE_COMMENTS
 
 unsetopt MENU_COMPLETE
