@@ -1,0 +1,8 @@
+alias gs='git status'
+alias gl='git log'
+alias gf='git fetch'
+alias gb='git branch'
+alias gd='git diff'
+alias ga='git add'
+alias gc='git commit -m'
+alias gcam='git commit --amend'
