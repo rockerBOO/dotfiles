@@ -1,0 +1,11 @@
+alias gpull='git pull --rebase --prune'
+alias gpush='git push origin HEAD'
+alias gs='git status -sb'
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias gf='git fetch'
+alias gb='git branch'
+alias gd='git diff'
+alias ga='git add'
+alias gc='git commit -m'
+alias gca='git commit -am'
+alias gcam='git commit --amend'

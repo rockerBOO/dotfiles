@@ -1,7 +1,3 @@
-if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then 
-  source "$HOME/.rvm/scripts/rvm"
-fi
-
 export ZSH=$HOME/.zsh
 export ZSH_THEME="simple"
 
