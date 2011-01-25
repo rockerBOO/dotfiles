@@ -1,0 +1,17 @@
+#!/bin/bash
+ 
+# http://gilesbowkett.blogspot.com/2009/02/simple-bash-domain-availability.html
+ 
+for d in $@;
+do
+  if host $d | grep "NXDOMAIN" >&/dev/null; then
+    if whois $d | grep -E "(No match for|NOT FOUND)" >&/dev/null; then
+      echo "$d AVAILABLE";
+    else
+      echo "$d TAKEN";
+    fi
+  else
+    echo "$d TAKEN";
+  fi
+  sleep 0.1;
+done
