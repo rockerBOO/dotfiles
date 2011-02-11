@@ -136,6 +136,16 @@ MapToggle <F3> number
 :vnoremap < <gv
 :vnoremap > >gv
 
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
 
 " Plugin Settings ****************
 let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
