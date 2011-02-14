@@ -153,7 +153,7 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 
 " GUI Settings *******************
 if has("gui_running")
-  let g:zenesque_colors=1
+  let g:zenesque_colors=3
   set guioptions=egmrt
   set guifont=Dejavu_Sans_Mono:h14
   colorscheme zenesque
