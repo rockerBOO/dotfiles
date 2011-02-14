@@ -4,7 +4,7 @@
 [github]
 	user = brettbuddin
 [core]
-	excludesfile = /Users/bbuddin/.gitignore
+	excludesfile = /Users/*/.gitignore
 	editor = mvim -f
 [color]
   branch = auto
