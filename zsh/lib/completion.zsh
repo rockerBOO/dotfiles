@@ -1,5 +1,6 @@
+fpath=($ZSH/completion $fpath)
 autoload -U compinit
-compinit                                                                                       
+compinit -i                                                                      
 
 zmodload -i zsh/complist
 
