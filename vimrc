@@ -142,7 +142,7 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 
 " GUI Settings *******************
 if has("gui_running")
-  set background=light
+  set background=dark
   set guioptions=egmrt
   set guifont=Dejavu_Sans_Mono:h14
   colorscheme solarized
