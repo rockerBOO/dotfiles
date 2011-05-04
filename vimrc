@@ -38,6 +38,8 @@ set ruler
 set rulerformat=%25(%n%m%r:\ %Y\ [%l,%v]\ %p%%%)
 let g:rails_statusline=0
 
+set fo-=r
+
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1,default
 
@@ -107,13 +109,6 @@ set hlsearch
 set incsearch
 set showmatch
 set mat=5
-
-
-" ---------------------------------
-" Editing
-" ---------------------------------
-
-set fo-=r
 
 
 " ---------------------------------
