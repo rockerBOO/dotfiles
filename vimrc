@@ -98,8 +98,10 @@ set hidden
 set nobackup
 set nowritebackup
 set noswapfile
-set undofile
-set undodir=~/.undo
+if has("undofile")
+  set undofile
+  set undodir=~/.undo
+end
 
 
 " ---------------------------------
