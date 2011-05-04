@@ -1,4 +1,6 @@
 set nocompatible
+set grepprg=ack
+set grepformat=%f:%l:%m
 
 call pathogen#runtime_append_all_bundles()
 
