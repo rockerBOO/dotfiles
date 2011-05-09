@@ -189,6 +189,10 @@ map ,O O[ ]
 map ,x :s/^\[ \]/[x]/<CR>
 map ,X :s/^\[x\]/[ ]/<CR>
 
+" Ex Mode is annoying. 
+" Use this for formatting instead.
+map Q gq
+
 " ---------------------------------
 " Plugins
 " ---------------------------------
