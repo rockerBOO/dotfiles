@@ -4,42 +4,6 @@ set grepformat=%f:%l:%m
 
 call pathogen#runtime_append_all_bundles()
 
-" ---------------------------------
-" Helpers
-" ---------------------------------
-
-function! MapToggle(key, opt)
-  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
-  exec 'nnoremap '.a:key.' '.cmd
-  exec 'inoremap '.a:key." \<C-O>".cmd
-endfunction
-command! -nargs=+ MapToggle call MapToggle(<f-args>)
-
-function! Browser()
-    let line0 = getline(".")
-    let line = matchstr(line0, "http[^ )]*")
-    let line = escape(line, "#?&;|%")
-    exec ':silent !open ' . "\"" . line . "\""
-endfunction
-
-function! Switch()
-  if expand('%:e') == 'h'
-    try | find %:t:r.m 
-    catch
-      try | find %:t:r.c
-      catch
-        try | find %:t:r.cc
-        catch
-          try | find %:t:r.cpp | catch | endtry
-        endtry
-      endtry
-    endtry
-  else
-    find %:t:r.h
-  endif
-
-endfunction
-command! Switch call Switch()
 
 " ---------------------------------
 " UI
@@ -193,6 +157,7 @@ map ,X :s/^\[x\]/[ ]/<CR>
 " Use this for formatting instead.
 map Q gq
 
+
 " ---------------------------------
 " Plugins
 " ---------------------------------
@@ -245,3 +210,72 @@ if system('uname') =~ 'Darwin'
     \ '/opt/local/bin:/opt/local/sbin:' .
     \ $PATH
 endif
+
+
+" ---------------------------------
+" Helpers
+" ---------------------------------
+
+" Toggles options
+
+function! MapToggle(key, opt)
+  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+  exec 'nnoremap '.a:key.' '.cmd
+  exec 'inoremap '.a:key." \<C-O>".cmd
+endfunction
+command! -nargs=+ MapToggle call MapToggle(<f-args>)
+
+" Open url on the current line in browser
+
+function! Browser()
+    let line0 = getline(".")
+    let line = matchstr(line0, "http[^ )]*")
+    let line = escape(line, "#?&;|%")
+    exec ':silent !open ' . "\"" . line . "\""
+endfunction
+
+" Close inactive (hidden) buffers
+" http://stackoverflow.com/questions/2974192/how-can-i-pare-down-vims-buffer-list-to-only-include-active-buffers
+" http://stackoverflow.com/questions/1534835/how-do-i-close-all-buffers-that-arent-shown-in-a-window-in-vim
+
+command! -nargs=* Only call CloseHiddenBuffers()
+function! CloseHiddenBuffers()
+  " figure out which buffers are visible in any tab
+  let visible = {}
+  for t in range(1, tabpagenr('$'))
+    for b in tabpagebuflist(t)
+      let visible[b] = 1
+    endfor
+  endfor
+  " close any buffer that are loaded and not visible
+  let l:tally = 0
+  for b in range(1, bufnr('$'))
+    if bufloaded(b) && !has_key(visible, b)
+      let l:tally += 1
+      exe 'bw ' . b
+    endif
+  endfor
+  echon "Deleted " . l:tally . " buffers"
+endfun
+
+" Quickly switch between .h and .m files
+
+function! Switch()
+  if expand('%:e') == 'h'
+    try | find %:t:r.m 
+    catch
+      try | find %:t:r.c
+      catch
+        try | find %:t:r.cc
+        catch
+          try | find %:t:r.cpp | catch | endtry
+        endtry
+      endtry
+    endtry
+  else
+    find %:t:r.h
+  endif
+
+endfunction
+command! Switch call Switch()
+
