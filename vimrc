@@ -41,6 +41,17 @@ if has("gui_running")
 
   set go-=T
   set go-=r
+
+  function! ToggleBackground()
+      if (g:solarized_style=="dark")
+      let g:solarized_style="light"
+      colorscheme solarized
+  else
+      let g:solarized_style="dark"
+      colorscheme solarized
+  endif
+  endfunction
+  command! ToggleBackground call ToggleBackground()
 endif
 
 
