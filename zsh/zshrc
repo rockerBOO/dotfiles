@@ -1,5 +1,5 @@
-for config_file ($ZSH/lib/**/*.zsh) source $config_file
-for config_file ($ZSH/plugin/**/*.zsh) source $config_file
+for file ($ZSH/lib/**/*.zsh) source $file
+for file ($ZSH/plugin/**/*.zsh) source $file
 
 setopt AUTO_CD
 setopt CORRECT
