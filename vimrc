@@ -22,6 +22,25 @@ function! Browser()
     exec ':silent !open ' . "\"" . line . "\""
 endfunction
 
+function! Switch()
+  if expand('%:e') == 'h'
+    try | find %:t:r.m 
+    catch
+      try | find %:t:r.c
+      catch
+        try | find %:t:r.cc
+        catch
+          try | find %:t:r.cpp | catch | endtry
+        endtry
+      endtry
+    endtry
+  else
+    find %:t:r.h
+  endif
+
+endfunction
+command! Switch call Switch()
+
 " ---------------------------------
 " UI
 " ---------------------------------
