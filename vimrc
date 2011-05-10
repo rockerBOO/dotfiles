@@ -188,8 +188,8 @@ map <S-Enter> O<ESC>
 map <Enter> o<ESC>
 
 " indentation
-:vnoremap < <gv
-:vnoremap > >gv
+vnoremap < <gv
+vnoremap > >gv
 
 " window splitting
 nmap <leader>swh :topleft vnew<CR>
