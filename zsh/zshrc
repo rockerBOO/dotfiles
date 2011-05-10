@@ -27,6 +27,8 @@ HISTSIZE=5000
 REPORTTIME=10
 LISTMAX=0
 
+CDPATH=:..:~:~/code
+
 autoload url-quote-magic
 zle -N self-insert url-quote-magic
 
