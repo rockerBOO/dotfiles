@@ -8,3 +8,8 @@ alias m=mvim
 stty erase ˆH
 
 source $ZSH/zshrc
+
+. `brew --prefix`/etc/profile.d/z.sh
+function precmd () {
+  z --add "$(pwd -P)"
+}
