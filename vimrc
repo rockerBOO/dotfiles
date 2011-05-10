@@ -119,6 +119,7 @@ let mapleader = ","
 MapToggle <F1> hlsearch
 MapToggle <F2> wrap
 MapToggle <F3> number
+MapToggle <F4> paste
 
 " new line creation with return
 map <S-Enter> O<ESC>
