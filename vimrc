@@ -9,7 +9,6 @@ call pathogen#runtime_append_all_bundles()
 " ---------------------------------
 
 " Toggles options
-
 function! MapToggle(key, opt)
   let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
   exec 'nnoremap '.a:key.' '.cmd
@@ -18,7 +17,6 @@ endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 " Open url on the current line in browser
-
 function! Browser()
     let line0 = getline(".")
     let line = matchstr(line0, "http[^ )]*")
@@ -29,8 +27,6 @@ endfunction
 " Close inactive (hidden) buffers
 " http://stackoverflow.com/questions/2974192/how-can-i-pare-down-vims-buffer-list-to-only-include-active-buffers
 " http://stackoverflow.com/questions/1534835/how-do-i-close-all-buffers-that-arent-shown-in-a-window-in-vim
-
-command! -nargs=* Only call CloseHiddenBuffers()
 function! CloseHiddenBuffers()
   " figure out which buffers are visible in any tab
   let visible = {}
@@ -48,10 +44,10 @@ function! CloseHiddenBuffers()
     endif
   endfor
   echon "Deleted " . l:tally . " buffers"
-endfun
+endfunction
+command! -nargs=* Only call CloseHiddenBuffers()
 
 " Quickly switch between .h and .m files
-
 function! Switch()
   if expand('%:e') == 'h'
     try | find %:t:r.m 
@@ -67,7 +63,6 @@ function! Switch()
   else
     find %:t:r.h
   endif
-
 endfunction
 command! Switch call Switch()
 
