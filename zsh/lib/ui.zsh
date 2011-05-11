@@ -39,14 +39,15 @@ function git_prompt_info {
   echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
+
 function parse_git_dirty {
   gitstat=$(git status 2>/dev/null | grep '\(# Untracked\|# Changes\|# Changed but not updated:\)')
 
-  if [[ $(echo ${gitstat} | grep -c "^# Changes to be committed:$") > 0 ]]; then
+  if [[ $(echo ${gitstat} | grep -c '^\(# Changes not staged for commit:\|# Changes to be committed:\)$') > 0 ]]; then
 	echo -n "$ZSH_THEME_GIT_PROMPT_DIRTY"
   fi
 
-  if [[ $(echo ${gitstat} | grep -c "^\(# Untracked files:\|# Changed but not updated:\)$") > 0 ]]; then
+  if [[ $(echo ${gitstat} | grep -c "^# Untracked files:$") > 0 ]]; then
 	echo -n "$ZSH_THEME_GIT_PROMPT_UNTRACKED"
   fi 
 
