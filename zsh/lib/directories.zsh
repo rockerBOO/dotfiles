@@ -15,3 +15,5 @@ alias 9='cd +9'
 alias l='ls -lah'
 alias ll='ls -lFh'
 alias ld='ls -ld *(/)'
+
+alias j=z
