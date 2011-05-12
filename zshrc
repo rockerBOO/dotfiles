@@ -7,3 +7,5 @@ for file ($ZSH/lib/**/*.zsh) source $file
 stty erase ˆH
 
 alias reload!='. ~/.zshrc && echo "Dotfiles reloaded!"'
+
+NODE_PATH=/usr/local/lib/node
