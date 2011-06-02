@@ -94,7 +94,7 @@ set isk+=_,$,@,%,#,-
 set listchars=tab:▸\ ,eol:¬
 
 if has("gui_running")
-  set background=dark
+  set background=light
   set guioptions=egmrt
   set guifont=Dejavu_Sans_Mono:h14
   colorscheme solarized
@@ -220,6 +220,8 @@ nnoremap Y y$
 " open a url on the current line in browser
 map ,w :call Browser()<CR>
 
+map <C-U> :!osascript ~/.dotfiles/applescripts/docksend.scpt %:~<CR>
+
 " todo
 map ,a o<ESC>:r!date +'\%A, \%B \%d, \%Y'<CR>:r!date +'\%A, \%B \%d, \%Y' \| sed 's/./-/g'<CR>A<CR><ESC>
 map ,o o[ ] 
@@ -265,9 +267,8 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 autocmd Filetype gitcommit set tw=68 spell
-autocmd Filetype ruby set tw=80 ts=2
 
-autocmd Filetype sh,bash,zsh set ts=4 sts=4 sw=4 expandtab
+autocmd Filetype javascript,php,sh,bash,zsh set ts=4 sts=4 sw=4 expandtab
 
 " don't use cindent for javascript
 autocmd FileType javascript setlocal nocindent
