@@ -273,6 +273,10 @@ autocmd Filetype javascript,php,sh,bash,zsh set ts=4 sts=4 sw=4 expandtab
 " don't use cindent for javascript
 autocmd FileType javascript setlocal nocindent
 
+" lint files
+:autocmd FileType php noremap <C-L> :!php -l %<CR>
+:autocmd FileType javascript noremap <C-L> :!jsl -nocontext -nologo -process %<CR>
+
 
 " ---------------------------------
 " OS X Stuff
