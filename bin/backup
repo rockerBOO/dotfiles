@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+bundle="/Volumes/Backup/backup.sparsebundle"
+to="/Volumes/Backup/Current"
+
+directories=(
+  Development
+  Documents
+  Movies
+  Music
+  Pictures
+)
+
+hdiutil attach -noverify $bundle
+for directory in ${directories[@]} do
+    rsync -avh --progress --stats --delete ~/$directory $to
+done
+hdiutil detach $backup_location
