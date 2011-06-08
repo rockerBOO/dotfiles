@@ -131,7 +131,6 @@ set softtabstop=2
 set expandtab
 set nosmarttab
 set formatoptions+=n
-set textwidth=80
 set virtualedit=block
 
 
