@@ -140,6 +140,7 @@ set virtualedit=block
 
 set completeopt=longest,menu
 set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
 set wildmenu
 set complete=.,t
 "set wildignore=*~
