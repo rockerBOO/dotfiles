@@ -232,6 +232,8 @@ map ,X :s/^\[x\]/[ ]/<CR>
 " Use this for formatting instead.
 map Q gq
 
+" Save even if we forgot to open the file with sudo
+cmap w!! %!sudo tee > /dev/null %
 
 " ---------------------------------
 " Plugins
