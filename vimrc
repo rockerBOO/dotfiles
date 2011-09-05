@@ -220,7 +220,7 @@ nnoremap Y y$
 " open a url on the current line in browser
 map ,w :call Browser()<CR>
 
-map <C-U> :!osascript ~/.dotfiles/applescripts/docksend.scpt %:~<CR><CR>
+map <C-U> :DockSend<CR>
 
 " todo
 map ,a o<ESC>:r!date +'\%A, \%B \%d, \%Y'<CR>:r!date +'\%A, \%B \%d, \%Y' \| sed 's/./-/g'<CR>A<CR><ESC>
