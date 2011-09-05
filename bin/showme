@@ -35,10 +35,15 @@ output = []
 
 1.upto(shots) do |shot|
   puts "\nPREPARE FOR SHOT #{shot}"
+  sleep 1
+  puts 2
+  sleep 1
+  puts 1
+  sleep 1
+  puts "GO!"
   filenm = "/tmp/isightcap-#{shot}.jpg"
   `isightcapture #{filenm} > /dev/null`
   output << filenm
-  puts 7.chr
 end
 
 
