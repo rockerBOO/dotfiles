@@ -1,13 +1,9 @@
 #!/usr/bin/env zsh
 
-to="/Volumes/Backup/Current"
+to="/Volumes/Pocket/Current"
 
 directories=(
   Code
-  Documents
-  Movies
-  Music
-  Pictures
 )
 
 for directory in ${directories[@]} 
