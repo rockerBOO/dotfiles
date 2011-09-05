@@ -248,7 +248,6 @@ let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
 " ---------------------------------
 
 " set filetype
-autocmd FileType html set filetype=xhtml
 autocmd BufRead *.css.php set filetype=css
 autocmd BufRead *.less set filetype=css
 autocmd BufRead *.js.php set filetype=javascript
