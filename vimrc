@@ -81,8 +81,25 @@ set mouse=a
 set backspace=indent,eol,start
 set laststatus=2
 set ch=2
-set ruler
-set rulerformat=%25(%n%m%r:\ %Y\ [%l,%v]\ %p%%%)
+
+set statusline=%f
+set statusline+=%m
+set statusline+=%r
+set statusline+=%w
+set statusline+=\ 
+
+set statusline+=%= " Right side
+
+set statusline+=(
+set statusline+=%{&ff}
+set statusline+=/
+set statusline+=%{strlen(&fenc)?&fenc:&enc}
+set statusline+=/
+set statusline+=%{&ft}
+set statusline+=)
+
+set statusline+=\ (line\ %l\/%L,\ col\ %03c)
+
 let g:rails_statusline=0
 
 set fo-=r
@@ -94,7 +111,7 @@ set isk+=_,$,@,%,#,-
 set listchars=tab:▸\ ,eol:¬
 
 if has("gui_running")
-  set background=dark
+  set background=light
   set guioptions=egmrt
   set guifont=Dejavu_Sans_Mono:h14
   colorscheme solarized
@@ -214,6 +231,7 @@ map <leader>/ :FufFile **/<CR>
 map <leader>f :FufFileWithCurrentBufferDir<CR>
 map <leader>d :FufDir<CR>
 map <leader>b :FufBuffer<CR>
+map <leader>t :TlistToggle<CR>
  
 nnoremap Y y$
 
@@ -275,8 +293,8 @@ autocmd Filetype javascript,php,sh,bash,zsh set ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript setlocal nocindent
 
 " lint files
-:autocmd FileType php noremap <C-L> :!php -l %<CR>
-:autocmd FileType javascript noremap <C-L> :!jsl -nocontext -nologo -process %<CR>
+autocmd FileType php noremap <C-L> :!php -l %<CR>
+autocmd FileType javascript noremap <C-L> :!jsl -nocontext -nologo -process %<CR>
 
 
 " ---------------------------------
