@@ -138,6 +138,7 @@ endif
 " Text Formatting
 " ---------------------------------
 
+set binary
 set autoindent
 set smartindent
 set smarttab
