@@ -1,2 +1,2 @@
 export EDITOR=mvim
-alias m=mvim
+alias e=mvim
