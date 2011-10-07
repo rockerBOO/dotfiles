@@ -111,26 +111,14 @@ set isk+=_,$,@,%,#,-
 set listchars=tab:▸\ ,eol:¬
 
 if has("gui_running")
-  set background=dark
   set guioptions=egmrt
   set guifont=Dejavu_Sans_Mono:h14
-  colorscheme solarized
+  colorscheme vwilight
 
   set lines=40 columns=120
 
   set go-=T
   set go-=r
-
-  function! ToggleBackground()
-      if (g:solarized_style=="dark")
-      let g:solarized_style="light"
-      colorscheme solarized
-  else
-      let g:solarized_style="dark"
-      colorscheme solarized
-  endif
-  endfunction
-  command! ToggleBackground call ToggleBackground()
 endif
 
 
