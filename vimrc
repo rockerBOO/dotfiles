@@ -72,7 +72,7 @@ command! Switch call Switch()
 " ---------------------------------
 
 syntax on
-set number
+set nonumber
 set guicursor=a:blinkon0
 set visualbell t_vb=
 set nospell
@@ -112,8 +112,8 @@ set listchars=tab:▸\ ,eol:¬
 
 if has("gui_running")
   set guioptions=egmrt
-  set guifont=Dejavu_Sans_Mono:h14
-  colorscheme vwilight
+  set guifont=Monaco:h14
+  colorscheme eclipse
 
   set lines=40 columns=120
 
