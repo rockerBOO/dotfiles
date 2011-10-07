@@ -3,7 +3,6 @@ export ZSH_THEME="minimal"
 export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:/usr/local/Cellar/python/2.7/bin:$PATH
 
 for file ($ZSH/lib/**/*.zsh) source $file
-for file ($ZSH/plugins/**/*.zsh) source $file
 
 stty erase ˆH
 
