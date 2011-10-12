@@ -80,7 +80,7 @@ set nostartofline
 set mouse=a
 set backspace=indent,eol,start
 set laststatus=2
-set ch=2
+set ch=1
 
 set statusline=%f
 set statusline+=%m
@@ -89,15 +89,6 @@ set statusline+=%w
 set statusline+=\ 
 
 set statusline+=%= " Right side
-
-set statusline+=(
-set statusline+=%{&ff}
-set statusline+=/
-set statusline+=%{strlen(&fenc)?&fenc:&enc}
-set statusline+=/
-set statusline+=%{&ft}
-set statusline+=)
-
 set statusline+=\ (line\ %l\/%L,\ col\ %03c)
 
 let g:rails_statusline=0
