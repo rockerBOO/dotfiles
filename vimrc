@@ -285,6 +285,7 @@ autocmd FileType javascript setlocal nocindent
 autocmd FileType php noremap <C-L> :!php -l %<CR>
 autocmd FileType javascript noremap <C-L> :!jsl -nocontext -nologo -process %<CR>
 
+autocmd FileType php set iskeyword-=-
 
 " ---------------------------------
 " OS X Stuff
