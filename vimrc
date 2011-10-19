@@ -79,17 +79,7 @@ set nospell
 set nostartofline
 set mouse=a
 set backspace=indent,eol,start
-set laststatus=2
 set ch=1
-
-set statusline=%f
-set statusline+=%m
-set statusline+=%r
-set statusline+=%w
-set statusline+=\ 
-
-set statusline+=%= " Right side
-set statusline+=\ (line\ %l\/%L,\ col\ %03c)
 
 let g:rails_statusline=0
 
@@ -211,7 +201,8 @@ map <leader>/ :FufFile **/<CR>
 map <leader>f :FufFileWithCurrentBufferDir<CR>
 map <leader>d :FufDir<CR>
 map <leader>b :FufBuffer<CR>
-map <leader>t :TlistToggle<CR>
+map <leader>t :FufTaggedFile<CR>
+map <leader>T :FufTag<CR>
  
 nnoremap Y y$
 
@@ -239,6 +230,7 @@ cmap w!! %!sudo tee > /dev/null %
 " ---------------------------------
 
 let g:fuf_file_exclude = '\v\.DS_Store|\.bak|\.swp'
+let g:statline_show_encoding = 0
 
 
 " ---------------------------------
@@ -272,9 +264,8 @@ autocmd Filetype javascript,php,sh,bash,zsh set ts=4 sts=4 sw=4 expandtab
 " don't use cindent for javascript
 autocmd FileType javascript setlocal nocindent
 
-" lint files
-autocmd FileType php noremap <C-L> :!php -l %<CR>
-autocmd FileType javascript noremap <C-L> :!jsl -nocontext -nologo -process %<CR>
+" keyword help files
+autocmd FileType php set keywordprg=pman
 
 autocmd FileType php set iskeyword-=-
 

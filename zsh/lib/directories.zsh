@@ -16,12 +16,6 @@ alias l='ls -lah'
 alias ll='ls -lFh'
 alias ld='ls -ld *(/)'
 
-. `brew --prefix`/etc/profile.d/z.sh
-function precmd () {
-  z --add "$(pwd -P)"
-}
-alias j=z
-
 function extract() {
     unset REMOVE_ARCHIVE
     
