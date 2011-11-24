@@ -19,29 +19,29 @@ usage() {
 check_for_running_itunes() {
   if ! ps ax | grep '[i]Tunes .*' > /dev/null
   then
-	echo "iTunes not running."
-	exit 1
+    echo "iTunes not running."
+    exit 1
   fi
 }
 
 main() {
-    if [ $# -lt 1 ]; then
-        usage
-        exit 1
-    fi
+  if [ $# -lt 1 ]; then
+    usage
+    exit 1
+  fi
 
-    local SUBCOMMAND="$1"
-    shift
+  local SUBCOMMAND="$1"
+  shift
 
-    if ! type "cmd_$SUBCOMMAND" >/dev/null 2>&1; then
-        echo "Unknown subcommand: '$SUBCOMMAND'"
-        usage
-        exit 1
-    fi
+  if ! type "cmd_$SUBCOMMAND" >/dev/null 2>&1; then
+    echo "Unknown subcommand: '$SUBCOMMAND'"
+    usage
+    exit 1
+  fi
 
-	check_for_running_itunes
-        
-    cmd_$SUBCOMMAND "$@"
+  check_for_running_itunes
+	  
+  cmd_$SUBCOMMAND "$@"
 }
 
 cmd_play() {
@@ -61,12 +61,12 @@ cmd_status() {
 
   status=`osascript -e 'tell application "iTunes" to player state as string'`
 
-  if [ $status = "playing" ]; then
+  if [ $status = "playing" ]
+  then
+    artist=`osascript -e 'tell application "iTunes" to artist of current track as string'`
+    track=`osascript -e 'tell application "iTunes" to name of current track as string'`
 
-	artist=`osascript -e 'tell application "iTunes" to artist of current track as string'`
-	track=`osascript -e 'tell application "iTunes" to name of current track as string'`
-
-	echo "$artist - $track"
+    echo "$artist - $track"
   fi
 }
 
