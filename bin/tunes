@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # tunes
-# https://github.com/brettbuddin/tunes
+# https://github.com/brettbuddin/dotfiles/blob/master/bin/tunes
 #
 # Basic control of iTunes via terminal.
 #
