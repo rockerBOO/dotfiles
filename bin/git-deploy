@@ -45,6 +45,11 @@ cmd_diff() {
 cmd_push() {
     verify_clean_working_dir
 
+    if [ $# -lt 2 ]; then
+        echo "No target branch specified."
+        exit 1
+    fi
+
     if [ "$1" == "test" -o "$1" == "live" ]; then
         git push origin $2
         git fetch
@@ -67,7 +72,5 @@ verify_clean_working_dir() {
         exit 1
     fi
 }
-
-
 
 main "$@"
