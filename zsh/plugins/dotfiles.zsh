@@ -1,1 +1,1 @@
-alias reload!='. ~/.zprofile && echo "Dotfiles reloaded!"'
+alias reload!='. ~/.zshrc && echo "Dotfiles reloaded!"'
