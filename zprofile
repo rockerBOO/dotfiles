@@ -9,5 +9,3 @@ for file ($ZSH/plugins/**/*.zsh) source $file
 stty erase ˆH
 
 alias reload!='. ~/.zprofile && echo "Dotfiles reloaded!"'
-
-NODE_PATH=/usr/local/lib/node
