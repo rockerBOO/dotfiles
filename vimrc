@@ -167,15 +167,9 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-q> <C-w>q
 
-" fuzzyfinder
-map <leader>F :FufFile<CR>
-map <leader>/ :FufFile **/<CR>
-map <leader>f :FufFileWithCurrentBufferDir<CR>
-map <leader>d :FufDir<CR>
-map <leader>b :FufBuffer<CR>
-map <leader>t :FufTaggedFile<CR>
-map <leader>T :FufTag<CR>
-map <leader>fr :FufRenewCache<CR>
+map <leader>/ :CtrlP<CR>
+map <leader>b :CtrlPBuffer<CR> 
+map <leader>h :CtrlPMRU<CR> 
  
 nnoremap Y y$
 
