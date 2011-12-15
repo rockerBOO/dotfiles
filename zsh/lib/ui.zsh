@@ -16,6 +16,8 @@ autoload url-quote-magic
 zle -N self-insert url-quote-magic
 bindkey -v
 
+stty erase ˆH
+
 REPORTTIME=10
 LISTMAX=0
 

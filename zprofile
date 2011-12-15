@@ -6,6 +6,4 @@ export EDITOR=mvim
 for file ($ZSH/lib/**/*.zsh) source $file
 for file ($ZSH/plugins/**/*.zsh) source $file
 
-stty erase ˆH
-
 alias reload!='. ~/.zprofile && echo "Dotfiles reloaded!"'
