@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import os
+import subprocess
+import sys
+
+from optparse import OptionParser
+from ConfigParser import ConfigParser
+
+def sync_to(dest):
+    subprocess.call('rsync --verbose --progress --stats --compress --recursive --times --perms --links --delete --exclude=".git" $(pwd)/* %s' % dest, shell=True)
+
+if __name__ == "__main__":
+    try:
+        config = ConfigParser()
+        config.readfp(open('project.cfg'))
+
+        branches       = config.items('branches')
+        current_branch = subprocess.check_output(['git rev-parse --abbrev-ref HEAD'], shell=True)
+        current_branch = current_branch.strip()
+
+        for branch, path in branches:
+            if branch == current_branch:
+                sync_to(path)
+                break
+            elif branch == '*':
+                sync_to(path)
+    except IOError as e:
+        print 'No project.cfg found.'
