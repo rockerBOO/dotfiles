@@ -29,9 +29,7 @@
 import os
 import os.path
 import subprocess
-import sys
 
-from optparse import OptionParser
 from ConfigParser import ConfigParser
 
 def sync_to(dest):
