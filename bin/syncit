@@ -1,6 +1,33 @@
 #!/usr/bin/env python
+#
+# syncit
+#
+# Allows you to sync a particular git branch to a
+# specific directory (on a remote machine).
+#
+# Recursively looks upward for an ini-style config.
+# Once the config is located, it grabs the branch
+# list and, depending on what branch you're currently
+# sitting on, will rsync the contents of the project
+# to a specific directory.
+#
+# It's a good idea to add the config to your .gitignore.
+#
+# Example usage:
+#   git checkout master
+#   syncit
+#   git checkout experiment
+#   syncit
+#
+# Example project.cfg:
+#   [branches]
+#   master: host:/webroot/project/branches/dev
+#   experiment: host:/webroot/project/branches/experiment
+#   *: host:/webroot/project/branches/other_dev
+#
 
 import os
+import os.path
 import subprocess
 import sys
 
@@ -8,12 +35,27 @@ from optparse import OptionParser
 from ConfigParser import ConfigParser
 
 def sync_to(dest):
-    subprocess.call('rsync --verbose --progress --stats --compress --recursive --times --perms --links --delete --exclude=".git" $(pwd)/* %s' % dest, shell=True)
+    subprocess.call('rsync -vPzrtpl --delete --exclude=".git" $(pwd)/* %s' % dest, shell=True)
+
+def config_path(file_name, path='.'):
+    path  = os.path.abspath(path)
+    files = [x for x in os.listdir(path) if os.path.isfile("%s/%s" % (path, x))]
+
+    if file_name in files:
+        return "%s/%s" % (path, file_name)
+    elif path == '/':
+        return None
+    else:
+        return config_path(file_name, os.path.join(path, os.pardir))
 
 if __name__ == "__main__":
+    if not os.path.isdir(os.path.abspath(".git")):
+        print 'This isn\'t a git repository.'
+        exit(1)
+
     try:
         config = ConfigParser()
-        config.readfp(open('project.cfg'))
+        config.readfp(open(config_path("project.cfg")))
 
         branches       = config.items('branches')
         current_branch = subprocess.check_output(['git rev-parse --abbrev-ref HEAD'], shell=True)
@@ -25,5 +67,7 @@ if __name__ == "__main__":
                 break
             elif branch == '*':
                 sync_to(path)
+
     except IOError as e:
         print 'No project.cfg found.'
+        exit(1)
