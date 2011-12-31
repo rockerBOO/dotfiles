@@ -6,7 +6,6 @@ My setup. This is always my most up-to-date configuration for:
 * zsh
 * git
 * tmux
-* rubygems
 
 ...and a few other things.
 
