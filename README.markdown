@@ -8,8 +8,8 @@
 
 To use these dotfiles:
 
-    rake
+    cd ~/.dotfiles && ./install.sh
 
 To remove these dotfiles:
 
-    rake unlink
+    cd ~/.dotfiles && ./uninstall.sh
