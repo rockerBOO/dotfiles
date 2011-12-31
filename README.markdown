@@ -1,15 +1,29 @@
 # Dotfiles
 
-## Get the files
+My batbelt. This is always my most up-to-date configuration for:
+
+* vim
+* zsh
+* git
+* tmux
+* rubygems
+
+...and a few other things.
+
+## Install
 
     $ git clone git://github.com/brettbuddin/dotfiles.git ~/.dotfiles
 
-## Setup configuration
-
-To use these dotfiles:
+To install:
 
     $ ~/.dotfiles/scripts/install.sh
 
-To remove these dotfiles:
+The installer will **never** delete a file from your $HOME directory. If it encounters a file that isn't a symlink, it lets you handle the situation.
+
+## Uninstall
+
+To uninstall:
 
     $ ~/.dotfiles/scripts/uninstall.sh
+
+This will only remove files of interest from $HOME that are symlinks.
