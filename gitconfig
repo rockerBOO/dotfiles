@@ -32,3 +32,5 @@
   insteadOf = "gist:"
 [url "git@heroku.com:"]
   insteadOf = "heroku:"
+[mergetool]
+	keepBackup = true

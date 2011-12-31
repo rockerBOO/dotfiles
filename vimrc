@@ -173,7 +173,7 @@ map <leader>h :CtrlPMRU<CR>
  
 nnoremap Y y$
 
-map <C-U> :DockSend<CR>
+map <C-U> :!syncit<CR>
 
 " insert mode completion
 inoremap <C-L> <C-X><C-L>
