@@ -1,6 +1,6 @@
 # Dotfiles
 
-My batbelt. This is always my most up-to-date configuration for:
+My setup. This is always my most up-to-date configuration for:
 
 * vim
 * zsh
@@ -12,10 +12,10 @@ My batbelt. This is always my most up-to-date configuration for:
 
 ## Install
 
-    $ git clone git://github.com/brettbuddin/dotfiles.git ~/.dotfiles
 
 To install:
 
+    $ git clone git://github.com/brettbuddin/dotfiles.git ~/.dotfiles
     $ ~/.dotfiles/scripts/install.sh
 
 The installer will **never** delete a file from your $HOME directory. If it encounters a file that isn't a symlink, it lets you handle the situation.
