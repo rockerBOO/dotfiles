@@ -4,20 +4,20 @@ dotfiles_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 excluded=("scripts" "README.markdown")
 
 function isExcluded() {
-	if [ -z "$1" ]
-	then
-		return
-	fi
+    if [ -z "$1" ]
+    then
+        return
+    fi
 
-	for i in ${excluded[@]}
-	do
-		if [ $i == $1 ]
-		then
-			return 1
-		fi
-	done
+    for i in ${excluded[@]}
+    do
+        if [ $i == $1 ]
+        then
+            return 1
+        fi
+    done
 
-	return 0
+    return 0
 }
 
 for path in $dotfiles_dir/*
