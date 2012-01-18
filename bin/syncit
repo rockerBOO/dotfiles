@@ -33,7 +33,7 @@ import subprocess
 from ConfigParser import ConfigParser
 
 def sync_to(dest):
-    subprocess.call('rsync -vPzrtpl --delete --exclude=".git" $(pwd)/* %s' % dest, shell=True)
+    subprocess.call('rsync -vPzrtl --delete --exclude=".git" $(pwd)/* %s' % dest, shell=True)
 
 def config_path(file_name, path='.'):
     path  = os.path.abspath(path)
