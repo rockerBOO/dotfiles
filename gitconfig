@@ -1,5 +1,5 @@
 [user]
-	name = Brett Buddin
+  name = Brett Buddin
   email = brett@intraspirit.net
 [branch]
   autosetuprebase = always
@@ -12,12 +12,18 @@
   branch = auto
   diff = auto
   status = auto
+  ui = true
+[push]
+  default = current
 [help]
   autocorrect = 1
 [alias]
   lol = log --oneline --graph --decorate
   human = name-rev --name-only
-
+  unstage = reset HEAD
+  staged = diff --cached
+  unstaged = diff
+  track = checkout -t
 [url "git@github.com:"]
   insteadOf = "gh:"
   pushInsteadOf = "github:"
@@ -33,4 +39,4 @@
 [url "git@heroku.com:"]
   insteadOf = "heroku:"
 [mergetool]
-	keepBackup = true
+  keepBackup = true

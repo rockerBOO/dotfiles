@@ -240,6 +240,8 @@ let g:statline_show_encoding = 0
 let g:syntastic_enable_signs = 1
 let g:syntastic_disabled_filetypes = ['html']
 
+let g:ctrlp_by_filename = 1
+
 " ---------------------------------
 " Auto Commands
 " ---------------------------------
