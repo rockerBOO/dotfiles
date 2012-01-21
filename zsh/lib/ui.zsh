@@ -40,7 +40,7 @@ ZSH_THEME_GIT_PROMPT_CLEAN=""
 function git_prompt_info {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   rev=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/} ➥ ${rev}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/} @ ${rev}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
 function parse_git_dirty {
