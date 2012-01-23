@@ -35,3 +35,16 @@ zstyle ':completion:*:ssh:*' group-order hosts-domain hosts-host users hosts-ipa
 zstyle ':completion:*:scp:*' tag-order files users 'hosts:-host hosts:-domain:domain hosts:-ipaddr"IP\ Address *'
 zstyle ':completion:*:ssh:*' tag-order users 'hosts:-host hosts:-domain:domain hosts:-ipaddr"IP\ Address *'
 zstyle '*' single-ignored show
+
+setopt AUTO_CD
+setopt CORRECT
+setopt CORRECTALL
+setopt COMPLETE_IN_WORD
+setopt ALWAYS_TO_END
+setopt INTERACTIVE_COMMENTS
+
+unsetopt MENU_COMPLETE
+setopt AUTO_MENU
+
+autoload url-quote-magic
+zle -N self-insert url-quote-magic
