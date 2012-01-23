@@ -180,7 +180,7 @@ inoremap <C-L> <C-X><C-L>
 inoremap <C-F> <C-X><C-F>
 
 " quick access to ack
-map <leader>a :Ack
+map <leader>a :Ack 
 
 " Ex Mode is annoying. 
 " Use this for formatting instead.
