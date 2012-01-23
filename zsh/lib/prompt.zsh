@@ -58,5 +58,5 @@ function git_prompt_dirty {
     fi
 }
 
-PROMPT=$'%{$fg_bold[cyan]%}%c%{$reset_color%} $(git_prompt_dirty)$(git_prompt_need_push)%{$reset_color%}\n>> '
+PROMPT=$'%{$fg_bold[cyan]%}%c%{$reset_color%} $(git_prompt_dirty)$(git_prompt_need_push)%{$reset_color%}\n› '
 RPROMPT=''
