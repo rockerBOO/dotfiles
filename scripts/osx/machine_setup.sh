@@ -13,14 +13,6 @@ echo "Installing Homebrew..."
 ruby -e "$(curl -fsSLk https://gist.github.com/raw/323731/install_homebrew.rb)"
 brew install git
 
-echo "Installing RVM..."
-bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
-source $HOME/.rvm/scripts/rvm
-
-echo "Installing Ruby 1.9.2..."
-rvm install 1.9.2
-rvm --default use 1.9.2
-
 echo "Installing other Homebrew packages..."
 brew install zsh
 brew install svn
@@ -40,11 +32,15 @@ brew install go
 brew install io
 brew install mysql
 
+#
+brew install tornado
+brew install pymongo
+
 unset TMPDIR
 mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
 
 echo "Installing dotfiles..."
-/usr/local/bin/git clone git@github.com:brettbuddin/dotfiles.git ~/.dotfiles
+/usr/local/bin/git clone git@github.com:rockerBOO/dotfiles.git ~/.dotfiles
 (cd ~/.dotfiles && rake)
 sudo chsh -s /usr/local/bin/zsh $(whoami)
 
