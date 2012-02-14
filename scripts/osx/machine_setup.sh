@@ -24,13 +24,13 @@ brew install ctags
 brew install z
 brew install imagemagick
 brew install ffmpeg
-brew install sphinx
 brew install scala
 brew install erlang
 brew install node
 brew install go
 brew install io
 brew install mysql
+brew install sphinx
 
 #
 brew install tornado
