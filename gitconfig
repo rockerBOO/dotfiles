@@ -1,13 +1,13 @@
 [user]
-	name = rockerBOO
-	email = rockerboo@gmail.com
+  name = rockerBOO
+  email = rockerboo@gmail.com
 [github]
   user = rockerboo
 [branch]
   autosetuprebase = always
 [core]
   excludesfile = ~/.gitignore
-	editor = mate -w
+  editor = mate -w
 [color]
   branch = auto
   diff = auto
