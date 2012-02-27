@@ -7,6 +7,7 @@ call pathogen#runtime_append_all_bundles()
 
 syntax on
 set title
+set titleold=
 set number
 set nolist
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
