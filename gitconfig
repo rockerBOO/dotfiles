@@ -7,7 +7,7 @@
   user = brettbuddin
 [core]
   excludesfile = /Users/brettbuddin/.gitignore
-  editor = mvim -f
+  editor = vim
 [color]
   branch = auto
   diff = auto
