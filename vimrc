@@ -47,23 +47,29 @@ set foldenable
 set nostartofline
 set scrolljump=5
 set scrolloff=3
-set showmatch
 set splitbelow
 set splitright
+set ttimeout
+set ttimeoutlen=20
+set notimeout
+set clipboard=unnamed
 
 " highlight VCS conflicts
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 
 let g:rails_statusline=0
+let loaded_matchparen = 1
 
 set fo-=r
+
+set background=dark
+colorscheme solarized
 
 if has("gui_running")
   set background=dark
   set guioptions=egmrt
   set guifont=Monaco:h14
-  colorscheme solarized
 
   set lines=40 columns=120
 
@@ -82,7 +88,7 @@ au VimResized * exe "normal! \<c-w>="
 set completeopt=longest,menuone,preview
 set wildmode=list:longest,list:full
 
-set wildignore+=.hg,.git,.svn
+set wildignore+=*/.hg,*/.git,*/.svn
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest,*.pyc
 set wildignore+=*.sw?
@@ -242,6 +248,8 @@ let g:syntastic_enable_signs = 1
 let g:syntastic_disabled_filetypes = ['html']
 
 let g:ctrlp_by_filename = 1
+
+let g:ctrlp_custom_ignore = { 'file': '\.eot$\|\.woff$\|\.svg$\|\.ttf$\|\.jpg$\|\.gif$\|\.png$' }
 
 " ---------------------------------
 " Auto Commands
