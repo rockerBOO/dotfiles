@@ -1,1 +1,1 @@
-alias e=mvim
+alias e=$EDITOR
