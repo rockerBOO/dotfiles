@@ -6,6 +6,8 @@ call pathogen#runtime_append_all_bundles()
 " ---------------------------------
 
 syntax on
+set background=dark
+colorscheme solarized
 set title
 set titleold=
 set number
@@ -57,22 +59,14 @@ set clipboard=unnamed
 " highlight VCS conflicts
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-
 let g:rails_statusline=0
 let loaded_matchparen = 1
 
 set fo-=r
 
-set background=dark
-colorscheme solarized
-
 if has("gui_running")
-  set background=dark
   set guioptions=egmrt
-  set guifont=Monaco:h14
-
   set lines=40 columns=120
-
   set go-=T
   set go-=r
 endif
