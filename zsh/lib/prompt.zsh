@@ -20,7 +20,7 @@ function git_prompt_unpushed {
 }
 
 function git_prompt_branch {
-    echo -n $(/usr/bin/git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
+    echo -n $(git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
 }
 
 function git_prompt_current_ref {
@@ -39,7 +39,7 @@ function git_prompt_need_push {
     then
         echo ""
     else
-        echo " with %{$fg_bold[magenta]%}unpushed%{$reset_color%}"
+        echo " with %{$fg_bold[magenta]%}unpushed%{$reset_color%}\n"
     fi
 }
 
@@ -51,12 +51,14 @@ function git_prompt_dirty {
     else
         if [[ $what == 'nothing to commit (working directory clean)' ]]
         then
-            echo "on %{$fg_bold[green]%}$(git_prompt_branch)%{$reset_color%}"
+            echo "%{$fg_bold[cyan]%}%c%{$reset_color%} on %{$fg_bold[green]%}$(git_prompt_branch)%{$reset_color%}"
+            echo "\n"
         else
-            echo "on %{$fg_bold[red]%}$(git_prompt_branch)%{$reset_color%}"
+            echo "%{$fg_bold[cyan]%}%c%{$reset_color%} on %{$fg_bold[red]%}$(git_prompt_branch)%{$reset_color%}"
+            echo "\n"
         fi
     fi
 }
 
-PROMPT=$'%{$fg_bold[cyan]%}%c%{$reset_color%} $(git_prompt_dirty)$(git_prompt_need_push)%{$reset_color%}\n› '
+PROMPT=$'$(git_prompt_dirty)$(git_prompt_need_push)%# '
 RPROMPT=''
