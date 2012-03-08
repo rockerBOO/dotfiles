@@ -1,3 +1,6 @@
+" boo vim colors
+" Colors: http://images.wikia.com/vim/images/1/16/Xterm-color-table.png
+
 set background=dark
 hi clear
 if exists("syntax_on")
