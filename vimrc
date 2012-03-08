@@ -1,4 +1,5 @@
 set nocompatible
+
 call pathogen#runtime_append_all_bundles()
 
 " ---------------------------------
@@ -6,7 +7,7 @@ call pathogen#runtime_append_all_bundles()
 " ---------------------------------
 
 syntax enable
-"set background=dark
+set background=dark
 colorscheme boo
 set title
 set titleold=
