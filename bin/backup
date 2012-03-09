@@ -4,6 +4,7 @@ to="/Volumes/Pocket/Current"
 
 directories=(
   Code
+  Projects
 )
 
 for directory in ${directories[@]} 

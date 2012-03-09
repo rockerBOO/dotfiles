@@ -32,8 +32,8 @@ import subprocess
 
 from ConfigParser import ConfigParser
 
-def sync_to(dest):
-    subprocess.call('rsync -vPzrtl --delete --exclude=".git" $(pwd)/* %s' % dest, shell=True)
+def sync_to(source, dest):
+    subprocess.call('cd %s && rsync -vPzrtl --delete --exclude=".git" $(pwd)/* %s' % (source, dest), shell=True)
 
 def config_path(file_name, path='.'):
     path  = os.path.abspath(path)
@@ -47,7 +47,9 @@ def config_path(file_name, path='.'):
         return config_path(file_name, os.path.join(path, os.pardir))
 
 if __name__ == "__main__":
-    if not os.path.isdir(os.path.abspath(".git")):
+    config_dir = os.path.dirname(config_path("project.cfg"))
+
+    if not os.path.isdir(os.path.join(config_dir, ".git")):
         print 'This isn\'t a git repository.'
         exit(1)
 
@@ -61,10 +63,10 @@ if __name__ == "__main__":
 
         for branch, path in branches:
             if branch == current_branch:
-                sync_to(path)
+                sync_to(config_dir, path)
                 break
             elif branch == '*':
-                sync_to(path)
+                sync_to(config_dir, path)
 
     except IOError as e:
         print 'No project.cfg found.'
