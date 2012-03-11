@@ -1,0 +1,14 @@
+#!/bin/bash
+
+directory="."
+
+echo $1
+echo $2
+
+if [ $1 = "virb" ]; then
+    directory="/Users/rockerBOO/Sites/virb"
+fi
+
+echo "find $directory -type f -print0 | xargs -0 grep $2"
+
+find $directory -type f -print0 | xargs -0 grep $2
