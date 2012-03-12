@@ -251,14 +251,13 @@ let g:ctrlp_custom_ignore = { 'file': '\.eot$\|\.woff$\|\.svg$\|\.ttf$\|\.jpg$\|
 " ---------------------------------
 
 " set filetype
-autocmd BufRead *.css.php set filetype=css
 autocmd BufRead *.less set filetype=css
-autocmd BufRead *.js.php set filetype=javascript
 autocmd BufRead *.jsx set filetype=javascript
 autocmd BufRead *.mkd set filetype=mkd
 autocmd BufRead *.markdown set filetype=mkd
 autocmd BufRead *.god set filetype=ruby
 autocmd BufRead *.as set filetype=actionscript
+autocmd BufRead *.tsv set filetype=tsv
 
 " set completion
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
@@ -273,6 +272,8 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd Filetype gitcommit set tw=68 spell
 
 autocmd Filetype python,javascript,php,sh,bash,zsh set ts=4 sts=4 sw=4 expandtab
+
+autocmd Filetype tsv set ts=4 sts=4 sw=4 noexpandtab
 
 " don't use cindent for javascript
 autocmd FileType javascript setlocal nocindent

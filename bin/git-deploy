@@ -59,6 +59,10 @@ cmd_push() {
         git push -f origin $1
         git checkout $2
         git branch -D $1
+        `curl -u 059703f709d829c6aa76e3f6d567ba0e35a40f6e:x \
+        -H 'Content-Type: application/json' \
+        -d '{"message":{"body":"Deploying..."}}' \
+        https://virb.campfirenow.com/room/447289/speak.json`
     else
         echo "Available environments: test, live"
     fi
