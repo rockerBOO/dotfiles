@@ -1,0 +1,26 @@
+@import url("../main.css");
+body { 
+  color: #00F7FF;
+  background: #000;
+}
+
+a { 
+  color: #00FFB7; 
+}
+
+.status_message, .statusmessage {
+  color: #003638;
+}
+
+.screenname {
+  color: #00C28B;
+  font-weight: bold;
+}
+
+.themessage {
+  color: #25DAE0;
+}
+
+.thetime {
+  color: #003638;
+}
