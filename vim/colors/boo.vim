@@ -16,7 +16,7 @@ hi Normal           ctermfg=7
 hi Comment          ctermfg=8
 
 
-hi String           ctermfg=white ctermbg=232
+hi String           ctermfg=white ctermbg=233
 hi Character        ctermfg=11
 hi Number           ctermfg=11
 hi Float            ctermfg=11
