@@ -2,10 +2,11 @@
 body { 
   color: #00F7FF;
   background: #000;
+  line-height: 1.455555;
 }
 
 a { 
-  color: #00FFB7; 
+  color: #318A8D; 
 }
 
 .status_message, .statusmessage {
@@ -13,12 +14,12 @@ a {
 }
 
 .screenname {
-  color: #00C28B;
+  color: #1A5C69;
   font-weight: bold;
 }
 
 .themessage {
-  color: #25DAE0;
+  color: #D6D6D6;
 }
 
 .thetime {
