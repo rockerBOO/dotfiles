@@ -57,6 +57,13 @@ set ttimeoutlen=20
 set notimeout
 set clipboard=unnamed
 
+set laststatus=2
+set statusline+=%f
+set statusline+=%=
+set statusline+=%{SyntasticStatuslineFlag()}%*
+set statusline+=\ [
+set statusline+=%{strlen(&ft)?&ft:'none'} "
+
 " highlight VCS conflicts
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
@@ -258,6 +265,7 @@ autocmd BufRead *.markdown set filetype=mkd
 autocmd BufRead *.god set filetype=ruby
 autocmd BufRead *.as set filetype=actionscript
 autocmd BufRead *.tsv set filetype=tsv
+au BufNewFile,BufRead *.sls,*.yaml,*.yml so ~/.vim/syntax/yaml.vim
 
 " set completion
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
