@@ -38,7 +38,7 @@ zstyle '*' single-ignored show
 
 setopt AUTO_CD
 setopt CORRECT
-setopt CORRECTALL
+# setopt CORRECTALL
 setopt COMPLETE_IN_WORD
 setopt ALWAYS_TO_END
 setopt INTERACTIVE_COMMENTS
