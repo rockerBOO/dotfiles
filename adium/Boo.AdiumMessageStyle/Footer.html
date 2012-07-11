@@ -1,1 +1,34 @@
 </p>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js" charset="utf-8">
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+      imageify = function(token){
+        //takes a token word and returns a img link if image or word if not
+        if(token.indexOf('http') != -1){
+          if(token.indexOf('jpg') != -1 || token.indexOf('png') != -1){
+            return '<img src="' + token + '"/>';
+          }
+        }
+        return false;
+      }
+      setInterval(function(){
+        $('p.imgtranslate').each(function(_, obj){
+          html = $(obj).html();
+          if(html){
+            $.each(html.split(' '), function(_, word){
+              url = imageify(word);
+              if(url && url.indexOf('href=') != -1){
+                arr = word.split('=');
+                image = arr[arr.length - 1];
+                client.debugLog(image);
+                $(obj).append('<img src=' + image + '/>');
+              }
+            });
+          }
+          $(obj).removeClass('imgtranslate');
+        });
+        }, 2000);
+      });
+</script>

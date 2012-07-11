@@ -182,7 +182,9 @@ map <leader>h :CtrlPMRU<CR>
  
 nnoremap Y y$
 
-map <C-U> :!syncit<CR>
+map <C-U> :silent !syncit<CR>
+"cmap Ws :w | :silent !syncit
+command Ws w | silent !syncit
 
 " insert mode completion
 inoremap <C-L> <C-X><C-L>
