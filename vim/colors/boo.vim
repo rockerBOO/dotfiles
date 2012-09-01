@@ -41,7 +41,7 @@ hi StorageClass     ctermfg=11 cterm=bold
 
 hi PreProc          ctermfg=57 cterm=bold
 
-hi LineNr           ctermfg=8 cterm=bold
+hi LineNr           ctermfg=8
 
 hi ColorColumn      ctermbg=232
 

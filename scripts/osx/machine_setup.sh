@@ -1,10 +1,10 @@
 #!/bin/sh
 # Usage: bash < <(curl -s https://gist.github.com/raw/965142/install.sh)
 
-if [ ! -d "/Developer/Applications/Xcode.app" ]; then
-  echo "Please install Xcode first. Exiting."  
-  exit 1
-fi
+#if [ ! -d "/Developer/Applications/Xcode.app" ]; then
+#  echo "Please install Xcode first. Exiting."  
+  #exit 1
+#fi
 
 # Have sudo ask us for our password before we kick everything off so we can walk away.
 sudo echo "Here we go..."
