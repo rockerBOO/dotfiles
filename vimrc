@@ -1,6 +1,8 @@
 set nocompatible
 
-call pathogen#runtime_append_all_bundles()
+"call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
+
 
 " ---------------------------------
 " UI
