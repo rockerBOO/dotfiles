@@ -1,0 +1,45 @@
+! special
+!*.foreground:   #ffffff
+!*.background:   #000000
+!*.cursorColor:  #ffffff
+
+! black
+*.color0:       #1a1e1d
+*.color8:       #5d6f74
+
+! red
+*.color1:       #dbabeb
+*.color9:       #d95490
+
+! green
+*.color2:       #9c75dd
+*.color10:      #63b0b0
+
+! yellow
+*.color3:       #7fa7af
+*.color11:      #c0c0dd
+
+! blue
+*.color4:       #64629f
+*.color12:      #5786bc
+
+! magenta
+*.color5:       #5f4c65
+*.color13:      #3f3442
+
+! cyan
+*.color6:       #a9d1df
+*.color14:      #849da2
+
+! white
+*.color7:       #f0f4ef
+*.color15:      #f5f4ef
+
+! font config
+Xft.hinting: 1
+Xft.hintstyle: hintslight
+Xft.antialias: 1
+Xft.rgba: rgb
+
+Xft.size: 16
+Xft.family: JetBrains Mono
