@@ -1,6 +1,10 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Configure the oh-my-zsh ssh-agent plugin
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent lifetime 4h
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.local/share/oh-my-zsh
 
@@ -68,7 +72,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf tmux cargo extract archlinux yarn systemd)
+plugins=(git fd docker fzf tmux cargo fancy-ctrl-z mix extract archlinux yarn systemd themes)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -97,4 +101,3 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
