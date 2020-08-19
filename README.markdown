@@ -1,12 +1,12 @@
 # Dotfiles
 
-My setup. This is always my most up-to-date configuration for:
+Linux
 
-* vim
-* zsh
+* neovim 0.5
+* alacritty 0.5
+* xorg 
+* zsh with oh-my-zsh
 * git
-
-...and a few other things.
 
 ## Install
 
