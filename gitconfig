@@ -7,7 +7,8 @@
 	autosetuprebase = always
 [core]
   excludesfile = ~/.gitignore
-  editor = vim
+  editor = nvim
+  autocrlf = true
 [color]
   branch = auto
   diff = auto
