@@ -2,12 +2,8 @@
 # vim: filetype=sh
 # Move a configuration to the dotfiles config and make a link to it.
 
-echo $1
-
-# remove the dot
-
 dotfile=~/$1
-postdotfile=~/.dotfiles/${1:1}
+postdotfile=~/.dotfiles/${1:1} # remove the dot
 
 echo "$dotfile $postdotfile moving..."
 
@@ -20,7 +16,7 @@ fi
 
 ln -snf $postdotfile $dotfile
 
-if [ ! -f $postdotfile ]; then
+if [ ! -L $dotfile ]; then
 	echo "Failed to link file $dotfile"
 	exit 2
 fi
