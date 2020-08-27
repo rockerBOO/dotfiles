@@ -9,6 +9,7 @@
   excludesfile = ~/.gitignore
   editor = nvim
   autocrlf = true
+  pager = delta
 [color]
   branch = auto
   diff = auto
@@ -24,5 +25,10 @@
 	sync = !legit sync \"$@\"
 	publish = !legit publish \"$@\"
 	graft = !legit graft \"$@\"
+[delta]
+  line-numbers = true
+	features = side-by-side line-numbers decorations
 [push]
 	default = tracking
+[interactive]
+  diffFilter = delta --color-only

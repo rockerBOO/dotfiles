@@ -4,7 +4,7 @@ call plug#begin()
 	Plug 'haishanh/night-owl.vim'
 	Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
 
-	" Configure LSP
+	" Configure LSP test this
 	Plug 'neovim/nvim-lsp'
 
 	" LSP Diagnostics
@@ -51,6 +51,17 @@ call plug#begin()
   Plug 'leafgarland/typescript-vim'
   Plug 'peitalin/vim-jsx-typescript'
 
+	" Teej tricking me into more plugins
+	Plug 'nvim-lua/plenary.nvim'
+
+	" Neovim Lua Development
+	" Plug 'tjdevries/nlua.nvim'
+
+	" This is required for syntax highlighting
+	" Plug 'euclidianAce/BetterLua.vim'
+
+	" LSP Extensions
+	Plug 'tjdevries/lsp_extensions.nvim'
 
 	" ES Linting
   Plug 'w0rp/ale'
@@ -73,6 +84,9 @@ endif
 " colors
 colorscheme challenger_deep
 
+let mapleader = "\<Space>"
+
+
 " configure lsp
 lua << EOF
 local on_attach_vim = function()
@@ -81,26 +95,40 @@ local on_attach_vim = function()
 end
 
 require'nvim_lsp'.elixirls.setup{on_attach=on_attach_vim}
-require'nvim_lsp'.rust_analyzer.setup{
-	on_attach=on_attach_vim,
-	settings = {
-		['rust-analyzer'] = {
-			diagnostics = {
-				enable = true;
-			}
-		}
-	}
-}
-require'nvim_lsp'.tsserver.setup{
-	on_attach = on_attach_vim
-}
-
+require'nvim_lsp'.rust_analyzer.setup{on_attach=on_attach_vim}
+require'nvim_lsp'.tsserver.setup{on_attach=on_attach_vim}
 require'nvim_lsp'.pyls.setup{}
 require'nvim_lsp'.cssls.setup{}
 require'nvim_lsp'.vimls.setup{}
 require'nvim_lsp'.bashls.setup{}
 require'nvim_lsp'.sumneko_lua.setup{}
+
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true
+	}
+}
+-- Load lua configuration from nlua.
+-- require('nlua.lsp.nvim').setup(nvim_lsp, {})
+
+ShowInlayHintsPerLine = function()
+	require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = ' ░ ', highlight = "Menu" }
+end
+
+ShowInlayHints = function()
+	require'lsp_extensions'.inlay_hints{ prefix = ' ░ ', highlight = "Menu" }
+end
 EOF
+
+augroup ShowInlayHints
+	autocmd!
+	autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = ' ░ ', highlight = "Menu" }
+	autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' ░ ', highlight = "Menu" }
+augroup end
+
+" nnoremap <Leader>t :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }<CR>
+nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("lsp_extensions")<CR>
+
 " Use deoplete.
 " let g:deoplete#enable_at_startup = 1
 
@@ -111,7 +139,14 @@ let g:ale_fixers = {
 
 syntax on
 
-let mapleader = "\<Space>"
+" Set path to search all sub directories
+" set path+=**
+
+" Control panes without using <C-w>
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
 
 set laststatus=2
 
@@ -147,7 +182,7 @@ let g:ale_fix_on_save = 1
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.md,*.json,*.graphql,*.vue,*.yaml,*.html Prettier
 
 " Format before writing
-autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.py,*.rs lua vim.lsp.buf.formatting_sync({ insertSpaces = false, trimTrailingWhitespace = true, tabSize = 2, insertFinalNewline = true }, 1000)
 
 " Setup omnifunc for LSP
 autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
@@ -158,7 +193,7 @@ autocmd BufNewFile,BufReadPost *.ts,*.tsx setfiletype typescript.vim
 "" completion-nvim
 
 " Attach to all buffers
-autocmd BufEnter * lua require'completion'.on_attach()
+" autocmd BufEnter * lua require'completion'.on_attach()
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -173,6 +208,7 @@ set shortmess+=c
 "" diagnostic-nvim
 
 let g:diagnostic_enable_virtual_text = 1
+nnoremap <Leader>? :OpenDiagnostic<CR>
 
 " tsx highlighting
 " hi tsxTagName  ctermfg=blue
@@ -182,9 +218,15 @@ let g:diagnostic_enable_virtual_text = 1
 highlight ALEErrorSign ctermbg=NONE ctermfg=red
 highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 
+" Save file
 nnoremap <Leader>w :w<CR>
+"nnoremap <Leader>s :w<cr>
+" inoremap <Leader>s <C-c>:w<cr>
+
+" Quit file
 nnoremap <Leader>q :q<CR>
 
+" Start append in insert mode
 inoremap <C-l> A<CR>
 
 " Setup default LSP keybinds
@@ -192,11 +234,13 @@ nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.rename()<CR>
+
 
 " Handle autocomplete
 " function! CleverTab()
