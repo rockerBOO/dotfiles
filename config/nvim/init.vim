@@ -1,3 +1,30 @@
+let g:ale_disable_lsp = 1
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['prettier', 'eslint'],
+\}
+
+" mix format
+"let g:mix_format_on_save = 1
+
+" rustfmt
+"let g:rustfmt_autosave = 1
+
+" leafgarland/typescript-vim
+let g:typescript_indent_disable = 1
+
+" prettier
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_config_present = 1
+let g:prettier#autoformat_config_files = [".prettierrc.js"]
+
+" ALE
+let g:ale_fix_on_save = 1
+
+let g:diagnostic_enable_virtual_text = 1
+
+
 call plug#begin()
  " Colors
 	Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
@@ -52,7 +79,7 @@ call plug#begin()
   Plug 'peitalin/vim-jsx-typescript'
 
 	" Teej tricking me into more plugins
-	Plug 'nvim-lua/plenary.nvim'
+	" Plug 'nvim-lua/plenary.nvim'
 
 	" Neovim Lua Development
 	" Plug 'tjdevries/nlua.nvim'
@@ -63,12 +90,20 @@ call plug#begin()
 	" LSP Extensions
 	Plug 'tjdevries/lsp_extensions.nvim'
 
+	" Some stupid thing
+	" Plug 'ThePrimeagen/vim-be-good', {'do': './install.sh'}
+
 	" ES Linting
   Plug 'w0rp/ale'
 
 	" JS/TS/HTML formatter
   Plug 'prettier/vim-prettier'
 
+
+	" Telescope fuzzy finder
+	Plug 'nvim-lua/popup.nvim'
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-lua/telescope.nvim'
 
 	" Fuzzy finder
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -122,20 +157,17 @@ EOF
 
 augroup ShowInlayHints
 	autocmd!
-	autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = ' ░ ', highlight = "Menu" }
-	autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' ░ ', highlight = "Menu" }
+	" autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = ' ░ ', highlight = "Menu" }
+	autocmd InsertLeave,BufEnter,BufCreate,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' ░ ', highlight = "Menu" }
 augroup end
 
 " nnoremap <Leader>t :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }<CR>
 nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("lsp_extensions")<CR>
 
+nnoremap <Leader>f :lua require'telescope.builtin'.git_files{}<CR>
+
 " Use deoplete.
 " let g:deoplete#enable_at_startup = 1
-
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier', 'eslint'],
-\}
 
 syntax on
 
@@ -148,7 +180,13 @@ noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 
+" Default split to bottom, right
+set splitbelow
+set splitright
+
 set laststatus=2
+
+set ff=unix
 
 set wildmenu
 set wildmode=longest:full,full
@@ -160,23 +198,6 @@ set softtabstop=2
 set noexpandtab
 
 " set mouse=a
-
-" mix format
-"let g:mix_format_on_save = 1
-
-" rustfmt
-"let g:rustfmt_autosave = 1
-
-" leafgarland/typescript-vim
-let g:typescript_indent_disable = 1
-
-" prettier
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_config_present = 1
-let g:prettier#autoformat_config_files = [".prettierrc.js"]
-
-" ALE
-let g:ale_fix_on_save = 1
 
 " Run Prettier on save
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.md,*.json,*.graphql,*.vue,*.yaml,*.html Prettier
@@ -207,7 +228,6 @@ set shortmess+=c
 
 "" diagnostic-nvim
 
-let g:diagnostic_enable_virtual_text = 1
 nnoremap <Leader>? :OpenDiagnostic<CR>
 
 " tsx highlighting
@@ -229,6 +249,10 @@ nnoremap <Leader>q :q<CR>
 " Start append in insert mode
 inoremap <C-l> A<CR>
 
+augroup LSPCursor
+	autocmd CursorHold,CursorHoldI <buffer> :lua vim.lsp.buf.hover()
+augroup END
+
 " Setup default LSP keybinds
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
@@ -236,10 +260,11 @@ nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
 " nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gr    <cmd>lua require'telescope.builtin'.lsp_references{}<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <Leader>re <cmd>lua vim.lsp.buf.rename()<CR>
 
 
 " Handle autocomplete
