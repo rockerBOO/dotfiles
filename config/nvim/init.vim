@@ -12,15 +12,15 @@ let g:ale_fixers = {
 "let g:rustfmt_autosave = 1
 
 " leafgarland/typescript-vim
-let g:typescript_indent_disable = 1
+" let g:typescript_indent_disable = 1
 
 " prettier
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_config_present = 1
-let g:prettier#autoformat_config_files = [".prettierrc.js"]
+" let g:prettier#autoformat = 1
+" let g:prettier#autoformat_config_present = 1
+" let g:prettier#autoformat_config_files = [".prettierrc.js"]
 
 " ALE
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 
 let g:diagnostic_enable_virtual_text = 1
 
@@ -94,7 +94,7 @@ call plug#begin()
 	" Plug 'ThePrimeagen/vim-be-good', {'do': './install.sh'}
 
 	" ES Linting
-  Plug 'w0rp/ale'
+  Plug 'dense-analysis/ale'
 
 	" JS/TS/HTML formatter
   Plug 'prettier/vim-prettier'
@@ -143,28 +143,19 @@ require'nvim-treesitter.configs'.setup {
     enable = true
 	}
 }
--- Load lua configuration from nlua.
--- require('nlua.lsp.nvim').setup(nvim_lsp, {})
 
-ShowInlayHintsPerLine = function()
-	require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = ' ░ ', highlight = "Menu" }
-end
-
-ShowInlayHints = function()
-	require'lsp_extensions'.inlay_hints{ prefix = ' ░ ', highlight = "Menu" }
-end
 EOF
 
 augroup ShowInlayHints
 	autocmd!
 	" autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = ' ░ ', highlight = "Menu" }
-	autocmd InsertLeave,BufEnter,BufCreate,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' ░ ', highlight = "Menu" }
+	autocmd InsertLeave,BufEnter,BufCreate,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' » ', highlight = "NonText" }
 augroup end
 
 " nnoremap <Leader>t :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }<CR>
-nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("lsp_extensions")<CR>
+" nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("lsp_extensions")<CR>
 
-nnoremap <Leader>f :lua require'telescope.builtin'.git_files{}<CR>
+nnoremap <Leader>f :lua require'telescope.builtin'.git_files{ selection_strategy = "follow" }<CR>
 
 " Use deoplete.
 " let g:deoplete#enable_at_startup = 1

@@ -2,9 +2,20 @@
 
 Linux
 
+neovim nightly
+LSP
+- nvim-lua/completion-nvim
+- nvim-lua/diagnostic-nvim
+- neovim/nvim-lsp
+- tjdevries/lsp_extensions.nvim
+
+- nvim-treesitter/nvim-treesitter
+- w0rp/aleA
+
+
 * neovim 0.5
 * alacritty 0.5
-* xorg 
+* xorg
 * zsh with oh-my-zsh
 * git
 
