@@ -93,6 +93,9 @@ fi
 # Starship https://starship.rs/
 eval "$(starship init zsh)"
 
+# Add API keys
+source $HOME/.config/private/keys
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
