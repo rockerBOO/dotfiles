@@ -17,5 +17,7 @@ eval $(ssh-agent)
 # Setup terminal
 # $HOME/.config/alacritty/startup.sh
 
+
+
 # Start dwm
 exec dwm

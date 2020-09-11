@@ -1,21 +1,15 @@
-local lsp_status = require("lsp-status")
+-- local lsp_status = require("lsp-status")
 
-lsp_status.register_progress()
-lsp_status.config {kind_labels = vim.g.completion_customize_lsp_label}
-local status = require("rockerboo.lsp_status")
+-- lsp_status.register_progress()
+-- lsp_status.config {kind_labels = vim.g.completion_customize_lsp_label}
+-- local status = require("rockerboo.lsp_status")
 local nvim_lsp = require("nvim_lsp")
 
-local on_attach_vim = function(client)
-  require"completion".on_attach(client)
-  require"diagnostic".on_attach(client)
-  status.on_attach(client)
-end
-
-local default_lsp_config = {capabilities = lsp_status.capabilities, on_attach = on_attach_vim}
-
+-- Does something, I forget.
 require"el".setup {}
 
 -- config.capabilities = vim.tbl_extend('keep', default_lsp_config.capabilities or {}, lsp_status.capabilities)
+-- not sure what config is to extend this in lsp-status
 -- Configure the completion chains for completion.nvim
 vim.g.completion_chain_complete_list = {
   default = {
@@ -28,6 +22,14 @@ vim.g.completion_chain_complete_list = {
 }
 
 --- Language servers
+local on_attach_vim = function(client)
+  require"completion".on_attach(client)
+  require"diagnostic".on_attach(client)
+  status.on_attach(client)
+end
+
+local default_lsp_config = { on_attach = on_attach_vim}
+
 nvim_lsp.elixirls.setup(default_lsp_config)
 nvim_lsp.rust_analyzer.setup(default_lsp_config)
 nvim_lsp.tsserver.setup(default_lsp_config)
@@ -53,16 +55,13 @@ local telescope_config = {
   shorten_path = true,
   layout_strategy = "flex",
 	prompt_position = "top",
-	sorting_strategy = "ascending"
+	sorting_strategy = "ascending",
+	preview_cutoff = 1
 }
 
-local function join(t1, t2)
-  for k, v in ipairs(t2) do table.insert(t1, v) end
-  return t1
-end
 
 function GitFiles()
-  require"telescope.builtin".git_files(telescope_config)
+  require"telescope.builtin".find_files(telescope_config)
 end
 
 function LspWorkspaceSymbols()
