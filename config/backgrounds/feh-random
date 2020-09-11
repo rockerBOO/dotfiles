@@ -1,3 +1,0 @@
-#!/bin/sh
-# Randomize getting background from backgrounds 
-feh --bg-fill --randomize ~/backgrounds/*
