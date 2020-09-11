@@ -16,6 +16,19 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set noexpandtab
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+
+" allow emojis
+scriptencoding utf-16
+" fix the emoji spacing for old vim
+set noemoji
+" does not work on neovim
+if !has('nvim')
+  " treat emojis 😄  as full width characters
+  set emoji
+end
+
 
 let g:ale_disable_lsp = 1
 
@@ -41,15 +54,15 @@ let g:ale_disable_lsp = 1
 
 
 " Configure the completion chains
-let g:completion_chain_complete_list = {
-			\'default' : {
-			\	'default' : [
-			\		{'complete_items' : ['lsp', 'snippet']},
-      \   {'complete_items' : ['buffer']},
-			\		{'mode' : 'file'}
-			\	],
-			\}
-			\}
+" let g:completion_chain_complete_list = {
+" 			\'default' : {
+" 			\	'default' : [
+" 			\		{'complete_items' : ['lsp', 'snippet']},
+"       \   {'complete_items' : ['buffer']},
+" 			\		{'mode' : 'file'}
+" 			\	],
+" 			\}
+" 			\}
 
 
 " ALE
@@ -117,6 +130,10 @@ call plug#begin()
 	"Plug 'mchakann/vim-sandwich'
 	Plug 'tpope/vim-surround'
 
+	" Distraction-free writing 
+	Plug 'junegunn/goyo.vim'
+
+	Plug 'junegunn/limelight.vim'
 	" Tooltips
 	" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
@@ -247,7 +264,17 @@ inoremap <Down> <nop>
 xnoremap  <   <gv
 xnoremap  >   >gv
 
+" ----------------------------------------------------------------------------
+" <Tab> indents in visual mode (recursive map to the above)
+" ----------------------------------------------------------------------------
+
+silent! vunmap <Tab>
+silent! vunmap <S-Tab>
+vmap <special> <Tab>     >
+vmap <special> <S-Tab>   <
+
 " set mouse=a
+
 augroup Prettier
 	autocmd!	
 	" Run Prettier on save
