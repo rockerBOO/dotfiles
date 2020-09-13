@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.bin:/usr/local/bin:$PATH
 
 # Configure the oh-my-zsh ssh-agent plugin
 zstyle :omz:plugins:ssh-agent agent-forwarding on
