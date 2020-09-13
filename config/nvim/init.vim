@@ -68,14 +68,14 @@ let g:ale_disable_lsp = 1
 
 " Configure the completion chains
 " let g:completion_chain_complete_list = {
-"				\'default' : {
-"				\	'default' : [
-"				\		{'complete_items' : ['lsp', 'snippet']},
+"       \'default' : {
+"       \ 'default' : [
+"       \   {'complete_items' : ['lsp', 'snippet']},
 "       \   {'complete_items' : ['buffer']},
-"				\		{'mode' : 'file'}
-"				\	],
-"				\}
-"				\}
+"       \   {'mode' : 'file'}
+"       \ ],
+"       \}
+"       \}
 
 
 " ALE
@@ -85,113 +85,113 @@ let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_auto_popup_while_jump = 1
  
 call plug#begin()
-	" Colors
-	Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-	Plug 'haishanh/night-owl.vim'
-	Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
+  " Colors
+  Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+  Plug 'haishanh/night-owl.vim'
+  Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
 
-	" Configure LSP test this
-	Plug 'neovim/nvim-lsp'
+  " Configure LSP test this
+  Plug 'neovim/nvim-lsp'
 
-	" LSP Diagnostics
-	Plug 'nvim-lua/diagnostic-nvim'
+  " LSP Diagnostics
+  Plug 'nvim-lua/diagnostic-nvim'
 
-	" LSP/Treesitter completion
-	Plug 'nvim-lua/completion-nvim'
+  " LSP/Treesitter completion
+  Plug 'nvim-lua/completion-nvim'
 
-	" Completion source for buffers
-	Plug 'steelsojka/completion-buffers'
+  " Completion source for buffers
+  Plug 'steelsojka/completion-buffers'
 
-	" LSP Status Bar
-	Plug 'nvim-lua/lsp-status.nvim'
+  " LSP Status Bar
+  Plug 'nvim-lua/lsp-status.nvim'
 
-	" Express line (status bar)
-	Plug 'tjdevries/express_line.nvim'
+  " Express line (status bar)
+  Plug 'tjdevries/express_line.nvim'
 
-	" Treesitter  
-	Plug 'nvim-treesitter/nvim-treesitter'
+  " Treesitter  
+  Plug 'nvim-treesitter/nvim-treesitter'
 
-	" Completion from treesitter
-	Plug 'nvim-treesitter/completion-treesitter'
-	" Indent rules for python
-	Plug 'vim-scripts/indentpython.vim'
+  " Completion from treesitter
+  Plug 'nvim-treesitter/completion-treesitter'
+  " Indent rules for python
+  Plug 'vim-scripts/indentpython.vim'
 
-	" Rust syntax rules
-	Plug 'rust-lang/rust.vim'
+  " Rust syntax rules
+  Plug 'rust-lang/rust.vim'
 
-	 " Elixir syntax rules
-	Plug 'elixir-editors/vim-elixir'
-	" Plug 'slashmili/alchemist.vim'
-	" Plug 'mhinz/vim-mix-format'
-	Plug 'moofish32/vim-ex_test'
+   " Elixir syntax rules
+  Plug 'elixir-editors/vim-elixir'
+  " Plug 'slashmili/alchemist.vim'
+  " Plug 'mhinz/vim-mix-format'
+  Plug 'moofish32/vim-ex_test'
 
-	" File tree
-	Plug 'preservim/nerdtree'
+  " File tree
+  Plug 'preservim/nerdtree'
 
-	" Git commands
-	Plug 'tpope/vim-fugitive'
+  " Git commands
+  Plug 'tpope/vim-fugitive'
 
-	"Plug 'tpope/vim-sleuth'
+  "Plug 'tpope/vim-sleuth'
 
-	" Auto-complete ends
-	Plug 'tpope/vim-endwise'
+  " Auto-complete ends
+  Plug 'tpope/vim-endwise'
 
-	" Dispatch jobs (like make, mix, yarn, tests)
-	Plug 'tpope/vim-dispatch'
+  " Dispatch jobs (like make, mix, yarn, tests)
+  Plug 'tpope/vim-dispatch'
 
-	" sd Sandwich for wrapping variables
-	"Plug 'mchakann/vim-sandwich'
-	Plug 'tpope/vim-surround'
+  " sd Sandwich for wrapping variables
+  "Plug 'mchakann/vim-sandwich'
+  Plug 'tpope/vim-surround'
 
-	" Distraction-free writing 
-	Plug 'junegunn/goyo.vim'
+  " Distraction-free writing 
+  Plug 'junegunn/goyo.vim'
 
-	Plug 'junegunn/limelight.vim'
-	" Tooltips
-	" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'junegunn/limelight.vim'
+  " Tooltips
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-	" Comment helpers
-	Plug 'tpope/vim-commentary'
+  " Comment helpers
+  Plug 'tpope/vim-commentary'
 
-	" Typescript
-	Plug 'leafgarland/typescript-vim'
-	
-	" JSX/TSX syntax 
-	Plug 'peitalin/vim-jsx-typescript'
+  " Typescript
+  Plug 'leafgarland/typescript-vim'
 
-	" Editorconfig support
-	Plug 'editorconfig/editorconfig-vim'
+  " JSX/TSX syntax 
+  Plug 'peitalin/vim-jsx-typescript'
 
-	" Neovim Lua Development
-	Plug 'tjdevries/nlua.nvim'
+  " Editorconfig support
+  Plug 'editorconfig/editorconfig-vim'
 
-	" This is required for syntax highlighting
-	Plug 'euclidianAce/BetterLua.vim'
+  " Neovim Lua Development
+  Plug 'tjdevries/nlua.nvim'
 
-	" LSP Extensions
-	Plug 'tjdevries/lsp_extensions.nvim'
+  " This is required for syntax highlighting
+  Plug 'euclidianAce/BetterLua.vim'
 
-	" Some stupid thing
-	Plug 'ThePrimeagen/vim-be-good',
+  " LSP Extensions
+  Plug 'tjdevries/lsp_extensions.nvim'
 
-	" ES Linting
-	"Plug 'dense-analysis/ale'
+  " Some stupid thing
+  Plug 'ThePrimeagen/vim-be-good',
 
-	Plug 'andrejlevkovitch/vim-lua-format'
+  " ES Linting
+  "Plug 'dense-analysis/ale'
 
-	" JS/TS/HTML formatter
-	Plug 'prettier/vim-prettier'
+  Plug 'andrejlevkovitch/vim-lua-format'
+
+  " JS/TS/HTML formatter
+  Plug 'prettier/vim-prettier'
 
 
-	Plug 'nvim-lua/popup.nvim'
-	Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'nvim-lua/plenary.nvim'
 
-	" Telescope fuzzy finder
-	Plug 'nvim-lua/telescope.nvim'
+  " Telescope fuzzy finder
+  Plug 'nvim-lua/telescope.nvim'
 
-	" Fuzzy finder
-	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-	Plug 'junegunn/fzf.vim'
+  " Fuzzy finder
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " configure lsp
@@ -205,7 +205,7 @@ colorscheme challenger_deep
 
 " Reload init.vim, this currently locks up nvim
 augroup ReloadNvim 
-	au BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
+  au BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
 augroup end
 
 augroup ShowInlayHints
@@ -229,8 +229,8 @@ nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("telescope")<
 nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files({ sorting_strategy = "ascending", preview_cutoff = 200,border = false, layout_strategy = "dropdown", prompt = "", width = 50,winblend = 3, results_title = "", border = false })<CR>
 
 " augroup TelescopeBindings
-"		autocmd!
-"		autocmd FileType elixir,rust,javascript,typescript nnoremap ggr :lua LspWorkspaceSymbols()<CR>
+"   autocmd!
+"   autocmd FileType elixir,rust,javascript,typescript nnoremap ggr :lua LspWorkspaceSymbols()<CR>
 " augroup end
 nnoremap ggr :lua LspWorkspaceSymbols()<CR>
 
@@ -268,22 +268,22 @@ vmap <special> <Tab>     >
 vmap <special> <S-Tab>   <
 
 augroup LSPFormatting
-	autocmd!
+  autocmd!
 " Format before writing
-	autocmd BufWritePre *.ex,*.exs,*.py,*.rs lua vim.lsp.buf.formatting_sync({  trimTrailingWhitespace = true, tabSize = 2, insertFinalNewline = true }, 1000)
+  autocmd BufWritePre *.ex,*.exs,*.py,*.rs lua vim.lsp.buf.formatting_sync({  trimTrailingWhitespace = true, tabSize = 2, insertFinalNewline = true }, 1000)
 augroup end
 
 " Setup omnifunc for LSP
 autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 augroup TypescriptSyntax
-	" Setup typescript syntax
-	" autocmd FileType typescript :set makeprg=tsc	
-	
-	" set filetypes as typescript.tsx
-	autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+  " Setup typescript syntax
+  " autocmd FileType typescript :set makeprg=tsc  
+  
+  " set filetypes as typescript.tsx
+  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 
-	autocmd BufNewFile,BufReadPost *.ts setfiletype typescript.vim
+  autocmd BufNewFile,BufReadPost *.ts setfiletype typescript.vim
 augroup end
 
 "" completion-nvim
@@ -338,11 +338,11 @@ nnoremap <expr> <Leader>p (len(system('git rev-parse')) > 0 ? ':Files' : ':GFile
 nnoremap <Leader>r :Dispatch make<CR>
 
 augroup Dispatch
-	autocmd!
-	au FileType rust nnoremap <Leader>r :Dispatch cargo run --bin plant_game<CR>
-	au FileType rust nnoremap <Leader>t :Dispatch cargo test<CR>
-	au FileType elixir nnoremap <Leader>r :Dispatch mix run<CR> 
-	au FileType elixir nnoremap <Leader>t :Dispatch mix test<CR>
+  autocmd!
+  au FileType rust nnoremap <Leader>r :Dispatch cargo run --bin plant_game<CR>
+  au FileType rust nnoremap <Leader>t :Dispatch cargo test<CR>
+  au FileType elixir nnoremap <Leader>r :Dispatch mix run<CR> 
+  au FileType elixir nnoremap <Leader>t :Dispatch mix test<CR>
 augroup end
 
 " Save file
@@ -357,18 +357,18 @@ nnoremap <Leader>q :q<CR>
 inoremap <C-l> A<CR>
 
 augroup YankHighlight
-	" Highlight on yank
+  " Highlight on yank
   autocmd! 
-	au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000}
+  au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000}
 augroup end
 
 " Handle autocomplete
 " function! CleverTab()
-"	 if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-"			return "\<Tab>"
-"	 else
-"			return "\<C-N>"
-"	 endif
+"  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+"     return "\<Tab>"
+"  else
+"     return "\<C-N>"
+"  endif
 " endfunction
 " inoremap <Tab> <C-R>=CleverTab()<CR>
 
