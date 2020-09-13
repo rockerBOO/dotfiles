@@ -72,30 +72,17 @@ let g:ale_disable_lsp = 1
 " let g:typescript_indent_disable = 1
 
 " prettier
-" let g:prettier#autoformat = 1
-" let g:prettier#autoformat_config_present = 1
-" let g:prettier#autoformat_config_files = [".prettierrc.js"]
-
-
-
-" Configure the completion chains
-" let g:completion_chain_complete_list = {
-"       \'default' : {
-"       \ 'default' : [
-"       \   {'complete_items' : ['lsp', 'snippet']},
-"       \   {'complete_items' : ['buffer']},
-"       \   {'mode' : 'file'}
-"       \ ],
-"       \}
-"       \}
-
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_config_present = 1
+let g:prettier#autoformat_config_files = [".prettierrc.js"]
 
 " ALE
 " let g:ale_fix_on_save = 1
+
 " diagnostic-nvim
 let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_auto_popup_while_jump = 1
- 
+
 call plug#begin()
   " Colors
   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
@@ -209,9 +196,8 @@ call plug#begin()
   Plug 'junegunn/fzf.vim'
 call plug#end()
 
+
 lua require'init'
-" configure lsp
-lua require'lsp_config' 
 
 " Setup colors
 color boo
@@ -225,35 +211,11 @@ augroup ReloadNvim
   au BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
 augroup end
 
-augroup ShowInlayHints
-  autocmd!
-  " autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true, prefix = ' ░ ', highlight = "Menu" }
-  autocmd InsertLeave,BufEnter,BufCreate,BufWinEnter,TabEnter,BufWritePost FileType rust :lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "NonText" }
-augroup end
+
 
 " Keybinds
 " =>>=>>=>>=>>=>>=>>=>>=>>=>>=>>
 "
-
-" Open this file in a new tab
-nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim" }<CR>
-
-" Reload module using plenary
-nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("telescope")<CR>
-
-" Telescope binds 
-" nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files()<CR>
-nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files({ sorting_strategy = "ascending", preview_cutoff = 200,border = false, layout_strategy = "dropdown", prompt = "", width = 50,winblend = 3, results_title = "", borderchars = { '', '', '', '', '', '', '', ''} })<CR>
-
-" augroup TelescopeBindings
-"   autocmd!
-"   autocmd FileType elixir,rust,javascript,typescript nnoremap ggr :lua LspWorkspaceSymbols()<CR>
-" augroup end
-nnoremap ggr :lua LspWorkspaceSymbols()<CR>
-
-nnoremap <Leader>P :lua require'telescope.builtin'.planets{}<CR>
-
-nnoremap <Leader>lg :lua LiveGrep()<CR>
 
 " Set path to search all sub directories
 " set path+=**
@@ -296,16 +258,6 @@ augroup end
 " Setup omnifunc for LSP
 autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-augroup TypescriptSyntax
-  " Setup typescript syntax
-  " autocmd FileType typescript :set makeprg=tsc  
-  
-  " set filetypes as typescript.tsx
-  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
-
-  autocmd BufNewFile,BufReadPost *.ts setfiletype typescript.vim
-augroup end
-
 "" completion-nvim
 
 " Attach to all buffers
@@ -315,55 +267,11 @@ augroup end
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" diagnostic-nvim
-nnoremap <Leader>? :OpenDiagnostic<CR>
-nnoremap <Leader>k :PrevDiagnosticCycle<CR>
-nnoremap <Leader>j :NextDiagnosticCycle<CR>
-
-
-map <Leader>o :NERDTreeToggle<CR>
 
 " fzf file fuzzy search that respects .gitignore
 " If in git directory, show only files that are committed, staged, or unstaged
 " else use regular :Files
 nnoremap <expr> <Leader>p (len(system('git rev-parse')) > 0 ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
-
-" tsx highlighting
-" hi tsxTagName  ctermfg=blue
-" hi tsxComponentName ctermfg=yellow
-
-" " ALE highlighting
-" highlight ALEErrorSign ctermbg=NONE ctermfg=red
-" highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
-
-
-" " dark red
-" hi tsxTagName ctermfg=red
-" hi tsxComponentName ctermfg=red
-" hi tsxCloseComponentName ctermfg=red
-
-" " orange
-" hi tsxCloseString ctermfg=cyan
-" hi tsxCloseTag ctermfg=cyan
-" hi tsxCloseTagName ctermfg=cyan
-" hi tsxAttributeBraces ctermfg=cyan
-" hi tsxEqual ctermfg=cyan
-
-" " yellow
-" hi tsxAttrib ctermfg=yellow cterm=italic
-
-" FILES
-" -->==>-->==>-->==>-->==>
-
-nnoremap <Leader>r :Dispatch make<CR>
-
-augroup Dispatch
-  autocmd!
-  au FileType rust nnoremap <Leader>r :Dispatch cargo run --bin plant_game<CR>
-  au FileType rust nnoremap <Leader>t :Dispatch cargo test<CR>
-  au FileType elixir nnoremap <Leader>r :Dispatch mix run<CR> 
-  au FileType elixir nnoremap <Leader>t :Dispatch mix test<CR>
-augroup end
 
 " Save file
 nnoremap <Leader>w :w<CR>
