@@ -3,7 +3,9 @@
 highlight ALEErrorSign ctermbg=NONE ctermfg=red
 highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 
-hi link TelescopeBorder Type
+highlight link TelescopeResultsBorder NonText 
+highlight link TelescopePreviewBorder NonText
+highlight link TelescopePromptBorder NonText
 
 " dark red
 hi tsxTagName ctermfg=red

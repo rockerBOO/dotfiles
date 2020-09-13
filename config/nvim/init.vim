@@ -8,16 +8,28 @@ set laststatus=2
 
 set ff=unix
 
+set wildignore+=*/.hg,*/.git,*/.svn
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
+
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest,*.pyc
+set wildignore+=*.sw?
+set wildignore+=.DS_Store
+
 set wildmenu
 set wildmode=longest:full,full
+
+set hidden
+set nobackup
+set nowritebackup
+set noswapfile
 
 " Set tabs to 2
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set noexpandtab
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 
 if (has("termguicolors"))
  set termguicolors
@@ -109,10 +121,10 @@ call plug#begin()
   Plug 'tjdevries/express_line.nvim'
 
   " Treesitter  
-  Plug 'nvim-treesitter/nvim-treesitter'
+  "Plug 'nvim-treesitter/nvim-treesitter'
 
   " Completion from treesitter
-  Plug 'nvim-treesitter/completion-treesitter'
+  "Plug 'nvim-treesitter/completion-treesitter'
   " Indent rules for python
   Plug 'vim-scripts/indentpython.vim'
 
@@ -165,6 +177,9 @@ call plug#begin()
   " Neovim Lua Development
   Plug 'tjdevries/nlua.nvim'
 
+	" Colorizer
+  Plug 'norcalli/nvim-colorizer.lua'
+
   " This is required for syntax highlighting
   Plug 'euclidianAce/BetterLua.vim'
 
@@ -194,6 +209,7 @@ call plug#begin()
   Plug 'junegunn/fzf.vim'
 call plug#end()
 
+lua require'init'
 " configure lsp
 lua require'lsp_config' 
 
@@ -205,6 +221,7 @@ colorscheme challenger_deep
 
 " Reload init.vim, this currently locks up nvim
 augroup ReloadNvim 
+  au!
   au BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
 augroup end
 
@@ -219,14 +236,14 @@ augroup end
 "
 
 " Open this file in a new tab
-nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim/" }<CR>
+nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim" }<CR>
 
 " Reload module using plenary
 nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("telescope")<CR>
 
 " Telescope binds 
 " nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files()<CR>
-nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files({ sorting_strategy = "ascending", preview_cutoff = 200,border = false, layout_strategy = "dropdown", prompt = "", width = 50,winblend = 3, results_title = "", border = false })<CR>
+nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files({ sorting_strategy = "ascending", preview_cutoff = 200,border = false, layout_strategy = "dropdown", prompt = "", width = 50,winblend = 3, results_title = "", borderchars = { '', '', '', '', '', '', '', ''} })<CR>
 
 " augroup TelescopeBindings
 "   autocmd!
@@ -266,6 +283,9 @@ silent! vunmap <Tab>
 silent! vunmap <S-Tab>
 vmap <special> <Tab>     >
 vmap <special> <S-Tab>   <
+
+" Save even if we forgot to open the file with sudo
+cmap w!! %!sudo tee > /dev/null %
 
 augroup LSPFormatting
   autocmd!

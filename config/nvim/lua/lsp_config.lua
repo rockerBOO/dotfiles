@@ -27,6 +27,10 @@ nvim_lsp.gopls.setup(default_lsp_config)
 nvim_lsp.cssls.setup(default_lsp_config)
 nvim_lsp.vimls.setup(default_lsp_config)
 nvim_lsp.bashls.setup(default_lsp_config)
-nvim_lsp.sumneko_lua.setup(default_lsp_config)
+
+-- nlua.lsp uses sumneko_lua
+-- nvim_lsp.sumneko_lua.setup(default_lsp_config)
+-- neovim lua lsp 
+require("nlua.lsp.nvim").setup(nvim_lsp, {on_attach = on_attach_vim})
 
 
