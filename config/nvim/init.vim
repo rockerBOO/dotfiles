@@ -19,10 +19,15 @@ set noexpandtab
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 
-" allow emojis
-scriptencoding utf-16
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+scriptencoding utf-16 " allow emojis
+
 " fix the emoji spacing for old vim
 set noemoji
+
 " does not work on neovim
 if !has('nvim')
   " treat emojis 😄  as full width characters
@@ -30,6 +35,14 @@ if !has('nvim')
 end
 
 
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+
+" Disable ale
 let g:ale_disable_lsp = 1
 
 " let g:ale_fixers = {
@@ -55,14 +68,14 @@ let g:ale_disable_lsp = 1
 
 " Configure the completion chains
 " let g:completion_chain_complete_list = {
-" 			\'default' : {
-" 			\	'default' : [
-" 			\		{'complete_items' : ['lsp', 'snippet']},
+"				\'default' : {
+"				\	'default' : [
+"				\		{'complete_items' : ['lsp', 'snippet']},
 "       \   {'complete_items' : ['buffer']},
-" 			\		{'mode' : 'file'}
-" 			\	],
-" 			\}
-" 			\}
+"				\		{'mode' : 'file'}
+"				\	],
+"				\}
+"				\}
 
 
 " ALE
@@ -72,7 +85,7 @@ let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_auto_popup_while_jump = 1
  
 call plug#begin()
- " Colors
+	" Colors
 	Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 	Plug 'haishanh/night-owl.vim'
 	Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
@@ -109,7 +122,7 @@ call plug#begin()
 	 " Elixir syntax rules
 	Plug 'elixir-editors/vim-elixir'
 	" Plug 'slashmili/alchemist.vim'
-  " Plug 'mhinz/vim-mix-format'
+	" Plug 'mhinz/vim-mix-format'
 	Plug 'moofish32/vim-ex_test'
 
 	" File tree
@@ -181,28 +194,19 @@ call plug#begin()
 	Plug 'junegunn/fzf.vim'
 call plug#end()
 
-if (has("termguicolors"))
- set termguicolors
-endif
+" configure lsp
+lua require'lsp_config' 
+
+" Setup colors
+color boo
 
 " colors
 colorscheme challenger_deep
-
-" Open this file in a new tab
-nnoremap <Leader>en :tabnew ~/.config/nvim/init.vim<CR>
-
-
 
 " Reload init.vim, this currently locks up nvim
 augroup ReloadNvim 
 	au BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
 augroup end
-
-
-"au FileType rust :lua require'nvim_lsp'.rust_analyzer.setup{on_attach=on_attach_vim}<CR>
-
-" configure lsp
-lua require'lsp_config' 
 
 augroup ShowInlayHints
   autocmd!
@@ -210,32 +214,29 @@ augroup ShowInlayHints
   autocmd InsertLeave,BufEnter,BufCreate,BufWinEnter,TabEnter,BufWritePost FileType rust :lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "NonText" }
 augroup end
 
-" nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("lsp_extensions")<CR>
+" Keybinds
+" =>>=>>=>>=>>=>>=>>=>>=>>=>>=>>
+"
+
+" Open this file in a new tab
+nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim/" }<CR>
+
+" Reload module using plenary
+nnoremap <Leader>asdf :lua require('plenary.reload').reload_module("telescope")<CR>
 
 " Telescope binds 
-nnoremap <Leader>f :lua GitFiles()<CR>
+" nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files()<CR>
+nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files({ sorting_strategy = "ascending", preview_cutoff = 200,border = false, layout_strategy = "dropdown", prompt = "", width = 50,winblend = 3, results_title = "", border = false })<CR>
+
 " augroup TelescopeBindings
-" 	autocmd!
-" 	autocmd FileType elixir,rust,javascript,typescript nnoremap ggr :lua LspWorkspaceSymbols()<CR>
+"		autocmd!
+"		autocmd FileType elixir,rust,javascript,typescript nnoremap ggr :lua LspWorkspaceSymbols()<CR>
 " augroup end
 nnoremap ggr :lua LspWorkspaceSymbols()<CR>
 
 nnoremap <Leader>P :lua require'telescope.builtin'.planets{}<CR>
 
-nnoremap <Leader>gr :lua LiveGrep()<CR>
-
-function! LspStatus() abort
-  if luaeval('#vim.lsp.buf_get_clients() > 0')
-    return luaeval("require('lsp-status').status()")
-  endif
-
-  return ''
-endfunction
-
-" Use deoplete.
-" let g:deoplete#enable_at_startup = 1
-
-syntax on
+nnoremap <Leader>lg :lua LiveGrep()<CR>
 
 " Set path to search all sub directories
 " set path+=**
@@ -256,30 +257,15 @@ inoremap jk <esc>
 inoremap <Up> <nop>
 inoremap <Down> <nop>
 
-
-" ----------------------------------------------------------------------------
 " Reselect visual block after indent
-" ----------------------------------------------------------------------------
-
 xnoremap  <   <gv
 xnoremap  >   >gv
 
-" ----------------------------------------------------------------------------
 " <Tab> indents in visual mode (recursive map to the above)
-" ----------------------------------------------------------------------------
-
 silent! vunmap <Tab>
 silent! vunmap <S-Tab>
 vmap <special> <Tab>     >
 vmap <special> <S-Tab>   <
-
-" set mouse=a
-
-augroup Prettier
-	autocmd!	
-	" Run Prettier on save
-	autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.md,*.json,*.graphql,*.vue,*.yaml,*.html Prettier
-augroup end
 
 augroup LSPFormatting
 	autocmd!
@@ -287,17 +273,12 @@ augroup LSPFormatting
 	autocmd BufWritePre *.ex,*.exs,*.py,*.rs lua vim.lsp.buf.formatting_sync({  trimTrailingWhitespace = true, tabSize = 2, insertFinalNewline = true }, 1000)
 augroup end
 
-augroup LuaFormatter
-	autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr>
-  "autocmd BufWrite *.lua call LuaFormat()
-augroup end
-
 " Setup omnifunc for LSP
-" autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 augroup TypescriptSyntax
 	" Setup typescript syntax
-	autocmd FileType typescript :set makeprg=tsc	
+	" autocmd FileType typescript :set makeprg=tsc	
 	
 	" set filetypes as typescript.tsx
 	autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
@@ -314,41 +295,42 @@ augroup end
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing message extra message when using completion
-set shortmess+=c
-
-"" diagnostic-nvim
+" diagnostic-nvim
 nnoremap <Leader>? :OpenDiagnostic<CR>
 nnoremap <Leader>k :PrevDiagnosticCycle<CR>
 nnoremap <Leader>j :NextDiagnosticCycle<CR>
 
 
+map <Leader>o :NERDTreeToggle<CR>
+
+" fzf file fuzzy search that respects .gitignore
+" If in git directory, show only files that are committed, staged, or unstaged
+" else use regular :Files
+nnoremap <expr> <Leader>p (len(system('git rev-parse')) > 0 ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
+
 " tsx highlighting
 " hi tsxTagName  ctermfg=blue
 " hi tsxComponentName ctermfg=yellow
 
-" ALE highlighting
-highlight ALEErrorSign ctermbg=NONE ctermfg=red
-highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+" " ALE highlighting
+" highlight ALEErrorSign ctermbg=NONE ctermfg=red
+" highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 
 
-" dark red
-hi tsxTagName ctermfg=red
-hi tsxComponentName ctermfg=red
-hi tsxCloseComponentName ctermfg=red
+" " dark red
+" hi tsxTagName ctermfg=red
+" hi tsxComponentName ctermfg=red
+" hi tsxCloseComponentName ctermfg=red
 
-" orange
-hi tsxCloseString ctermfg=cyan
-hi tsxCloseTag ctermfg=cyan
-hi tsxCloseTagName ctermfg=cyan
-hi tsxAttributeBraces ctermfg=cyan
-hi tsxEqual ctermfg=cyan
+" " orange
+" hi tsxCloseString ctermfg=cyan
+" hi tsxCloseTag ctermfg=cyan
+" hi tsxCloseTagName ctermfg=cyan
+" hi tsxAttributeBraces ctermfg=cyan
+" hi tsxEqual ctermfg=cyan
 
-" yellow
-hi tsxAttrib ctermfg=yellow cterm=italic
+" " yellow
+" hi tsxAttrib ctermfg=yellow cterm=italic
 
 " FILES
 " -->==>-->==>-->==>-->==>
@@ -374,25 +356,6 @@ nnoremap <Leader>q :q<CR>
 " Start append in insert mode
 inoremap <C-l> A<CR>
 
-augroup LSPCursor
-	autocmd!
-	autocmd CursorHold,CursorHoldI <buffer> :lua vim.lsp.buf.hover()
-augroup END
-
-" Setup default LSP keybinds
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gr    <cmd>lua require'telescope.builtin'.lsp_references{}<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> <Leader>re <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> <Leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
-
 augroup YankHighlight
 	" Highlight on yank
   autocmd! 
@@ -409,9 +372,3 @@ augroup end
 " endfunction
 " inoremap <Tab> <C-R>=CleverTab()<CR>
 
-map <Leader>o :NERDTreeToggle<CR>
-
-" fzf file fuzzy search that respects .gitignore
-" If in git directory, show only files that are committed, staged, or unstaged
-" else use regular :Files
-nnoremap <expr> <Leader>p (len(system('git rev-parse')) > 0 ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"

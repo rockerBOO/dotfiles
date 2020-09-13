@@ -1,0 +1,2 @@
+CompilerSet makeprg=tsc
+

@@ -42,4 +42,5 @@ Xft.antialias: 1
 Xft.rgba: rgb
 
 Xft.size: 16
-Xft.family: JetBrains Mono
+Xft.family: JetBrainsMono Nerd Font
+

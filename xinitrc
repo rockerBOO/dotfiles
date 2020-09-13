@@ -17,7 +17,11 @@ eval $(ssh-agent)
 # Setup terminal
 # $HOME/.config/alacritty/startup.sh
 
+# Start dwm slstatus
+~/.bin/dwm_status
 
+# Start redshift
+~/.bin/start_redshift
 
 # Start dwm
 exec dwm
