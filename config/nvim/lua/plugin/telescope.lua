@@ -1,5 +1,7 @@
+local telescope = require"telescope"
+
 -- Telescope defaults
-local telescope_config = {
+local config = {
   selection_strategy = "reset",
   shorten_path = true,
   layout_strategy = "flex",
@@ -9,17 +11,5 @@ local telescope_config = {
   winblend = 3,
 }
 
-require"telescope".setup(telescope_config)
-
-function FindFiles()
-  require"telescope.builtin".find_files(telescope_config)
-end
-
-function LspWorkspaceSymbols()
-  require"telescope.builtin".lsp_workspace_symbols()
-end
-
-function LiveGrep()
-  require"telescope.builtin".live_grep()
-end
+telescope.setup(config)
 

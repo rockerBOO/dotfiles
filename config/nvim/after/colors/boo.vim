@@ -3,23 +3,22 @@
 highlight ALEErrorSign ctermbg=NONE ctermfg=red
 highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 
-highlight link TelescopeResultsBorder NonText 
-highlight link TelescopePreviewBorder NonText
-highlight link TelescopePromptBorder NonText
+" Telescope
+highlight! link TelescopeBorder NonText 
 
 " dark red
-hi tsxTagName ctermfg=red
-hi tsxComponentName ctermfg=red
-hi tsxCloseComponentName ctermfg=red
+highlight tsxTagName ctermfg=red
+highlight tsxComponentName ctermfg=red
+highlight tsxCloseComponentName ctermfg=red
 
 " orange
-hi tsxCloseString ctermfg=cyan
-hi tsxCloseTag ctermfg=cyan
-hi tsxCloseTagName ctermfg=cyan
-hi tsxAttributeBraces ctermfg=cyan
-hi tsxEqual ctermfg=cyan
+highlight tsxCloseString ctermfg=cyan
+highlight tsxCloseTag ctermfg=cyan
+highlight tsxCloseTagName ctermfg=cyan
+highlight tsxAttributeBraces ctermfg=cyan
+highlight tsxEqual ctermfg=cyan
 
 " yellow
-hi tsxAttrib ctermfg=yellow cterm=italic
+highlight tsxAttrib ctermfg=yellow cterm=italic
 
 

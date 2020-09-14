@@ -1,3 +1,3 @@
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+autocmd BufNewFile,BufRead set filetype=typescript.tsx
 
-autocmd BufNewFile,BufReadPost *.ts setfiletype typescript.vim
+autocmd BufNewFile,BufReadPost setfiletype typescript.vim

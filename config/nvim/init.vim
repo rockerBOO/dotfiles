@@ -79,17 +79,16 @@ let g:prettier#autoformat_config_files = [".prettierrc.js"]
 " ALE
 " let g:ale_fix_on_save = 1
 
-" diagnostic-nvim
-let g:diagnostic_enable_virtual_text = 1
-let g:diagnostic_auto_popup_while_jump = 1
-
 call plug#begin()
   " Colors
   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
   Plug 'haishanh/night-owl.vim'
   Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
 
-  " Configure LSP test this
+	" Style css in styled-components
+  Plug 'styled-components/vim-styled-components'
+
+  " Configure LSP 
   Plug 'neovim/nvim-lsp'
 
   " LSP Diagnostics
@@ -190,10 +189,16 @@ call plug#begin()
 
   " Telescope fuzzy finder
   Plug 'nvim-lua/telescope.nvim'
+  
+  " Dashboard too many things I do not want right now
+  " Plug 'hardcoreplayers/dashboard-nvim'
 
   " Fuzzy finder
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
+
+  "Neomake
+  " Plug 'neomake/neomake'
 call plug#end()
 
 
@@ -205,7 +210,7 @@ color boo
 " colors
 colorscheme challenger_deep
 
-" Reload init.vim, this currently locks up nvim
+" Reload init.vim
 augroup ReloadNvim 
   au!
   au BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
@@ -215,10 +220,6 @@ augroup end
 
 " Keybinds
 " =>>=>>=>>=>>=>>=>>=>>=>>=>>=>>
-"
-
-" Set path to search all sub directories
-" set path+=**
 
 " Control panes without using <C-w>
 noremap <C-l> <C-w>l
@@ -241,8 +242,8 @@ xnoremap  <   <gv
 xnoremap  >   >gv
 
 " <Tab> indents in visual mode (recursive map to the above)
-silent! vunmap <Tab>
-silent! vunmap <S-Tab>
+" silent! vunmap <Tab>
+" silent! vunmap <S-Tab>
 vmap <special> <Tab>     >
 vmap <special> <S-Tab>   <
 
@@ -252,11 +253,11 @@ cmap w!! %!sudo tee > /dev/null %
 augroup LSPFormatting
   autocmd!
 " Format before writing
-  autocmd BufWritePre *.ex,*.exs,*.py,*.rs lua vim.lsp.buf.formatting_sync({  trimTrailingWhitespace = true, tabSize = 2, insertFinalNewline = true }, 1000)
+  autocmd BufWritePre *.ex,*.exs,*.py lua LSPFormat() 
 augroup end
 
 " Setup omnifunc for LSP
-autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+" autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 "" completion-nvim
 
@@ -267,15 +268,8 @@ autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-
-" fzf file fuzzy search that respects .gitignore
-" If in git directory, show only files that are committed, staged, or unstaged
-" else use regular :Files
-nnoremap <expr> <Leader>p (len(system('git rev-parse')) > 0 ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
-
 " Save file
 nnoremap <Leader>w :w<CR>
-"nnoremap <Leader>s :w<cr>
 " inoremap <Leader>s <C-c>:w<cr>
 
 " Quit file
