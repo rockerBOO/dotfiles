@@ -107,3 +107,5 @@ source $HOME/.config/private/keys
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias eg="cd ~/code/ecogarden/create"
+

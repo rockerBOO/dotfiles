@@ -1,12 +1,13 @@
 " telescope.nvim
 " ---
-
+" let g:telescope_cache_results = 1 
 
 " Open this file in a new tab
 nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim" }<CR>
 
 lua <<EOF
 function PlenaryReload()
+  require('plenary.reload').reload_module("telescope.themes")
   require('plenary.reload').reload_module("telescope")
   require('plenary.reload').reload_module("plenary")
 end
@@ -16,16 +17,14 @@ EOF
 nnoremap <Leader>asdf :lua PlenaryReload()<CR>
 
 " Telescope binds 
-nnoremap <Leader>f <cmd>lua require'telescope.builtin'.find_files()<CR>
-" nnoremap <Leader>f <cmd>:lua require'telescope.builtin'.find_files({ sorting_strategy = "ascending", preview_cutoff = 200,border = false, layout_strategy = "dropdown", prompt = "", width = 50,winblend = 3, results_title = "", borderchars = { '', '', '', '', '', '', '', ''} })<CR>
+nnoremap <Leader>f <cmd>lua FindFiles()<CR>
+nnoremap <Leader>gf :lua require'telescope.builtin'.git_files(require'telescope.themes'.get_dropdown())<CR>
+nnoremap <Leader>gg :lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim/plugged" }<CR>
 
-" augroup TelescopeBindings
-"   autocmd!
-"   autocmd FileType elixir,rust,javascript,typescript nnoremap ggr :lua LspWorkspaceSymbols()<CR>
-" augroup end
+" LSP
 nnoremap ggr :lua LspWorkspaceSymbols()<CR>
-
 nnoremap <Leader>P :lua require'telescope.builtin'.planets{}<CR>
 
-nnoremap <Leader>lg :lua LiveGrep()<CR>
+" Grep files
+nnoremap <Leader>gl :lua require'telescope.builtin'.live_grep{}<CR>
 

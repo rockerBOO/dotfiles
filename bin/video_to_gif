@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ "$#" -ne 2 ]; then
+	echo "Usage: video_to_gif video_file gif_file_output"
+	exit 2
+fi
+
+input=$1
+output=$2
+
+ffmpeg -ss 30 -t 3 -i $1 -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 $2

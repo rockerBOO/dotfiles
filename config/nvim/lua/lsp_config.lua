@@ -9,10 +9,12 @@ local nvim_lsp = require("nvim_lsp")
 
 --- Language servers
 local on_attach_vim = function(client)
+
   require"completion".on_attach(client)
   require"diagnostic".on_attach(client)
   -- status.on_attach(client)
 end
+
 
 local default_lsp_config = {on_attach = on_attach_vim}
 

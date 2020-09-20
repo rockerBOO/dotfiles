@@ -1,5 +1,8 @@
 let mapleader = "\<Space>"
 
+" No show modes twice with status bar
+set noshowmode
+
 " Default split to bottom, right
 set splitbelow
 set splitright
@@ -89,7 +92,7 @@ call plug#begin()
   Plug 'styled-components/vim-styled-components'
 
   " Configure LSP 
-  Plug 'neovim/nvim-lsp'
+  Plug 'neovim/nvim-lspconfig'
 
   " LSP Diagnostics
   Plug 'nvim-lua/diagnostic-nvim'
@@ -192,6 +195,9 @@ call plug#begin()
   
   " Dashboard too many things I do not want right now
   " Plug 'hardcoreplayers/dashboard-nvim'
+
+  Plug 'hrsh7th/vim-vsnip'
+  Plug 'hrsh7th/vim-vsnip-integ'
 
   " Fuzzy finder
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }

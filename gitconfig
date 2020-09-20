@@ -14,6 +14,10 @@
   branch = auto
   diff = auto
   status = auto
+[diff]
+	tool = nvimdiff 
+[difftool "nvimdiff"]
+	cmd = "nvim -d -u ~/.config/nvim/init.vim \"$LOCAL\" \"$REMOTE\""
 [help]
   autocorrect = 1
 [alias]
@@ -25,6 +29,12 @@
 	sync = !legit sync \"$@\"
 	publish = !legit publish \"$@\"
 	graft = !legit graft \"$@\"
+[merge]
+  tool = nvimdiff
+[mergetool]
+  prompt = true
+[mergetool "nvimdiff"]
+  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [delta]
   line-numbers = true
 	features = side-by-side line-numbers decorations
