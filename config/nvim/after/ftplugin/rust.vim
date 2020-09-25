@@ -1,4 +1,4 @@
-nnoremap <Leader>r :Dispatch cargo run --bin plant_game<CR>
+nnoremap <Leader>r :Dispatch cargo run<CR>
 nnoremap <Leader>t :Dispatch cargo test<CR>
 lua <<EOF
 function LSPExtensionsInlayHints()

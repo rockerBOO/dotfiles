@@ -56,6 +56,9 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
+" Handle tmux properly
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 " Disable ale
 let g:ale_disable_lsp = 1
@@ -66,10 +69,10 @@ let g:ale_disable_lsp = 1
 " \}
 
 " mix format
-"let g:mix_format_on_save = 1
+let g:mix_format_on_save = 1
 
 " rustfmt
-"let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 1
 
 " leafgarland/typescript-vim
 " let g:typescript_indent_disable = 1
@@ -110,10 +113,10 @@ call plug#begin()
   Plug 'tjdevries/express_line.nvim'
 
   " Treesitter  
-  "Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'nvim-treesitter/nvim-treesitter'
 
   " Completion from treesitter
-  "Plug 'nvim-treesitter/completion-treesitter'
+  Plug 'nvim-treesitter/completion-treesitter'
   " Indent rules for python
   Plug 'vim-scripts/indentpython.vim'
 
@@ -123,11 +126,11 @@ call plug#begin()
    " Elixir syntax rules
   Plug 'elixir-editors/vim-elixir'
   " Plug 'slashmili/alchemist.vim'
-  " Plug 'mhinz/vim-mix-format'
+  Plug 'mhinz/vim-mix-format'
   Plug 'moofish32/vim-ex_test'
 
   " File tree
-  Plug 'preservim/nerdtree'
+  " Plug 'preservim/nerdtree'
 
   " Git commands
   Plug 'tpope/vim-fugitive'
@@ -196,12 +199,17 @@ call plug#begin()
   " Dashboard too many things I do not want right now
   " Plug 'hardcoreplayers/dashboard-nvim'
 
+  " Nightfly colors
+  Plug 'bluz71/vim-nightfly-guicolors'
+  
   Plug 'hrsh7th/vim-vsnip'
   Plug 'hrsh7th/vim-vsnip-integ'
 
   " Fuzzy finder
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
+
+  Plug 'justinmk/vim-dirvish'
 
   "Neomake
   " Plug 'neomake/neomake'
@@ -214,15 +222,13 @@ lua require'init'
 color boo
 
 " colors
-colorscheme challenger_deep
+colorscheme nightfly 
 
 " Reload init.vim
 augroup ReloadNvim 
   au!
   au BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
 augroup end
-
-
 
 " Keybinds
 " =>>=>>=>>=>>=>>=>>=>>=>>=>>=>>
@@ -256,14 +262,10 @@ vmap <special> <S-Tab>   <
 " Save even if we forgot to open the file with sudo
 cmap w!! %!sudo tee > /dev/null %
 
-augroup LSPFormatting
-  autocmd!
-" Format before writing
-  autocmd BufWritePre *.ex,*.exs,*.py lua LSPFormat() 
-augroup end
+
 
 " Setup omnifunc for LSP
-" autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 "" completion-nvim
 

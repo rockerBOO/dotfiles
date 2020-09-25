@@ -1,2 +1,2 @@
-map <Leader>o :NERDTreeToggle<CR>
+"map <Leader>o :NERDTreeToggle<CR>
 
