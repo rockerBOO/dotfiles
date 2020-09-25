@@ -1,3 +1,7 @@
+; spotifyd.service as a user service. 
+; https://github.com/Spotifyd/spotifyd/pull/600/
+;
+
 [Unit]
 Description=A spotify playing daemon
 Documentation=https://github.com/Spotifyd/spotifyd
