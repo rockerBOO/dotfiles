@@ -20,6 +20,7 @@ local default_lsp_config = {on_attach = on_attach_vim}
 
 nvim_lsp.elixirls.setup(default_lsp_config)
 nvim_lsp.rust_analyzer.setup(default_lsp_config)
+-- nvim_lsp.rome.setup(default_lsp_config)
 nvim_lsp.tsserver.setup(default_lsp_config)
 nvim_lsp.pyls.setup(default_lsp_config)
 nvim_lsp.gopls.setup(default_lsp_config)

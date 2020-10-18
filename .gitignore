@@ -2,3 +2,6 @@
 
 /config/nvim/plugged/
 /config/nvim/rplugin/
+
+/bin/exercism
+/bin/pob

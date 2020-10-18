@@ -7,7 +7,7 @@ export PATH=$HOME/.local/share/npm/bin/:$PATH
 export PATH=$HOME/.gem/ruby/2.7.0/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
-
+export PATH=$HOME/.yarn/bin:$PATH
 
 export EDITOR="nvim"
 export VISUAL="nvim"

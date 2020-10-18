@@ -85,9 +85,9 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 # Starship https://starship.rs/
@@ -95,6 +95,7 @@ eval "$(starship init zsh)"
 
 # Add API keys
 source $HOME/.config/private/keys
+source $HOME/.config/keys/reddit
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"

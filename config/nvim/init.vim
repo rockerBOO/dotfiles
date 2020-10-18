@@ -182,7 +182,7 @@ call plug#begin()
   Plug 'ThePrimeagen/vim-be-good',
 
   " ES Linting
-  "Plug 'dense-analysis/ale'
+  Plug 'dense-analysis/ale'
 
   Plug 'andrejlevkovitch/vim-lua-format'
 
@@ -195,7 +195,9 @@ call plug#begin()
 
   " Telescope fuzzy finder
   Plug 'nvim-lua/telescope.nvim'
-  
+
+  Plug 'kyazdani42/nvim-web-devicons'
+
   " Dashboard too many things I do not want right now
   " Plug 'hardcoreplayers/dashboard-nvim'
 
@@ -259,13 +261,27 @@ xnoremap  >   >gv
 vmap <special> <Tab>     >
 vmap <special> <S-Tab>   <
 
-" Save even if we forgot to open the file with sudo
-cmap w!! %!sudo tee > /dev/null %
 
+" syntax match Repeat "loop" conceal cchar=∞
 
+" CONCEAL
+" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+function! ToggleConcealLevel()
+    if &conceallevel == 0
+        setlocal conceallevel=2
+    else
+        setlocal conceallevel=0
+    endif
+endfunction
+
+nnoremap <silent> <C-c><C-y> :call ToggleConcealLevel()<CR>
+
+" COMPLETION
+" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 " Setup omnifunc for LSP
-autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+autocmd Filetype elixir,python,javascript,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 "" completion-nvim
 
@@ -276,9 +292,15 @@ autocmd Filetype elixir,python,javascript,ts,typescript,rust setlocal omnifunc=v
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" FILES
+" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 " Save file
 nnoremap <Leader>w :w<CR>
 " inoremap <Leader>s <C-c>:w<cr>
+
+" Save even if we forgot to open the file with sudo
+cmap w!! %!sudo tee > /dev/null %
 
 " Quit file
 nnoremap <Leader>q :q<CR>

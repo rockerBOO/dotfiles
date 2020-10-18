@@ -1,28 +1,22 @@
--- local telescope = require "telescope"
+local telescope = require "telescope"
 local themes = require "telescope.themes"
+
 -- Telescope defaults
--- local config = {
---   selection_strategy = "reset",
---   shorten_path = true,
---   layout_strategy = "flex",
---   prompt_position = "top",
---   sorting_strategy = "ascending",
---   preview_cutoff = 1,
---   winblend = 3,
--- }
+local telescope_config = {
+  selection_strategy = "reset",
+  shorten_path = true,
+  layout_strategy = "flex",
+  prompt_position = "top",
+  sorting_strategy = "ascending",
+  winblend = 3,
+  prompt_prefix = "※",
+  width = 0.8
+}
 
--- telescope.setup(config)
-
+telescope.setup({ defaults = telescope_config })
 
 function FindFiles()
-  local theme = themes.get_dropdown{ winblend = 10 }
+  require('plenary.reload').reload_module('telescope')
+  local theme = themes.get_dropdown{ winblend = 10, results_height = 10 }
   require"telescope.builtin".find_files(theme)
-
-
-  -- require"telescope.builtin".find_files {
-  --   sorting_strategy = "ascending",
-  --   preview_cutoff = 200,
-  --   layout_strategy = "center",
-  --   winblend = 3,
-  -- }
 end

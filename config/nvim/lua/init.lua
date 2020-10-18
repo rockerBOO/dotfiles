@@ -33,10 +33,10 @@ require("el").setup {
       sections.split,
       lsp_statusline.current_function,
       lsp_statusline.server_progress,
-      subscribe.buf_autocmd("el_git_changes", "BufWritePost", function(window, buffer)
-        return extensions.git_changes(window, buffer)
-      end),
-      "",
+      -- subscribe.buf_autocmd("el_git_changes", "BufWritePost", function(window, buffer)
+      --   return extensions.git_changes(window, buffer)
+      -- end),
+      -- "",
       builtin.line,
       ",",
       builtin.column,

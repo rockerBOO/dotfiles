@@ -18,3 +18,5 @@ nnoremap <silent> <Leader>re <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> <Leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> <c-]>      <cmd>lua vim.lsp.buf.declaration()<CR>
 
+
+nnoremap <silent> <Leader>di <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>

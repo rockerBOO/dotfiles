@@ -5,6 +5,14 @@ highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 
 " Telescope
 highlight! link TelescopeBorder NonText 
+highlight! link TelescopeSelection SpellRare
+highlight! link TelescopeSelectionCaret Error 
+
+highlight! TelescopeMatching ctermfg=cyan ctermbg=black 
+
+highlight MyTelescopeNormal ctermfg=cyan ctermbg=red
+
+highlight! link TelescopeNormal MyTelescopeNormal 
 
 " dark red
 highlight tsxTagName ctermfg=red
