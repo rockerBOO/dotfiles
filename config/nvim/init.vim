@@ -98,7 +98,7 @@ call plug#begin()
   Plug 'neovim/nvim-lspconfig'
 
   " LSP Diagnostics
-  Plug 'nvim-lua/diagnostic-nvim'
+  " Plunvim-lua/diagnostic-nvim'
 
   " LSP/Treesitter completion
   Plug 'nvim-lua/completion-nvim'

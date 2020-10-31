@@ -11,7 +11,7 @@ local nvim_lsp = require("nvim_lsp")
 local on_attach_vim = function(client)
 
   require"completion".on_attach(client)
-  require"diagnostic".on_attach(client)
+  -- require"diagnostic".on_attach(client)
   -- status.on_attach(client)
 end
 
