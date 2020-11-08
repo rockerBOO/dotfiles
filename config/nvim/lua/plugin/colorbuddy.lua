@@ -21,52 +21,90 @@ function M:colors()
     "#d9d6cf",
   }
 
-  for i, color in ipairs(themeColors) do Color.new("cloud" .. i-1, color) end
+  for i, color in ipairs(themeColors) do Color.new("cloud" .. i - 1, color) end
 
   Color.new("fg", "#e4dcec")
   Color.new("bg", "#111113")
 
   Group.new("Normal", c.fg, c.bg)
 
+  -- Conceal
   Group.new("Conceal", c.cloud3:light(), c.none)
-  Group.new("VertSplit", c.cloud3, c.none)
+
+  Group.new("VertSplit", c.cloud0, c.none)
 
   Group.new("Function", c.cloud8, c.none, styles.bold)
+
   Group.new("Error", c.cloud9, c.none, styles.bold)
-  Group.new("ErrorMsg", c.cloud1, c.cloud9, styles.bold)
-  Group.new("WarningMsg", c.cloud5, c.cloud12, styles.bold)
-  Group.new("Boolean", c.cloud9, c.none, styles.NONE)
-  Group.new("Character", c.cloud14, c.none, styles.NONE)
-  Group.new("Comment", c.cloud3:light(), c.none, styles.NONE)
-  Group.new("Conditional", c.cloud9, c.none, styles.NONE)
-  Group.new("Constant", c.cloud4, c.none, styles.NONE)
-  Group.new("Define", c.cloud9, c.none, styles.NONE)
-  Group.new("Delimiter", c.cloud6, c.none, styles.NONE)
+  Group.new("ErrorMsg", c.cloud1:light():light(), c.cloud9:dark():saturate(.1), styles.bold)
+
+  Group.new("WarningMsg", c.cloud5, c.cloud12)
   Group.new("Exception", c.cloud9, c.none, styles.NONE)
-  Group.new("Float", c.cloud15, c.none, styles.NONE)
-  Group.new("Function", c.cloud8, c.none, styles.NONE)
-  Group.new("Identifier", c.cloud4, c.none, styles.NONE)
-  Group.new("Include", c.cloud9, c.none, styles.NONE)
-  Group.new("Keyword", c.cloud9, c.none, styles.italic)
-  Group.new("Label", c.cloud9, c.none, styles.italic)
+
+  Group.new("Boolean", c.cloud10, c.none, styles.NONE)
+  Group.new("Character", c.cloud14, c.none, styles.NONE)
+  Group.new("Comment", c.cloud3:dark(), c.bg:light(.04), styles.NONE)
+  Group.new("Conditional", c.cloud10, c.none, styles.NONE)
+  Group.new("Constant", c.cloud4, c.none, styles.NONE)
+
+  Group.new("Underlined", c.none, c.none, styles.italic)
+
+  Group.new("Float", c.cloud4, c.none, styles.NONE)
+
+  -- Search
+  Group.new("IncSearch", c.cloud10)
+  Group.new("Search", c.cloud10, c.cloud10:dark():dark():dark():dark())
+
+  -- Numbers
   Group.new("Number", c.cloud15, c.none, styles.NONE)
-  Group.new("Operator", c.cloud9, c.none, styles.NONE)
-  Group.new("PreProc", c.cloud9, c.none, styles.NONE)
-  Group.new("Repeat", c.cloud9, c.none, styles.NONE)
-  Group.new("Special", c.cloud4, c.none, styles.NONE)
-  Group.new("SpecialChar", c.cloud13, c.none, styles.NONE)
-  Group.new("SpecialComment", c.cloud8, c.none, styles.NONE)
-  Group.new("Statement", c.cloud9, c.none, styles.NONE)
-  Group.new("StorageClass", c.cloud9, c.none, styles.NONE)
+
+  Group.new("Define", c.cloud10, c.none, styles.NONE)
+
+  Group.new("Delimiter", c.cloud6, c.none, styles.NONE)
+
+  Group.new("Directory", c.cloud4)
+
+  Group.new("Function", c.cloud8)
+
+  -- Folds
+  Group.new("Folded", c.cloud0)
+  Group.new("FoldColumn", c.cloud0:light())
+
+  -- Diff
+  Group.new("DiffAdd", c.none, c.cloud10)
+  Group.new("DiffChange", c.none, c.cloud12)
+  Group.new("DiffDelete", c.none, c.cloud9)
+  Group.new("DiffText", c.none, c.cloud3)
+
+  Group.new("Identifier", c.cloud4, c.none, styles.NONE)
+  Group.new("Include", c.cloud10, c.none, styles.NONE)
+
+  Group.new("Keyword", c.cloud11, c.none, styles.italic)
+
+  Group.new("Label", c.cloud10, c.none, styles.italic)
+
+  Group.new("Operator", c.cloud12:dark(), c.none, styles.NONE)
+
+  Group.new("PreProc", c.cloud10, c.none, styles.NONE)
+
+  Group.new("Repeat", c.cloud12:dark(), c.none, styles.NONE)
+
+  Group.new("Statement", c.cloud10, c.none, styles.NONE)
+  Group.new("StorageClass", c.cloud10, c.none, styles.NONE)
   Group.new("String", c.cloud14, c.none, styles.NONE)
-  Group.new("Structure", c.cloud9, c.none, styles.NONE)
+  Group.new("Structure", c.cloud10, c.none, styles.NONE)
   Group.new("Tag", c.cloud4, c.none, styles.NONE)
+
   Group.new("Title", c.cloud4, c.none)
+
   Group.new("Todo", c.cloud13, c.none, styles.NONE)
-  Group.new("Type", c.cloud9, c.none, styles.italic)
-  Group.new("Typedef", c.cloud9, c.none, styles.NONE)
+
+  Group.new("Type", c.cloud10:light(), c.none, styles.italic)
+  Group.new("Typedef", c.cloud10, c.none, styles.NONE)
+
+  -- Side Column
   Group.new("CursorColumn", c.cloud1, c.none, styles.NONE)
-  Group.new("LineNr", c.cloud9, c.none, styles.NONE)
+  Group.new("LineNr", c.cloud10, c.none, styles.NONE)
   Group.new("CursorLineNr", c.cloud5, c.none, styles.NONE)
   Group.new("Line", c.cloud12, c.none, styles.bold)
   Group.new("SignColumn", c.none, c.none, styles.NONE)
@@ -75,21 +113,106 @@ function M:colors()
   Group.new("Cursor", c.cloud0, c.cloud4)
   Group.new("CursorLine", c.none, c.cloud0)
   Group.new("iCursor", c.cloud0, c.cloud4)
-  Group.new("EndOfBuffer", c.none, c.none)
-  Group.new("MatchParen", c.cloud8, c.cloud3)
-  Group.new("NonText", c.none, c.none)
-  Group.new("PMenu", c.cloud4, c.cloud2)
+
+  Group.new("EndOfBuffer", c.cloud3, c.none)
+
+  Group.new("MatchParen", c.none, c.cloud13:dark())
+  Group.new("NonText", c.bg:light(), c.none)
+
+  -- Popup Menu
+  Group.new("PMenu", c.cloud4, c.cloud0)
   Group.new("PmenuSbar", c.cloud4, c.cloud2)
-  Group.new("PMenuSel", c.cloud6, c.cloud9)
+  Group.new("PMenuSel", c.cloud10, c.cloud0)
   Group.new("PmenuThumb", c.cloud8, c.cloud3)
-  Group.new("SpecialKey", c.cloud3, c.cloud3)
-  Group.new("SpellBad", c.cloud11, c.cloud0)
-  Group.new("SpellCap", c.cloud13, c.cloud0)
-  Group.new("SpellLocal", c.cloud5, c.cloud0)
-  Group.new("SpellRare", c.cloud6, c.cloud0)
-  Group.new("Visual", c.cloud4, c.cloud9)
+
+  -- Special
+  Group.new("Special", c.cloud4, c.none, styles.NONE)
+  Group.new("SpecialChar", c.cloud13, c.none, styles.NONE)
+  Group.new("SpecialKey", c.cloud13)
+  Group.new("SpecialComment", c.cloud8, c.none, styles.NONE)
+
+  -- Spell
+  Group.new("SpellBad", c.cloud11, c.none)
+  Group.new("SpellCap", c.cloud13, c.none)
+  Group.new("SpellLocal", c.cloud5, c.none)
+  Group.new("SpellRare", c.cloud6, c.none)
+
+  -- Statusline
+  Group.new("StatusLine", c.cloud4, c.cloud10)
+  Group.new("StatusLineNC", c.cloud4, c.cloud10)
+
+  -- Tabline
+  Group.new("TabLine", c.cloud2, c.cloud8:dark())
+  Group.new("TabLineSel", c.cloud2, c.cloud10)
+  Group.new("TabLineFill", c.cloud2, c.cloud0:dark())
+
+  Group.new("Question", c.cloud10, c.none, styles.bold)
+
+  -- Visual
+  Group.new("Visual", c.cloud4, c.cloud13:dark())
   Group.new("VisualNOS", c.cloud2, c.cloud1)
 
+  M:lsp()
+  M:ale()
+  M:typescript()
+  M:markdown()
+end
+
+function M:lsp()
+  Group.new("LspDiagnosticsDefaultHint", c.cloud13:saturate(.05):light(), c.cloud13:dark(.9))
+  Group.new("LspDiagnosticsDefaultError", c.cloud1, c.cloud9:dark():saturate(.1))
+  Group.new("LspDiagnosticsDefaultWarning", c.cloud6)
+  Group.new("LspDiagnosticsDefaultInformation", c.fg)
+end
+
+function M:ale()
+  -- Clear ALEWarning
+  -- Clear ALEError
+  vim.cmd("highlight clear ALEWarning")
+  vim.cmd("highlight clear ALEError")
+end
+
+function M:typescript()
+  -- Group.new("typescriptbraces", c.cloud14:dark())
+
+  -- tsx
+  Group.new("tsxJsBlock", c.cloud4)
+  Group.new("typescriptTypeAnnotation", c.cloud8)
+  Group.new("typescriptAliasDeclaration", c.cloud8)
+  Group.new("typescriptObjectLiteral", c.cloud8)
+  Group.new("typescriptBinaryOp", c.cloud8)
+  Group.new("typescriptParenExp", c.cloud8)
+  Group.new("tsxclosetag", c.cloud8)
+  Group.new("typescriptParens", c.cloud8)
+  Group.new("tsxelseoperator", c.cloud10:dark(.2))
+  Group.new("typescriptParenthesizedType", c.cloud10:dark(.2))
+end
+
+function M:markdown()
+  Group.new("markdownh1", c.cloud6:light():saturate(.7), c.cloud0:dark(), styles.bold)
+  Group.new("markdownh2", c.cloud6:saturate(.7), c.cloud0:dark(), styles.bold)
+  Group.new("markdownh3", c.cloud6:dark(), c.cloud0:dark(), styles.bold)
+  Group.new("markdownh4", c.cloud6:dark(), c.cloud0:dark(), styles.bold)
+  Group.new("markdownh5", c.cloud6:dark(), c.cloud0:dark(), styles.bold)
+
+  local delimiters = {
+    "markdownH1Delimiter",
+    "markdownH2Delimiter",
+    "markdownH3Delimiter",
+    "markdownH4Delimiter",
+    "markdownH5Delimiter",
+    "markdownH6Delimiter",
+  }
+
+  for _, delimiter in ipairs(delimiters) do Group.new(delimiter, c.cloud6:dark(), c.cloud0:dark()) end
+
+  Group.new("markdownCodeDelimiter", c.cloud8:dark(), c.cloud0:dark(.1))
+  Group.new("markdownCode", c.cloud4, c.cloud0:dark(.1))
+  Group.new("markdownUrl", c.cloud14)
+  Group.new("markdownLinkText", c.cloud10)
+
+  Group.new("markdownLinkTextDelimiter", c.cloud8)
+  Group.new("markdownLinkDelimiter", c.cloud8)
 end
 
 function M:treesitter()
@@ -103,17 +226,29 @@ function M:treesitter()
 
   local boolean = {"TSBoolean"}
 
+  local functions = {"TSFunction", "TSFuncBuiltin", "TSFuncMacro"}
+
+  local methods = {"TSMethod"}
+
+  local fields = {"TSField", "TSProperty"}
+
   local number = {"TSNumber", "TSFloat"}
 
   local parameters = {"TSParameter", "TSParameterReference"}
 
   local operators = {"TSOperator"}
 
-  local keywords = {"TSConditional", "TSRepeat"}
+  local forwords = {"TSConditional", "TSRepeat"}
 
   local keyword = {"TSKeyword", "TSKeywordOperator"}
 
+  local types = {"TSType", "TSTypeBuiltin"}
+
   local labels = {"TSLabel"}
+
+  local namespaces = {"TSNamespace"}
+
+  local includes = {"TSInclude"}
 
   local variables = {"TSVariable", "TSVariableBuiltin"}
 
@@ -130,18 +265,24 @@ function M:treesitter()
   }
 
   local groups = {
-    {error, c.cloud9, c.cloud1},
-    {punctuation, c.cloud4:light():light()},
+    {error, c.cloud1:light(), c.cloud9:dark(.5)},
+    {punctuation, c.cloud3:dark():dark()},
     {constants, c.cloud5:light()},
-    {string, c.cloud10:light()},
+    {string, c.cloud10:light():light():saturate(.25)},
     {boolean, c.cloud2:light()},
+    {functions, c.cloud8:light(.1)},
+    {methods, c.cloud8:light(.2)},
+    {fields, c.cloud8},
     {number, c.cloud6:light()},
-    {parameters, c.cloud6, c.cloud12},
-    {operators, c.cloud3:dark()},
-    {keywords, c.cloud4:light()},
-    {keyword, c.cloud4:light()},
+    {parameters, c.cloud6:dark()},
+    {operators, c.cloud3:dark():dark()},
+    {forwords, c.cloud8:saturate(.1):light(), c.none},
+    {keyword, c.cloud4, c.none, styles.bold + styles.italic},
+    {types, c.cloud10},
+    {includes, c.cloud10},
     {labels, c.cloud4:light()},
-    {variables, c.cloud12:light():light()},
+    {namespaces, c.cloud4},
+    {variables, c.cloud6},
     {text, c.fg},
   }
 
@@ -149,6 +290,16 @@ function M:treesitter()
   for _, group in ipairs(groups) do
     for _, color in ipairs(group[1]) do Group.new(color, group[2], group[3], group[4]) end
   end
+
+  -- Group.new("TSPunctBracket", c.blue)
+  Group.new("TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1))
+  Group.new("TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold)
+
+  Group.new("TSTypeBuiltin", c.cloud10, c.none, styles.bold)
+  Group.new("TSFuncBuiltin", c.cloud8:light(.1), c.none, styles.bold)
+
+  -- Group.new("TSTitle", c.cloud4)
+  -- Group.new("TSStrong", c.cloud4, c.none, styles.bold)
 end
 
 return M

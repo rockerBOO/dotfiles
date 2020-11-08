@@ -158,7 +158,7 @@ call plug#begin()
   Plug 'tpope/vim-commentary'
 
   " Typescript
-  Plug 'leafgarland/typescript-vim'
+  " Plug 'leafgarland/typescript-vim'
 
   " JSX/TSX syntax 
   Plug 'peitalin/vim-jsx-typescript'
@@ -327,3 +327,6 @@ augroup end
 " endfunction
 " inoremap <Tab> <C-R>=CleverTab()<CR>
 
+map <leader>hi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
