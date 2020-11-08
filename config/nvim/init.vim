@@ -35,7 +35,9 @@ set noexpandtab
 " set foldexpr=nvim_treesitter#foldexpr()
 
 if (has("termguicolors"))
- set termguicolors
+	let g:nvcode_termcolors=256
+  set termguicolors
+  hi LineNr ctermbg=NONE guibg=NONE
 endif
 
 scriptencoding utf-16 " allow emojis
@@ -77,11 +79,6 @@ let g:rustfmt_autosave = 1
 " leafgarland/typescript-vim
 " let g:typescript_indent_disable = 1
 
-" prettier
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_config_present = 1
-let g:prettier#autoformat_config_files = [".prettierrc.js"]
-
 " ALE
 " let g:ale_fix_on_save = 1
 
@@ -89,7 +86,9 @@ call plug#begin()
   " Colors
   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
   Plug 'haishanh/night-owl.vim'
-  Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
+  " Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
+  Plug 'bluz71/vim-moonfly-colors'
+  Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
 
 	" Style css in styled-components
   Plug 'styled-components/vim-styled-components'
@@ -117,6 +116,7 @@ call plug#begin()
 
   " Completion from treesitter
   Plug 'nvim-treesitter/completion-treesitter'
+
   " Indent rules for python
   Plug 'vim-scripts/indentpython.vim'
 
@@ -178,6 +178,8 @@ call plug#begin()
   " LSP Extensions
   Plug 'tjdevries/lsp_extensions.nvim'
 
+  Plug 'tjdevries/colorbuddy.nvim'
+
   " Some stupid thing
   Plug 'ThePrimeagen/vim-be-good',
 
@@ -187,8 +189,9 @@ call plug#begin()
   Plug 'andrejlevkovitch/vim-lua-format'
 
   " JS/TS/HTML formatter
-  Plug 'prettier/vim-prettier'
-
+	Plug 'prettier/vim-prettier', {
+		\ 'do': 'yarn install',
+		\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
@@ -224,7 +227,7 @@ lua require'init'
 color boo
 
 " colors
-colorscheme nightfly 
+" colorscheme snazzy
 
 " Reload init.vim
 augroup ReloadNvim 

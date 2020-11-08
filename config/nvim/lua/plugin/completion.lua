@@ -5,6 +5,10 @@ vim.g.completion_chain_complete_list = {
       {complete_items = {"lsp", "snippet"}},
       {complete_items = {"buffer"}},
     },
+    typescript = { 
+      {complete_items = {'lsp', 'snippet', 'ts'}},
+      {complete_items = {"buffer"}}
+    }
   },
 }
 

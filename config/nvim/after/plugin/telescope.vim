@@ -10,6 +10,7 @@ function PlenaryReload()
   require('plenary.reload').reload_module("telescope.themes")
   require('plenary.reload').reload_module("telescope")
   require('plenary.reload').reload_module("plenary")
+  require'plenary.reload'.reload_module('plugin.colorbuddy')
 end
 EOF
 
