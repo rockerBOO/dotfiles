@@ -158,7 +158,7 @@ call plug#begin()
   Plug 'tpope/vim-commentary'
 
   " Typescript
-  " Plug 'leafgarland/typescript-vim'
+  Plug 'leafgarland/typescript-vim'
 
   " JSX/TSX syntax 
   Plug 'peitalin/vim-jsx-typescript'

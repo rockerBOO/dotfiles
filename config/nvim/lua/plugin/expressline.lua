@@ -1,10 +1,9 @@
-
 -- Express Line
-local builtin = require('el.builtin')
-local extensions = require('el.extensions')
-local sections = require('el.sections')
-local subscribe = require('el.subscribe')
-local lsp_statusline = require('el.plugins.lsp_status')
+local builtin = require("el.builtin")
+local extensions = require("el.extensions")
+local sections = require("el.sections")
+local subscribe = require("el.subscribe")
+local lsp_statusline = require("el.plugins.lsp_status")
 
 require("el").setup {
   generator = function(win_id)
@@ -31,10 +30,9 @@ require("el").setup {
       builtin.column,
       " ",
       sections.collapse_builtin {"", builtin.help_list, builtin.readonly_list, ""},
-      function(_, buffer) 
+      function(_, buffer)
         return buffer.filetype
-      end
+      end,
     }
   end,
 }
-

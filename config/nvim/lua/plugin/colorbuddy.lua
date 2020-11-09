@@ -1,3 +1,7 @@
+-- Colorscheme using colorbuddy
+-- with Treesitter, Typescript, LSP supported
+-- colors from colorsx cloud (defunct website)
+--
 local Color, c, Group = require"colorbuddy".setup()
 local M = {}
 
@@ -26,7 +30,7 @@ function M:colors()
   Color.new("fg", "#e4dcec")
   Color.new("bg", "#111113")
 
-  Group.new("Normal", c.fg, c.bg)
+  Group.new("Normal", c.fg:dark(.01), c.bg:light(.01))
 
   -- Conceal
   Group.new("Conceal", c.cloud3:light(), c.none)
@@ -38,10 +42,10 @@ function M:colors()
   Group.new("Error", c.cloud9, c.none, styles.bold)
   Group.new("ErrorMsg", c.cloud1:light():light(), c.cloud9:dark():saturate(.1), styles.bold)
 
-  Group.new("WarningMsg", c.cloud5, c.cloud12)
+  Group.new("WarningMsg", c.cloud4:light(.3), c.cloud12:dark(.3))
   Group.new("Exception", c.cloud9, c.none, styles.NONE)
 
-  Group.new("Boolean", c.cloud10, c.none, styles.NONE)
+  Group.new("Boolean", c.cloud2:dark(), c.none, styles.NONE)
   Group.new("Character", c.cloud14, c.none, styles.NONE)
   Group.new("Comment", c.cloud3:dark(), c.bg:light(.04), styles.NONE)
   Group.new("Conditional", c.cloud10, c.none, styles.NONE)
@@ -52,8 +56,8 @@ function M:colors()
   Group.new("Float", c.cloud4, c.none, styles.NONE)
 
   -- Search
-  Group.new("IncSearch", c.cloud10)
-  Group.new("Search", c.cloud10, c.cloud10:dark():dark():dark():dark())
+  Group.new("IncSearch", c.cloud10:light(), c.cloud10:dark(.5), styles.italic)
+  Group.new("Search", c.cloud10, c.cloud10:dark(.8))
 
   -- Numbers
   Group.new("Number", c.cloud15, c.none, styles.NONE)
@@ -67,8 +71,8 @@ function M:colors()
   Group.new("Function", c.cloud8)
 
   -- Folds
-  Group.new("Folded", c.cloud0)
-  Group.new("FoldColumn", c.cloud0:light())
+  Group.new("Folded", c.cloud4:dark(.1))
+  Group.new("FoldColumn", c.cloud4:light())
 
   -- Diff
   Group.new("DiffAdd", c.none, c.cloud10)
@@ -76,10 +80,10 @@ function M:colors()
   Group.new("DiffDelete", c.none, c.cloud9)
   Group.new("DiffText", c.none, c.cloud3)
 
-  Group.new("Identifier", c.cloud4, c.none, styles.NONE)
+  Group.new("Identifier", c.cloud2, c.none, styles.NONE)
   Group.new("Include", c.cloud10, c.none, styles.NONE)
 
-  Group.new("Keyword", c.cloud11, c.none, styles.italic)
+  Group.new("Keyword", c.cloud4, c.none, styles.italic)
 
   Group.new("Label", c.cloud10, c.none, styles.italic)
 
@@ -138,24 +142,44 @@ function M:colors()
   Group.new("SpellRare", c.cloud6, c.none)
 
   -- Statusline
-  Group.new("StatusLine", c.cloud4, c.cloud10)
-  Group.new("StatusLineNC", c.cloud4, c.cloud10)
+  Group.new("StatusLine", c.cloud10, c.cloud8:dark(.2))
+  Group.new("StatusLineNC", c.cloud4, c.cloud8:dark(.3))
 
   -- Tabline
-  Group.new("TabLine", c.cloud2, c.cloud8:dark())
-  Group.new("TabLineSel", c.cloud2, c.cloud10)
+  Group.new("TabLine", c.cloud2, c.cloud0:dark())
+  Group.new("TabLineSel", c.cloud10:light(), c.cloud13, styles.bold)
   Group.new("TabLineFill", c.cloud2, c.cloud0:dark())
 
   Group.new("Question", c.cloud10, c.none, styles.bold)
 
   -- Visual
-  Group.new("Visual", c.cloud4, c.cloud13:dark())
+  Group.new("Visual", c.cloud10, c.cloud13:dark(.2))
   Group.new("VisualNOS", c.cloud2, c.cloud1)
 
   M:lsp()
   M:ale()
   M:typescript()
   M:markdown()
+  M:vim()
+end
+
+function M:vim()
+  Group.new("vimcommand", c.cloud4)
+  Group.new("vimmap", c.cloud4)
+  Group.new("vimbracket", c.cloud10)
+  Group.new("vimmapmodkey", c.cloud6)
+  Group.new("vimnotation", c.cloud6)
+  Group.new("vimmaplhs", c.cloud10)
+  Group.new("vimiscommand", c.cloud10:light())
+  Group.new("vimFilter", c.cloud7)
+  Group.new("vimMapRhs", c.cloud15:dark(.1))
+  Group.new("vimMapRhsExtend", c.cloud15:dark(.1))
+
+  Group.new("vimlet", c.cloud4:dark())
+  Group.new("vimnotfunc", c.cloud4:dark())
+  Group.new("vimAutoCmdSfxList", c.cloud6)
+  Group.new("vimUserFunc", c.cloud10)
+  Group.new("vimSetEqual", c.cloud6)
 end
 
 function M:lsp()
@@ -177,15 +201,48 @@ function M:typescript()
 
   -- tsx
   Group.new("tsxJsBlock", c.cloud4)
-  Group.new("typescriptTypeAnnotation", c.cloud8)
+  Group.new("tsxclosetag", c.cloud8)
+  Group.new("tsxelseoperator", c.cloud10:dark(.2))
+
   Group.new("typescriptAliasDeclaration", c.cloud8)
   Group.new("typescriptObjectLiteral", c.cloud8)
   Group.new("typescriptBinaryOp", c.cloud8)
+
   Group.new("typescriptParenExp", c.cloud8)
-  Group.new("tsxclosetag", c.cloud8)
+  -- Actually used as this? not sure if case sensitive
+  Group.new("typescriptparenexp", c.cloud10)
+
+  Group.new("typescriptEnum", c.cloud10)
+  Group.new("typescriptString", c.cloud10:light(.3))
+  Group.new("typescriptProp", c.cloud10)
+  Group.new("typescriptUnion", c.cloud8:dark())
+
+  Group.new("typescriptInterfaceTypeParameter", c.cloud8:dark())
+  Group.new("typescriptInterfaceName", c.cloud10)
+
   Group.new("typescriptParens", c.cloud8)
-  Group.new("tsxelseoperator", c.cloud10:dark(.2))
+  Group.new("typescriptTernaryOp", c.cloud8)
   Group.new("typescriptParenthesizedType", c.cloud10:dark(.2))
+  Group.new("typescriptIdentifierName", c.cloud10)
+
+  Group.new("typescriptGenericCall", c.cloud8)
+  Group.new("typescript1", c.cloud6:dark():saturate(.1))
+
+  Group.new("typescriptAssign", c.cloud6:dark():saturate(.1))
+  Group.new("typescriptbraces", c.cloud10)
+  Group.new("typescriptendcolons", c.cloud10:light())
+
+  Group.new("typescriptFuncCallArg", c.cloud6)
+  Group.new("typescriptTypeBrackets", c.cloud8:dark())
+  Group.new("typescriptTypeAnnotation", c.cloud8)
+  Group.new("typescriptTypeArguments", c.cloud8)
+  Group.new("typescriptTypeReference", c.cloud10)
+  Group.new("typescriptTypeCast", c.cloud8)
+  Group.new("typescriptFuncType", c.cloud10)
+
+  Group.new("typescriptUnaryOp", c.cloud4:light(.3), c.none, styles.bold)
+
+  Group.new("typescriptaliasdeclaration", c.cloud10)
 end
 
 function M:markdown()
