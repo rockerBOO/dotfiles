@@ -1,12 +1,12 @@
 
 " ALE highlighting
-highlight ALEErrorSign ctermbg=NONE ctermfg=red
-highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+" highlight ALEErrorSign ctermbg=NONE ctermfg=red
+" highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 
 " Telescope
-highlight! link TelescopeBorder NonText 
-highlight! link TelescopeSelection SpellRare
-highlight! link TelescopeSelectionCaret Error 
+" highlight! link TelescopeBorder NonText 
+" highlight! link TelescopeSelection SpellRare
+" highlight! link TelescopeSelectionCaret Error 
 
 " highlight! TelescopeMatching ctermfg=cyan ctermbg=black 
 

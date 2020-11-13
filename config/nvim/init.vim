@@ -35,7 +35,6 @@ set noexpandtab
 " set foldexpr=nvim_treesitter#foldexpr()
 
 if (has("termguicolors"))
-	let g:nvcode_termcolors=256
   set termguicolors
   hi LineNr ctermbg=NONE guibg=NONE
 endif
@@ -114,6 +113,8 @@ call plug#begin()
   " Treesitter  
   Plug 'nvim-treesitter/nvim-treesitter'
 
+  Plug 'nvim-treesitter/playground'
+
   " Completion from treesitter
   Plug 'nvim-treesitter/completion-treesitter'
 
@@ -158,7 +159,8 @@ call plug#begin()
   Plug 'tpope/vim-commentary'
 
   " Typescript
-  Plug 'leafgarland/typescript-vim'
+  " Plug 'leafgarland/typescript-vim'
+  Plug 'HerringtonDarkholme/yats.vim'
 
   " JSX/TSX syntax 
   Plug 'peitalin/vim-jsx-typescript'
@@ -184,7 +186,7 @@ call plug#begin()
   Plug 'ThePrimeagen/vim-be-good',
 
   " ES Linting
-  Plug 'dense-analysis/ale'
+  " Plug 'dense-analysis/ale'
 
   Plug 'andrejlevkovitch/vim-lua-format'
 
@@ -200,6 +202,8 @@ call plug#begin()
   Plug 'nvim-lua/telescope.nvim'
 
   Plug 'kyazdani42/nvim-web-devicons'
+
+	Plug 'rockerBOO/boo-colorscheme-nvim'
 
   " Dashboard too many things I do not want right now
   " Plug 'hardcoreplayers/dashboard-nvim'
@@ -222,6 +226,7 @@ call plug#end()
 
 
 lua require'init'
+lua require'boo-colorscheme'.use{}
 
 " Setup colors
 color boo

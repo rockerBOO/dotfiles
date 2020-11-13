@@ -25,6 +25,7 @@ function M:colors()
     "#d9d6cf",
   }
 
+  -- cloud0 to cloud16 for all the available colors. 
   for i, color in ipairs(themeColors) do Color.new("cloud" .. i - 1, color) end
 
   Color.new("fg", "#e4dcec")
@@ -54,6 +55,8 @@ function M:colors()
   Group.new("Underlined", c.none, c.none, styles.italic)
 
   Group.new("Float", c.cloud4, c.none, styles.NONE)
+
+  Group.new("NormalFloat", c.cloud4, c.cloud0:dark(.4))
 
   -- Search
   Group.new("IncSearch", c.cloud10:light(), c.cloud10:dark(.5), styles.italic)
@@ -184,8 +187,8 @@ end
 
 function M:lsp()
   Group.new("LspDiagnosticsDefaultHint", c.cloud13:saturate(.05):light(), c.cloud13:dark(.9))
-  Group.new("LspDiagnosticsDefaultError", c.cloud1, c.cloud9:dark():saturate(.1))
-  Group.new("LspDiagnosticsDefaultWarning", c.cloud6)
+  Group.new("LspDiagnosticsDefaultError", c.cloud1:dark():saturate(.5), c.cloud1:dark(.7):saturate(.1))
+  Group.new("LspDiagnosticsDefaultWarning", c.cloud6, c.cloud6:dark(.6):saturate(.2):light(.001))
   Group.new("LspDiagnosticsDefaultInformation", c.fg)
 end
 
@@ -200,9 +203,15 @@ function M:typescript()
   -- Group.new("typescriptbraces", c.cloud14:dark())
 
   -- tsx
-  Group.new("tsxJsBlock", c.cloud4)
+  Group.new("tsxJsBlock", c.cloud8:light())
   Group.new("tsxclosetag", c.cloud8)
   Group.new("tsxelseoperator", c.cloud10:dark(.2))
+  Group.new('tsxclosetagname', c.cloud10)
+
+  Group.new('tsxclosetag', c.cloud8:dark())
+
+  Group.new("tsxtypes", c.cloud10:light(), c.none, styles.none)
+  Group.new('tsxtag', c.cloud8)
 
   Group.new("typescriptAliasDeclaration", c.cloud8)
   Group.new("typescriptObjectLiteral", c.cloud8)
@@ -225,6 +234,7 @@ function M:typescript()
   Group.new("typescriptParenthesizedType", c.cloud10:dark(.2))
   Group.new("typescriptIdentifierName", c.cloud10)
 
+  Group.new('typescriptGlobal', c.cloud7)
   Group.new("typescriptGenericCall", c.cloud8)
   Group.new("typescript1", c.cloud6:dark():saturate(.1))
 
@@ -279,6 +289,8 @@ function M:treesitter()
 
   local constants = {"TSConstant", "TsConstBuiltin", "TSConstMacro"}
 
+  local constructors = {"TSConstructor"}
+
   local string = {"TSStringRegex", "TSString", "TSStringEscape"}
 
   local boolean = {"TSBoolean"}
@@ -309,17 +321,9 @@ function M:treesitter()
 
   local variables = {"TSVariable", "TSVariableBuiltin"}
 
-  local text = {
-    "TSText",
-    "TSStrong",
-    "TSEmphasis",
-    "TSUnderline",
-    "TSTitle",
-    "TSLiteral",
-    "TSURI",
-    "TSTag",
-    "TSTagDelimiter",
-  }
+  local tags = {"TSTag", "TSTagDelimiter"}
+
+  local text = {"TSText", "TSStrong", "TSEmphasis", "TSUnderline", "TSTitle", "TSLiteral", "TSURI"}
 
   local groups = {
     {error, c.cloud1:light(), c.cloud9:dark(.5)},
@@ -327,19 +331,21 @@ function M:treesitter()
     {constants, c.cloud5:light()},
     {string, c.cloud10:light():light():saturate(.25)},
     {boolean, c.cloud2:light()},
-    {functions, c.cloud8:light(.1)},
-    {methods, c.cloud8:light(.2)},
-    {fields, c.cloud8},
+    {functions, c.cloud14:light(.1)},
+    {methods, c.cloud14:light(.1)},
+    {fields, c.cloud8:light()},
     {number, c.cloud6:light()},
     {parameters, c.cloud6:dark()},
     {operators, c.cloud3:dark():dark()},
     {forwords, c.cloud8:saturate(.1):light(), c.none},
-    {keyword, c.cloud4, c.none, styles.bold + styles.italic},
+    {keyword, c.cloud4:dark(.2):saturate(.01):light(.2), c.none, styles.italic},
+    {constructors, c.cloud10},
     {types, c.cloud10},
     {includes, c.cloud10},
     {labels, c.cloud4:light()},
     {namespaces, c.cloud4},
     {variables, c.cloud6},
+    {tags, c.cloud8},
     {text, c.fg},
   }
 
@@ -352,7 +358,10 @@ function M:treesitter()
   Group.new("TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1))
   Group.new("TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold)
 
-  Group.new("TSTypeBuiltin", c.cloud10, c.none, styles.bold)
+  -- null
+  Group.new("TSConstBuiltin", c.cloud6:dark(.3), c.none, styles.bold)
+
+  Group.new("TSTypeBuiltin", c.cloud10:dark(.2), c.none, styles.bold)
   Group.new("TSFuncBuiltin", c.cloud8:light(.1), c.none, styles.bold)
 
   -- Group.new("TSTitle", c.cloud4)
