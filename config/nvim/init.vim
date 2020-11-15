@@ -160,10 +160,10 @@ call plug#begin()
 
   " Typescript
   " Plug 'leafgarland/typescript-vim'
-  Plug 'HerringtonDarkholme/yats.vim'
+  " Plug 'HerringtonDarkholme/yats.vim'
 
   " JSX/TSX syntax 
-  Plug 'peitalin/vim-jsx-typescript'
+  " Plug 'peitalin/vim-jsx-typescript'
 
   " Editorconfig support
   Plug 'editorconfig/editorconfig-vim'
@@ -335,3 +335,6 @@ augroup end
 map <leader>hi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+
+nnoremap <leader>hhi :TSHighlightCapturesUnderCursor<CR>

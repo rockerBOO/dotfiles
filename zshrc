@@ -110,3 +110,4 @@ source $HOME/.config/keys/reddit
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias eg="cd ~/code/ecogarden/create"
 
+source /usr/share/nvm/init-nvm.sh
