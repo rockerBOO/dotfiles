@@ -11,7 +11,7 @@ LSP
 - nvim-treesitter/nvim-treesitter
 - w0rp/aleA
 
-
+![Linux - Neofetch](https://user-images.githubusercontent.com/15027/99193889-c79d4200-2749-11eb-8c54-c5b6a8884b1e.png)
 
 ## Install
 
