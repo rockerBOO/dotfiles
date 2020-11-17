@@ -1,7 +1,22 @@
 local lsp_status = require("lsp-status")
--- lsp_status.config {kind_labels = vim.g.completion_customize_lsp_label}
 local status = require("rockerboo.lsp_status")
 local nvim_lsp = require("lspconfig")
+
+function DoFormat()
+  vim.lsp.buf.formatting_sync(nil, 1000)
+end
+
+local attach_formatting = function(client)
+  -- Skip tsserver for now so we dont format things twice
+  if client.name == "tsserver" then return end
+
+  print(string.format('attaching format to %s', client.name))
+
+  vim.api.nvim_command [[augroup Format]]
+  vim.api.nvim_command [[autocmd! * <buffer>]]
+  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua DoFormat()]]
+  vim.api.nvim_command [[augroup END]]
+end
 
 local setup = function()
   status.activate()
@@ -11,9 +26,9 @@ local setup = function()
 
     lsp_status.register_client(client.name)
 
-    print("'" .. client.name .. "' language server started");
+    print("'" .. client.name .. "' language server attached");
     require"completion".on_attach(client)
-    -- require"diagnostic".on_attach(client)
+
     require"lsp-status".on_attach(client)
 
     vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
@@ -21,10 +36,7 @@ local setup = function()
     if client.resolved_capabilities.document_formatting then
       print(string.format("Formatting supported %s", client.name))
 
-      -- vim.api.nvim_command [[augroup Format]]
-      -- vim.api.nvim_command [[autocmd! * <buffer>]]
-      -- vim.api.nvim_command [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
-      -- vim.api.nvim_command [[augroup END]]
+      attach_formatting(client)
     end
 
     -- If the client is a documentSymbolProvider, set up an autocommand
@@ -65,13 +77,12 @@ local setup = function()
   --     end,
   --     filetypes = {"lua", "typescript", "javascript"},
   --   })
-  nvim_lsp.efm.setup {on_attach = on_attach_vim, filetypes = {"lua"}}
+  -- nvim_lsp.efm.setup {on_attach = on_attach_vim, filetypes = {"lua", "typescript.tsx" }}
 
   require("nlua.lsp.nvim").setup(nvim_lsp, {
     on_attach = on_attach_vim,
     capabilities = lsp_status.capabilities,
   })
-
 
   nvim_lsp.diagnosticls.setup {
     on_attach = on_attach_vim,
@@ -132,7 +143,7 @@ local setup = function()
         prettierEslint = {
           command = "prettier-eslint",
           args = {"--stdin"},
-          rootPatterns = {".eslintrc.cjs", ".eslintrc", ".eslintrc.json", ".eslintrc.js", ".git" },
+          rootPatterns = {".eslintrc.cjs", ".eslintrc", ".eslintrc.json", ".eslintrc.js", ".git"},
         },
         prettier = {command = "prettier", args = {"--stdin-filepath", "%filename"}},
       },
