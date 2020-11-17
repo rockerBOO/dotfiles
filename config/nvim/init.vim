@@ -163,7 +163,7 @@ call plug#begin()
   " Plug 'HerringtonDarkholme/yats.vim'
 
   " JSX/TSX syntax 
-  " Plug 'peitalin/vim-jsx-typescript'
+  Plug 'peitalin/vim-jsx-typescript'
 
   " Editorconfig support
   Plug 'editorconfig/editorconfig-vim'
@@ -191,9 +191,9 @@ call plug#begin()
   Plug 'andrejlevkovitch/vim-lua-format'
 
   " JS/TS/HTML formatter
-	Plug 'prettier/vim-prettier', {
-		\ 'do': 'yarn install',
-		\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+	" Plug 'prettier/vim-prettier', {
+	" 	\ 'do': 'yarn install',
+	" 	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
@@ -289,7 +289,7 @@ nnoremap <silent> <C-c><C-y> :call ToggleConcealLevel()<CR>
 " -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 " Setup omnifunc for LSP
-autocmd Filetype elixir,python,javascript,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+" autocmd Filetype elixir,python,javascript,typescript,rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 "" completion-nvim
 

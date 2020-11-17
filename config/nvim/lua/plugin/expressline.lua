@@ -5,34 +5,32 @@ local sections = require("el.sections")
 local subscribe = require("el.subscribe")
 local lsp_statusline = require("el.plugins.lsp_status")
 
-require("el").setup {
-  generator = function(win_id)
-    return {
-      extensions.gen_mode {format_string = "%s"},
-      sections.split,
-      subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
-        local icon = extensions.file_icon(_, bufnr)
-        if icon then return icon .. " " end
+require("el").reset_windows()
 
-        return ""
-      end),
-      builtin.responsive_file(140, 90),
-      sections.collapse_builtin {" ", builtin.modified_flag},
-      sections.split,
-      lsp_statusline.current_function,
-      lsp_statusline.server_progress,
-      -- subscribe.buf_autocmd("el_git_changes", "BufWritePost", function(window, buffer)
-      --   return extensions.git_changes(window, buffer)
-      -- end),
-      -- "",
-      builtin.line,
-      ",",
-      builtin.column,
-      " ",
-      sections.collapse_builtin {"", builtin.help_list, builtin.readonly_list, ""},
-      function(_, buffer)
-        return buffer.filetype
-      end,
-    }
-  end,
-}
+local generator = function(win_id)
+  print("Generating statusline")
+  return {
+    extensions.gen_mode {format_string = "%s"},
+    sections.split,
+    subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
+      local icon = extensions.file_icon(_, bufnr)
+      if icon then return icon .. " " end
+      return ""
+    end),
+    builtin.responsive_file(140, 90),
+    sections.collapse_builtin {" ", builtin.modified_flag},
+    sections.split,
+    lsp_statusline.status,
+    -- lsp_statusline.server_progress,
+    builtin.line,
+    ",",
+    builtin.column,
+    " ",
+    sections.collapse_builtin {"", builtin.help_list, builtin.readonly_list, ""},
+    function(_, buffer)
+      return buffer.filetype
+    end,
+  }
+end
+
+require("el").setup {generator = generator}

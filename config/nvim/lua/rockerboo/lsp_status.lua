@@ -1,4 +1,4 @@
-local nvim_status  = require('lsp-status')
+local lsp_status  = require('lsp-status')
 
 local status = {}
 
@@ -20,19 +20,11 @@ status.select_symbol = function(cursor_pos, symbol)
 end
 
 status.activate = function()
-  nvim_status.onfig {
+  lsp_status.config {
     select_symbol = status.select_symbol
   }
 
-  nvim_status.register_progress()
-end
-
-status.on_attach = function(client)
-  nvim_status.on_attach(client)
-
-  vim.cmd [[augroup boo_lsp_status]]
-  vim.cmd [[  autocmd CursorHold,BufEnter <buffer> lua require('lsp-status').update_current_function()]]
-  vim.cmd [[augroup END]]
+  lsp_status.register_progress()
 end
 
 return status
