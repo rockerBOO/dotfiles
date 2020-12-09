@@ -3,18 +3,23 @@ local status = require("rockerboo.lsp_status")
 local nvim_lsp = require("lspconfig")
 
 function DoFormat()
+  for _, client in pairs(vim.lsp.buf_get_clients()) do
+    print(string.format("Formatting for attached client: %s", client.name))
+  end
+
   vim.lsp.buf.formatting_sync(nil, 1000)
 end
 
 local attach_formatting = function(client)
   -- Skip tsserver for now so we dont format things twice
   if client.name == "tsserver" then return end
+  if client.name == "cssls" then return end
 
-  print(string.format('attaching format to %s', client.name))
+  print(string.format("attaching format to %s", client.name))
 
-  vim.api.nvim_command [[augroup Format]]
+  vim.api.nvim_command [[augroup LSPFormat]]
   vim.api.nvim_command [[autocmd! * <buffer>]]
-  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua DoFormat()]]
+  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
   vim.api.nvim_command [[augroup END]]
 end
 
@@ -26,7 +31,7 @@ local setup = function()
 
     lsp_status.register_client(client.name)
 
-    print("'" .. client.name .. "' language server attached");
+    print("'" .. client.name .. "' language server attached")
     require"completion".on_attach(client)
 
     require"lsp-status".on_attach(client)
@@ -77,7 +82,10 @@ local setup = function()
   --     end,
   --     filetypes = {"lua", "typescript", "javascript"},
   --   })
-  -- nvim_lsp.efm.setup {on_attach = on_attach_vim, filetypes = {"lua", "typescript.tsx" }}
+  nvim_lsp.efm.setup {
+    on_attach = on_attach_vim,
+    filetypes = {"lua", "javascript", "typescript.tsx", "typescript"},
+  }
 
   require("nlua.lsp.nvim").setup(nvim_lsp, {
     on_attach = on_attach_vim,
@@ -93,15 +101,14 @@ local setup = function()
       "typescriptreact",
       "typescript.tsx",
       "css",
-      "scss",
       "markdown",
       -- "pandoc",
     },
     init_options = {
       linters = {
         eslint = {
-          command = "eslint",
-          rootPatterns = {".git", ".eslintrc.cjs", ".eslintrc", ".eslintrc.json", ".eslintrc.js"},
+          command = "yarn eslint",
+          rootPatterns = {".eslintrc.cjs", ".eslintrc", ".eslintrc.json", ".eslintrc.js", ".git"},
           debounce = 100,
           args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
           sourceName = "eslint",
@@ -117,7 +124,7 @@ local setup = function()
           securities = {[2] = "error", [1] = "warning"},
         },
         markdownlint = {
-          command = "markdownlint",
+          command = "yarn markdownlint",
           rootPatterns = {".git"},
           isStderr = true,
           debounce = 100,
@@ -141,14 +148,40 @@ local setup = function()
       },
       formatters = {
         prettierEslint = {
-          command = "prettier-eslint",
+          command = "yarn prettier-eslint",
           args = {"--stdin"},
-          rootPatterns = {".eslintrc.cjs", ".eslintrc", ".eslintrc.json", ".eslintrc.js", ".git"},
+          rootPatterns = {
+            ".eslintrc.cjs",
+            ".eslintrc",
+            ".eslintrc.json",
+            ".eslintrc.js",
+            ".prettierrc",
+            ".prettierrc.js",
+            ".prettierrc.json",
+            ".prettierrc.yml",
+            ".prettierrc.yaml",
+            ".prettier.config.js",
+            ".prettier.config.cjs",
+            ".git",
+          },
         },
-        prettier = {command = "prettier", args = {"--stdin-filepath", "%filename"}},
+        prettier = {
+          command = "yarn prettier",
+          args = {"--stdin-filepath", "%filename"},
+          rootPatterns = {
+            ".prettierrc",
+            ".prettierrc.js",
+            ".prettierrc.json",
+            ".prettierrc.yml",
+            ".prettierrc.yaml",
+            ".prettier.config.js",
+            ".prettier.config.cjs",
+            ".git",
+          },
+        },
       },
       formatFiletypes = {
-        css = "prettier",
+        css = "prettierEslint",
         javascript = "prettierEslint",
         javascriptreact = "prettierEslint",
         json = "prettier",

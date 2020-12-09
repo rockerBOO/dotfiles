@@ -1,5 +1,6 @@
 local telescope = require "telescope"
 local themes = require "telescope.themes"
+local previewers = require "telescope.previewers"
 
 -- Telescope defaults
 local telescope_config = {
@@ -12,7 +13,9 @@ local telescope_config = {
   prompt_prefix = "※",
   width = 0.8, 
   height = 0.7,
-  results_width = 80
+  results_width = 80,
+  file_previewer = previewers.vim_buffer_cat.new,
+  grep_previewer = previewers.vim_buffer_vimgrep.new,
 }
 
 telescope.setup({ defaults = telescope_config })

@@ -163,7 +163,7 @@ call plug#begin()
   " Plug 'HerringtonDarkholme/yats.vim'
 
   " JSX/TSX syntax 
-  Plug 'peitalin/vim-jsx-typescript'
+  " Plug 'peitalin/vim-jsx-typescript'
 
   " Editorconfig support
   Plug 'editorconfig/editorconfig-vim'
@@ -203,7 +203,7 @@ call plug#begin()
 
   Plug 'kyazdani42/nvim-web-devicons'
 
-	Plug 'rockerBOO/boo-colorscheme-nvim'
+	Plug 'rockerBOO/boo-colorscheme-nvim', { 'branch': 'main' }
 
   " Dashboard too many things I do not want right now
   " Plug 'hardcoreplayers/dashboard-nvim'
