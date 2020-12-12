@@ -203,7 +203,7 @@ call plug#begin()
 
   Plug 'kyazdani42/nvim-web-devicons'
 
-	Plug 'rockerBOO/boo-colorscheme-nvim', { 'branch': 'main' }
+	Plug '~/code/boo-colorscheme-nvim', { 'branch': 'main' }
 
   " Dashboard too many things I do not want right now
   " Plug 'hardcoreplayers/dashboard-nvim'
