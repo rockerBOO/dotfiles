@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 dotfiles_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
-excluded=("scripts" "README.markdown")
+excluded=("scripts" "README.markdown" "Makefile" ".github")
 
 function isExcluded() {
     if [ -z "$1" ]
