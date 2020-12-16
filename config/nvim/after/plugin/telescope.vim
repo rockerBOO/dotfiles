@@ -6,6 +6,10 @@
 nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim" }<CR>
 
 lua <<EOF
+function P(module)
+  require'plenary.reload'.reload_module(module)
+end
+
 function PlenaryReload()
   require('plenary.reload').reload_module("telescope.themes")
   require('plenary.reload').reload_module("telescope")
@@ -21,7 +25,7 @@ EOF
 nnoremap <Leader>asdf :lua PlenaryReload()<CR>
 
 " Telescope binds 
-nnoremap <Leader>f <cmd>lua FindFiles()<CR>
+nnoremap <Leader>f <cmd>lua require'plugin.telescope'.find_files()<CR>
 nnoremap <Leader>gf :lua require'telescope.builtin'.git_files(require'telescope.themes'.get_dropdown())<CR>
 nnoremap <Leader>gg :lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim/plugged" }<CR>
 

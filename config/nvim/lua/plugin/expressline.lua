@@ -7,7 +7,8 @@ local lsp_statusline = require("el.plugins.lsp_status")
 
 require("el").reset_windows()
 
-local generator = function(win_id)
+-- generator(win_id)
+local generator = function(_)
   print("Generating statusline")
   return {
     extensions.gen_mode {format_string = "%s"},

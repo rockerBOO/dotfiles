@@ -4,6 +4,6 @@ std = luajit
 
 self = false
 
-read_globals = {"vim"}
+globals = {"vim", "describe", "it", "use"}
 
 

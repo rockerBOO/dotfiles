@@ -1,3 +1,3 @@
 
 lint:
-	luacheck config/nvim/lua
+	luacheck config/nvim/lua --globals=vim

@@ -165,6 +165,9 @@ call plug#begin()
   " JSX/TSX syntax 
   " Plug 'peitalin/vim-jsx-typescript'
 
+  " Delve - Go Debugger
+  Plug 'sebdah/vim-delve'
+
   " Editorconfig support
   Plug 'editorconfig/editorconfig-vim'
 

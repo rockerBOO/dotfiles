@@ -2,14 +2,6 @@ local lsp_status = require("lsp-status")
 local status = require("rockerboo.lsp_status")
 local nvim_lsp = require("lspconfig")
 
-function DoFormat()
-  for _, client in pairs(vim.lsp.buf_get_clients()) do
-    print(string.format("Formatting for attached client: %s", client.name))
-  end
-
-  vim.lsp.buf.formatting_sync(nil, 1000)
-end
-
 local attach_formatting = function(client)
   -- Skip tsserver for now so we dont format things twice
   if client.name == "tsserver" then return end
@@ -19,7 +11,7 @@ local attach_formatting = function(client)
 
   vim.api.nvim_command [[augroup LSPFormat]]
   vim.api.nvim_command [[autocmd! * <buffer>]]
-  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
+  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua require'rockerboo.utils'.format()]]
   vim.api.nvim_command [[augroup END]]
 end
 
@@ -84,7 +76,7 @@ local setup = function()
   --   })
   nvim_lsp.efm.setup {
     on_attach = on_attach_vim,
-    filetypes = {"lua", "javascript", "typescript.tsx", "typescript"},
+    filetypes = {"lua", "javascript", "typescript.tsx", "typescriptreact", "typescript"},
   }
 
   require("nlua.lsp.nvim").setup(nvim_lsp, {
