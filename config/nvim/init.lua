@@ -23,6 +23,11 @@ cmd [[ autocmd! ]]
 cmd [[ autocmd TextYankPost *  lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000} ]]
 cmd [[ augroup END ]]
 
+cmd [[ augroup Reload ]]
+cmd [[  au! ]]
+cmd [[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module'init'<cr> ]]
+cmd [[ augroup end ]]
+
 -- Tabs
 opt.tabstop = 2
 opt.shiftwidth = 2
@@ -99,5 +104,5 @@ setup_mappings()
 
 -- Setup all the plugins
 require"plugins".setup()
-require "init"
+require "setup"
 require"boo-colorscheme".use {}

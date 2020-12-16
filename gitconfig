@@ -17,7 +17,7 @@
 [diff]
 	tool = nvimdiff 
 [difftool "nvimdiff"]
-	cmd = "nvim -d -u ~/.config/nvim/init.vim \"$LOCAL\" \"$REMOTE\""
+	cmd = "nvim -d -u ~/.config/nvim/init.lua \"$LOCAL\" \"$REMOTE\""
 [help]
   autocorrect = 1
 [alias]
