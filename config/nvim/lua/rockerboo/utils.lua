@@ -11,16 +11,19 @@ M.keymap = function(map)
 end
 
 -- @param maps list of keymaps 
-M.keymaps = function(maps) 
+M.keymaps = function(maps)
   for _, m in ipairs(maps) do M.keymap(m) end
 end
 
 M.lsp_format = function()
   for _, client in pairs(vim.lsp.buf_get_clients()) do
+    -- skip these for formatting, use efm
+    if client.name == "sumneko_lua" then return end
+    if client.name == "tsserver" then return end
     print(string.format("Formatting for attached client: %s", client.name))
-  end
 
-  vim.lsp.buf.formatting_sync(nil, 1000)
+    vim.lsp.buf.formatting_sync(nil, 1000)
+  end
 end
 
 return M

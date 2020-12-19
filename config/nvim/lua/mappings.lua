@@ -44,8 +44,8 @@ mappings.setup = function()
 
     {i, "<C-l>", "A<cr>"},
 
-    {i, "<expr>", "<Tab> pumvisible() ? '<C-n>' : '<Tab>'"},
-    {i, "<expr>", "<S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'"},
+    {i, "<expr> <Tab>", "pumvisible() ? '<C-n>' : '<Tab>'"},
+    {i, "<expr> <S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'"},
 
     {n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", {silent = true}},
   }
@@ -53,4 +53,4 @@ mappings.setup = function()
   require"rockerboo.utils".keymaps(maps)
 end
 
-return mappings 
+return mappings

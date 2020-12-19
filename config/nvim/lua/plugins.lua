@@ -1,3 +1,6 @@
+-- 
+-- Setup packer.nvim with all necessary plugins 
+--
 -- Teej special code I stole :)
 local ensure_packer_installed = function()
   local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
@@ -21,7 +24,13 @@ end
 local setup = function()
   if not ensure_packer_installed() then return end
 
-  require("packer").startup(function()
+  local packer = require "packer"
+
+  packer.init({
+    package_root = require"packer.util".join_paths(vim.fn.stdpath("data"), "site", "pack"),
+  })
+
+  packer.startup(function(use)
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
 
@@ -123,7 +132,8 @@ local setup = function()
     -- LSP Extensions
     use {"tjdevries/lsp_extensions.nvim"}
 
-    use {"tjdevries/colorbuddy.nvim"}
+    -- use {"tjdevries/colorbuddy.nvim"}
+    use {"~/code/colorbuddy.nvim"}
 
     -- Some stupid thing
     use {"ThePrimeagen/vim-be-good"}

@@ -1,7 +1,6 @@
---[[
---  Hello
---]] 
-
+--
+--     Hello
+-- 
 local g, opt, cmd = vim.g, vim.o, vim.cmd
 
 g.mapleader = " "
@@ -25,6 +24,10 @@ cmd [[ set noswapfile
        set nobackup
        set nowritebackup ]]
 opt.updatetime = 1000
+
+-- Undo not working?
+opt.undodir = vim.fn.expand("~/.config/nvim/undo")
+opt.undofile = true
 
 -- opt.shada = {"!", "'1000", "<50", "s10", "h"}
 
@@ -67,10 +70,10 @@ cmd [[  autocmd TextYankPost *  lua vim.highlight.on_yank {higroup="IncSearch", 
 cmd [[ augroup END ]]
 
 -- Reload module after saving
-cmd [[ augroup Reload ]]
-cmd [[  au! ]]
-cmd [[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module'init'<cr> ]]
-cmd [[ augroup end ]]
+-- cmd [[ augroup Reload ]]
+-- cmd [[  au! ]]
+-- cmd [[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module('init') ]]
+-- cmd [[ augroup end ]]
 
 -- Setup key mappings
 require"mappings".setup()

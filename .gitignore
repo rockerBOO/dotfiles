@@ -2,6 +2,7 @@
 
 /config/nvim/plugged/
 /config/nvim/rplugin/
+/config/nvim/undo/
 
 /bin/exercism
 /bin/pob

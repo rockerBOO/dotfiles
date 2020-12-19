@@ -3,16 +3,16 @@ local status = require("rockerboo.lsp_status")
 local nvim_lsp = require("lspconfig")
 
 local attach_formatting = function(client)
-  -- Skip tsserver for now so we dont format things twice
+  -- Skip formatting for these servers. Using prettier for these
   if client.name == "tsserver" then return end
   if client.name == "cssls" then return end
 
-  print(string.format("attaching format to %s", client.name))
+  -- print(string.format("attaching format to %s", client.name))
 
-  vim.api.nvim_command [[augroup LSPFormat]]
-  vim.api.nvim_command [[autocmd! * <buffer>]]
-  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua require'rockerboo.utils'.format()]]
-  vim.api.nvim_command [[augroup END]]
+  -- vim.api.nvim_command [[augroup LSPFormat]]
+  -- vim.api.nvim_command [[autocmd! * <buffer>]]
+  -- vim.api.nvim_command [[autocmd BufWritePre <buffer> :lua require'rockerboo.utils'.lsp_format()]]
+  -- vim.api.nvim_command [[augroup END]]
 end
 
 local setup = function()
@@ -20,35 +20,20 @@ local setup = function()
 
   --- Language servers
   local on_attach_vim = function(client)
+    print("'" .. client.name .. "' language server attached")
 
     lsp_status.register_client(client.name)
-
-    print("'" .. client.name .. "' language server attached")
     require"completion".on_attach(client)
+    lsp_status.on_attach(client)
 
-    require"lsp-status".on_attach(client)
-
-    vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
+    vim.cmd [[ setlocal omnifunc=v:lua.vim.lsp.omnifunc ]]
+    vim.api.nvim_buf_set_keymap(0, "n", "<Leader>aa",
+                                "<cmd>lua require'rockerboo.utils'.lsp_format()<cr>", {})
 
     if client.resolved_capabilities.document_formatting then
       print(string.format("Formatting supported %s", client.name))
 
-      attach_formatting(client)
     end
-
-    -- If the client is a documentSymbolProvider, set up an autocommand
-    -- to update the containing function
-    -- not necessary if registered
-    -- if client.resolved_capabilities.document_symbol then
-    --   print(string.format("Document symbols supported %s", client.name))
-    --   print(vim.inspect(lsp_status.messages()))
-
-    --   vim.api.nvim_command("augroup lsp_aucmds")
-    --   vim.api.nvim_command(
-    --       "au CursorHold <buffer> lua require(\"lsp-status\").update_current_function()")
-    --   vim.api.nvim_command("augroup END")
-    -- end
-
   end
 
   local default_lsp_config = {on_attach = on_attach_vim, capabilities = lsp_status.capabilities}
@@ -67,16 +52,28 @@ local setup = function()
   --   end
   -- end
 
-  --   nvim_lsp["efm"].setup({
-  --     on_attach = function(client)
-  --       print("wtf?")
-  --       on_attach_vim(client)
-  --     end,
-  --     filetypes = {"lua", "typescript", "javascript"},
-  --   })
-  nvim_lsp.efm.setup {
+  require"lspconfig".efm.setup {
     on_attach = on_attach_vim,
-    filetypes = {"lua", "javascript", "typescript.tsx", "typescriptreact", "typescript"},
+    init_options = {documentFormatting = true},
+    settings = {
+      -- Require formatter configuration files to load
+      rootMarkers = {
+        ".lua-format",
+        ".eslintrc.cjs",
+        ".eslintrc",
+        ".eslintrc.json",
+        ".eslintrc.js",
+        ".prettierrc",
+        ".prettierrc.js",
+        ".prettierrc.json",
+        ".prettierrc.yml",
+        ".prettierrc.yaml",
+        ".prettier.config.js",
+        ".prettier.config.cjs",
+      },
+      -- languages = {lua = {{formatCommand = "lua-format -i", formatStdin = true}}},
+    },
+    filetypes = {"lua", "typescript", "typescriptreact", "javascript", "html", "json"},
   }
 
   require("nlua.lsp.nvim").setup(nvim_lsp, {
@@ -84,106 +81,107 @@ local setup = function()
     capabilities = lsp_status.capabilities,
   })
 
-  nvim_lsp.diagnosticls.setup {
-    on_attach = on_attach_vim,
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-      "css",
-      "markdown",
-      -- "pandoc",
-    },
-    init_options = {
-      linters = {
-        eslint = {
-          command = "yarn eslint",
-          rootPatterns = {".eslintrc.cjs", ".eslintrc", ".eslintrc.json", ".eslintrc.js", ".git"},
-          debounce = 100,
-          args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
-          sourceName = "eslint",
-          parseJson = {
-            errorsRoot = "[0].messages",
-            line = "line",
-            column = "column",
-            endLine = "endLine",
-            endColumn = "endColumn",
-            message = "[eslint] ${message} [${ruleId}]",
-            security = "severity",
-          },
-          securities = {[2] = "error", [1] = "warning"},
-        },
-        markdownlint = {
-          command = "yarn markdownlint",
-          rootPatterns = {".git"},
-          isStderr = true,
-          debounce = 100,
-          args = {"--stdin"},
-          offsetLine = 0,
-          offsetColumn = 0,
-          sourceName = "markdownlint",
-          securities = {undefined = "hint"},
-          formatLines = 1,
-          formatPattern = {"^.*:(\\d+)\\s+(.*)$", {line = 1, column = -1, message = 2}},
-        },
-      },
-      filetypes = {
-        javascript = "eslint",
-        javascriptreact = "eslint",
-        typescript = "eslint",
-        typescriptreact = "eslint",
-        ["typescript.tsx"] = "eslint",
-        markdown = "markdownlint",
-        -- pandoc = "markdownlint",
-      },
-      formatters = {
-        prettierEslint = {
-          command = "yarn prettier-eslint",
-          args = {"--stdin"},
-          rootPatterns = {
-            ".eslintrc.cjs",
-            ".eslintrc",
-            ".eslintrc.json",
-            ".eslintrc.js",
-            ".prettierrc",
-            ".prettierrc.js",
-            ".prettierrc.json",
-            ".prettierrc.yml",
-            ".prettierrc.yaml",
-            ".prettier.config.js",
-            ".prettier.config.cjs",
-            ".git",
-          },
-        },
-        prettier = {
-          command = "yarn prettier",
-          args = {"--stdin-filepath", "%filename"},
-          rootPatterns = {
-            ".prettierrc",
-            ".prettierrc.js",
-            ".prettierrc.json",
-            ".prettierrc.yml",
-            ".prettierrc.yaml",
-            ".prettier.config.js",
-            ".prettier.config.cjs",
-            ".git",
-          },
-        },
-      },
-      formatFiletypes = {
-        css = "prettierEslint",
-        javascript = "prettierEslint",
-        javascriptreact = "prettierEslint",
-        json = "prettier",
-        scss = "prettier",
-        typescript = "prettierEslint",
-        typescriptreact = "prettierEslint",
-        ["typescript.tsx"] = "prettierEslint",
-      },
-    },
-  }
+  -- nvim_lsp.diagnosticls.setup {
+  --   on_attach = on_attach_vim,
+  --   filetypes = {
+  --     "javascript",
+  --     "javascriptreact",
+  --     "typescript",
+  --     "typescriptreact",
+  --     "typescript.tsx",
+  --     "css",
+  --     "markdown",
+  --     -- "pandoc",
+  --   },
+  --   init_options = {
+  --     linters = {
+  --       eslint = {
+  --         command = "yarn eslint",
+  --         rootPatterns = {".eslintrc.cjs", ".eslintrc", ".eslintrc.json", ".eslintrc.js", ".git"},
+  --         debounce = 100,
+  --         args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
+  --         sourceName = "eslint",
+  --         parseJson = {
+  --           errorsRoot = "[0].messages",
+  --           line = "line",
+  --           column = "column",
+  --           endLine = "endLine",
+  --           endColumn = "endColumn",
+  --           message = "[eslint] ${message} [${ruleId}]",
+  --           security = "severity",
+  --         },
+  --         securities = {[2] = "error", [1] = "warning"},
+  --       },
+  --       markdownlint = {
+  --         command = "yarn markdownlint",
+  --         rootPatterns = {".git"},
+  --         isStderr = true,
+  --         debounce = 100,
+  --         args = {"--stdin"},
+  --         offsetLine = 0,
+  --         offsetColumn = 0,
+  --         sourceName = "markdownlint",
+  --         securities = {undefined = "hint"},
+  --         formatLines = 1,
+  --         formatPattern = {"^.*:(\\d+)\\s+(.*)$", {line = 1, column = -1, message = 2}},
+  --       },
+  --     },
+  --     filetypes = {
+  --       javascript = "eslint",
+  --       javascriptreact = "eslint",
+  --       typescript = "eslint",
+  --       typescriptreact = "eslint",
+  --       ["typescript.tsx"] = "eslint",
+  --       markdown = "markdownlint",
+  --       -- pandoc = "markdownlint",
+  --     },
+  --     formatters = {
+  --       prettierEslint = {
+  --         command = "yarn prettier-eslint",
+  --         args = {"--stdin"},
+  --         rootPatterns = {
+  --           ".eslintrc.cjs",
+  --           ".eslintrc",
+  --           ".eslintrc.json",
+  --           ".eslintrc.js",
+  --           ".prettierrc",
+  --           ".prettierrc.js",
+  --           ".prettierrc.json",
+  --           ".prettierrc.yml",
+  --           ".prettierrc.yaml",
+  --           ".prettier.config.js",
+  --           ".prettier.config.cjs",
+  --           ".git",
+  --         },
+  --       },
+  --       prettier = {
+  --         command = "yarn prettier",
+  --         args = {"--stdin-filepath", "%filename"},
+  --         rootPatterns = {
+  --           ".prettierrc",
+  --           ".prettierrc.js",
+  --           ".prettierrc.json",
+  --           ".prettierrc.yml",
+  --           ".prettierrc.yaml",
+  --           ".prettier.config.js",
+  --           ".prettier.config.cjs",
+  --           ".git",
+  --         },
+  --       },
+  --     },
+  --     formatFiletypes = {
+  --       css = "prettierEslint",
+  --       javascript = "prettierEslint",
+  --       javascriptreact = "prettierEslint",
+  --       json = "prettier",
+  --       scss = "prettier",
+  --       typescript = "prettierEslint",
+  --       typescriptreact = "prettierEslint",
+  --       ["typescript.tsx"] = "prettierEslint",
+  --     },
+  --   },
+  -- }
+  -- end
 end
 
 return {setup = setup}
