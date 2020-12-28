@@ -1,7 +1,6 @@
 local telescope = require "telescope"
 local themes = require "telescope.themes"
 local previewers = require "telescope.previewers"
-local mappings = require "plugin.telescope.mappings"
 
 local tele = {}
 

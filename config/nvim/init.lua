@@ -1,6 +1,6 @@
 --
 --     Hello
--- 
+--
 local g, o,  cmd = vim.g, vim.o,  vim.cmd
 local b = vim.b
 
@@ -70,7 +70,7 @@ g.ale_disable_lsp = 1 -- Disable Ale LSP support
 g.mix_format_on_save = 1 -- Elixir mix format on save
 g.rustfmt_autosave = 1 -- rustfmt on save
 
--- Highlight yank'd text after yankin' 
+-- Highlight yank'd text after yankin'
 cmd [[ augroup YankHighlight ]]
 cmd [[  autocmd! ]]
 cmd [[  autocmd TextYankPost *  lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000} ]]

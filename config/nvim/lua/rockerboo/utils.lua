@@ -10,7 +10,7 @@ M.keymap = function(map)
   return vim.api.nvim_set_keymap(map[1], map[2], map[3], opts)
 end
 
--- @param maps list of keymaps 
+-- @param maps list of keymaps
 M.keymaps = function(maps)
   for _, m in ipairs(maps) do M.keymap(m) end
 end

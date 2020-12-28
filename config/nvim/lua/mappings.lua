@@ -20,7 +20,7 @@ local maps = {
   {i, "Jk", esc},
   {i, "jK", esc},
 
-  -- LSP 
+  -- LSP
   {n, "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", silent},
   {n, "K", "<cmd>lua vim.lsp.buf.hover()<cr>", silent},
 
