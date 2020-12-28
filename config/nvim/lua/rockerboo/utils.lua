@@ -15,15 +15,30 @@ M.keymaps = function(maps)
   for _, m in ipairs(maps) do M.keymap(m) end
 end
 
+-- Skip these servers for formatting
+local skip_formatting_lsp = {"diagnosticls", "sumneko_lua", "tsserver"}
+
+-- Format the file using the lsp formatter
 M.lsp_format = function()
-  for _, client in pairs(vim.lsp.buf_get_clients()) do
-    -- skip these for formatting, use efm
-    if client.name == "sumneko_lua" then return end
-    if client.name == "tsserver" then return end
+  -- @param client lsp client
+  local format = function(client)
     print(string.format("Formatting for attached client: %s", client.name))
 
     vim.lsp.buf.formatting_sync(nil, 1000)
   end
+
+  -- Run the function if it passes all the checks
+  -- @param client lsp client
+  local once = function(client)
+    return function(skip, f)
+      for _, key in ipairs(skip) do if client.name == key then return end end
+
+      f(client)
+    end
+  end
+
+  -- Run our formatters
+  for _, client in pairs(vim.lsp.buf_get_clients()) do once(client)(skip_formatting_lsp, format) end
 end
 
 return M

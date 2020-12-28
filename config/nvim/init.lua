@@ -1,54 +1,61 @@
 --
 --     Hello
 -- 
-local g, opt, cmd = vim.g, vim.o, vim.cmd
+local g, o,  cmd = vim.g, vim.o,  vim.cmd
+local b = vim.b
 
 g.mapleader = " "
 
-opt.splitbelow = true -- Default split below
-opt.splitright = true -- Default split right
+o.splitbelow = true -- Default split below
+o.splitright = true -- Default split right
 
-opt.showmatch = true
+o.showmatch = true
 
-opt.pumblend = 10
+o.pumblend = 10
 
-opt.laststatus = 2
-opt.ff = "unix"
+o.laststatus = 2
+o.ff = "unix"
 
 -- No show modes twice with status bar
-cmd [[ set noshowmode ]]
+b.noshowmode = true
+-- cmd [[ set noshowmode ]]
 
 -- Files
-opt.hidden = true
-cmd [[ set noswapfile
-       set nobackup
-       set nowritebackup ]]
-opt.updatetime = 1000
+o.hidden = true
+b.noswapfile = true
+g.nobackup = true
+g.nowritebackup = true
+
+-- cmd [[ set noswapfile
+--        set nobackup
+--        set nowritebackup ]]
+o.updatetime = 1000
 
 -- Undo not working?
-opt.undodir = vim.fn.expand("~/.config/nvim/undo")
-opt.undofile = true
+o.undodir = vim.fn.expand("~/.config/nvim/undo")
+o.undofile = true
 
 -- opt.shada = {"!", "'1000", "<50", "s10", "h"}
 
 -- Tabs
-opt.tabstop = 2
-opt.shiftwidth = 2
-opt.softtabstop = 2
-cmd [[ set noexpandtab ]]
+o.tabstop = 2
+o.shiftwidth = 0
+b.softtabstop = 2
+b.noexpandtab = true
+-- cmd [[ set noexpandtab ]]
 
-opt.clipboard = "unnamedplus"
-opt.scrolloff = 10 -- Leave 10 rows when scrolling
-opt.emoji = true -- Use emojis
+o.clipboard = "unnamedplus"
+o.scrolloff = 10 -- Leave 10 rows when scrolling
+o.emoji = true -- Use emojis
 
-opt.formatoptions = "cqrnj"
+o.formatoptions = "cqrnj"
 
 -- Completion
-opt.completeopt = "menuone,noinsert,noselect"
-opt.shortmess = "c" -- Avoid showing extra messages when using completion
+o.completeopt = "menuone,noinsert,noselect"
+o.shortmess = "c" -- Avoid showing extra messages when using completion
 
 -- Colors
-opt.termguicolors = true -- Support 24bit colors
+o.termguicolors = true -- Support 24bit colors
 
 -- cmd [[ color boo ]]
 

@@ -25,9 +25,18 @@ tele.setup = function()
   telescope.setup({defaults = telescope_config})
 end
 
-function tele.find_files()
-  local theme = themes.get_dropdown {winblend = 10, results_height = 10}
-  require"telescope.builtin".find_files(theme)
+function tele.find_files(input_opts)
+  local opts = vim.tbl_deep_extend("force",
+                                   themes.get_dropdown {winblend = 10, results_height = 10},
+                                   input_opts or {})
+  require"telescope.builtin".find_files(opts)
+end
+
+function tele.find_files_plugins()
+  local cwd = require"packer.util".join_paths(vim.fn.stdpath("data"), "site", "pack")
+
+  local opts = themes.get_dropdown {winblend = 10, results_height = 10, cwd = cwd}
+  require"telescope.builtin".find_files(opts)
 end
 
 return tele

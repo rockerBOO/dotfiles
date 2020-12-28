@@ -2,19 +2,6 @@ local lsp_status = require("lsp-status")
 local status = require("rockerboo.lsp_status")
 local nvim_lsp = require("lspconfig")
 
-local attach_formatting = function(client)
-  -- Skip formatting for these servers. Using prettier for these
-  if client.name == "tsserver" then return end
-  if client.name == "cssls" then return end
-
-  -- print(string.format("attaching format to %s", client.name))
-
-  -- vim.api.nvim_command [[augroup LSPFormat]]
-  -- vim.api.nvim_command [[autocmd! * <buffer>]]
-  -- vim.api.nvim_command [[autocmd BufWritePre <buffer> :lua require'rockerboo.utils'.lsp_format()]]
-  -- vim.api.nvim_command [[augroup END]]
-end
-
 local setup = function()
   status.activate()
 
@@ -27,10 +14,11 @@ local setup = function()
     lsp_status.on_attach(client)
 
     vim.cmd [[ setlocal omnifunc=v:lua.vim.lsp.omnifunc ]]
-    vim.api.nvim_buf_set_keymap(0, "n", "<Leader>aa",
-                                "<cmd>lua require'rockerboo.utils'.lsp_format()<cr>", {})
 
     if client.resolved_capabilities.document_formatting then
+
+      vim.api.nvim_buf_set_keymap(0, "n", "<Leader>aa",
+                                  "<cmd>lua require'rockerboo.utils'.lsp_format()<cr>", {})
       print(string.format("Formatting supported %s", client.name))
 
     end
@@ -41,16 +29,6 @@ local setup = function()
   local servers = {"elixirls", "rust_analyzer", "tsserver", "gopls", "cssls", "vimls", "bashls"}
 
   for _, server in ipairs(servers) do nvim_lsp[server].setup(default_lsp_config) end
-
-  -- vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
-  --   if err ~= nil or result == nil then return end
-  --   if not vim.api.nvim_buf_get_option(bufnr, "modified") then
-  --     local view = vim.fn.winsaveview()
-  --     vim.lsp.util.apply_text_edits(result, bufnr)
-  --     vim.fn.winrestview(view)
-  --     if bufnr == vim.api.nvim_get_current_buf() then vim.api.nvim_command("noautocmd :update") end
-  --   end
-  -- end
 
   require"lspconfig".efm.setup {
     on_attach = on_attach_vim,
@@ -71,9 +49,7 @@ local setup = function()
         ".prettier.config.js",
         ".prettier.config.cjs",
       },
-      -- languages = {lua = {{formatCommand = "lua-format -i", formatStdin = true}}},
     },
-    filetypes = {"lua", "typescript", "typescriptreact", "javascript", "html", "json"},
   }
 
   require("nlua.lsp.nvim").setup(nvim_lsp, {
@@ -88,7 +64,6 @@ local setup = function()
   --     "javascriptreact",
   --     "typescript",
   --     "typescriptreact",
-  --     "typescript.tsx",
   --     "css",
   --     "markdown",
   --     -- "pandoc",
@@ -135,53 +110,8 @@ local setup = function()
   --       markdown = "markdownlint",
   --       -- pandoc = "markdownlint",
   --     },
-  --     formatters = {
-  --       prettierEslint = {
-  --         command = "yarn prettier-eslint",
-  --         args = {"--stdin"},
-  --         rootPatterns = {
-  --           ".eslintrc.cjs",
-  --           ".eslintrc",
-  --           ".eslintrc.json",
-  --           ".eslintrc.js",
-  --           ".prettierrc",
-  --           ".prettierrc.js",
-  --           ".prettierrc.json",
-  --           ".prettierrc.yml",
-  --           ".prettierrc.yaml",
-  --           ".prettier.config.js",
-  --           ".prettier.config.cjs",
-  --           ".git",
-  --         },
-  --       },
-  --       prettier = {
-  --         command = "yarn prettier",
-  --         args = {"--stdin-filepath", "%filename"},
-  --         rootPatterns = {
-  --           ".prettierrc",
-  --           ".prettierrc.js",
-  --           ".prettierrc.json",
-  --           ".prettierrc.yml",
-  --           ".prettierrc.yaml",
-  --           ".prettier.config.js",
-  --           ".prettier.config.cjs",
-  --           ".git",
-  --         },
-  --       },
-  --     },
-  --     formatFiletypes = {
-  --       css = "prettierEslint",
-  --       javascript = "prettierEslint",
-  --       javascriptreact = "prettierEslint",
-  --       json = "prettier",
-  --       scss = "prettier",
-  --       typescript = "prettierEslint",
-  --       typescriptreact = "prettierEslint",
-  --       ["typescript.tsx"] = "prettierEslint",
-  --     },
   --   },
   -- }
-  -- end
 end
 
 return {setup = setup}
