@@ -1,5 +1,5 @@
--- 
--- Setup packer.nvim with all necessary plugins 
+--
+-- Setup packer.nvim with all necessary plugins
 --
 -- Teej special code I stole :)
 local ensure_packer_installed = function()
