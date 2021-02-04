@@ -121,7 +121,7 @@ local setup = function()
     use {"editorconfig/editorconfig-vim"}
 
     -- Neovim Lua Development
-    use {"tjdevries/nlua.nvim"}
+    use {"~/code/nlua.nvim"}
 
     -- Colorizer
     use {"norcalli/nvim-colorizer.lua"}

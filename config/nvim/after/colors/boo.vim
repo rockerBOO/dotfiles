@@ -1,3 +1,4 @@
+" Yep, all gone
 
 " ALE highlighting
 " highlight ALEErrorSign ctermbg=NONE ctermfg=red

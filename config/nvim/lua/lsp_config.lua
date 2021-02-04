@@ -9,7 +9,6 @@ local setup = function()
   local on_attach_vim = function(client)
     print("'" .. client.name .. "' language server attached")
 
-    lsp_status.register_client(client.name)
     require"completion".on_attach(client)
     lsp_status.on_attach(client)
 
@@ -26,10 +25,12 @@ local setup = function()
 
   local default_lsp_config = {on_attach = on_attach_vim, capabilities = lsp_status.capabilities}
 
-  local servers = {"elixirls", "rust_analyzer", "tsserver", "gopls", "cssls", "vimls", "bashls"}
+  local servers = {"rust_analyzer", "tsserver", "gopls", "cssls", "vimls", "bashls"}
 
   for _, server in ipairs(servers) do nvim_lsp[server].setup(default_lsp_config) end
 
+  require'lspconfig'.elixirls.setup { cmd = {"elixir-ls"}, on_attach = on_attach_vim }
+  
   require"lspconfig".efm.setup {
     on_attach = on_attach_vim,
     init_options = {documentFormatting = true},
@@ -37,10 +38,10 @@ local setup = function()
       -- Require formatter configuration files to load
       rootMarkers = {
         ".lua-format",
-        ".eslintrc.cjs",
-        ".eslintrc",
-        ".eslintrc.json",
-        ".eslintrc.js",
+        -- ".eslintrc.cjs",
+        -- ".eslintrc",
+        -- ".eslintrc.json",
+        -- ".eslintrc.js",
         ".prettierrc",
         ".prettierrc.js",
         ".prettierrc.json",
@@ -53,6 +54,7 @@ local setup = function()
   }
 
   require("nlua.lsp.nvim").setup(nvim_lsp, {
+    cmd = {"lua-language-server", "-E", "/home/rockerboo/build/lua-language-server/main.lua"},
     on_attach = on_attach_vim,
     capabilities = lsp_status.capabilities,
   })

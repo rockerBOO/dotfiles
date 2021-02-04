@@ -1,6 +1,7 @@
+---
 version: 2
 log-file: /tmp/efm.log
-log-level: 1
+log-level: 4
 root-markers:
   - .git/
   - package.json
@@ -79,13 +80,12 @@ tools:
     format-stdin: true
 
   eslint: &eslint
-    lint-command: './node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}'
+    lint-command: 'eslint -f unix --stdin --stdin-filename ${INPUT}'
     lint-ignore-exit-code: true
     lint-stdin: true
     lint-formats:
-      - "%f:%l:%c: %m"
-    format-stdin: true
-    root-markers: 
+      - '%f:%l:%c: %m'
+    root-markers:
       - .git/
       - .eslintrc.cjs
 
@@ -93,7 +93,8 @@ tools:
     format-command: './node_modules/.bin/prettier'
 
   php-phpstan: &php-phpstan
-    lint-command: './vendor/bin/phpstan analyze --error-format raw --no-progress'
+    lint-command: \
+      './vendor/bin/phpstan analyze --error-format raw --no-progress'
 
   php-psalm: &php-psalm
     lint-command: './vendor/bin/psalm --output-format=emacs --no-progress'
@@ -124,7 +125,8 @@ tools:
     format-stdin: true
 
   luacheck: &luacheck
-    lint-command: 'luacheck --globals vim --filename ${INPUT} --formatter plain -'
+    lint-command: \
+      'luacheck --globals vim --filename ${INPUT} --formatter plain -'
     lint-stdin: true
     lint-formats:
       - '%f:%l:%c: %m'
@@ -170,16 +172,19 @@ languages:
     - <<: *sh-shfmt
 
   javascript:
-    - <<: *eslint
+    # - <<: *eslint
+    - <<: *prettier
 
   javascriptreact:
-    - <<: *eslint
+    # - <<: *eslint
+    - <<: *prettier
 
   typescript:
-    - <<: *eslint
+    # - <<: *eslint
+    - <<: *prettier
 
   typescriptreact:
-    - <<: *eslint
+    # - <<: *eslint
     - <<: *prettier
 
   php:
@@ -208,4 +213,4 @@ languages:
     - <<: *blade-blade-formatter
 
   _:
-    - <<: *any-excitetranslate 
+    - <<: *any-excitetranslate

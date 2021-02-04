@@ -1,7 +1,7 @@
 --
 --     Hello
 --
-local g, o,  cmd = vim.g, vim.o,  vim.cmd
+local g, o, cmd = vim.g, vim.o, vim.cmd
 local b = vim.b
 
 g.mapleader = " "
@@ -11,6 +11,7 @@ o.splitright = true -- Default split right
 
 o.showmatch = true
 
+-- Compositor transparency on pum menus
 o.pumblend = 10
 
 o.laststatus = 2
@@ -22,7 +23,7 @@ b.noshowmode = true
 
 -- Files
 o.hidden = true
-b.noswapfile = true
+g.noswapfile = true
 g.nobackup = true
 g.nowritebackup = true
 
@@ -35,7 +36,7 @@ o.updatetime = 1000
 o.undodir = vim.fn.expand("~/.config/nvim/undo")
 o.undofile = true
 
--- opt.shada = {"!", "'1000", "<50", "s10", "h"}
+g.shada = {"!", "'1000", "<50", "s10", "h"}
 
 -- Tabs
 o.tabstop = 2

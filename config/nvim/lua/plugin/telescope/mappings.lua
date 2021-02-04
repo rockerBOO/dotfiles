@@ -7,10 +7,10 @@ mappings.setup = function()
   local builtin = "<cmd>lua require'telescope.builtin'."
 
   local maps = {
-    {n, "<Leader>en", builtin .. "find_files{ cwd = '~/.config/nvim'"},
+    {n, "<Leader>en", builtin .. "find_files{ cwd = '~/.config/nvim' }"},
     {n, "<Leader>f", builtin .. "find_files{}"},
     {n, "<Leader>gf", builtin .. "git_files(require'telescope.themes'.get_dropdown())"},
-    {n, "<Leader>gg", builtin .. "file_files{cwd = '~/.config/nvim'"},
+    {n, "<Leader>gg", builtin .. "file_files{cwd = '~/.config/nvim' }"},
     {n, "ggr", builtin .. "lsp_workspace_symbols"},
     {n, "<Leader>P", builtin .. "planets"},
     {n, "<Leader>gl", builtin .. "live_grep"},

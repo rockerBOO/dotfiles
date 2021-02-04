@@ -1,7 +1,7 @@
 local mappings = {}
 
 -- Just reduce the length and maybe some memory :)
-local n, i, esc = "n", "i", "<esc>"
+local n, i, t, esc = "n", "i", "t", "<esc>"
 local silent = {silent = true}
 
 local maps = {
@@ -36,6 +36,9 @@ local maps = {
   {n, "<c-]>", "<cmd>lua vim.lsp.buf.declaration()<CR>", silent},
   {n, "<Leader>di", "<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>", silent},
 
+  {n, "<leader>T", "<cmd>lua require('plugin/jest-test').run_single_file{}<cr>"},
+
+  {t, "<esc><esc>", "<C-\\><C-n>"},
   -- {i, "kj", esc},
   -- {i, "KJ", esc},
   -- {i, "Kj", esc},
