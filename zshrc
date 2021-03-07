@@ -112,4 +112,10 @@ alias eg="cd ~/code/ecogarden/create"
 alias docker=podman
 alias spot=ncspot
 
+# NVM node version manager
 source /usr/share/nvm/init-nvm.sh
+
+# Python environment manager
+eval "$(pyenv init -)"
+
+

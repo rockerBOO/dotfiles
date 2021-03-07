@@ -34,21 +34,18 @@ local setup = function()
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
 
-    use {"challenger-deep-theme/vim", as = "challenger-deep"}
-    use {"haishanh/night-owl.vim"}
+    -- use {"challenger-deep-theme/vim", as = "challenger-deep"}
+    -- use {"haishanh/night-owl.vim"}
 
     -- Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
-    use {"bluz71/vim-moonfly-colors"}
-    use {"ChristianChiarulli/nvcode-color-schemes.vim"}
+    -- use {"bluz71/vim-moonfly-colors"}
+    -- use {"ChristianChiarulli/nvcode-color-schemes.vim"}
 
     -- Style css in styled-components
     use {"styled-components/vim-styled-components"}
 
     -- Configure LSP
     use {"neovim/nvim-lspconfig"}
-
-    -- LSP/Treesitter completion
-    use {"nvim-lua/completion-nvim"}
 
     -- Completion source for buffers
     use {"steelsojka/completion-buffers"}
@@ -159,14 +156,20 @@ local setup = function()
     -- Nightfly colors
     use {"bluz71/vim-nightfly-guicolors"}
 
-    use {"hrsh7th/vim-vsnip"}
-    use {"hrsh7th/vim-vsnip-integ"}
+    -- LSP/Treesitter completion
+    use {
+      "nvim-lua/completion-nvim",
+      requires = {{"hrsh7th/vim-vsnip"}, {"hrsh7th/vim-vsnip-integ", opt = true}},
+    }
+    -- use {"hrsh7th/vim-vsnip", requires = {}}
 
     -- Fuzzy finder
     -- use {'junegunn/fzf', { 'do': { -> fzf#install() } }}
     -- use { 'junegunn/fzf.vim' }
 
     use {"justinmk/vim-dirvish"}
+
+    use {"rcarriga/vim-ultest", requires = {{"janko/vim-test"}}}
   end)
 end
 

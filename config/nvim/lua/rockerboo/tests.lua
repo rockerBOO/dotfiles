@@ -29,4 +29,8 @@ test_runner.run = function(file_or_directory)
   return require"plenary.test_harness".test_directory(file_or_directory, opts)
 end
 
+-- vim-test settings
+vim.g["test#strategy"] = "dispatch"
+vim.g["test#javascript#jest#options"] = "--color=always"
+
 return test_runner

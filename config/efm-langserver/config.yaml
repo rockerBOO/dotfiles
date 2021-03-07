@@ -89,8 +89,11 @@ tools:
       - .git/
       - .eslintrc.cjs
 
-  prettier: &prettier
+  local-prettier: &local-prettier
     format-command: './node_modules/.bin/prettier'
+
+  prettier: &prettier
+    format-command: 'prettier'
 
   php-phpstan: &php-phpstan
     lint-command: \
@@ -120,13 +123,12 @@ tools:
   csv-csvlint: &csv-csvlint
     lint-command: 'csvlint'
 
-  lua-lua-format: &lua-lua-format
-    format-command: 'lua-format -i'
+  lua-stylua-format: &lua-stylua-format
+    format-command: 'stylua -'
     format-stdin: true
 
   luacheck: &luacheck
-    lint-command: \
-      'luacheck --globals vim --filename ${INPUT} --formatter plain -'
+    lint-command: 'luacheck --globals vim --filename ${INPUT} --formatter plain -'
     lint-stdin: true
     lint-formats:
       - '%f:%l:%c: %m'
@@ -152,6 +154,7 @@ languages:
   markdown:
     - <<: *markdown-markdownlint
     - <<: *markdown-pandoc
+    - <<: *prettier
 
   rst:
     - <<: *rst-lint
@@ -173,19 +176,19 @@ languages:
 
   javascript:
     # - <<: *eslint
-    - <<: *prettier
+    - <<: *local-prettier
 
   javascriptreact:
     # - <<: *eslint
-    - <<: *prettier
+    - <<: *local-prettier
 
   typescript:
     # - <<: *eslint
-    - <<: *prettier
+    - <<: *local-prettier
 
   typescriptreact:
-    # - <<: *eslint
-    - <<: *prettier
+    - <<: *eslint
+    - <<: *local-prettier
 
   php:
     - <<: *php-phpstan
@@ -206,7 +209,7 @@ languages:
     - <<: *csv-csvlint
 
   lua:
-    - <<: *lua-lua-format
+    - <<: *lua-stylua-format
     - <<: *luacheck
 
   blade:

@@ -14,6 +14,8 @@ local maps = {
   -- Treesitter quickfix
   {n, "<leader><c-w>", ":write | edit | TSBufEnable highlight<cr><cr>"},
 
+  -- {n, "<leader>hhi", ":TSPlaygroundToggle<cr>"}, 
+
   -- Escape
   {i, "jk", esc},
   {i, "JK", esc},
@@ -36,8 +38,13 @@ local maps = {
   {n, "<c-]>", "<cmd>lua vim.lsp.buf.declaration()<CR>", silent},
   {n, "<Leader>di", "<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>", silent},
 
-  {n, "<leader>T", "<cmd>lua require('plugin/jest-test').run_single_file{}<cr>"},
+  {n, "<leader>T", "<cmd>Ultest<cr>"},
+  {n, "]t", "<plug>(ultest-next-fail)"},
+  {n, "[t", "<plug>(ultest-prev-fail)"},
 
+  -- {n, "<leader>hi", [[ <cmd>echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+-- ]]},
+  
   {t, "<esc><esc>", "<C-\\><C-n>"},
   -- {i, "kj", esc},
   -- {i, "KJ", esc},

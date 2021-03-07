@@ -10,10 +10,9 @@ mappings.setup = function()
     {n, "<Leader>en", builtin .. "find_files{ cwd = '~/.config/nvim' }"},
     {n, "<Leader>f", builtin .. "find_files{}"},
     {n, "<Leader>gf", builtin .. "git_files(require'telescope.themes'.get_dropdown())"},
-    {n, "<Leader>gg", builtin .. "file_files{cwd = '~/.config/nvim' }"},
     {n, "ggr", builtin .. "lsp_workspace_symbols"},
-    {n, "<Leader>P", builtin .. "planets"},
     {n, "<Leader>gl", builtin .. "live_grep"},
+    {n, "<Leader>gp", builtin .. string.format("find_files{ cwd = '%s' }", vim.fn.stdpath('cache'))}
   }
 
   utils.keymaps(maps)
@@ -32,6 +31,7 @@ function PlenaryReload()
   require"plenary.reload".reload_module("lsp_extensions")
   require"plenary.reload".reload_module("plugin")
   require"plenary.reload".reload_module("rockerboo")
+  mappings.setup()
   require"boo-colorscheme".use {}
 end
 

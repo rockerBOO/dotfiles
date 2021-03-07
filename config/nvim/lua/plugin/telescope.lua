@@ -4,10 +4,14 @@ local previewers = require "telescope.previewers"
 local sorters = require "telescope.sorters"
 local utils = require "rockerboo.utils"
 
+local plugins_directory = function()
+  return require"packer.util".join_paths(vim.fn.stdpath("data"), "site", "pack")
+end
+
 local tele = {}
 
 -- Telescope defaults
-tele.setup = function()
+tele.setup_defaults = function()
   local telescope_config = {
     selection_strategy = "reset",
     shorten_path = true,
@@ -23,12 +27,13 @@ tele.setup = function()
     grep_previewer = previewers.vim_buffer_vimgrep.new,
     qflist_previewer = previewers.vim_buffer_qflist.new,
     generic_sorter = sorters.get_fzy_sorter,
-    -- file_sorter = sorters.get_fzy_sorter,
+    file_sorter = sorters.get_fzy_sorter,
   }
 
   telescope.setup({defaults = telescope_config})
 
   utils.keymap({"n", "<Leader>gt", "<cmd>lua require'plugin.telescope'.treesitter()<cr>"})
+  utils.keymap({"n", "<Leader>pl", "<cmd>lua require'plugin.telescope'.find_files_plugins()<cr>"})
 end
 
 -- Themes
@@ -44,14 +49,11 @@ end
 -- >>- ------- -<
 
 tele.find_files = function(input_opts)
-  local opts = vim.tbl_deep_extend("force", theme, input_opts or {})
-  require"telescope.builtin".find_files(opts)
+  require"telescope.builtin".find_files(tele.theme(input_opts))
 end
 
 tele.find_files_plugins = function()
-  local cwd = require"packer.util".join_paths(vim.fn.stdpath("data"), "site", "pack")
-
-  require"telescope.builtin".find_files(tele.theme({cwd = cwd}))
+  require"telescope.builtin".find_files(tele.theme({cwd = plugins_directory()}))
 end
 
 -- Treesitter 
@@ -60,6 +62,7 @@ end
 tele.treesitter = function()
   return require"telescope.builtin".treesitter(tele.theme())
 end
+
 
 function P(module)
   require"plenary.reload".reload_module(module)
@@ -71,8 +74,8 @@ function PlenaryReload()
   require"plenary.reload".reload_module("boo-colorscheme")
   require"plenary.reload".reload_module("plugin")
   require"plenary.reload".reload_module("lsp_extensions")
-  require"boo-colorscheme".use {}
-  tele.setup()
+  require"boo-colorscheme".use()
+  tele.setup_defaults()
 end
 
 return tele

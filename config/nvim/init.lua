@@ -18,14 +18,14 @@ o.laststatus = 2
 o.ff = "unix"
 
 -- No show modes twice with status bar
-b.noshowmode = true
+b.showmode = false
 -- cmd [[ set noshowmode ]]
 
 -- Files
 o.hidden = true
-g.noswapfile = true
-g.nobackup = true
-g.nowritebackup = true
+g.swapfile = false
+g.backup = false
+g.writebackup = false
 
 -- cmd [[ set noswapfile
 --        set nobackup
@@ -42,8 +42,7 @@ g.shada = {"!", "'1000", "<50", "s10", "h"}
 o.tabstop = 2
 o.shiftwidth = 0
 b.softtabstop = 2
-b.noexpandtab = true
--- cmd [[ set noexpandtab ]]
+b.expandtab = false
 
 o.clipboard = "unnamedplus"
 o.scrolloff = 10 -- Leave 10 rows when scrolling
@@ -70,6 +69,12 @@ g.ale_disable_lsp = 1 -- Disable Ale LSP support
 
 g.mix_format_on_save = 1 -- Elixir mix format on save
 g.rustfmt_autosave = 1 -- rustfmt on save
+
+-- cmd [[ augroup LuaFormat ]]
+-- cmd [[ autocmd! ]]
+-- cmd [[ autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr> ]]
+-- cmd [[ autocmd BufWrite *.lua call LuaFormat() ]]
+-- cmd [[ augroup END ]]
 
 -- Highlight yank'd text after yankin'
 cmd [[ augroup YankHighlight ]]
