@@ -41,4 +41,17 @@ M.lsp_format = function()
   for _, client in pairs(vim.lsp.buf_get_clients()) do once(client)(skip_formatting_lsp, format) end
 end
 
+M.log_to_file = function(logfile)
+  return function(log_value)
+    local file = io.open(logfile, "a")
+    if not file then
+      file:close()
+      return
+    end
+
+    file:write(log_value .. "\n")
+    file:close()
+  end
+end
+
 return M

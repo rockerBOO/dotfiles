@@ -118,4 +118,6 @@ source /usr/share/nvm/init-nvm.sh
 # Python environment manager
 eval "$(pyenv init -)"
 
+# Add luarocks paths
+eval "$(luarocks path --bin)"
 

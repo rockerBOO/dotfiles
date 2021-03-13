@@ -22,27 +22,28 @@ b.showmode = false
 -- cmd [[ set noshowmode ]]
 
 -- Files
+-- if you had like noswapfile you should use o.swapfile = false
+-- simular throughout for when you had `set noswapfile`
 o.hidden = true
-g.swapfile = false
-g.backup = false
-g.writebackup = false
+o.swapfile = false
+o.backup = false
+o.writebackup = false
 
--- cmd [[ set noswapfile
---        set nobackup
---        set nowritebackup ]]
+-- Lower update time for CursorHold event
 o.updatetime = 1000
 
--- Undo not working?
+-- Undo
 o.undodir = vim.fn.expand("~/.config/nvim/undo")
 o.undofile = true
 
-g.shada = {"!", "'1000", "<50", "s10", "h"}
+-- Shada
+o.shada = "!,'1000,<50,s10,h"
 
 -- Tabs
 o.tabstop = 2
-o.shiftwidth = 0
-b.softtabstop = 2
-b.expandtab = false
+o.shiftwidth = 2
+o.softtabstop = 2
+o.expandtab = false
 
 o.clipboard = "unnamedplus"
 o.scrolloff = 10 -- Leave 10 rows when scrolling
@@ -77,10 +78,10 @@ g.rustfmt_autosave = 1 -- rustfmt on save
 -- cmd [[ augroup END ]]
 
 -- Highlight yank'd text after yankin'
-cmd [[ augroup YankHighlight ]]
-cmd [[  autocmd! ]]
-cmd [[  autocmd TextYankPost *  lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000} ]]
-cmd [[ augroup END ]]
+cmd([[ augroup YankHighlight ]])
+cmd([[  autocmd! ]])
+cmd([[  autocmd TextYankPost *  lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000} ]])
+cmd([[ augroup END ]])
 
 -- Reload module after saving
 -- cmd [[ augroup Reload ]]
@@ -89,13 +90,13 @@ cmd [[ augroup END ]]
 -- cmd [[ augroup end ]]
 
 -- Setup key mappings
-require"mappings".setup()
+require("mappings").setup()
 
 -- Setup all the plugins
-require"plugins".setup()
+require("plugins").setup()
 
 -- Configure plugins
-require "setup"
+require("setup")
 
 -- Colorscheme
-require"boo-colorscheme".use {}
+require("boo-colorscheme").use({})
