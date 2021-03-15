@@ -64,18 +64,8 @@ o.termguicolors = true -- Support 24bit colors
 g["&t_8f"] = "<Esc>[38;2;%lu;%lu;%lum]"
 g["&t_8b"] = "<Esc>[48;2;%lu;%lu;%lum]"
 
--- Plugins (need to move out of here)
+-- Plugins
 g.loaded_netrwPlugin = 1 -- Don't load netrw
-g.ale_disable_lsp = 1 -- Disable Ale LSP support
-
-g.mix_format_on_save = 1 -- Elixir mix format on save
-g.rustfmt_autosave = 1 -- rustfmt on save
-
--- cmd [[ augroup LuaFormat ]]
--- cmd [[ autocmd! ]]
--- cmd [[ autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr> ]]
--- cmd [[ autocmd BufWrite *.lua call LuaFormat() ]]
--- cmd [[ augroup END ]]
 
 -- Highlight yank'd text after yankin'
 cmd([[ augroup YankHighlight ]])
@@ -84,10 +74,10 @@ cmd([[  autocmd TextYankPost *  lua vim.highlight.on_yank {higroup="IncSearch", 
 cmd([[ augroup END ]])
 
 -- Reload module after saving
--- cmd [[ augroup Reload ]]
--- cmd [[  au! ]]
--- cmd [[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module('init') ]]
--- cmd [[ augroup end ]]
+cmd([[ augroup Reload ]])
+cmd([[  au! ]])
+cmd([[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module('init') ]])
+cmd([[ augroup end ]])
 
 -- Setup key mappings
 require("mappings").setup()

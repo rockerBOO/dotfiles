@@ -119,5 +119,5 @@ source /usr/share/nvm/init-nvm.sh
 eval "$(pyenv init -)"
 
 # Add luarocks paths
-eval "$(luarocks path --bin)"
+# eval "$(luarocks path --bin)"
 

@@ -74,7 +74,7 @@ local setup = function()
 		use({ "vim-scripts/indentpython.vim" })
 
 		-- Rust syntax rules
-		use({ "rust-lang/rust.vim" })
+		-- use({ "rust-lang/rust.vim" })
 
 		-- Elixir syntax rules
 		use({ "elixir-editors/vim-elixir" })

@@ -71,7 +71,7 @@ local setup = function()
 		require("completion").on_attach(client)
 		lsp_status.on_attach(client)
 
-		vim.cmd([[ setlocal omnifunc=v:lua.vim.lsp.omnifunc ]])
+		-- vim.cmd([[ setlocal omnifunc=v:lua.vim.lsp.omnifunc ]])
 
 		-- print(vim.inspect(client.resolved_capabilities))
 
@@ -79,9 +79,11 @@ local setup = function()
 			utils.keymap({
 				"n",
 				"<Leader>aa",
-				"<cmd>lua require'rockerboo.utils'.lsp_format()<cr>",
+				"<cmd>lua vim.lsp.buf.formatting()<cr>",
 				{},
 			})
+
+			vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 1000) ]])
 			print(string.format("Formatting supported %s", client.name))
 		end
 	end

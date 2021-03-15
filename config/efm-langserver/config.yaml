@@ -90,7 +90,8 @@ tools:
       - .eslintrc.cjs
 
   local-prettier: &local-prettier
-    format-command: './node_modules/.bin/prettier'
+    format-command: './node_modules/.bin/prettier --stdin-filename ${INPUT}'
+    format-stdin: true
 
   prettier: &prettier
     format-command: 'prettier'
