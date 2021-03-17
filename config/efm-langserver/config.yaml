@@ -94,7 +94,8 @@ tools:
     format-stdin: true
 
   prettier: &prettier
-    format-command: 'prettier'
+    format-command: 'prettier --stdin-filename ${INPUT}'
+    format-stdin: true
 
   php-phpstan: &php-phpstan
     lint-command: \
@@ -176,15 +177,15 @@ languages:
     - <<: *sh-shfmt
 
   javascript:
-    # - <<: *eslint
+    - <<: *eslint
     - <<: *local-prettier
 
   javascriptreact:
-    # - <<: *eslint
+    - <<: *eslint
     - <<: *local-prettier
 
   typescript:
-    # - <<: *eslint
+    - <<: *eslint
     - <<: *local-prettier
 
   typescriptreact:

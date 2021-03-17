@@ -53,7 +53,7 @@ o.formatoptions = "cqrnj"
 
 -- Completion
 o.completeopt = "menuone,noinsert,noselect"
-o.shortmess = "c" -- Avoid showing extra messages when using completion
+o.shortmess = "filnxtToOFc" -- Avoid showing extra messages when using completion
 
 -- Colors
 o.termguicolors = true -- Support 24bit colors
@@ -74,10 +74,10 @@ cmd([[  autocmd TextYankPost *  lua vim.highlight.on_yank {higroup="IncSearch", 
 cmd([[ augroup END ]])
 
 -- Reload module after saving
-cmd([[ augroup Reload ]])
-cmd([[  au! ]])
-cmd([[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module('init') ]])
-cmd([[ augroup end ]])
+-- cmd([[ augroup Reload ]])
+-- cmd([[  au! ]])
+-- cmd([[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module('init')<cr> ]])
+-- cmd([[ augroup end ]])
 
 -- Setup key mappings
 require("mappings").setup()

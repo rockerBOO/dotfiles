@@ -83,7 +83,7 @@ local setup = function()
 				{},
 			})
 
-			vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 1000) ]])
+			vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 100) ]])
 			print(string.format("Formatting supported %s", client.name))
 		end
 	end

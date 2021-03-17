@@ -63,12 +63,13 @@ local setup = function()
 		use({ "tjdevries/express_line.nvim" })
 
 		-- Treesitter
-		use({ "nvim-treesitter/nvim-treesitter" })
+		-- use({ "nvim-treesitter/nvim-treesitter" })
+		use({ "~/build/tmp/nvim-treesitter" })
 
 		use({ "nvim-treesitter/playground" })
 
 		-- Completion from treesitter
-		use({ "nvim-treesitter/completion-treesitter" })
+		-- use({ "nvim-treesitter/completion-treesitter" })
 
 		-- Indent rules for python
 		use({ "vim-scripts/indentpython.vim" })
@@ -136,7 +137,7 @@ local setup = function()
 		use({ "tjdevries/lsp_extensions.nvim" })
 
 		-- use {"tjdevries/colorbuddy.nvim"}
-		use({ "~/code/colorbuddy.nvim" })
+		-- use({ "~/code/colorbuddy.nvim" })
 
 		-- Some stupid thing
 		use({ "ThePrimeagen/vim-be-good" })

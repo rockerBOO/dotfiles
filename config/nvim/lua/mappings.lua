@@ -76,9 +76,10 @@ local maps = {
 	{ n, "<Leader>q", ":q<cr>" },
 
 	{ i, "<C-l>", "A<cr>" },
-
 	{ i, "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true } },
 	{ i, "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true } },
+
+
 
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
 }
