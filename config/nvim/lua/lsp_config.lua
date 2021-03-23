@@ -68,7 +68,6 @@ local setup = function()
 
 		-- log_capabilities(client.resolved_capabilities)
 
-		require("completion").on_attach(client)
 		lsp_status.on_attach(client)
 
 		-- vim.cmd([[ setlocal omnifunc=v:lua.vim.lsp.omnifunc ]])
@@ -83,22 +82,17 @@ local setup = function()
 				{},
 			})
 
-			vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 100) ]])
+			if client.name ~= "tsserver" then
+				vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 250) ]])
+			end
+
 			print(string.format("Formatting supported %s", client.name))
 		end
 	end
 
-	local default_lsp_config = { on_attach = on_attach_vim, capabilities = lsp_status.capabilities }
+  -- EFM
+  --
 
-	local servers = { "tsserver", "gopls", "cssls", "vimls", "bashls" }
-
-	for _, server in ipairs(servers) do
-		config[server].setup(default_lsp_config)
-	end
-
-	-- config.tsserver.setup({ on_attach = on_attach_vim })
-	config.elixirls.setup({ cmd = { "elixir-ls" }, on_attach = on_attach_vim })
-	config.rust_analyzer.setup({ on_attach = on_attach_vim })
 
 	require("lspconfig").efm.setup({
 		on_attach = on_attach_vim,
@@ -107,7 +101,6 @@ local setup = function()
 			hover = true,
 			documentSymbol = true,
 			codeAction = true,
-			completion = true,
 		},
 		settings = {
 			-- Require formatter configuration files to load
@@ -127,6 +120,19 @@ local setup = function()
 			},
 		},
 	})
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+	local default_lsp_config = { on_attach = on_attach_vim, capabilities = capabilities }
+
+	local servers = { "tsserver", "gopls", "cssls", "vimls", "bashls" }
+
+	for _, server in ipairs(servers) do
+		config[server].setup(default_lsp_config)
+	end
+
+	-- config.tsserver.setup({ on_attach = on_attach_vim })
+	config.elixirls.setup({ cmd = { "elixir-ls" }, on_attach = on_attach_vim })
+	config.rust_analyzer.setup({ on_attach = on_attach_vim })
 
 	require("nlua.lsp.nvim").setup(config, {
 		cmd = {

@@ -53,9 +53,6 @@ local setup = function()
 		-- Configure LSP
 		use({ "neovim/nvim-lspconfig" })
 
-		-- Completion source for buffers
-		use({ "steelsojka/completion-buffers" })
-
 		-- LSP Status Bar
 		use({ "nvim-lua/lsp-status.nvim" })
 
@@ -64,7 +61,10 @@ local setup = function()
 
 		-- Treesitter
 		-- use({ "nvim-treesitter/nvim-treesitter" })
-		use({ "~/build/tmp/nvim-treesitter" })
+		use({ "~/code/nvim-treesitter" })
+
+		-- Completion source for buffers
+		-- use({ "steelsojka/completion-buffers" })
 
 		use({ "nvim-treesitter/playground" })
 
@@ -78,10 +78,10 @@ local setup = function()
 		-- use({ "rust-lang/rust.vim" })
 
 		-- Elixir syntax rules
-		use({ "elixir-editors/vim-elixir" })
+		-- use({ "elixir-editors/vim-elixir" })
 		-- Plug 'slashmili/alchemist.vim'
-		use({ "mhinz/vim-mix-format" })
-		use({ "moofish32/vim-ex_test" })
+		-- use({ "mhinz/vim-mix-format" })
+		-- use({ "moofish32/vim-ex_test" })
 
 		--  File tree
 		-- Plug 'preservim/nerdtree'
@@ -164,11 +164,16 @@ local setup = function()
 		use({ "bluz71/vim-nightfly-guicolors" })
 
 		-- LSP/Treesitter completion
+		-- use({
+		-- 	"nvim-lua/completion-nvim",
+		-- 	requires = { { "hrsh7th/vim-vsnip" }, { "hrsh7th/vim-vsnip-integ", opt = true } },
+		-- })
+		-- use {"hrsh7th/vim-vsnip", requires = {}}
+
 		use({
-			"nvim-lua/completion-nvim",
+			"hrsh7th/nvim-compe",
 			requires = { { "hrsh7th/vim-vsnip" }, { "hrsh7th/vim-vsnip-integ", opt = true } },
 		})
-		-- use {"hrsh7th/vim-vsnip", requires = {}}
 
 		use({ "norcalli/nvim-terminal.lua" })
 

@@ -1,6 +1,6 @@
 local telescope = require("telescope")
 local themes = require("telescope.themes")
-local previewers = require("telescope.previewers")
+-- local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
 local utils = require("rockerboo.utils")
 
@@ -23,11 +23,8 @@ tele.setup_defaults = function()
 		width = 0.8,
 		height = 0.7,
 		results_width = 80,
-		file_previewer = previewers.vim_buffer_cat.new,
-		grep_previewer = previewers.vim_buffer_vimgrep.new,
-		qflist_previewer = previewers.vim_buffer_qflist.new,
-		generic_sorter = sorters.get_fzy_sorter,
-		file_sorter = sorters.get_fzy_sorter,
+	-- generic_sorter = sorters.get_fzy_sorter,
+	-- file_sorter = sorters.get_fzy_sorter,
 	}
 
 	telescope.setup({ defaults = telescope_config })

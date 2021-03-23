@@ -8,7 +8,7 @@ mappings.setup = function()
 
   local maps = {
     {n, "<Leader>en", builtin .. "find_files{ cwd = '~/.config/nvim' }"},
-    {n, "<Leader>f", builtin .. "find_files{}"},
+    {n, "<Leader>f", builtin .. "find_files{previewer_cutoff = 0}"},
     {n, "<Leader>gf", builtin .. "git_files(require'telescope.themes'.get_dropdown())"},
     {n, "ggr", builtin .. "lsp_workspace_symbols"},
     {n, "<Leader>gl", builtin .. "live_grep"},

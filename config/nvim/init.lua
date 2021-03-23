@@ -79,14 +79,16 @@ cmd([[ augroup END ]])
 -- cmd([[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module('init')<cr> ]])
 -- cmd([[ augroup end ]])
 
--- Setup key mappings
-require("mappings").setup()
-
 -- Setup all the plugins
 require("plugins").setup()
+
+-- Setup key mappings
+require("mappings").setup()
 
 -- Configure plugins
 require("setup")
 
 -- Colorscheme
-require("boo-colorscheme").use({})
+-- require("boo-colorscheme").use({})
+-- o.colorscheme = "boo"
+cmd([[ colorscheme boo ]])
