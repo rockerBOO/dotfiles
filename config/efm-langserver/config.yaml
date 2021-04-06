@@ -79,12 +79,25 @@ tools:
     format-command: 'shfmt -ci -s -bn'
     format-stdin: true
 
-  eslint: &eslint
-    lint-command: 'eslint -f unix --stdin --stdin-filename ${INPUT}'
+
+  eslint_d: &eslint_d
+    lint-command: 'eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}'
     lint-ignore-exit-code: true
     lint-stdin: true
     lint-formats:
-      - '%f:%l:%c: %m'
+      - "%f(%l,%c): %tarning %m"
+      - "%f(%l,%c): %rror %m"
+    root-markers:
+      - .git/
+      - .eslintrc.cjs
+
+  eslint: &eslint
+    lint-command: 'eslint -f visualstudio --stdin --stdin-filename ${INPUT}'
+    lint-ignore-exit-code: true
+    lint-stdin: true
+    lint-formats:
+      - "%f(%l,%c): %tarning %m"
+      - "%f(%l,%c): %rror %m"
     root-markers:
       - .git/
       - .eslintrc.cjs
@@ -180,19 +193,19 @@ languages:
     - <<: *sh-shfmt
 
   javascript:
-    # - <<: *eslint
+    - <<: *eslint_d
     - <<: *local-prettier
 
   javascriptreact:
-    # - <<: *eslint
+    - <<: *eslint
     - <<: *local-prettier
 
   typescript:
-    # - <<: *eslint
+    - <<: *eslint_d
     - <<: *local-prettier
 
   typescriptreact:
-    # - <<: *eslint
+    - <<: *eslint_d
     - <<: *local-prettier
 
   php:
@@ -207,8 +220,8 @@ languages:
 
   json:
     - <<: *json-jq
-    - <<: *json-fixjson
-    # - <<: *json-prettier
+    # - <<: *json-fixjson
+    - <<: *json-prettier
 
   csv:
     - <<: *csv-csvlint

@@ -71,17 +71,17 @@ F.find = function(fn)
 end
 
 F.flatten = function(array)
-  return F.reduce(function(acc, value) 
-    if type(value) == 'table' then
-      for _, v in ipairs(value) do
-        table.insert(acc, v) 
-      end 
-    else 
-      table.insert(acc, value)
-    end
+	return F.reduce(function(acc, value)
+		if type(value) == "table" then
+			for _, v in ipairs(value) do
+				table.insert(acc, v)
+			end
+		else
+			table.insert(acc, value)
+		end
 
-    return acc
-  end, {})(array)
+		return acc
+	end, {})(array)
 end
 
 -- @param array = table -- { "a", "b" }

@@ -72,7 +72,7 @@ ZSH_CUSTOM=~/.local/share/zsh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fd docker fzf tmux cargo fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent)
+plugins=(git fd docker fzf tmux cargo fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa)
 
 source $ZSH/oh-my-zsh.sh
 

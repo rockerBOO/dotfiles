@@ -4,7 +4,7 @@ require("nvim-treesitter.configs").setup({
 	incremental_selection = { enable = true },
 	textobjects = { enable = true },
 	playground = { enable = true, disable = {}, updatetime = 25, persist_queries = false },
-	additional_vim_regex_highlighting = false,
+	-- additional_vim_regex_highlighting = false,
 })
 
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()

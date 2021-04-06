@@ -142,6 +142,8 @@ local setup = function()
 		-- Some stupid thing
 		use({ "ThePrimeagen/vim-be-good" })
 
+		use({ "ThePrimeagen/neovim-irc-ui" })
+
 		-- ES Linting
 		-- Plug 'dense-analysis/ale'
 

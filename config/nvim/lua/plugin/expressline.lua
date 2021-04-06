@@ -9,29 +9,30 @@ require("el").reset_windows()
 
 -- generator(win_id)
 local generator = function(_)
-  print("Generating statusline")
-  return {
-    extensions.gen_mode {format_string = "%s"},
-    sections.split,
-    subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
-      local icon = extensions.file_icon(_, bufnr)
-      if icon then return icon .. " " end
-      return ""
-    end),
-    builtin.responsive_file(140, 90),
-    sections.collapse_builtin {" ", builtin.modified_flag},
-    sections.split,
-    lsp_statusline.status,
-    -- lsp_statusline.server_progress,
-    builtin.line,
-    ",",
-    builtin.column,
-    " ",
-    sections.collapse_builtin {"", builtin.help_list, builtin.readonly_list, ""},
-    function(_, buffer)
-      return buffer.filetype
-    end,
-  }
+	return {
+		extensions.gen_mode({ format_string = "%s" }),
+		sections.split,
+		subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
+			local icon = extensions.file_icon(_, bufnr)
+			if icon then
+				return icon .. " "
+			end
+			return ""
+		end),
+		builtin.responsive_file(140, 90),
+		sections.collapse_builtin({ " ", builtin.modified_flag }),
+		sections.split,
+		lsp_statusline.status,
+		lsp_statusline.server_progress,
+		builtin.line,
+		",",
+		builtin.column,
+		" ",
+		sections.collapse_builtin({ "", builtin.help_list, builtin.readonly_list, "" }),
+		function(_, buffer)
+			return buffer.filetype
+		end,
+	}
 end
 
-require("el").setup {generator = generator}
+require("el").setup({ generator = generator })
