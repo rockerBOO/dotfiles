@@ -4,6 +4,8 @@ local utils = require("rockerboo.utils")
 local f = require("rockerboo.functional")
 local config = require("lspconfig")
 
+-- vim.lsp.set_log_level("debug")
+
 local setup = function()
 	status.activate()
 
@@ -63,8 +65,10 @@ local setup = function()
 	end
 
 	--- Language servers
-	local on_attach_vim = function(client)
+	local on_attach_vim = function(client, bufnr)
 		print("'" .. client.name .. "' language server attached")
+
+		utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
 
 		-- log_capabilities(client.resolved_capabilities)
 
@@ -72,7 +76,8 @@ local setup = function()
 
 		-- vim.cmd([[ setlocal omnifunc=v:lua.vim.lsp.omnifunc ]])
 
-		-- print(vim.inspect(client.resolved_capabilities))
+		local capLog = utils.log_to_file("/tmp/capabilities.log")
+		capLog("client.name: " .. client.name .. "\n" .. vim.inspect(client.resolved_capabilities))
 
 		if client.resolved_capabilities.document_formatting then
 			utils.keymap({
@@ -81,18 +86,50 @@ local setup = function()
 				"<cmd>lua vim.lsp.buf.formatting()<cr>",
 				{},
 			})
-
-			if client.name ~= "tsserver" then
-				vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 250) ]])
-			end
+			vim.api.nvim_command([[augroup Format]])
+			vim.api.nvim_command([[autocmd! * <buffer>]])
+			vim.api.nvim_command([[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync(nil, 500)]])
+			vim.api.nvim_command([[augroup END]])
+			-- vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 500) ]])
+			-- if client.name ~= "tsserver" then
+			-- end
 
 			print(string.format("Formatting supported %s", client.name))
 		end
 	end
 
-  -- EFM
-  --
+	-- EFM
+	--
 
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	local default_lsp_config = { on_attach = on_attach_vim, capabilities = capabilities }
+
+	local servers = { "gopls", "cssls", "vimls", "bashls" }
+
+	for _, server in ipairs(servers) do
+		config[server].setup(default_lsp_config)
+	end
+
+	local tsserver_capabilities = capabilities
+
+	-- utils.log_to_file(vim.lsp.get_log_path())(vim.inspect(tsserver_capabilities))
+	-- tsserver_capabilities["textDocument"]["formatting"] = false
+
+	config["tsserver"].setup({
+		-- cmd = "typescript-language-server --stdio --log-level=4 --tsserver-log-file=/tmp/tsserver.log",
+		capabilities = tsserver_capabilities,
+		on_attach = function(client, bufnr)
+			require("nvim-lsp-ts-utils").setup({
+				-- defaults
+				disable_commands = false,
+				enable_import_on_completion = false,
+				import_on_completion_timeout = 5000,
+			})
+
+			return on_attach_vim(client, bufnr)
+		end,
+	})
 
 	require("lspconfig").efm.setup({
 		on_attach = on_attach_vim,
@@ -120,17 +157,7 @@ local setup = function()
 			},
 		},
 	})
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-	local default_lsp_config = { on_attach = on_attach_vim, capabilities = capabilities }
 
-	local servers = { "tsserver", "gopls", "cssls", "vimls", "bashls" }
-
-	for _, server in ipairs(servers) do
-		config[server].setup(default_lsp_config)
-	end
-
-	-- config.tsserver.setup({ on_attach = on_attach_vim })
 	config.elixirls.setup({ cmd = { "elixir-ls" }, on_attach = on_attach_vim })
 	config.rust_analyzer.setup({ on_attach = on_attach_vim })
 
@@ -143,7 +170,11 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 		on_attach = on_attach_vim,
 	})
 
-	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { update_in_insert = false })
+	vim.lsp.handlers["textDocument/publishDiagnostics"] =
+		vim.lsp.with(
+			vim.lsp.diagnostic.on_publish_diagnostics,
+			{ virtual_text = false, update_in_insert = false }
+		)
 end
 
 return { setup = setup }

@@ -60,8 +60,8 @@ local setup = function()
 		use({ "tjdevries/express_line.nvim" })
 
 		-- Treesitter
-		-- use({ "nvim-treesitter/nvim-treesitter" })
-		use({ "~/code/nvim-treesitter" })
+		use({ "nvim-treesitter/nvim-treesitter" })
+		-- use({ "~/code/nvim-treesitter" })
 
 		-- Completion source for buffers
 		-- use({ "steelsojka/completion-buffers" })
@@ -164,6 +164,9 @@ local setup = function()
 
 		-- Nightfly colors
 		use({ "bluz71/vim-nightfly-guicolors" })
+
+
+    use({"jose-elias-alvarez/nvim-lsp-ts-utils"})
 
 		-- LSP/Treesitter completion
 		-- use({

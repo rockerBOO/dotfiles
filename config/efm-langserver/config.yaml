@@ -103,11 +103,18 @@ tools:
       - .eslintrc.cjs
 
   local-prettier: &local-prettier
-    format-command: './node_modules/.bin/prettier --stdin-filename ${INPUT}'
+    format-command: './node_modules/.bin/prettier --stdin-filepath ${INPUT}'
     format-stdin: true
 
   prettier: &prettier
     format-command: 'prettier --stdin-filename ${INPUT}'
+    format-stdin: true
+    require-markers:
+      - '.prettierrc'
+      - '.prettierrc.json'
+
+  prettier-d: &prettier_d
+    format-command: 'prettierd --stdin-filename ${INPUT}'
     format-stdin: true
 
   php-phpstan: &php-phpstan
@@ -144,6 +151,8 @@ tools:
   lua-stylua-format: &lua-stylua-format
     format-command: 'stylua -'
     format-stdin: true
+    root-markers:
+      - 'stylua.toml'
 
   luacheck: &luacheck
     lint-command: 'luacheck --globals vim --filename ${INPUT} --formatter plain -'
@@ -194,19 +203,19 @@ languages:
 
   javascript:
     - <<: *eslint_d
-    - <<: *local-prettier
+    - <<: *prettier
 
   javascriptreact:
     - <<: *eslint
-    - <<: *local-prettier
+    - <<: *prettier
 
   typescript:
     - <<: *eslint_d
-    - <<: *local-prettier
+    - <<: *prettier
 
   typescriptreact:
     - <<: *eslint_d
-    - <<: *local-prettier
+    - <<: *prettier
 
   php:
     - <<: *php-phpstan
