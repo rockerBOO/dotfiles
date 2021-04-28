@@ -139,23 +139,23 @@ local setup = function()
 			documentSymbol = true,
 			codeAction = true,
 		},
-		settings = {
-			-- Require formatter configuration files to load
-			rootMarkers = {
-				".lua-format",
-				-- ".eslintrc.cjs",
-				-- ".eslintrc",
-				-- ".eslintrc.json",
-				-- ".eslintrc.js",
-				".prettierrc",
-				".prettierrc.js",
-				".prettierrc.json",
-				".prettierrc.yml",
-				".prettierrc.yaml",
-				".prettier.config.js",
-				".prettier.config.cjs",
-			},
-		},
+			-- settings = {
+			-- 	-- Require formatter configuration files to load
+			-- 	rootMarkers = {
+			-- 		".lua-format",
+			-- 		-- ".eslintrc.cjs",
+			-- 		-- ".eslintrc",
+			-- 		-- ".eslintrc.json",
+			-- 		-- ".eslintrc.js",
+			-- 		".prettierrc",
+			-- 		".prettierrc.js",
+			-- 		".prettierrc.json",
+			-- 		".prettierrc.yml",
+			-- 		".prettierrc.yaml",
+			-- 		".prettier.config.js",
+			-- 		".prettier.config.cjs",
+			-- 	},
+			-- },
 	})
 
 	config.elixirls.setup({ cmd = { "elixir-ls" }, on_attach = on_attach_vim })

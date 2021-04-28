@@ -109,6 +109,7 @@ source $HOME/.config/keys/reddit
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias eg="cd ~/code/ecogarden/create"
+alias ecogarden="cd ~/code/ecogarden"
 alias docker=podman
 alias spot=ncspot
 

@@ -14,11 +14,12 @@ local ensure_packer_installed = function()
 
 		vim.fn.mkdir(directory, "p")
 
-		local out = vim.fn.system(string.format(
-			"git clone %s %s",
-			"https://github.com/wbthomason/packer.nvim",
-			directory .. "/packer.nvim"
-		))
+		local out =
+			vim.fn.system(string.format(
+				"git clone %s %s",
+				"https://github.com/wbthomason/packer.nvim",
+				directory .. "/packer.nvim"
+			))
 		print(out)
 	end
 
@@ -165,8 +166,12 @@ local setup = function()
 		-- Nightfly colors
 		use({ "bluz71/vim-nightfly-guicolors" })
 
+		-- TokyoNight colorscheme
+		use({ "folke/tokyonight.nvim" })
 
-    use({"jose-elias-alvarez/nvim-lsp-ts-utils"})
+		use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
+
+		use({ "simrat39/symbols-outline.nvim" })
 
 		-- LSP/Treesitter completion
 		-- use({

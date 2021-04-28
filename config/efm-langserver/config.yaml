@@ -107,7 +107,7 @@ tools:
     format-stdin: true
 
   prettier: &prettier
-    format-command: 'prettier --stdin-filename ${INPUT}'
+    format-command: 'prettier --stdin-filepath ${INPUT}'
     format-stdin: true
     require-markers:
       - '.prettierrc'
