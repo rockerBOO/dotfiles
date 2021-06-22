@@ -1,7 +1,7 @@
 local mappings = {}
 
 -- Just reduce the length and maybe some memory :)
-local n, i, t, esc = "n", "i", "t", "<esc>"
+local n, i, t, o, v, esc = "n", "i", "t", "o", "v", "<esc>"
 local silent = { silent = true }
 
 local maps = {
@@ -36,7 +36,7 @@ local maps = {
 	{ n, "<Leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", silent },
 
 	{ n, "<c-]>", "<cmd>lua vim.lsp.buf.declaration()<CR>", silent },
-	{ n, "<Leader>di", "<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>", silent },
+	{ n, "<Leader>di", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", silent },
 
 	{ n, "<leader>T", "<cmd>Ultest<cr>" },
 	{ n, "]t", "<plug>(ultest-next-fail)" },
@@ -79,7 +79,9 @@ local maps = {
 	{ i, "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true } },
 	{ i, "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true } },
 
-
+	-- nvim-ts-hint-textobject
+	{ v, "m", ":lua require('tsht').nodes()<CR>", { silent = true } },
+	{ o, "m", ":<C-U>lua require('tsht').nodes()<CR>", { silent = true } },
 
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
 }

@@ -16,6 +16,10 @@ eval $(ssh-agent)
 
 # Setup terminal
 # $HOME/.config/alacritty/startup.sh
+#
+#
+
+export QT_QPA_PLATFORMTHEME=qt5ct
 
 # Start dwm slstatus
 ~/.bin/dwm_status

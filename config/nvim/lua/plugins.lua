@@ -45,8 +45,8 @@ local setup = function()
 		-- use {"haishanh/night-owl.vim"}
 
 		-- Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
-		-- use {"bluz71/vim-moonfly-colors"}
-		-- use {"ChristianChiarulli/nvcode-color-schemes.vim"}
+		use({ "bluz71/vim-moonfly-colors" })
+		use({ "ChristianChiarulli/nvcode-color-schemes.vim" })
 
 		-- Style css in styled-components
 		use({ "styled-components/vim-styled-components" })
@@ -63,6 +63,8 @@ local setup = function()
 		-- Treesitter
 		use({ "nvim-treesitter/nvim-treesitter" })
 		-- use({ "~/code/nvim-treesitter" })
+
+		use({ "theHamsta/crazy-node-movement" })
 
 		-- Completion source for buffers
 		-- use({ "steelsojka/completion-buffers" })
@@ -125,6 +127,16 @@ local setup = function()
 		-- Editorconfig support
 		use({ "editorconfig/editorconfig-vim" })
 
+		use({
+			"kkoomen/vim-doge",
+			config = function()
+				vim.g.doge_enable_mappings = false
+			end,
+			run = function()
+				vim.fn["doge#install"]()
+			end,
+		})
+
 		-- Neovim Lua Development
 		use({ "~/code/nlua.nvim" })
 
@@ -148,13 +160,14 @@ local setup = function()
 		-- ES Linting
 		-- Plug 'dense-analysis/ale'
 
-		use({ "andrejlevkovitch/vim-lua-format" })
+		-- use({ "andrejlevkovitch/vim-lua-format" })
 
 		use({ "nvim-lua/popup.nvim" })
 		use({ "nvim-lua/plenary.nvim" })
 
 		-- Telescope fuzzy finder
 		use({ "nvim-lua/telescope.nvim" })
+		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
 		use({ "kyazdani42/nvim-web-devicons" })
 
@@ -182,7 +195,11 @@ local setup = function()
 
 		use({
 			"hrsh7th/nvim-compe",
-			requires = { { "hrsh7th/vim-vsnip" }, { "hrsh7th/vim-vsnip-integ", opt = true } },
+			requires = {
+				{ "hrsh7th/vim-vsnip" },
+				{ "hrsh7th/vim-vsnip-integ", opt = true },
+				{ "rafamadriz/friendly-snippets", opt = true },
+			},
 		})
 
 		use({ "norcalli/nvim-terminal.lua" })
@@ -196,6 +213,8 @@ local setup = function()
 		use({ "rcarriga/vim-ultest", requires = { { "janko/vim-test" } } })
 
 		use({ "windwp/nvim-ts-autotag" })
+
+		use({ "mfussenegger/nvim-ts-hint-textobject" })
 	end)
 end
 

@@ -2,3 +2,7 @@ clear lock
 clear control
 keycode 66 = Control_L
 add control = Control_L Control_R
+
+! https://schnouki.net/post/2019/how-to-use-a-keychron-k2-usb-keyboard-on-linux/
+keycode 119 = Delete Insert Delete Insert
+

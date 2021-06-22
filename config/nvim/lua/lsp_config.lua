@@ -68,7 +68,7 @@ local setup = function()
 	local on_attach_vim = function(client, bufnr)
 		print("'" .. client.name .. "' language server attached")
 
-		utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
+		-- utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
 
 		-- log_capabilities(client.resolved_capabilities)
 
@@ -88,7 +88,7 @@ local setup = function()
 			})
 			vim.api.nvim_command([[augroup Format]])
 			vim.api.nvim_command([[autocmd! * <buffer>]])
-			vim.api.nvim_command([[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync(nil, 500)]])
+			vim.api.nvim_command([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync(nil, 750, {"efm"})]])
 			vim.api.nvim_command([[augroup END]])
 			-- vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 500) ]])
 			-- if client.name ~= "tsserver" then
@@ -114,7 +114,7 @@ local setup = function()
 	local tsserver_capabilities = capabilities
 
 	-- utils.log_to_file(vim.lsp.get_log_path())(vim.inspect(tsserver_capabilities))
-	-- tsserver_capabilities["textDocument"]["formatting"] = false
+	tsserver_capabilities["textDocument"]["formatting"] = false
 
 	config["tsserver"].setup({
 		-- cmd = "typescript-language-server --stdio --log-level=4 --tsserver-log-file=/tmp/tsserver.log",
@@ -125,6 +125,7 @@ local setup = function()
 				disable_commands = false,
 				enable_import_on_completion = false,
 				import_on_completion_timeout = 5000,
+				signature_help_in_parens = true,
 			})
 
 			return on_attach_vim(client, bufnr)

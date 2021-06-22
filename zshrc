@@ -109,7 +109,7 @@ source $HOME/.config/keys/reddit
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias eg="cd ~/code/ecogarden/create"
-alias ecogarden="cd ~/code/ecogarden"
+alias ecogarden="~/code/ecogarden/create/src-tauri/target/release/ecogarden"
 alias docker=podman
 alias spot=ncspot
 
@@ -121,4 +121,8 @@ eval "$(pyenv init -)"
 
 # Add luarocks paths
 # eval "$(luarocks path --bin)"
+
+# Setup nvidia shader cache 
+export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 

@@ -4,8 +4,6 @@ log-file: /tmp/efm.log
 log-level: 4
 root-markers:
   - .git/
-  - package.json
-  - .eslintrc.cjs
 
 tools:
   eruby-erb: &eruby-erb
@@ -79,28 +77,34 @@ tools:
     format-command: 'shfmt -ci -s -bn'
     format-stdin: true
 
-
   eslint_d: &eslint_d
-    lint-command: 'eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}'
+    lint-command: './node_modules/.bin/eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}'
     lint-ignore-exit-code: true
     lint-stdin: true
     lint-formats:
       - "%f(%l,%c): %tarning %m"
       - "%f(%l,%c): %rror %m"
     root-markers:
-      - .git/
+      - .eslintrc.js
+      - .eslintrc.yaml
+      - .eslintrc.yml
+      - .eslintrc.json
       - .eslintrc.cjs
 
   eslint: &eslint
-    lint-command: 'eslint -f visualstudio --stdin --stdin-filename ${INPUT}'
+    lint-command: './node_modules/.bin/eslint -f visualstudio --stdin --stdin-filename ${INPUT}'
     lint-ignore-exit-code: true
     lint-stdin: true
     lint-formats:
       - "%f(%l,%c): %tarning %m"
       - "%f(%l,%c): %rror %m"
     root-markers:
-      - .git/
       - .eslintrc.cjs
+      - package.json
+      - .eslintrc.js
+      - .eslintrc.yaml
+      - .eslintrc.yml
+      - .eslintrc.json
 
   local-prettier: &local-prettier
     format-command: './node_modules/.bin/prettier --stdin-filepath ${INPUT}'
@@ -109,13 +113,30 @@ tools:
   prettier: &prettier
     format-command: 'prettier --stdin-filepath ${INPUT}'
     format-stdin: true
-    require-markers:
+    root-markers:
       - '.prettierrc'
       - '.prettierrc.json'
 
   prettier-d: &prettier_d
     format-command: 'prettierd --stdin-filename ${INPUT}'
     format-stdin: true
+    root-markers:
+      - '.prettierrc'
+      - '.prettierrc.json'
+
+  prettier-d-slim: &prettier-d-slim
+    format-command: 'prettier_d_slim --stdin --stdin-filepath ${INPUT}'
+    format-stdin: true
+    root-markers:
+      - '.prettierrc'
+      - '.prettierrc.json'
+
+  local-prettier-d-slim: &local-prettier-d-slim
+    format-command: './node_modules/.bin/prettier_d_slim --stdin --stdin-filepath ${INPUT}'
+    format-stdin: true
+    root-markers:
+      - '.prettierrc'
+      - '.prettierrc.json'
 
   php-phpstan: &php-phpstan
     lint-command: \
@@ -130,14 +151,23 @@ tools:
   html-prettier: &html-prettier
     format-command: './node_modules/.bin/prettier --parser html --stdin-filename ${INPUT}'
     format-stdin: true
+    root-markers:
+      - .prettierrc
+      - .prettierrc.json
 
   css-prettier: &css-prettier
     format-command: './node_modules/.bin/prettier --parser css --stdin-filename ${INPUT}'
     format-stdin: true
+    root-markers: 
+      - .prettierrc
+      - .prettierrc.json
 
   json-prettier: &json-prettier
     format-command: './node_modules/.bin/prettier --parser json --stdin-filename ${INPUT}'
     format-stdin: true
+    root-markers: 
+      - .prettierrc
+      - .prettierrc.json
 
   json-jq: &json-jq
     lint-command: 'jq .'
@@ -147,6 +177,16 @@ tools:
 
   csv-csvlint: &csv-csvlint
     lint-command: 'csvlint'
+
+  stylelint-lint: &stylelint-lint
+    lint-command: './node_modules/.bin/stylelint --formatter unix --stdin --stdin-filename ${INPUT}'
+    lint-ignore-exit-code: false
+    lint-stdin: true
+    lint-formats:
+      - '%f:%l:%c: %m [%t%*[a-z]]'
+    root-markers:
+      - .stylelintrc.json
+      - .stylelintrc
 
   lua-stylua-format: &lua-stylua-format
     format-command: 'stylua -'
@@ -181,7 +221,7 @@ languages:
   markdown:
     - <<: *markdown-markdownlint
     - <<: *markdown-pandoc
-    - <<: *prettier
+    # - <<: *prettier
 
   rst:
     - <<: *rst-lint
@@ -203,29 +243,34 @@ languages:
 
   javascript:
     - <<: *eslint_d
-    - <<: *prettier
+    - <<: *local-prettier-d-slim
+    - <<: *stylelint-lint
 
   javascriptreact:
     - <<: *eslint
-    - <<: *prettier
+    - <<: *local-prettier-d-slim
+    - <<: *stylelint-lint
 
   typescript:
     - <<: *eslint_d
-    - <<: *prettier
+    - <<: *local-prettier-d-slim
+    - <<: *stylelint-lint
 
   typescriptreact:
     - <<: *eslint_d
-    - <<: *prettier
+    - <<: *local-prettier-d-slim
+    - <<: *stylelint-lint
 
   php:
     - <<: *php-phpstan
     - <<: *php-psalm
 
   html:
-    - <<: *html-prettier
+    - <<: *local-prettier-d-slim
 
   css:
     - <<: *css-prettier
+    - <<: *stylelint-lint
 
   json:
     - <<: *json-jq

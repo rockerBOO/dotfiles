@@ -19,9 +19,10 @@ nnoremap <Leader>gg :lua require'plugin.telescope'.find_files_plugins()<CR>
 
 nnoremap <Leader>gt :lua require'telescope.builtin'.treesitter(require'telescope.themes'.get_dropdown())<CR>
 
+nnoremap gW :lua require'telescope.builtin'.lsp_workspace_symbols(require'telescope.themes'.get_dropdown())<CR>
+nnoremap g0 :lua require'telescope.builtin'.lsp_document_symbols(require'telescope.themes'.get_dropdown())<CR>
+
 " LSP
-nnoremap ggr :lua LspWorkspaceSymbols()<CR>
-nnoremap <Leader>P :lua require'telescope.builtin'.planets{}<CR>
 
 " Grep files
 nnoremap <Leader>gl :lua require'telescope.builtin'.live_grep{}<CR>

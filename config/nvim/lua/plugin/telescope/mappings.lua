@@ -10,8 +10,9 @@ mappings.setup = function()
     {n, "<Leader>en", builtin .. "find_files{ cwd = '~/.config/nvim' }"},
     {n, "<Leader>f", builtin .. "find_files{previewer_cutoff = 0}"},
     {n, "<Leader>gf", builtin .. "git_files(require'telescope.themes'.get_dropdown())"},
-    {n, "ggr", builtin .. "lsp_workspace_symbols"},
-    {n, "<Leader>gl", builtin .. "live_grep"},
+    -- {n, "gW", builtin .. "lsp_workspace_symbols(require'telescope.themes'.get_dropdown())"},
+    -- {n, "ggr", builtin .. "lsp_workspace_symbols"},
+    -- {n, "<Leader>gl", builtin .. "live_grep"},
     {n, "<Leader>gp", builtin .. string.format("find_files{ cwd = '%s' }", vim.fn.stdpath('cache'))}
   }
 

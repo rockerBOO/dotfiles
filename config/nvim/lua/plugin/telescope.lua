@@ -29,6 +29,8 @@ tele.setup_defaults = function()
 
 	telescope.setup({ defaults = telescope_config })
 
+telescope.load_extension('fzf')
+
 	utils.keymap({ "n", "<Leader>gt", "<cmd>lua require'plugin.telescope'.treesitter()<cr>" })
 	utils.keymap({ "n", "<Leader>pl", "<cmd>lua require'plugin.telescope'.find_files_plugins()<cr>" })
 end
