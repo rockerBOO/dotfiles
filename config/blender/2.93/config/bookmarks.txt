@@ -1,0 +1,15 @@
+[Bookmarks]
+!Home
+/home/rockerboo/
+/home/rockerboo/art/
+[Recent]
+/home/rockerboo/art/tree/
+/home/rockerboo/art/toon/
+/home/rockerboo/art/swan/
+/home/rockerboo/art/hdri/
+/home/rockerboo/art/dog/
+/home/rockerboo/art/telescope/
+/home/rockerboo/art/
+/home/rockerboo/art/tmp/
+/mnt/backup_silver/3d/Assets/hdri/
+/home/rockerboo/art/begin/

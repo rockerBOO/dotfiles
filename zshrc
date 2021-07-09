@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.bin:/usr/local/bin:$PATH
 
 # Configure the oh-my-zsh ssh-agent plugin
 zstyle :omz:plugins:ssh-agent agent-forwarding on
@@ -77,6 +77,9 @@ plugins=(git fd docker fzf tmux cargo fancy-ctrl-z mix extract archlinux yarn sy
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+#
+# https://docs.docker.com/engine/security/rootless/
+export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
 export MANPATH="/usr/local/man:$MANPATH"
 

@@ -21,6 +21,9 @@ eval $(ssh-agent)
 
 export QT_QPA_PLATFORMTHEME=qt5ct
 
+# Fsync/Futex2
+export WINEFSYNC=1
+
 # Start dwm slstatus
 ~/.bin/dwm_status
 

@@ -117,16 +117,22 @@ local setup = function()
 	tsserver_capabilities["textDocument"]["formatting"] = false
 
 	config["tsserver"].setup({
-		-- cmd = "typescript-language-server --stdio --log-level=4 --tsserver-log-file=/tmp/tsserver.log",
+		cmd = {
+			"typescript-language-server",
+			"--stdio",
+			"--log-level=4",
+			"--tsserver-log-file=/tmp/tsserver.log",
+		}, 
 		capabilities = tsserver_capabilities,
 		on_attach = function(client, bufnr)
 			require("nvim-lsp-ts-utils").setup({
-				-- defaults
-				disable_commands = false,
-				enable_import_on_completion = false,
-				import_on_completion_timeout = 5000,
+				eslint_enable_code_actions = false,
+				eslint_enable_diagnostics = false,
 				signature_help_in_parens = true,
 			})
+
+			require("nvim-lsp-ts-utils").setup_client(client)
+			client.resolved_capabilities.document_formatting = false
 
 			return on_attach_vim(client, bufnr)
 		end,

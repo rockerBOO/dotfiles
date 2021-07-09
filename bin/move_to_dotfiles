@@ -7,7 +7,7 @@ postdotfile=~/.dotfiles/${1:1} # remove the dot
 
 echo "$dotfile $postdotfile moving..."
 
-cp -uv $dotfile $postdotfile
+cp -ruv $dotfile $postdotfile
 
 if [ ! -f $postdotfile ]; then
 	echo "Failed to make destination file. $postdotfile"

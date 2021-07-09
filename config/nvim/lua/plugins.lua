@@ -182,6 +182,7 @@ local setup = function()
 		-- TokyoNight colorscheme
 		use({ "folke/tokyonight.nvim" })
 
+		-- Typescript LSP utilties
 		use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
 
 		use({ "simrat39/symbols-outline.nvim" })
@@ -210,7 +211,7 @@ local setup = function()
 
 		use({ "justinmk/vim-dirvish" })
 
-		use({ "rcarriga/vim-ultest", requires = { { "janko/vim-test" } } })
+		-- use({ "rcarriga/vim-ultest", requires = { { "janko/vim-test" } } })
 
 		use({ "windwp/nvim-ts-autotag" })
 
