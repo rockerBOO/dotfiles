@@ -4,16 +4,13 @@
 
 " Open this file in a new tab
 nnoremap <Leader>en <cmd>lua require'plugin.telescope'.find_files{ cwd = "~/.config/nvim" }<CR>
-
-lua <<EOF
-EOF
+nnoremap <Leader>eN <cmd>lua require'telescope.builtin'.live_grep{ cwd = "~/.config/nvim" }<CR>
 
 
 " Reload module using plenary
-nnoremap <Leader>asdf :lua PlenaryReload()<CR>
+nnoremap <Leader>asdf <cmd>lua PlenaryReload()<CR>
 
 " Telescope binds 
-nnoremap <Leader>f <cmd>lua require'plugin.telescope'.find_files()<CR>
 nnoremap <Leader>gf :lua require'telescope.builtin'.git_files(require'telescope.themes'.get_dropdown())<CR>
 nnoremap <Leader>gg :lua require'plugin.telescope'.find_files_plugins()<CR>
 

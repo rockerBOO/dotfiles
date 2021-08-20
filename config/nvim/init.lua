@@ -58,8 +58,6 @@ o.shortmess = "filnxtToOFc" -- Avoid showing extra messages when using completio
 -- Colors
 o.termguicolors = true -- Support 24bit colors
 
--- cmd [[ color boo ]]
-
 -- Tmux support
 g["&t_8f"] = "<Esc>[38;2;%lu;%lu;%lum]"
 g["&t_8b"] = "<Esc>[48;2;%lu;%lu;%lum]"

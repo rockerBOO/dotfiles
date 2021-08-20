@@ -1,7 +1,5 @@
 local telescope = require("telescope")
 local themes = require("telescope.themes")
--- local previewers = require("telescope.previewers")
-local sorters = require("telescope.sorters")
 local utils = require("rockerboo.utils")
 
 local plugins_directory = function()
@@ -14,30 +12,33 @@ local tele = {}
 tele.setup_defaults = function()
 	local telescope_config = {
 		selection_strategy = "reset",
-		shorten_path = true,
 		layout_strategy = "flex",
 		layout_config = { prompt_position = "top", width = 0.8, height = 0.7 },
 		sorting_strategy = "ascending",
 		winblend = 3,
 		prompt_prefix = "> ",
-		-- generic_sorter = sorters.get_fzy_sorter,
-		-- file_sorter = sorters.get_fzy_sorter,
 	}
 
 	telescope.setup({ defaults = telescope_config })
 
 	telescope.load_extension("fzf")
 
+	utils.keymap({
+		"n",
+		"<Leader>ca",
+		"<cmd>lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_cursor())<CR>",
+	})
 	utils.keymap({ "n", "<Leader>gt", "<cmd>lua require'plugin.telescope'.treesitter()<cr>" })
 	utils.keymap({ "n", "<Leader>pl", "<cmd>lua require'plugin.telescope'.find_files_plugins()<cr>" })
+
+	require("plugin.telescope.mappings").setup()
 end
 
 -- Themes
 -- >>- ------- -<
 
-local theme = themes.get_dropdown({ winblend = 10, layout_config = { height = 10 } })
-
 tele.theme = function(opts)
+	local theme = themes.get_dropdown({ layout_config = { height = 10 } })
 	return vim.tbl_deep_extend("force", theme, opts or {})
 end
 
@@ -45,7 +46,11 @@ end
 -- >>- ------- -<
 
 tele.find_files = function(input_opts)
-	require("telescope.builtin").find_files(tele.theme(input_opts))
+	local options = vim.tbl_deep_extend("force", {
+		previewer = false,
+		debounce = 30,
+	}, input_opts or {})
+	require("telescope.builtin").find_files(tele.theme(options))
 end
 
 tele.find_files_plugins = function()

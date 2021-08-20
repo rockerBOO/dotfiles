@@ -130,8 +130,10 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="1922.43"
-         height="1078.57" />
+         width="35.779"
+         height="35.6234"
+         rx="0"
+         ry="0" />
       <eventcontext
          id="3dbox"
          style="stroke:none;stroke-linejoin:round;"
@@ -167,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="63.5205"
-         ry="63.5205" />
+         rx="5.4244"
+         ry="5.4244" />
       <eventcontext
          id="star"
          magnitude="5"
@@ -328,7 +330,7 @@
        font_sample="AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()"
        show_sample_in_list="1"
        use_svg2="1"
-       style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;"
+       style="line-height:1.25;font-family:monospace;font-size:40px;-inkscape-font-specification:monospace"
        selcue="1"
        align_mode="1" />
     <eventcontext
@@ -346,8 +348,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="1133.28"
-       y="616.568"
+       x="-2.47765"
+       y="13.0221"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -602,7 +604,7 @@
     <group
        id="preferences"
        state="1"
-       page="7"
+       page="47"
        x="2741"
        y="253"
        w="918"
@@ -631,7 +633,7 @@
        placement="5">
       <group
          id="exportarea"
-         value="custom" />
+         value="drawing" />
       <group
          id="defaultxdpi"
          value="384" />
@@ -641,18 +643,18 @@
        default="org.inkscape.output.svg.inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/rockerboo/code/ecogarden/designs/mockups"
+       path="/home/rockerboo/code/ecogarden/designs/shapes"
        use_current_dir="1" />
     <group
        id="save_copy"
        default="org.inkscape.output.scour_inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/rockerboo/code/ecogarden/site/content/features" />
+       path="/home/rockerboo/code/ecogarden/create/src/svg" />
     <group
        id="open"
        enable_preview="1"
-       path="/home/rockerboo/code/ecogarden/community/" />
+       path="/home/rockerboo/code/ecogarden/designs/shapes/" />
     <group
        id="import"
        enable_preview="1"
@@ -660,7 +662,7 @@
        ask="1"
        ask_svg="1"
        link="embed"
-       scale="optimizeQuality"
+       scale="auto"
        import_mode_svg="include"
        forcexdpi="0" />
     <group
@@ -723,7 +725,8 @@
   </group>
   <group
      id="options"
-     onimport="0">
+     onimport="0"
+     rotationlock="1">
     <group
        id="renderingcache"
        size="512" />
@@ -1000,7 +1003,7 @@
     <group
        id="boot"
        canvas="dark-check"
-       theme="system">
+       theme="colorful">
       <group
          id="shown"
          ver1.1="1" />
@@ -1015,10 +1018,15 @@
      org.inkscape.effect.voronoi.diagram-type="Voronoi"
      org.inkscape.effect.voronoi.clip-box="Page"
      ru.cnc-club.filter.gcodetools_graffiti_orientation.unit="G21 (All units in mm)"
-     ru.cnc-club.filter.gcodetools_graffiti_orientation.postprocessor=" " />
+     ru.cnc-club.filter.gcodetools_graffiti_orientation.postprocessor=" "
+     org.inkscape.output.scour_inkscape.tab="Output"
+     org.inkscape.output.scour_inkscape.enable-comment-stripping="1"
+     org.inkscape.output.scour_inkscape.remove-metadata="1"
+     org.inkscape.output.scour_inkscape.strip-xml-prolog="1"
+     org.inkscape.output.scour_inkscape.strip-xml-space="1" />
   <group
      id="desktop"
-     style="fill:#0c4a0c;-inkscape-font-specification:'Inter V Thin';font-family:'Inter V';font-size:21.33333333px;text-anchor:middle;text-align:center;stroke-linecap:round;stroke-width:2.667;font-weight:100;fill-opacity:0.64738107">
+     style="fill:#3b3b31;-inkscape-font-specification:'Liberation Serif';font-family:'Liberation Serif';font-size:21.33333333px;text-anchor:middle;text-align:center;stroke:#313131">
     <group
        width="2556"
        height="1415"
@@ -1134,9 +1142,11 @@
      darkTheme="1"
      defaultPreferDarkTheme="1"
      defaultGtkTheme="Arc-Darker"
-     symbolicIcons="0"
-     symbolicDefaultBaseColors="1"
-     symbolicDefaultHighColors="1">
+     symbolicIcons="1"
+     symbolicDefaultBaseColors="0"
+     symbolicDefaultHighColors="0"
+     gtkTheme="Adwaita"
+     iconTheme="multicolor">
     <group
        id="multicolor"
        symbolicBaseColor="3958107135"

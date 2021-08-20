@@ -64,7 +64,7 @@ local setup = function()
 		use({ "nvim-treesitter/nvim-treesitter" })
 		-- use({ "~/code/nvim-treesitter" })
 
-		use({ "theHamsta/crazy-node-movement" })
+		-- use({ "theHamsta/crazy-node-movement" })
 
 		-- Completion source for buffers
 		-- use({ "steelsojka/completion-buffers" })
@@ -144,7 +144,7 @@ local setup = function()
 		use({ "norcalli/nvim-colorizer.lua" })
 
 		-- This is required for syntax highlighting
-		use({ "euclidianAce/BetterLua.vim" })
+		-- use({ "euclidianAce/BetterLua.vim" })
 
 		-- LSP Extensions
 		use({ "tjdevries/lsp_extensions.nvim" })
@@ -166,7 +166,7 @@ local setup = function()
 		use({ "nvim-lua/plenary.nvim" })
 
 		-- Telescope fuzzy finder
-		use({ "nvim-lua/telescope.nvim" })
+		use({ "nvim-telescope/telescope.nvim" })
 		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
 		use({ "kyazdani42/nvim-web-devicons" })

@@ -1,7 +1,6 @@
 local treesitter = {}
 
 treesitter.setup = function()
-	vim.cmd([[echo "hello"]])
 	require("nvim-treesitter.configs").setup({
 		-- modules and its options go here
 		highlight = { enable = true },
@@ -19,7 +18,7 @@ treesitter.setup = function()
 		},
 		textobjects = { enable = true },
 		playground = { enable = true, disable = {}, updatetime = 25, persist_queries = false },
-		-- additional_vim_regex_highlighting = false,
+		additional_vim_regex_highlighting = false,
 		node_movement = {
 			keymaps = {
 				move_up = "<c-g>",

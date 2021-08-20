@@ -209,6 +209,13 @@ tools:
     lint-formats:
       - '%f:%l:%c: %m'
 
+  vale: &vale
+    lint-command: 'vale --output=line '
+    lint-ignore-exit-code: true
+    # lint-stdin: true
+    root-markers:
+      - '.vale.ini'
+
   blade-blade-formatter: &blade-blade-formatter
     format-command: 'blade-formatter --stdin'
     format-stdin: true
@@ -228,8 +235,9 @@ languages:
     - <<: *make-checkmake
 
   markdown:
-    - <<: *markdown-markdownlint
-    - <<: *markdown-pandoc
+    # - <<: *markdown-pandoc
+    - <<: *vale
+    # - <<: *markdown-markdownlint
     # - <<: *prettier
 
   rst:
@@ -274,6 +282,7 @@ languages:
 
   html:
     - <<: *local-prettier-d-slim
+    - <<: *vale
 
   css:
     - <<: *css-prettier

@@ -33,14 +33,13 @@ local maps = {
 	{ n, "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", silent },
 	{ n, "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", silent },
 	{ n, "<Leader>re", "<cmd>lua vim.lsp.buf.rename()<CR>", silent },
-	{ n, "<Leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", silent },
 
 	{ n, "<c-]>", "<cmd>lua vim.lsp.buf.declaration()<CR>", silent },
 	{ n, "<Leader>di", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", silent },
 
 	{ n, "<leader>T", "<cmd>Ultest<cr>" },
 	{ n, "]t", "<plug>(ultest-next-fail)" },
-	{ n, "[t", "<plug>(ultest-prev-fail)" },
+	{ n , "[t", "<plug>(ultest-prev-fail)" },
 
 	-- {n, "<leader>hi", [[ <cmd>echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 	-- ]]},
