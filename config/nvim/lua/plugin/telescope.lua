@@ -76,6 +76,7 @@ function PlenaryReload()
 	require("plenary.reload").reload_module("lsp_extensions")
 	require("boo-colorscheme").use()
 	tele.setup_defaults()
+  require('setup').setup()
 end
 
 return tele

@@ -1,50 +1,57 @@
--- local t = function(str)
---   return vim.api.nvim_replace_termcodes(str, true, true, true)
--- end
+-- require("compe").setup({
+-- 	enabled = true,
+-- 	source = {  nvim_lsp = true, nvim_lua = true, vsnip = true, nvim_treesitter = true },
+-- })
+local lspkind = require("lspkind")
+-- local tabnine = require("cmp_tabnine.config")
+-- tabnine:setup({
+-- 	max_lines = 1000,
+-- 	max_num_results = 20,
+-- 	sort = true,
+-- 	priority = 5000,
+-- 	show_prediction_strength = true,
+-- })
 
--- local check_back_space = function()
---     local col = vim.fn.col('.') - 1
---     if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
---         return true
---     else
---         return false
---     end
--- end
+local source_mapping = {
+	buffer = "[Buffer]",
+	nvim_lsp = "[LSP]",
+	nvim_lua = "[Lua]",
+	cmp_tabnine = "[TN]",
+	luasnip = "[LuaSnip]",
+	path = "[Path]",
+	calc = "[calc]",
+}
 
--- -- Use (s-)tab to:
--- --- move to prev/next item in completion menuone
--- --- jump to prev/next snippet's placeholder
--- _G.tab_complete = function()
---   if vim.fn.pumvisible() == 1 then
---     return t "<C-n>"
---   elseif vim.fn.call("vsnip#available", {1}) == 1 then
---     return t "<Plug>(vsnip-expand-or-jump)"
---   elseif check_back_space() then
---     return t "<Tab>"
---   else
---     return vim.fn['compe#complete']()
---   end
--- end
--- _G.s_tab_complete = function()
---   if vim.fn.pumvisible() == 1 then
---     return t "<C-p>"
---   elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
---     return t "<Plug>(vsnip-jump-prev)"
---   else
---     return t "<S-Tab>"
---   end
--- end
+require("cmp").setup({
+	completion = {
+		autocomplete = false,
+	},
+	sources = {
+		{ name = "cmp_tabnine" },
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+			-- { name = "buffers" },
+			-- { name = "nvim_lua" },
+	},
+	formatting = {
+		format = function(entry, vim_item)
+			vim_item.kind = lspkind.presets.default[vim_item.kind]
+			local menu = source_mapping[entry.source.name]
+			if
+				entry.source.name == "cmp_tabnine"
+				and entry.completion_item.data ~= nil
+				and entry.completion_item.data.details ~= nil
+			then
+				menu = entry.data.details .. " " .. menu
+			end
+			vim_item.menu = menu
+			return vim_item
+		end,
+	},
 
-require("compe").setup({
-	enabled = true,
-	source = {  nvim_lsp = true, nvim_lua = true, vsnip = true, nvim_treesitter = true },
+	snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body)
+		end,
+	},
 })
-
--- vim.api.nvim_set_keymap("i", "<C-Space>", "compe#complete()", { expr = true, silent = true })
--- vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm("<CR>")]], { expr = true, silent = true })
--- vim.api.nvim_set_keymap("i", "<C-e>", [[compe#close("<C-e>")]], { expr = true, silent = true })
-
--- vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})

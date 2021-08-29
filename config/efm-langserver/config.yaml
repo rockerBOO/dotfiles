@@ -23,7 +23,7 @@ tools:
     lint-stdin: true
 
   markdown-markdownlint: &markdown-markdownlint
-    lint-command: 'markdownlint -s'
+    lint-command: 'markdownlint-cli -s'
     lint-stdin: true
     lint-formats:
       - '%f:%l %m'
@@ -106,9 +106,19 @@ tools:
       - .eslintrc.yml
       - .eslintrc.json
 
+  yarn-prettier: &yarn-prettier
+    format-command: 'yarn workspace site prettier --stdin-filepath ${INPUT}'
+    format-stdin: true
+    root-markers:
+      - '.prettierrc'
+      - '.prettierrc.json'
+
   local-prettier: &local-prettier
     format-command: './node_modules/.bin/prettier --stdin-filepath ${INPUT}'
     format-stdin: true
+    root-markers:
+      - '.prettierrc'
+      - '.prettierrc.json'
 
   prettier: &prettier
     format-command: 'prettier --stdin-filepath ${INPUT}'
@@ -237,7 +247,7 @@ languages:
   markdown:
     # - <<: *markdown-pandoc
     - <<: *vale
-    # - <<: *markdown-markdownlint
+    - <<: *markdown-markdownlint
     # - <<: *prettier
 
   rst:
@@ -281,7 +291,9 @@ languages:
     - <<: *php-psalm
 
   html:
-    - <<: *local-prettier-d-slim
+    # - <<: *local-prettier-d-slim
+    # - <<: *local-prettier
+    - <<: *yarn-prettier
     - <<: *vale
 
   css:

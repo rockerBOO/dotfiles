@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="35.779"
-         height="35.6234"
+         width="377.855"
+         height="63.1985"
          rx="0"
          ry="0" />
       <eventcontext
@@ -1026,7 +1026,7 @@
      org.inkscape.output.scour_inkscape.strip-xml-space="1" />
   <group
      id="desktop"
-     style="fill:#3b3b31;-inkscape-font-specification:'Liberation Serif';font-family:'Liberation Serif';font-size:21.33333333px;text-anchor:middle;text-align:center;stroke:#313131">
+     style="fill:#efffef;-inkscape-font-specification:'Liberation Serif';font-family:'Liberation Serif';font-size:21.33333333px;text-anchor:middle;text-align:center;stroke:#313131">
     <group
        width="2556"
        height="1415"

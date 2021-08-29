@@ -129,3 +129,5 @@ eval "$(pyenv init -)"
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 
+
+alias luamake=/home/rockerboo/build/lua-language-server/3rd/luamake/luamake

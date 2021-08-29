@@ -9,42 +9,6 @@ local config = require("lspconfig")
 local setup = function()
 	status.activate()
 
-	--- [[
-	-- {
-	--   call_hierarchy = false,
-	--   code_action = {
-	--     codeActionKinds = { "", "quickfix", "refactor.rewrite", "refactor.extract" },
-	--     resolveProvider = false
-	--   },
-	--   completion = true,
-	--   declaration = false,
-	--   document_formatting = false,
-	--   document_highlight = true,
-	--   document_range_formatting = false,
-	--   document_symbol = true,
-	--   execute_command = true,
-	--   find_references = true,
-	--   goto_definition = true,
-	--   hover = true,
-	--   implementation = false,
-	--   rename = true,
-	--   signature_help = true,
-	--   signature_help_trigger_characters = { "(", "," },
-	--   text_document_did_change = 2,
-	--   text_document_open_close = true,
-	--   text_document_save = false,
-	--   text_document_save_include_text = false,
-	--   text_document_will_save = false,
-	--   text_document_will_save_wait_until = false,
-	--   type_definition = false,
-	--   workspace_folder_properties = {
-	--     changeNotifications = false,
-	--     supported = false
-	--   },
-	--   workspace_symbol = true
-	-- }
-	-- ]]
-
 	local log_capabilities = function(capabilities)
 		-- @param filter = table {"hover"}
 		local reduce = function(filter)
@@ -74,8 +38,6 @@ local setup = function()
 
 		lsp_status.on_attach(client)
 
-		-- vim.cmd([[ setlocal omnifunc=v:lua.vim.lsp.omnifunc ]])
-
 		local capLog = utils.log_to_file("/tmp/capabilities.log")
 		capLog("client.name: " .. client.name .. "\n" .. vim.inspect(client.resolved_capabilities))
 
@@ -102,8 +64,18 @@ local setup = function()
 	--
 
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+
+	-- Support snippets
 	capabilities.textDocument.completion.completionItem.snippetSupport = true
-	local default_lsp_config = { on_attach = on_attach_vim, capabilities = capabilities }
+
+	local default_lsp_config = {
+		on_attach = on_attach_vim,
+		capabilities = capabilities,
+		flags = {
+			debounce_text_changes = 30,
+		},
+	}
 
 	local servers = { "gopls", "cssls", "vimls", "bashls" }
 
@@ -122,7 +94,7 @@ local setup = function()
 			"--stdio",
 			"--log-level=4",
 			"--tsserver-log-file=/tmp/tsserver.log",
-		}, 
+		},
 		capabilities = tsserver_capabilities,
 		on_attach = function(client, bufnr)
 			require("nvim-lsp-ts-utils").setup({

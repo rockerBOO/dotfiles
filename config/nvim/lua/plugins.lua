@@ -41,9 +41,6 @@ local setup = function()
 		-- Packer can manage itself as an optional plugin
 		use({ "wbthomason/packer.nvim", opt = true })
 
-		-- use {"challenger-deep-theme/vim", as = "challenger-deep"}
-		-- use {"haishanh/night-owl.vim"}
-
 		-- Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
 		use({ "bluz71/vim-moonfly-colors" })
 		use({ "ChristianChiarulli/nvcode-color-schemes.vim" })
@@ -62,32 +59,11 @@ local setup = function()
 
 		-- Treesitter
 		use({ "nvim-treesitter/nvim-treesitter" })
-		-- use({ "~/code/nvim-treesitter" })
-
-		-- use({ "theHamsta/crazy-node-movement" })
-
-		-- Completion source for buffers
-		-- use({ "steelsojka/completion-buffers" })
 
 		use({ "nvim-treesitter/playground" })
 
 		-- Completion from treesitter
 		-- use({ "nvim-treesitter/completion-treesitter" })
-
-		-- Indent rules for python
-		use({ "vim-scripts/indentpython.vim" })
-
-		-- Rust syntax rules
-		-- use({ "rust-lang/rust.vim" })
-
-		-- Elixir syntax rules
-		-- use({ "elixir-editors/vim-elixir" })
-		-- Plug 'slashmili/alchemist.vim'
-		-- use({ "mhinz/vim-mix-format" })
-		-- use({ "moofish32/vim-ex_test" })
-
-		--  File tree
-		-- Plug 'preservim/nerdtree'
 
 		-- Git commands
 		use({ "tpope/vim-fugitive" })
@@ -114,13 +90,6 @@ local setup = function()
 		-- Comment helpers
 		use({ "tpope/vim-commentary" })
 
-		-- Typescript
-		-- Plug 'leafgarland/typescript-vim'
-		-- Plug 'HerringtonDarkholme/yats.vim'
-
-		-- JSX/TSX syntax
-		-- Plug 'peitalin/vim-jsx-typescript'
-
 		-- Delve - Go Debugger
 		use({ "sebdah/vim-delve" })
 
@@ -143,24 +112,8 @@ local setup = function()
 		-- Colorizer
 		use({ "norcalli/nvim-colorizer.lua" })
 
-		-- This is required for syntax highlighting
-		-- use({ "euclidianAce/BetterLua.vim" })
-
 		-- LSP Extensions
 		use({ "tjdevries/lsp_extensions.nvim" })
-
-		-- use {"tjdevries/colorbuddy.nvim"}
-		-- use({ "~/code/colorbuddy.nvim" })
-
-		-- Some stupid thing
-		use({ "ThePrimeagen/vim-be-good" })
-
-		use({ "ThePrimeagen/neovim-irc-ui" })
-
-		-- ES Linting
-		-- Plug 'dense-analysis/ale'
-
-		-- use({ "andrejlevkovitch/vim-lua-format" })
 
 		use({ "nvim-lua/popup.nvim" })
 		use({ "nvim-lua/plenary.nvim" })
@@ -173,9 +126,6 @@ local setup = function()
 
 		use({ "~/code/boo-colorscheme-nvim", branch = "main" })
 
-		-- Dashboard too many things I do not want right now
-		-- Plug 'hardcoreplayers/dashboard-nvim'
-
 		-- Nightfly colors
 		use({ "bluz71/vim-nightfly-guicolors" })
 
@@ -187,20 +137,50 @@ local setup = function()
 
 		use({ "simrat39/symbols-outline.nvim" })
 
-		-- LSP/Treesitter completion
-		-- use({
-		-- 	"nvim-lua/completion-nvim",
-		-- 	requires = { { "hrsh7th/vim-vsnip" }, { "hrsh7th/vim-vsnip-integ", opt = true } },
-		-- })
-		-- use {"hrsh7th/vim-vsnip", requires = {}}
+		use({ "onsails/lspkind-nvim" })
+
+		-- Completion (nvim-cmp)
+		-- use({ "hrsh7th/cmp-buffer" })
+		use({ "hrsh7th/cmp-nvim-lsp", requires = "onsails/lspkind-nvim" })
+		use({ "hrsh7th/cmp-nvim-lua" })
+
+		use({ "L3MON4D3/LuaSnip" })
 
 		use({
-			"hrsh7th/nvim-compe",
+			"hrsh7th/nvim-cmp",
 			requires = {
-				{ "hrsh7th/vim-vsnip" },
-				{ "hrsh7th/vim-vsnip-integ", opt = true },
-				{ "rafamadriz/friendly-snippets", opt = true },
+				-- "hrsh7th/cmp-buffer",
+				"hrsh7th/cmp-nvim-lsp",
+				{
+					"hrsh7th/cmp-nvim-lua",
+					ft = "lua",
+					-- this is after/plugin content
+					config = function()
+						require("cmp").register_source("nvim_lua", require("cmp_nvim_lua").new())
+					end,
+				},
+				{
+					"L3MON4D3/LuaSnip",
+					wants = "rafamadriz/friendly-snippets",
+				},
+				"hrsh7th/cmp-vsnip",
+				"saadparwaiz1/cmp_luasnip",
 			},
+		})
+
+		-- Tabnine
+		-- use({ "codota/tabnine-vim" })
+		use({ "~/build/tabnine-vim", opt = true })
+		use({
+			"tzachar/cmp-tabnine",
+			run = "./install.sh",
+			-- after = "hrsh7th/nvim-cmp",
+			event = "InsertEnter",
+			requires = { "hrsh7th/nvim-cmp", "codata/tabnine-vim" },
+			config = function()
+				require("cmp_tabnine").setup()
+			end,
+			opt = true,
 		})
 
 		use({ "norcalli/nvim-terminal.lua" })

@@ -39,7 +39,7 @@ local maps = {
 
 	{ n, "<leader>T", "<cmd>Ultest<cr>" },
 	{ n, "]t", "<plug>(ultest-next-fail)" },
-	{ n , "[t", "<plug>(ultest-prev-fail)" },
+	{ n, "[t", "<plug>(ultest-prev-fail)" },
 
 	-- {n, "<leader>hi", [[ <cmd>echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 	-- ]]},
@@ -66,9 +66,19 @@ local maps = {
 	-- {i, "Kl", esc},
 	-- {i, "kL", esc},
 
+	{ n, "<Space>", "10j" },
+	{ n, "<C-Space>", "10k" },
+
+	-- { n, "<leader><leader>", "<c-^>" },
+
+	{ n, "<leader><CR>", ":noh<CR>", { silent = true } },
+
 	-- Disable up/down in insert mode
 	{ i, "<Up>", "<nop>" },
 	{ i, "<Down>", "<nop>" },
+
+	{ n, "<Left>", ":bp<cr>", { silent = true } },
+	{ n, "<Right>", ":bp<cr>", { silent = true } },
 
 	-- Quick quick file/buffer commands
 	{ n, "<Leader>w", ":w<cr>" },
@@ -79,8 +89,8 @@ local maps = {
 	{ i, "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true } },
 
 	-- nvim-ts-hint-textobject
-	{ v, "m", ":lua require('tsht').nodes()<CR>", { silent = true } },
-	{ o, "m", ":<C-U>lua require('tsht').nodes()<CR>", { silent = true } },
+	{ v, "m", "<cmd>lua require('tsht').nodes()<CR>", { silent = true } },
+	{ o, "m", "<cmd><C-U>lua require('tsht').nodes()<CR>", { silent = true } },
 
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
 }

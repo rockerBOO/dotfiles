@@ -1,9 +1,10 @@
-" nvim-compe
+" nvim-cmp
 "
+autocmd FileType TelescopePrompt lua require'cmp'.setup.buffer {
+\   completion = { autocomplete = false }
+\ }
 
-
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+autocmd FileType TelescopePrompt lua require'cmp_tabnine.config'.setup {
+\    max_lines = 0
+\    max_num_results = 0
+\ }

@@ -52,7 +52,8 @@ o.emoji = true -- Use emojis
 o.formatoptions = "cqrnj"
 
 -- Completion
-o.completeopt = "menuone,noinsert,noselect"
+-- o.completeopt = "menuone,noinsert,noselect"
+o.completeopt = "menu,menuone,noselect"
 o.shortmess = "filnxtToOFc" -- Avoid showing extra messages when using completion
 
 -- Colors
@@ -84,7 +85,7 @@ require("plugins").setup()
 require("mappings").setup()
 
 -- Configure plugins
-require("setup")
+require("setup").setup()
 
 -- Colorscheme
 -- require("boo-colorscheme").use({})

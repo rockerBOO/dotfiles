@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+function usage {
+	echo "Usage: $0 <csv_file> [<table_name>]"
+	exit 1
+}
+
+[ $# -lt 1 ] && usage
+csvfile="$1"
+[ ! -s "$csvfile" ] && echo "missing or empty file: $csvfile" && exit 1
+
+tablename="${csvfile%%\.csv}"
+[ -z "$tablename" ] && echo "unable to determine tablename"
+if [[ $tablename =~ [-] ]]; then
+	echo "tablename cannot contain hypen - converting to underscore (_)"
+	tablename=$(echo "$tablename" | tr "-" "_")
+fi
+
+echo "csv file  : $csvfile"
+echo "table name: $tablename"
+
+# -cmd ".mode columns" \
+sqlite3 -interactive \
+	-cmd ".mode tabs" \
+	-cmd ".headers on" \
+	-cmd ".import $csvfile '$tablename'"
