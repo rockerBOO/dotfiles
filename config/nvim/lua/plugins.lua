@@ -89,7 +89,7 @@ local setup = function()
 
 		-- Comment helpers
 		use({ "tpope/vim-commentary" })
-
+		use({ "JoosepAlviste/nvim-ts-context-commentstring" })
 		-- Delve - Go Debugger
 		use({ "sebdah/vim-delve" })
 
@@ -170,7 +170,7 @@ local setup = function()
 
 		-- Tabnine
 		-- use({ "codota/tabnine-vim" })
-		use({ "~/build/tabnine-vim", opt = true })
+		use({ "~/build/tabnine-vim", opt = true, as = "codota/tabnine-vim" })
 		use({
 			"tzachar/cmp-tabnine",
 			run = "./install.sh",
@@ -182,6 +182,8 @@ local setup = function()
 			end,
 			opt = true,
 		})
+
+		use("lewis6991/impatient.nvim")
 
 		use({ "norcalli/nvim-terminal.lua" })
 

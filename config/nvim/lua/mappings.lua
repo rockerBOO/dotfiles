@@ -89,8 +89,8 @@ local maps = {
 	{ i, "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true } },
 
 	-- nvim-ts-hint-textobject
-	{ v, "m", "<cmd>lua require('tsht').nodes()<CR>", { silent = true } },
-	{ o, "m", "<cmd><C-U>lua require('tsht').nodes()<CR>", { silent = true } },
+	{ v, "m", "<cmd>lua R('tsht').nodes()<CR>", { silent = true } },
+	{ o, "m", "<cmd><C-U>lua R('tsht').nodes()<CR>", { silent = true } },
 
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
 }

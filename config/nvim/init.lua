@@ -78,6 +78,28 @@ cmd([[ augroup END ]])
 -- cmd([[  au BufWritePost ~/.config/nvim/init.lua <cmd>lua require'plenary.reload'.reload_module('init')<cr> ]])
 -- cmd([[ augroup end ]])
 
+-- Reload module
+function Reload(module)
+	require("plenary.reload").reload_module(module)
+end
+
+-- Require shortcut
+function R(module)
+	return require(module)
+end
+
+function PlenaryReload()
+	local reload = require("plenary.reload").reload_module
+	-- require("plenary.reload").reload_module("telescope")
+	-- require("plenary.reload").reload_module("plenary")
+	-- require("plenary.reload").reload_module("lsp_extensions")
+	reload("boo-colorscheme")
+	reload("plugin")
+	reload("rockerboo")
+	require("telescope.mappings").setup()
+	require("boo-colorscheme").use({})
+end
+
 -- Setup all the plugins
 require("plugins").setup()
 

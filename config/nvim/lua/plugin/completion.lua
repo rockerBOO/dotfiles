@@ -23,9 +23,6 @@ local source_mapping = {
 }
 
 require("cmp").setup({
-	completion = {
-		autocomplete = false,
-	},
 	sources = {
 		{ name = "cmp_tabnine" },
 		{ name = "nvim_lsp" },

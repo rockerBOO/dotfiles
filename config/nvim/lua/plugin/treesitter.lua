@@ -4,6 +4,9 @@ treesitter.setup = function()
 	require("nvim-treesitter.configs").setup({
 		-- modules and its options go here
 		highlight = { enable = true },
+		context_commentstring = {
+			enable = true,
+		},
 		incremental_selection = {
 			enable = true,
 			keymaps = {
@@ -20,6 +23,7 @@ treesitter.setup = function()
 		playground = { enable = true, disable = {}, updatetime = 25, persist_queries = false },
 		additional_vim_regex_highlighting = false,
 		node_movement = {
+      enable = true,
 			keymaps = {
 				move_up = "<c-g>",
 				move_down = "<m-j>",
