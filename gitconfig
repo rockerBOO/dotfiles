@@ -1,6 +1,7 @@
 [user]
   name = rockerBOO
   email = rockerboo@gmail.com
+	signingkey = 0D4EAF00DCABC97B
 [github]
   user = rockerboo
 [branch]
@@ -49,3 +50,5 @@
 	process = git-lfs filter-process
 [init]
 	defaultBranch = main
+[commit]
+	gpgsign = true
