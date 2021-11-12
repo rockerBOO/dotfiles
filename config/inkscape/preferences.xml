@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="377.855"
-         height="63.1985"
+         width="392.997"
+         height="162.868"
          rx="0"
          ry="0" />
       <eventcontext
@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="5.4244"
-         ry="5.4244" />
+         rx="8.79578"
+         ry="7.52688" />
       <eventcontext
          id="star"
          magnitude="5"
@@ -330,7 +330,7 @@
        font_sample="AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()"
        show_sample_in_list="1"
        use_svg2="1"
-       style="line-height:1.25;font-family:monospace;font-size:40px;-inkscape-font-specification:monospace"
+       style="line-height:1.25;font-family:sans-serif;font-size:20px;-inkscape-font-specification:'sans-serif, @wght=700';font-variation-settings:'wght' 700"
        selcue="1"
        align_mode="1" />
     <eventcontext
@@ -348,8 +348,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="-2.47765"
-       y="13.0221"
+       x="514.132"
+       y="264.596"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -584,7 +584,9 @@
     <group
        id="xml"
        h="500"
-       w="300" />
+       w="300"
+       panedpos="243"
+       vertical="1" />
     <group
        id="find" />
     <group
@@ -640,25 +642,25 @@
     </group>
     <group
        id="save_as"
-       default="org.inkscape.output.svg.inkscape"
+       default="org.inkscape.output.scour_inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/rockerboo/code/ecogarden/designs/shapes"
+       path="/home/rockerboo/code/ecogarden/site/static/svg"
        use_current_dir="1" />
     <group
        id="save_copy"
        default="org.inkscape.output.scour_inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/rockerboo/code/ecogarden/create/src/svg" />
+       path="/home/rockerboo/code/ecogarden/site/layouts/partials" />
     <group
        id="open"
        enable_preview="1"
-       path="/home/rockerboo/code/ecogarden/designs/shapes/" />
+       path="/home/rockerboo/Downloads/" />
     <group
        id="import"
        enable_preview="1"
-       path="/home/rockerboo/code/ecogarden/designs/resources/"
+       path="/home/rockerboo/code/ecogarden/site/static/img/screens/"
        ask="1"
        ask_svg="1"
        link="embed"
@@ -879,7 +881,7 @@
        value="2" />
     <group
        id="transform"
-       stroke="1"
+       stroke="0"
        rectcorners="1"
        pattern="1"
        gradient="1" />
@@ -993,7 +995,8 @@
        id="rendering" />
     <group
        id="font"
-       unitType="2" />
+       unitType="2"
+       scaleLineHeightFromFontSIze="1" />
     <group
        id="middlemousezoom"
        value="1" />
@@ -1006,7 +1009,8 @@
        theme="colorful">
       <group
          id="shown"
-         ver1.1="1" />
+         ver1.1="1"
+         ver1.1.1="1" />
     </group>
   </group>
   <group
@@ -1019,20 +1023,21 @@
      org.inkscape.effect.voronoi.clip-box="Page"
      ru.cnc-club.filter.gcodetools_graffiti_orientation.unit="G21 (All units in mm)"
      ru.cnc-club.filter.gcodetools_graffiti_orientation.postprocessor=" "
-     org.inkscape.output.scour_inkscape.tab="Output"
+     org.inkscape.output.scour_inkscape.tab="Options"
      org.inkscape.output.scour_inkscape.enable-comment-stripping="1"
      org.inkscape.output.scour_inkscape.remove-metadata="1"
      org.inkscape.output.scour_inkscape.strip-xml-prolog="1"
-     org.inkscape.output.scour_inkscape.strip-xml-space="1" />
+     org.inkscape.output.scour_inkscape.strip-xml-space="1"
+     org.inkscape.output.scour_inkscape.enable-viewboxing="0" />
   <group
      id="desktop"
-     style="fill:#efffef;-inkscape-font-specification:'Liberation Serif';font-family:'Liberation Serif';font-size:21.33333333px;text-anchor:middle;text-align:center;stroke:#313131">
+     style="fill:#048141;-inkscape-font-specification:'sans-serif, @wght=700';font-family:sans-serif;font-size:28px;text-anchor:middle;text-align:center;stroke-width:4;stroke:#06ff00;font-variation-settings:'wght' 700">
     <group
        width="2556"
-       height="1415"
+       height="1414"
        x="1920"
-       y="21"
-       maximized="0"
+       y="22"
+       maximized="1"
        fullscreen="0"
        id="geometry" />
     <group

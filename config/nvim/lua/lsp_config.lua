@@ -1,7 +1,7 @@
 local lsp_status = require("lsp-status")
 local status = require("rockerboo.lsp_status")
 local utils = require("rockerboo.utils")
-local f = require("rockerboo.functional")
+-- local f = require("rockerboo.functional")
 local config = require("lspconfig")
 
 -- vim.lsp.set_log_level("debug")
@@ -9,27 +9,27 @@ local config = require("lspconfig")
 local setup = function()
 	status.activate()
 
-	local log_capabilities = function(capabilities)
-		-- @param filter = table {"hover"}
-		local reduce = function(filter)
-			local result = {}
-			for k, _ in pairs(capabilities) do
-				table.insert(
-					result,
-					f.map(function(v)
-						return { v = capabilities[v] }
-					end)(f.filter(f.contains(k))(filter))
-				)
-			end
-			return f.flatten(result)
-		end
+	-- local log_capabilities = function(capabilities)
+	-- 	-- @param filter = table {"hover"}
+	-- 	local reduce = function(filter)
+	-- 		local result = {}
+	-- 		for k, _ in pairs(capabilities) do
+	-- 			table.insert(
+	-- 				result,
+	-- 				f.map(function(v)
+	-- 					return { v = capabilities[v] }
+	-- 				end)(f.filter(f.contains(k))(filter))
+	-- 			)
+	-- 		end
+	-- 		return f.flatten(result)
+	-- 	end
 
-		-- local log = utils.log_to_file("/tmp/neovim-lsp-capabilities.log")
-		-- log(vim.inspect(reduce(capabilities)))
-	end
+	-- 	-- local log = utils.log_to_file("/tmp/neovim-lsp-capabilities.log")
+	-- 	-- log(vim.inspect(reduce(capabilities)))
+	-- end
 
 	--- Language servers
-	local on_attach_vim = function(client, bufnr)
+	local on_attach_vim = function(client)
 		print("'" .. client.name .. "' language server attached")
 
 		-- utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
@@ -50,11 +50,8 @@ local setup = function()
 			})
 			vim.api.nvim_command([[augroup Format]])
 			vim.api.nvim_command([[autocmd! * <buffer>]])
-			vim.api.nvim_command([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync(nil, 750, {"efm"})]])
+			vim.api.nvim_command([[autocmd BufWritePre <buffer> silent! lua vim.lsp.buf.formatting_seq_sync(nil, 2000, {"efm"})]])
 			vim.api.nvim_command([[augroup END]])
-			-- vim.cmd([[ autocmd BufWritePre * :lua vim.lsp.buf.formatting_sync(nil, 500) ]])
-			-- if client.name ~= "tsserver" then
-			-- end
 
 			print(string.format("Formatting supported %s", client.name))
 		end
@@ -77,7 +74,7 @@ local setup = function()
 		},
 	}
 
-	local servers = { "gopls", "cssls", "vimls", "bashls" }
+	local servers = { "gopls", "cssls", "html", "vimls", "bashls", "eslint" }
 
 	for _, server in ipairs(servers) do
 		config[server].setup(default_lsp_config)
@@ -96,17 +93,20 @@ local setup = function()
 			"--tsserver-log-file=/tmp/tsserver.log",
 		},
 		capabilities = tsserver_capabilities,
-		on_attach = function(client, bufnr)
+		init_options = require("nvim-lsp-ts-utils").init_options,
+		on_attach = function(client)
+			client.resolved_capabilities.document_formatting = false
+
 			require("nvim-lsp-ts-utils").setup({
 				eslint_enable_code_actions = false,
 				eslint_enable_diagnostics = false,
 				signature_help_in_parens = true,
+				auto_inlay_hints = false,
 			})
 
 			require("nvim-lsp-ts-utils").setup_client(client)
-			client.resolved_capabilities.document_formatting = false
 
-			return on_attach_vim(client, bufnr)
+			return on_attach_vim(client)
 		end,
 	})
 

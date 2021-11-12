@@ -2,8 +2,8 @@
 version: 2
 log-file: /tmp/efm.log
 log-level: 4
-root-markers:
-  - .git/
+# root-markers:
+#   - .git/
 
 tools:
   eruby-erb: &eruby-erb
@@ -84,6 +84,7 @@ tools:
     lint-formats:
       - "%f(%l,%c): %tarning %m"
       - "%f(%l,%c): %rror %m"
+    require-marker: true
     root-markers:
       - .eslintrc.cjs
       - .eslintrc.js
@@ -98,6 +99,7 @@ tools:
     lint-formats:
       - "%f(%l,%c): %tarning %m"
       - "%f(%l,%c): %rror %m"
+    require-marker: true
     root-markers:
       - .eslintrc.cjs
       - package.json
@@ -109,6 +111,7 @@ tools:
   yarn-prettier: &yarn-prettier
     format-command: 'yarn workspace site prettier --stdin-filepath ${INPUT}'
     format-stdin: true
+    require-marker: true
     root-markers:
       - '.prettierrc'
       - '.prettierrc.json'
@@ -116,6 +119,7 @@ tools:
   local-prettier: &local-prettier
     format-command: './node_modules/.bin/prettier --stdin-filepath ${INPUT}'
     format-stdin: true
+    require-marker: true
     root-markers:
       - '.prettierrc'
       - '.prettierrc.json'
@@ -123,6 +127,7 @@ tools:
   prettier: &prettier
     format-command: 'prettier --stdin-filepath ${INPUT}'
     format-stdin: true
+    require-marker: true
     root-markers:
       - '.prettierrc'
       - '.prettierrc.json'
@@ -130,13 +135,15 @@ tools:
   prettier-d: &prettier_d
     format-command: 'prettierd --stdin-filename ${INPUT}'
     format-stdin: true
+    require-marker: true
     root-markers:
       - '.prettierrc'
       - '.prettierrc.json'
 
   prettier-d-slim: &prettier-d-slim
-    format-command: 'prettier_d_slim --stdin --stdin-filepath ${INPUT}'
+    format-command: 'node /home/rockerboo/code/prettier_d_slim/lib/bin/prettier_d_slim.js --stdin --stdin-filepath ${INPUT}'
     format-stdin: true
+    require-marker: true
     root-markers:
       - '.prettierrc'
       - '.prettierrc.json'
@@ -144,6 +151,9 @@ tools:
   local-prettier-d-slim: &local-prettier-d-slim
     format-command: './node_modules/.bin/prettier_d_slim --stdin --stdin-filepath ${INPUT}'
     format-stdin: true
+
+    require-marker: true
+
     root-markers:
       - '.prettierrc'
       - '.prettierrc.json'
@@ -159,15 +169,17 @@ tools:
       - '%f:%l:%c:%tarning - %m'
 
   html-prettier: &html-prettier
-    format-command: './node_modules/.bin/prettier --parser html --stdin-filename ${INPUT}'
+    format-command: 'yarn run --silent prettier --parser html --stdin-filename ${INPUT}'
     format-stdin: true
+    require-marker: true
     root-markers:
       - .prettierrc
       - .prettierrc.json
 
   css-prettier: &css-prettier
-    format-command: './node_modules/.bin/prettier --parser css --stdin-filename ${INPUT}'
+    format-command: 'yarn run --silent prettier --parser css --stdin-filename ${INPUT}'
     format-stdin: true
+    require-marker: true
     root-markers:
       - .prettierrc
       - .prettierrc.json
@@ -175,6 +187,7 @@ tools:
   json-prettier: &json-prettier
     format-command: './node_modules/.bin/prettier --parser json --stdin-filename ${INPUT}'
     format-stdin: true
+    require-marker: true
     root-markers:
       - .prettierrc
       - .prettierrc.json
@@ -210,6 +223,7 @@ tools:
   lua-stylua-format: &lua-stylua-format
     format-command: 'stylua -'
     format-stdin: true
+    require-marker: true
     root-markers:
       - 'stylua.toml'
 
@@ -220,11 +234,20 @@ tools:
       - '%f:%l:%c: %m'
 
   vale: &vale
-    lint-command: 'vale --output=line '
+    lint-command: 'vale --output=/home/rockerboo/.config/vale/output.tmpl '
     lint-ignore-exit-code: true
+    lint-formats:
+      - '%f:%l:%c:%trror:%m'
+      - '%f:%l:%c:%tarning:%m'
     # lint-stdin: true
+    require-marker: true
     root-markers:
       - '.vale.ini'
+
+  proselint: &proselint
+    lint-formats:
+      - '%f:%l:%c: %m'
+    lint-command: 'proselint'
 
   blade-blade-formatter: &blade-blade-formatter
     format-command: 'blade-formatter --stdin'
@@ -252,6 +275,7 @@ languages:
 
   rst:
     - <<: *rst-lint
+    - <<: *vale
     - <<: *rst-pandoc
 
   yaml:
@@ -269,21 +293,23 @@ languages:
     - <<: *sh-shfmt
 
   javascript:
-    - <<: *eslint_d
-    - <<: *local-prettier-d-slim
+    # - <<: *eslint_d
+    # - <<: *local-prettier-d-slim
+    - <<: *prettier
 
   javascriptreact:
-    - <<: *eslint_d
+    # - <<: *eslint_d
     - <<: *local-prettier-d-slim
     - <<: *stylelint_d-lint
 
   typescript:
     # - <<: *eslint_d
-    - <<: *local-prettier-d-slim
+    - <<: *prettier
 
   typescriptreact:
     # - <<: *eslint_d
-    - <<: *local-prettier-d-slim
+    # - <<: *prettier-d-slim
+    - <<: *prettier
     - <<: *stylelint_d-lint
 
   php:
@@ -293,8 +319,15 @@ languages:
   html:
     # - <<: *local-prettier-d-slim
     # - <<: *local-prettier
-    - <<: *yarn-prettier
+    - <<: *html-prettier
+    # - <<: *prettier-d-slim
     - <<: *vale
+
+  svg:
+    - <<: *html-prettier
+
+  mjml:
+    - <<: *prettier
 
   css:
     - <<: *css-prettier

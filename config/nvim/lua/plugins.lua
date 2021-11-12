@@ -42,8 +42,8 @@ local setup = function()
 		use({ "wbthomason/packer.nvim", opt = true })
 
 		-- Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
-		use({ "bluz71/vim-moonfly-colors" })
-		use({ "ChristianChiarulli/nvcode-color-schemes.vim" })
+		use({ "bluz71/vim-moonfly-colors", opt = true })
+		use({ "ChristianChiarulli/nvcode-color-schemes.vim", opt = true })
 
 		-- Style css in styled-components
 		use({ "styled-components/vim-styled-components" })
@@ -64,6 +64,7 @@ local setup = function()
 
 		-- Completion from treesitter
 		-- use({ "nvim-treesitter/completion-treesitter" })
+		use({ "~/code/ejs-nvim" })
 
 		-- Git commands
 		use({ "tpope/vim-fugitive" })
@@ -71,10 +72,10 @@ local setup = function()
 		-- Plug 'tpope/vim-sleuth'
 
 		-- Auto-complete ends
-		use({ "tpope/vim-endwise" })
+		-- use({ "tpope/vim-endwise" })
 
 		-- Dispatch jobs (like make, mix, yarn, tests)
-		use({ "tpope/vim-dispatch" })
+		-- use({ "tpope/vim-dispatch" })
 
 		-- sd Sandwich for wrapping variables
 		-- Plug 'mchakann/vim-sandwich'
@@ -90,6 +91,7 @@ local setup = function()
 		-- Comment helpers
 		use({ "tpope/vim-commentary" })
 		use({ "JoosepAlviste/nvim-ts-context-commentstring" })
+
 		-- Delve - Go Debugger
 		use({ "sebdah/vim-delve" })
 
@@ -115,6 +117,8 @@ local setup = function()
 		-- LSP Extensions
 		use({ "tjdevries/lsp_extensions.nvim" })
 
+		use({ "~/code/vim-mjml" })
+
 		use({ "nvim-lua/popup.nvim" })
 		use({ "nvim-lua/plenary.nvim" })
 
@@ -124,13 +128,16 @@ local setup = function()
 
 		use({ "kyazdani42/nvim-web-devicons" })
 
-		use({ "~/code/boo-colorscheme-nvim", branch = "main" })
+		use({ "~/code/boo-colorscheme-nvim" })
 
 		-- Nightfly colors
 		use({ "bluz71/vim-nightfly-guicolors" })
 
 		-- TokyoNight colorscheme
-		use({ "folke/tokyonight.nvim" })
+		use({ "folke/tokyonight.nvim", opt = true })
+
+		-- Emmet helpers for html/css
+		use({ "mattn/emmet-vim" })
 
 		-- Typescript LSP utilties
 		use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
@@ -145,6 +152,8 @@ local setup = function()
 		use({ "hrsh7th/cmp-nvim-lua" })
 
 		use({ "L3MON4D3/LuaSnip" })
+
+		use({ "David-Kunz/jester" })
 
 		use({
 			"hrsh7th/nvim-cmp",
@@ -183,7 +192,7 @@ local setup = function()
 			opt = true,
 		})
 
-		use("lewis6991/impatient.nvim")
+		use({ "lewis6991/impatient.nvim" })
 
 		use({ "norcalli/nvim-terminal.lua" })
 
@@ -197,7 +206,12 @@ local setup = function()
 
 		use({ "windwp/nvim-ts-autotag" })
 
-		use({ "mfussenegger/nvim-ts-hint-textobject" })
+		use({
+			"mfussenegger/nvim-ts-hint-textobject",
+			config = function()
+				require("tsht").config.hint_keys = { "h", "j", "f", "d", "n", "v", "s", "l", "a" }
+			end,
+		})
 	end)
 end
 

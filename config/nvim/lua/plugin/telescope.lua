@@ -21,6 +21,7 @@ tele.setup_defaults = function()
 
 	telescope.setup({ defaults = telescope_config })
 
+	-- fzf native
 	telescope.load_extension("fzf")
 
 	utils.keymap({
@@ -38,7 +39,7 @@ end
 -- >>- ------- -<
 
 tele.theme = function(opts)
-	local theme = themes.get_dropdown({ layout_config = { height = 10 } })
+	local theme = themes.get_dropdown({ layout_config = { height = 15 } })
 	return vim.tbl_deep_extend("force", theme, opts or {})
 end
 
@@ -76,7 +77,7 @@ function PlenaryReload()
 	require("plenary.reload").reload_module("lsp_extensions")
 	require("boo-colorscheme").use()
 	tele.setup_defaults()
-  require('setup').setup()
+	require("setup").setup()
 end
 
 return tele

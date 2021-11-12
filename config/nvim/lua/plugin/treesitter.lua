@@ -19,27 +19,24 @@ treesitter.setup = function()
 		indent = {
 			enable = true,
 		},
-		textobjects = { enable = true },
-		playground = { enable = true, disable = {}, updatetime = 25, persist_queries = false },
-		additional_vim_regex_highlighting = false,
-		node_movement = {
-      enable = true,
-			keymaps = {
-				move_up = "<c-g>",
-				move_down = "<m-j>",
-				move_left = "<a-h>",
-				move_right = "<a-l>",
-				swap_left = "<s-a-h>", -- will only swap when one of "swappable_textobjects" is selected
-				swap_right = "<s-a-l>",
-				select_current_node = "<leader><cr>",
+		textobjects = {
+			enable = true,
+			select = {
+				enable = true,
+				keymaps = {
+					["af"] = "@function.outer",
+					["if"] = "@function.inner",
+					["ac"] = "@class.outer",
+					["ic"] = "@class.inner",
+				},
 			},
-			swappable_textobjects = { "@function.outer", "@parameter.inner", "@statement.outer" },
-			allow_switch_parents = true, -- more craziness by switching parents while staying on the same level, false prevents you from accidentally jumping out of a function
-			allow_next_parent = true, -- more craziness by going up one level if next node does not have children
 		},
+		playground = { enable = true, disable = {}, updatetime = 25, persist_queries = false },
+		additional_vim_regex_hjighlighting = false,
 	})
 
 	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+
 	parser_config.gleam = {
 		install_info = {
 			url = "~/code/tree-sitter-gleam-gg", -- local path or git repo
@@ -58,14 +55,15 @@ treesitter.setup = function()
 		used_by = {}, -- additional filetypes that use this parser
 	}
 
-	parser_config.elixir = {
-		install_info = {
-			url = "~/code/tree-sitter-elixir", -- local path or git repo
-			files = { "src/parser.c" },
-		},
-		filetype = "elixir", -- if filetype does not agrees with parser name
-		used_by = {}, -- additional filetypes that use this parser
-	}
+	-- parser_config.elixir = {
+	-- 	install_info = {
+	-- 		url = "~/code/tree-sitter-elixir-ananthakumaran",
+	-- 		files = { "src/parser.c", "src/scanner.cc" },
+	-- 		requires_generate_from_grammar = true,
+	-- 	},
+	-- 	maintainers = { "@nifoc" },
+	-- }
+	table.insert(parser_config.html.used_by, "ejs")
 end
 
 return treesitter

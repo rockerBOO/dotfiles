@@ -72,7 +72,7 @@ ZSH_CUSTOM=~/.local/share/zsh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fd docker fzf tmux cargo fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa)
+plugins=(git gh node fd docker fzf tmux cargo fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa ripgrep)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -122,6 +122,9 @@ source /usr/share/nvm/init-nvm.sh
 # Python environment manager
 eval "$(pyenv init -)"
 
+# Zoxide
+eval "$(zoxide init zsh)"
+
 # Add luarocks paths
 # eval "$(luarocks path --bin)"
 
@@ -131,3 +134,6 @@ export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 
 
 alias luamake=/home/rockerboo/build/lua-language-server/3rd/luamake/luamake
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/vault vault

@@ -41,37 +41,22 @@ local maps = {
 	{ n, "]t", "<plug>(ultest-next-fail)" },
 	{ n, "[t", "<plug>(ultest-prev-fail)" },
 
-	-- {n, "<leader>hi", [[ <cmd>echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-	-- ]]},
+	{
+		n,
+		"<leader>hi",
+		[[ <cmd>echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+	-- ]],
+	},
 
+	-- Escape for terminal (aka spam escape will get me out)
 	{ t, "<esc><esc>", "<C-\\><C-n>" },
-	-- {i, "kj", esc},
-	-- {i, "KJ", esc},
-	-- {i, "Kj", esc},
-	-- {i, "kJ", esc},
-
-	-- {i, "kk", esc},
-	-- {i, "KK", esc},
-
-	-- {i, "jj", esc},
-	-- {i, "JJ", esc},
-
-	-- {i, "hj", esc},
-	-- {i, "HJ", esc},
-	-- {i, "Hj", esc},
-	-- {i, "hJ", esc},
-
-	-- {i, "kl", esc},
-	-- {i, "KL", esc},
-	-- {i, "Kl", esc},
-	-- {i, "kL", esc},
 
 	{ n, "<Space>", "10j" },
 	{ n, "<C-Space>", "10k" },
 
 	-- { n, "<leader><leader>", "<c-^>" },
 
-	{ n, "<leader><CR>", ":noh<CR>", { silent = true } },
+	-- { n, "<leader><CR>", ":noh<CR>", { silent = true } },
 
 	-- Disable up/down in insert mode
 	{ i, "<Up>", "<nop>" },
@@ -91,6 +76,9 @@ local maps = {
 	-- nvim-ts-hint-textobject
 	{ v, "m", "<cmd>lua R('tsht').nodes()<CR>", { silent = true } },
 	{ o, "m", "<cmd><C-U>lua R('tsht').nodes()<CR>", { silent = true } },
+
+	-- jester
+	{ v, "<Leader>t", "<cmd>lua R('jester').run({ cmd = \"jest -t '$result' -- $file\" })" },
 
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
 }

@@ -2,7 +2,6 @@
 --     Hello
 --
 local g, o, cmd = vim.g, vim.o, vim.cmd
-local b = vim.b
 
 g.mapleader = " "
 
@@ -18,13 +17,13 @@ o.laststatus = 2
 o.ff = "unix"
 
 -- No show modes twice with status bar
-b.showmode = false
+o.showmode = false
 -- cmd [[ set noshowmode ]]
 
 -- Files
+o.hidden = true
 -- if you had like noswapfile you should use o.swapfile = false
 -- simular throughout for when you had `set noswapfile`
-o.hidden = true
 o.swapfile = false
 o.backup = false
 o.writebackup = false

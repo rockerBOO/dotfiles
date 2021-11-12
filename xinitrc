@@ -24,6 +24,9 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 # Fsync/Futex2
 export WINEFSYNC=1
 
+# Use xinput2 for firefox
+export MOZ_USE_XINPUT2=true
+
 # Start dwm slstatus
 ~/.bin/dwm_status
 
