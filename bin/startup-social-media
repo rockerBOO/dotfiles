@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-podman run -p 10000:8080 -d libreddit_web
+podman run -p 10000:8080 -d libreddit
 podman run -p 9000:8080 -d nitter

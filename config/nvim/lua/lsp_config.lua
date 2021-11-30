@@ -48,12 +48,12 @@ local setup = function()
 				"<cmd>lua vim.lsp.buf.formatting()<cr>",
 				{},
 			})
-			vim.api.nvim_command([[augroup Format]])
-			vim.api.nvim_command([[autocmd! * <buffer>]])
-			vim.api.nvim_command([[autocmd BufWritePre <buffer> silent! lua vim.lsp.buf.formatting_seq_sync(nil, 2000, {"efm"})]])
-			vim.api.nvim_command([[augroup END]])
+			-- vim.api.nvim_command([[augroup Format]])
+			-- vim.api.nvim_command([[autocmd! * <buffer>]])
+			-- vim.api.nvim_command([[autocmd BufWritePre <buffer> silent! lua vim.lsp.buf.formatting_seq_sync(nil, 2000, {"efm"})]])
+			-- vim.api.nvim_command([[augroup END]])
 
-			print(string.format("Formatting supported %s", client.name))
+			-- print(string.format("Formatting supported %s", client.name))
 		end
 	end
 
@@ -110,7 +110,7 @@ local setup = function()
 		end,
 	})
 
-	require("lspconfig").efm.setup({
+	config.efm.setup({
 		on_attach = on_attach_vim,
 		init_options = {
 			documentFormatting = true,
@@ -135,6 +135,36 @@ local setup = function()
 			-- 		".prettier.config.cjs",
 			-- 	},
 			-- },
+	})
+
+	config.jsonls.setup({
+		on_attach = on_attach_vim,
+		settings = {
+			json = {
+				schemas = {
+					{
+						fileMatch = { "package.json" },
+						url = "https://json.schemastore.org/package.json",
+					},
+					{
+						fileMatch = { "tsconfig.json", "tsconfig.*.json" },
+						url = "http://json.schemastore.org/tsconfig",
+					},
+					{
+						fileMatch = { ".eslintrc.json", ".eslintrc" },
+						url = "http://json.schemastore.org/eslintrc",
+					},
+					{
+						fileMatch = { ".prettierrc", ".prettierrc.json", "prettier.config.json" },
+						url = "http://json.schemastore.org/prettierrc",
+					},
+					{
+						fileMatch = { ".stylelintrc", ".stylelintrc.json", "stylelint.config.json" },
+						url = "http://json.schemastore.org/stylelintrc",
+					},
+				},
+			},
+		},
 	})
 
 	config.elixirls.setup({ cmd = { "elixir-ls" }, on_attach = on_attach_vim })

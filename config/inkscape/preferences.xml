@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="392.997"
-         height="162.868"
+         width="636"
+         height="476"
          rx="0"
          ry="0" />
       <eventcontext
@@ -330,7 +330,7 @@
        font_sample="AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()"
        show_sample_in_list="1"
        use_svg2="1"
-       style="line-height:1.25;font-family:sans-serif;font-size:20px;-inkscape-font-specification:'sans-serif, @wght=700';font-variation-settings:'wght' 700"
+       style="line-height:1.25;font-family:sans-serif;font-size:21.33333333px;-inkscape-font-specification:'sans-serif, @wght=700';font-variation-settings:'wght' 700"
        selcue="1"
        align_mode="1" />
     <eventcontext
@@ -1031,13 +1031,13 @@
      org.inkscape.output.scour_inkscape.enable-viewboxing="0" />
   <group
      id="desktop"
-     style="fill:#048141;-inkscape-font-specification:'sans-serif, @wght=700';font-family:sans-serif;font-size:28px;text-anchor:middle;text-align:center;stroke-width:4;stroke:#06ff00;font-variation-settings:'wght' 700">
+     style="fill:#8bf9f9;-inkscape-font-specification:'Inter V, @wght=900';font-family:'Inter V';font-size:85.33333333px;text-anchor:middle;text-align:center;stroke-width:4;font-variation-settings:'wght' 900">
     <group
        width="2556"
        height="1414"
        x="1920"
        y="22"
-       maximized="1"
+       maximized="0"
        fullscreen="0"
        id="geometry" />
     <group

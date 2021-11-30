@@ -64,7 +64,7 @@ local setup = function()
 
 		-- Completion from treesitter
 		-- use({ "nvim-treesitter/completion-treesitter" })
-		use({ "~/code/ejs-nvim" })
+		use({ "~/code/ejs-nvim", opt = true })
 
 		-- Git commands
 		use({ "tpope/vim-fugitive" })
@@ -93,7 +93,7 @@ local setup = function()
 		use({ "JoosepAlviste/nvim-ts-context-commentstring" })
 
 		-- Delve - Go Debugger
-		use({ "sebdah/vim-delve" })
+		use({ "sebdah/vim-delve", opt = true })
 
 		-- Editorconfig support
 		use({ "editorconfig/editorconfig-vim" })
@@ -117,7 +117,7 @@ local setup = function()
 		-- LSP Extensions
 		use({ "tjdevries/lsp_extensions.nvim" })
 
-		use({ "~/code/vim-mjml" })
+		use({ "~/code/vim-mjml", opt = true })
 
 		use({ "nvim-lua/popup.nvim" })
 		use({ "nvim-lua/plenary.nvim" })
@@ -176,6 +176,8 @@ local setup = function()
 				"saadparwaiz1/cmp_luasnip",
 			},
 		})
+
+		use({ "~/code/reload-lua" })
 
 		-- Tabnine
 		-- use({ "codota/tabnine-vim" })
