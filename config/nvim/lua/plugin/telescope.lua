@@ -16,6 +16,7 @@ tele.setup_defaults = function()
 		layout_config = { prompt_position = "top", width = 0.8, height = 0.7 },
 		sorting_strategy = "ascending",
 		winblend = 3,
+
 		prompt_prefix = "> ",
 	}
 
@@ -27,10 +28,20 @@ tele.setup_defaults = function()
 	utils.keymap({
 		"n",
 		"<Leader>ca",
-		"<cmd>lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_cursor())<CR>",
+		function()
+			require("telescope.builtin").lsp_code_actions(require("telescope.themes").get_cursor())
+		end,
 	})
-	utils.keymap({ "n", "<Leader>gt", "<cmd>lua require'plugin.telescope'.treesitter()<cr>" })
-	utils.keymap({ "n", "<Leader>pl", "<cmd>lua require'plugin.telescope'.find_files_plugins()<cr>" })
+	utils.keymap({
+		"n",
+		"<Leader>gt",
+		require'plugin.telescope'.treesitter,
+	})
+	utils.keymap({
+		"n",
+		"<Leader>pl",
+		require'plugin.telescope'.find_files_plugins,
+	})
 
 	require("plugin.telescope.mappings").setup()
 end
@@ -39,7 +50,31 @@ end
 -- >>- ------- -<
 
 tele.theme = function(opts)
-	local theme = themes.get_dropdown({ layout_config = { height = 15 } })
+	local theme = themes.get_dropdown({
+		layout_config = { height = 15 },
+
+			-- borderchars = {
+			--   prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+			--   results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
+			--   preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+			-- },
+			--
+			-- borderchars = {
+			-- 	prompt = { "▔", "▔", " ", "▎", "▎", "▐", " ", " " },
+			-- 	results = { "▂", "▐", "▂", "▌", "┣", "▅", "▀", "▀" },
+			-- 	preview = { "─", "▍", "▀", "", " ", "▁", "▀", "▀" },
+			-- },
+			-- borderchars = {
+			-- 	prompt = { "░", "░", " ", "░", "░", "░", " ", " " },
+			-- 	results = { "░", "░", "░", "░", "░", "░", "░", "░" },
+			-- 	preview = { "─", "░", "░", "", " ", " ", "░", "░" },
+			-- },
+			-- borderchars = {
+			-- 	prompt = { "▓", "▓", " ", "▓", "▓", "▓", " ", " " },
+			-- 	results = { "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓" },
+			-- 	preview = { "─", "▓", "▓", "", " ", " ", "▓", "▓" },
+			-- },
+	})
 	return vim.tbl_deep_extend("force", theme, opts or {})
 end
 
@@ -65,19 +100,23 @@ tele.treesitter = function()
 	return require("telescope.builtin").treesitter(tele.theme())
 end
 
-function P(module)
+function Reload(module)
 	require("plenary.reload").reload_module(module)
 end
 
-function PlenaryReload()
+local plenary_reload = function()
 	require("plenary.reload").reload_module("telescope")
 	require("plenary.reload").reload_module("plenary")
 	require("plenary.reload").reload_module("boo-colorscheme")
 	require("plenary.reload").reload_module("plugin")
-	require("plenary.reload").reload_module("lsp_extensions")
+	Reload("lsp_config")
+	Reload("plugin.telescope")
+	-- require("plenary.reload").reload_module("lsp_extensions")
 	require("boo-colorscheme").use()
 	tele.setup_defaults()
-	require("setup").setup()
+	-- require("setup").setup()
 end
+
+vim.keymap.set("n", "<leader>asdf", plenary_reload)
 
 return tele

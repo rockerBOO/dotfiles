@@ -5,6 +5,8 @@ return {
 		require("plugin.telescope").setup_defaults()
 		require("plugin.colorizer")
 		require("plugin.expressline")
+		require("plugin.nvim-dap-ui").setup()
+		require("plugin.dap").setup()
 		require("rockerboo.tests").setup()
 		require("nvim-ts-autotag").setup()
 

@@ -4,25 +4,59 @@ local mappings = {}
 mappings.setup = function()
 	local n = "n"
 
-	local builtin = "<cmd>lua R'telescope.builtin'."
-
 	local maps = {
-		{ n, "<Leader>en", builtin .. "find_files{ cwd = '~/.config/nvim' }<cr>" },
-		{ n, "<Leader>f", "<cmd>lua R('plugin.telescope').find_files()<cr>" },
-		{ n, "<Leader>gf", builtin .. "git_files({ theme = 'dropdown' })<cr>" },
-		{ n, "gW", builtin .. "lsp_workspace_symbols(R'telescope.themes'.get_dropdown())<cr>" },
-		{ n, "ggr", builtin .. "lsp_workspace_symbols()<cr>" },
+		{
+			n,
+			"<Leader>en",
+			function()
+				require("telescope.builtin").find_files({ cwd = "/home/rockerboo/.config/nvim" })
+			end,
+		},
+		{
+			n,
+			"<Leader>f",
+			require("plugin.telescope").find_files,
+		},
+		{
+			n,
+			"<Leader>gf",
+			function()
+				require("telescope.builtin").git_files({ theme = "dropdown" })
+			end,
+		},
+		{
+			n,
+			"gW",
+			function()
+				require("telescope.builtin").lsp_workspace_symbols(require("telescope.themes").get_dropdown())
+			end,
+		},
+		{
+			n,
+			"ggr",
+			require("telescope.builtin").lsp_workspace_symbols,
+		},
 		-- {n, "<Leader>gl", builtin .. "live_grep"},
 		{
 			n,
 			"<Leader>gp",
-			builtin .. string.format("find_files{ cwd = '%s' }", vim.fn.stdpath("cache")) .. "<cr>",
+			function()
+				require("telescope.builtin")(string.format(
+					"find_files{ cwd = '%s' }",
+					vim.fn.stdpath("cache")
+				))
+			end,
 		},
-		{ n, "<Leader>cs", builtin .. "colorscheme({ theme = 'dropdown', enable_preview = true })<cr>" },
+		{
+			n,
+			"<Leader>cs",
+			function()
+				require("telescope.builtin").colorscheme({ theme = "dropdown", enable_preview = true })
+			end,
+		},
 	}
 
 	utils.keymaps(maps)
 end
-
 
 return mappings

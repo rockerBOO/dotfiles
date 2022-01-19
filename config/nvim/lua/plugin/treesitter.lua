@@ -19,23 +19,36 @@ treesitter.setup = function()
 		indent = {
 			enable = true,
 		},
-		textobjects = {
+		textsubjects = {
 			enable = true,
-			select = {
-				enable = true,
-				keymaps = {
-					["af"] = "@function.outer",
-					["if"] = "@function.inner",
-					["ac"] = "@class.outer",
-					["ic"] = "@class.inner",
-				},
+			keymaps = {
+				["."] = "textsubjects-smart",
+				[";"] = "textsubjects-container-outer",
 			},
 		},
-		playground = { enable = true, disable = {}, updatetime = 25, persist_queries = false },
+		-- textobjects = {
+		-- 	enable = true,
+		-- 	select = {
+		-- 		enable = true,
+		-- 		keymaps = {
+		-- 			["af"] = "@function.outer",
+		-- 			["if"] = "@function.inner",
+		-- 			["ac"] = "@class.outer",
+		-- 			["ic"] = "@class.inner",
+		-- 		},
+		-- 	},
+		-- },
+		playground = {
+			enable = true,
+			disable = {},
+			updatetime = 25,
+			persist_queries = false, 
+		},
 		additional_vim_regex_hjighlighting = false,
 	})
 
-	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+	local parser_config =
+		require("nvim-treesitter.parsers").get_parser_configs()
 
 	parser_config.gleam = {
 		install_info = {
@@ -55,14 +68,14 @@ treesitter.setup = function()
 		used_by = {}, -- additional filetypes that use this parser
 	}
 
-	-- parser_config.elixir = {
-	-- 	install_info = {
-	-- 		url = "~/code/tree-sitter-elixir-ananthakumaran",
-	-- 		files = { "src/parser.c", "src/scanner.cc" },
-	-- 		requires_generate_from_grammar = true,
-	-- 	},
-	-- 	maintainers = { "@nifoc" },
-	-- }
+	parser_config.elixir = {
+		install_info = {
+			url = "~/code/tree-sitter-elixir-ananthakumaran",
+			files = { "src/parser.c", "src/scanner.cc" },
+			requires_generate_from_grammar = true,
+		},
+		maintainers = { "@nifoc" },
+	}
 	table.insert(parser_config.html.used_by, "ejs")
 end
 

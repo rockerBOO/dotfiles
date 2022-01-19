@@ -3,14 +3,7 @@
 -- 	source = {  nvim_lsp = true, nvim_lua = true, vsnip = true, nvim_treesitter = true },
 -- })
 local lspkind = require("lspkind")
--- local tabnine = require("cmp_tabnine.config")
--- tabnine:setup({
--- 	max_lines = 1000,
--- 	max_num_results = 20,
--- 	sort = true,
--- 	priority = 5000,
--- 	show_prediction_strength = true,
--- })
+local cmp = require("cmp")
 
 local source_mapping = {
 	buffer = "[Buffer]",
@@ -23,9 +16,20 @@ local source_mapping = {
 }
 
 require("cmp").setup({
+	mapping = {
+		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+		["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+		["<C-e>"] = cmp.mapping({
+			i = cmp.mapping.abort(),
+			c = cmp.mapping.close(),
+		}),
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
+	},
 	sources = {
-		{ name = "cmp_tabnine" },
 		{ name = "nvim_lsp" },
+		{ name = "cmp_tabnine" },
 		{ name = "luasnip" },
 			-- { name = "buffers" },
 			-- { name = "nvim_lua" },

@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="636"
-         height="476"
+         width="998.515"
+         height="248.404"
          rx="0"
          ry="0" />
       <eventcontext
@@ -348,8 +348,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="514.132"
-       y="264.596"
+       x="0.514439"
+       y="249.209"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -635,7 +635,7 @@
        placement="5">
       <group
          id="exportarea"
-         value="drawing" />
+         value="page" />
       <group
          id="defaultxdpi"
          value="384" />
@@ -645,7 +645,7 @@
        default="org.inkscape.output.scour_inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/rockerboo/code/ecogarden/site/static/svg"
+       path="/home/rockerboo/code/ecogarden/create/src/svg/objects"
        use_current_dir="1" />
     <group
        id="save_copy"
@@ -656,7 +656,7 @@
     <group
        id="open"
        enable_preview="1"
-       path="/home/rockerboo/Downloads/" />
+       path="/home/rockerboo/code/ecogarden/create/src/svg/objects/" />
     <group
        id="import"
        enable_preview="1"
@@ -1023,7 +1023,7 @@
      org.inkscape.effect.voronoi.clip-box="Page"
      ru.cnc-club.filter.gcodetools_graffiti_orientation.unit="G21 (All units in mm)"
      ru.cnc-club.filter.gcodetools_graffiti_orientation.postprocessor=" "
-     org.inkscape.output.scour_inkscape.tab="Options"
+     org.inkscape.output.scour_inkscape.tab="About"
      org.inkscape.output.scour_inkscape.enable-comment-stripping="1"
      org.inkscape.output.scour_inkscape.remove-metadata="1"
      org.inkscape.output.scour_inkscape.strip-xml-prolog="1"
@@ -1031,13 +1031,13 @@
      org.inkscape.output.scour_inkscape.enable-viewboxing="0" />
   <group
      id="desktop"
-     style="fill:#8bf9f9;-inkscape-font-specification:'Inter V, @wght=900';font-family:'Inter V';font-size:85.33333333px;text-anchor:middle;text-align:center;stroke-width:4;font-variation-settings:'wght' 900">
+     style="fill:#cccccc;-inkscape-font-specification:'Inter V, @wght=900';font-family:'Inter V';font-size:85.33333333px;text-anchor:middle;text-align:center;font-variation-settings:'wght' 900;stroke-miterlimit:1.5;stroke:#000000">
     <group
-       width="2556"
+       width="1404"
        height="1414"
        x="1920"
        y="22"
-       maximized="0"
+       maximized="1"
        fullscreen="0"
        id="geometry" />
     <group

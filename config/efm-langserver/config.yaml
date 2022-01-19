@@ -78,7 +78,7 @@ tools:
     format-stdin: true
 
   eslint_d: &eslint_d
-    lint-command: './node_modules/.bin/eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}'
+    lint-command: 'yarn eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}'
     lint-ignore-exit-code: true
     lint-stdin: true
     lint-formats:
@@ -93,7 +93,7 @@ tools:
       - .eslintrc.json
 
   eslint: &eslint
-    lint-command: './node_modules/.bin/eslint -f visualstudio --stdin --stdin-filename ${INPUT}'
+    lint-command: 'yarn eslint -f visualstudio --stdin --stdin-filename ${INPUT}'
     lint-ignore-exit-code: true
     lint-stdin: true
     lint-formats:
@@ -293,34 +293,25 @@ languages:
     - <<: *sh-shfmt
 
   javascript:
-    # - <<: *eslint_d
-    # - <<: *local-prettier-d-slim
     - <<: *prettier
 
   javascriptreact:
-    # - <<: *eslint_d
     - <<: *prettier
-    - <<: *stylelint-lint
+    # - <<: *stylelint-lint
 
   typescript:
-    # - <<: *eslint_d
     - <<: *prettier
 
   typescriptreact:
-    # - <<: *eslint_d
-    # - <<: *prettier-d-slim
     - <<: *prettier
-    - <<: *stylelint-lint
+    # - <<: *stylelint-lint
 
   php:
     - <<: *php-phpstan
     - <<: *php-psalm
 
   html:
-    # - <<: *local-prettier-d-slim
-    # - <<: *local-prettier
     - <<: *html-prettier
-    # - <<: *prettier-d-slim
     - <<: *vale
 
   svg:

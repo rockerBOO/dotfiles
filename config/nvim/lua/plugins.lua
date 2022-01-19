@@ -10,16 +10,19 @@ local ensure_packer_installed = function()
 			return false
 		end
 
-		local directory = string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
+		local directory =
+			string.format(
+				"%s/site/pack/packer/opt/",
+				vim.fn.stdpath("data")
+			)
 
 		vim.fn.mkdir(directory, "p")
 
-		local out =
-			vim.fn.system(string.format(
-				"git clone %s %s",
-				"https://github.com/wbthomason/packer.nvim",
-				directory .. "/packer.nvim"
-			))
+		local out = vim.fn.system(string.format(
+			"git clone %s %s",
+			"https://github.com/wbthomason/packer.nvim",
+			directory .. "/packer.nvim"
+		))
 		print(out)
 	end
 
@@ -43,7 +46,10 @@ local setup = function()
 
 		-- Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
 		use({ "bluz71/vim-moonfly-colors", opt = true })
-		use({ "ChristianChiarulli/nvcode-color-schemes.vim", opt = true })
+		use({
+			"ChristianChiarulli/nvcode-color-schemes.vim",
+			opt = true,
+		})
 
 		-- Style css in styled-components
 		use({ "styled-components/vim-styled-components" })
@@ -108,6 +114,21 @@ local setup = function()
 			end,
 		})
 
+		use({ "mfussenegger/nvim-dap" })
+
+		use({
+			"rcarriga/nvim-dap-ui",
+			requires = { "mfussenegger/nvim-dap" },
+		})
+
+		use({
+			"theHamsta/nvim-dap-virtual-text",
+			requires = { "mfussenegger/nvim-dap" },
+		})
+
+		-- use({ "David-Kunz/jester" })
+		use({ "~/code/jester" })
+
 		-- Neovim Lua Development
 		use({ "~/code/nlua.nvim" })
 
@@ -124,7 +145,10 @@ local setup = function()
 
 		-- Telescope fuzzy finder
 		use({ "nvim-telescope/telescope.nvim" })
-		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+		use({
+			"nvim-telescope/telescope-fzf-native.nvim",
+			run = "make",
+		})
 
 		use({ "kyazdani42/nvim-web-devicons" })
 
@@ -142,18 +166,19 @@ local setup = function()
 		-- Typescript LSP utilties
 		use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
 
-		use({ "simrat39/symbols-outline.nvim" })
+		-- use({ "simrat39/symbols-outline.nvim" })
 
 		use({ "onsails/lspkind-nvim" })
 
 		-- Completion (nvim-cmp)
 		-- use({ "hrsh7th/cmp-buffer" })
-		use({ "hrsh7th/cmp-nvim-lsp", requires = "onsails/lspkind-nvim" })
+		use({
+			"hrsh7th/cmp-nvim-lsp",
+			requires = "onsails/lspkind-nvim",
+		})
 		use({ "hrsh7th/cmp-nvim-lua" })
 
 		use({ "L3MON4D3/LuaSnip" })
-
-		use({ "David-Kunz/jester" })
 
 		use({
 			"hrsh7th/nvim-cmp",
@@ -165,7 +190,10 @@ local setup = function()
 					ft = "lua",
 					-- this is after/plugin content
 					config = function()
-						require("cmp").register_source("nvim_lua", require("cmp_nvim_lua").new())
+						require("cmp").register_source(
+							"nvim_lua",
+							require("cmp_nvim_lua").new()
+						)
 					end,
 				},
 				{
@@ -179,9 +207,56 @@ local setup = function()
 
 		use({ "~/code/reload-lua" })
 
+		-- used for yarn pnp packaging
+		use({
+			"lbrayner/vim-rzip",
+			config = function()
+				vim.cmd([[" Decode URI encoded characters
+function! DecodeURI(uri)
+    return substitute(a:uri, '%\([a-fA-F0-9][a-fA-F0-9]\)', '\=nr2char("0x" . submatch(1))', "g")
+endfunction
+
+" Attempt to clear non-focused buffers with matching name
+function! ClearDuplicateBuffers(uri)
+    " if our filename has URI encoded characters
+    if DecodeURI(a:uri) !=# a:uri
+        " wipeout buffer with URI decoded name - can print error if buffer in focus
+        sil! exe "bwipeout " . fnameescape(DecodeURI(a:uri))
+        " change the name of the current buffer to the URI decoded name
+        exe "keepalt file " . fnameescape(DecodeURI(a:uri))
+        " ensure we don't have any open buffer matching non-URI decoded name
+        sil! exe "bwipeout " . fnameescape(a:uri)
+    endif
+endfunction
+
+function! RzipOverride()
+    " Disable vim-rzip's autocommands
+    autocmd! zip BufReadCmd   zipfile:*,zipfile:*/*
+    exe "au! zip BufReadCmd ".g:zipPlugin_ext
+
+    " order is important here, setup name of new buffer correctly then fallback to vim-rzip's handling
+    autocmd zip BufReadCmd   zipfile:*  call ClearDuplicateBuffers(expand("<amatch>"))
+    autocmd zip BufReadCmd   zipfile:*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
+
+    if has("unix")
+        autocmd zip BufReadCmd   zipfile:*/*  call ClearDuplicateBuffers(expand("<amatch>"))
+        autocmd zip BufReadCmd   zipfile:*/*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
+    endif
+
+    exe "au zip BufReadCmd ".g:zipPlugin_ext."  call rzip#Browse(DecodeURI(expand('<amatch>')))"
+endfunction
+
+autocmd VimEnter * call RzipOverride()]])
+			end,
+		})
+
 		-- Tabnine
 		-- use({ "codota/tabnine-vim" })
-		use({ "~/build/tabnine-vim", opt = true, as = "codota/tabnine-vim" })
+		use({
+			"~/build/tabnine-vim",
+			opt = true,
+			as = "codota/tabnine-vim",
+		})
 		use({
 			"tzachar/cmp-tabnine",
 			run = "./install.sh",
@@ -190,11 +265,25 @@ local setup = function()
 			requires = { "hrsh7th/nvim-cmp", "codata/tabnine-vim" },
 			config = function()
 				require("cmp_tabnine").setup()
+
+				local tabnine = require("cmp_tabnine.config")
+				tabnine:setup({
+					max_lines = 1000,
+					max_num_results = 20,
+					sort = true,
+					priority = 5000,
+					show_prediction_strength = true,
+				})
 			end,
 			opt = true,
 		})
 
 		use({ "lewis6991/impatient.nvim" })
+
+		use({
+			"yardnsm/vim-import-cost",
+			run = "npm install --production",
+		})
 
 		use({ "norcalli/nvim-terminal.lua" })
 
@@ -207,11 +296,13 @@ local setup = function()
 		-- use({ "rcarriga/vim-ultest", requires = { { "janko/vim-test" } } })
 
 		use({ "windwp/nvim-ts-autotag" })
+		use({ "RRethy/nvim-treesitter-textsubjects" })
 
 		use({
 			"mfussenegger/nvim-ts-hint-textobject",
 			config = function()
-				require("tsht").config.hint_keys = { "h", "j", "f", "d", "n", "v", "s", "l", "a" }
+				require("tsht").config.hint_keys =
+					{ "h", "j", "f", "d", "n", "v", "s", "l", "a" }
 			end,
 		})
 	end)

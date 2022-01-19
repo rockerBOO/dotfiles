@@ -19,7 +19,7 @@ local generator = function(_)
 			end
 			return ""
 		end),
-		builtin.responsive_file(140, 90),
+		builtin.make_responsive_file(140, 90),
 		sections.collapse_builtin({ " ", builtin.modified_flag }),
 		sections.split,
 		lsp_statusline.status,

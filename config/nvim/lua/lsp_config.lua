@@ -39,7 +39,12 @@ local setup = function()
 		lsp_status.on_attach(client)
 
 		local capLog = utils.log_to_file("/tmp/capabilities.log")
-		capLog("client.name: " .. client.name .. "\n" .. vim.inspect(client.resolved_capabilities))
+		capLog(
+			"client.name: "
+				.. client.name
+				.. "\n"
+				.. vim.inspect(client.resolved_capabilities)
+		)
 
 		if client.resolved_capabilities.document_formatting then
 			utils.keymap({
@@ -48,10 +53,15 @@ local setup = function()
 				"<cmd>lua vim.lsp.buf.formatting()<cr>",
 				{},
 			})
-			-- vim.api.nvim_command([[augroup Format]])
-			-- vim.api.nvim_command([[autocmd! * <buffer>]])
-			-- vim.api.nvim_command([[autocmd BufWritePre <buffer> silent! lua vim.lsp.buf.formatting_seq_sync(nil, 2000, {"efm"})]])
-			-- vim.api.nvim_command([[augroup END]])
+			-- vim.api.nvim_define_augroup({ name = "Format" })
+			-- vim.api.nvim_define_autocmd({
+			-- 	group = "Format",
+			-- 	event = "BufWritePre",
+			-- 	pattern = "<buffer>",
+			-- 	callback = function()
+			-- 		vim.lsp.buf.formatting_seq_sync(nil, 2000, { "efm" })
+			-- 	end,
+			-- })
 
 			-- print(string.format("Formatting supported %s", client.name))
 		end
@@ -64,7 +74,7 @@ local setup = function()
 	capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 	-- Support snippets
-	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 	local default_lsp_config = {
 		on_attach = on_attach_vim,
@@ -74,7 +84,7 @@ local setup = function()
 		},
 	}
 
-	local servers = { "gopls", "cssls", "html", "vimls", "bashls", "eslint" }
+	local servers = { "gopls", "cssls", "html", "vimls", "bashls" }
 
 	for _, server in ipairs(servers) do
 		config[server].setup(default_lsp_config)
@@ -112,29 +122,6 @@ local setup = function()
 
 	config.efm.setup({
 		on_attach = on_attach_vim,
-		init_options = {
-			documentFormatting = true,
-			hover = true,
-			documentSymbol = true,
-			codeAction = true,
-		},
-			-- settings = {
-			-- 	-- Require formatter configuration files to load
-			-- 	rootMarkers = {
-			-- 		".lua-format",
-			-- 		-- ".eslintrc.cjs",
-			-- 		-- ".eslintrc",
-			-- 		-- ".eslintrc.json",
-			-- 		-- ".eslintrc.js",
-			-- 		".prettierrc",
-			-- 		".prettierrc.js",
-			-- 		".prettierrc.json",
-			-- 		".prettierrc.yml",
-			-- 		".prettierrc.yaml",
-			-- 		".prettier.config.js",
-			-- 		".prettier.config.cjs",
-			-- 	},
-			-- },
 	})
 
 	config.jsonls.setup({
@@ -155,15 +142,34 @@ local setup = function()
 						url = "http://json.schemastore.org/eslintrc",
 					},
 					{
-						fileMatch = { ".prettierrc", ".prettierrc.json", "prettier.config.json" },
+						fileMatch = {
+							".prettierrc",
+							".prettierrc.json",
+							"prettier.config.json",
+						},
 						url = "http://json.schemastore.org/prettierrc",
 					},
 					{
-						fileMatch = { ".stylelintrc", ".stylelintrc.json", "stylelint.config.json" },
+						fileMatch = {
+							".stylelintrc",
+							".stylelintrc.json",
+							"stylelint.config.json",
+						},
 						url = "http://json.schemastore.org/stylelintrc",
 					},
 				},
 			},
+		},
+	})
+
+	-- Using typescript plugin for eslint?
+	config.eslint.setup({
+		on_attach = on_attach_vim,
+		filetypes = {
+			"javascript",
+			"javascriptreact",
+			"javascript.jsx",
+			"vue",
 		},
 	})
 
@@ -179,11 +185,10 @@ local setup = function()
 		on_attach = on_attach_vim,
 	})
 
-	vim.lsp.handlers["textDocument/publishDiagnostics"] =
-		vim.lsp.with(
-			vim.lsp.diagnostic.on_publish_diagnostics,
-			{ virtual_text = false, update_in_insert = false }
-		)
+	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+		vim.lsp.diagnostic.on_publish_diagnostics,
+		{ virtual_text = false, update_in_insert = false }
+	)
 end
 
 return { setup = setup }

@@ -72,7 +72,7 @@ ZSH_CUSTOM=~/.local/share/zsh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gh node fd docker fzf tmux cargo fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa ripgrep kubectl)
+plugins=(git gh node fd docker fzf tmux rust fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa ripgrep kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -135,6 +135,7 @@ export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 
 alias luamake=/home/rockerboo/build/lua-language-server/3rd/luamake/luamake
 alias gitlab-run="gitlab-runner exec docker --cache-dir /cache --docker-volumes `pwd`/build-output:/cache"
+alias nvim=/home/rockerboo/build/lua_autocmds/build/bin/nvim
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/vault vault
