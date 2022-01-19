@@ -8,7 +8,8 @@ Linux
 * Treesitter
 * Telescope
 
-![Linux - Neofetch](https://user-images.githubusercontent.com/15027/99193889-c79d4200-2749-11eb-8c54-c5b6a8884b1e.png)
+![Linux - Neofetch](https://user-images.githubusercontent.com/15027/150073502-185f5e6b-a13f-4927-b4d9-18bdab81efac.png)
+)
 
 ## Install
 
