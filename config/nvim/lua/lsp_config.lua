@@ -30,7 +30,7 @@ local setup = function()
 
 	--- Language servers
 	local on_attach_vim = function(client)
-		print("'" .. client.name .. "' language server attached")
+		-- print("'" .. client.name .. "' language server attached")
 
 		-- utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
 
@@ -121,10 +121,12 @@ local setup = function()
 	})
 
 	config.efm.setup({
+		capabilities = capabilities,
 		on_attach = on_attach_vim,
 	})
 
 	config.jsonls.setup({
+		capabilities = capabilities,
 		on_attach = on_attach_vim,
 		settings = {
 			json = {
@@ -165,6 +167,7 @@ local setup = function()
 	-- Using typescript plugin for eslint?
 	config.eslint.setup({
 		on_attach = on_attach_vim,
+		capabilities = capabilities,
 		filetypes = {
 			"javascript",
 			"javascriptreact",
@@ -173,8 +176,15 @@ local setup = function()
 		},
 	})
 
-	config.elixirls.setup({ cmd = { "elixir-ls" }, on_attach = on_attach_vim })
-	config.rust_analyzer.setup({ on_attach = on_attach_vim })
+	config.elixirls.setup({
+		cmd = { "elixir-ls" },
+		capabilities = capabilities,
+		on_attach = on_attach_vim,
+	})
+	config.rust_analyzer.setup({
+		on_attach = on_attach_vim,
+		capabilities = vim.lsp.protocol.make_client_capabilities(),
+	})
 
 	require("nlua.lsp.nvim").setup(config, {
 		cmd = {
@@ -183,6 +193,20 @@ local setup = function()
 			"/home/rockerboo/build/lua-language-server/main.lua",
 		},
 		on_attach = on_attach_vim,
+	})
+
+	require("lspconfig").ltex.setup({
+		cmd = { "/home/rockerboo/build/ltex-ls-15.2.0/bin/ltex-ls" },
+    settings = {
+      ltex = {
+        language = 'en',
+        additionalRules = {
+          enablePickyRules = true,
+          motherTongue = 'en',
+          languageModel = '/mnt/900/ngrams/ngrams-en-20150817/'
+        }
+      }
+    }
 	})
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

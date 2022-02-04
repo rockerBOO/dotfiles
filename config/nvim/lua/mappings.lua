@@ -39,7 +39,7 @@ local maps = {
 	{ n, "<Leader>di", vim.diagnostic.open_float, silent },
 
   -- Diagnostics movement
-  { n, "<Leader>k", vim.diagnostic.goto_next },
+  { n, "<Leader>k", vim.diagnostic.goto_prev },
   { n, "<Leader>j", vim.diagnostic.goto_next },
 
 	-- { n, "<leader>T", "<cmd>Ultest<cr>" },

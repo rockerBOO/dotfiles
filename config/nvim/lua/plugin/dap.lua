@@ -73,7 +73,7 @@ return {
 			},
 		}
 
-    -- lldb/rust
+		-- lldb/rust
 		dap.adapters.lldb = {
 			type = "executable",
 			command = "/usr/bin/lldb-vscode", -- adjust as needed
@@ -112,6 +112,6 @@ return {
 
 		-- setup extensions
 		require("nvim-dap-virtual-text").setup()
-    require('plugin.dap.mappings').setup()
+		require("plugin.dap.mappings").setup()
 	end,
 }

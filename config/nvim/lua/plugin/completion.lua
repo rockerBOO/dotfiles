@@ -7,9 +7,10 @@ local cmp = require("cmp")
 
 local source_mapping = {
 	buffer = "[Buffer]",
-	nvim_lsp = "[LSP]",
+	nvim_lsp = "",
 	nvim_lua = "[Lua]",
-	cmp_tabnine = "[TN]",
+	treesitter = "串",
+	cmp_tabnine = "",
 	luasnip = "[LuaSnip]",
 	path = "[Path]",
 	calc = "[calc]",
@@ -31,8 +32,9 @@ require("cmp").setup({
 		{ name = "nvim_lsp" },
 		{ name = "cmp_tabnine" },
 		{ name = "luasnip" },
-			-- { name = "buffers" },
-			-- { name = "nvim_lua" },
+		{ name = "treesitter" },
+		-- { name = "buffers" },
+		-- { name = "nvim_lua" },
 	},
 	formatting = {
 		format = function(entry, vim_item)

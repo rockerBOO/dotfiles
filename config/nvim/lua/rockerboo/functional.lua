@@ -48,7 +48,10 @@ F.filter = function(fn)
 	end
 end
 
+---Execute functions until one results in true
+---@param fn function
 F.any = function(fn)
+	---@param array table
 	return function(array)
 		for _, v in ipairs(array) do
 			if fn(v) then

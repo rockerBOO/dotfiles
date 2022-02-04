@@ -10,9 +10,69 @@ After=sound.target
 
 [Service]
 Type=exec
-ExecStart=/home/rockerboo/.cargo/bin/spotifyd --no-daemon
+ExecStart=/home/rockerboo/build/spotifyd/target/release/spotifyd --no-daemon
 Restart=always
 RestartSec=12
+
+;Hardening https://www.ctrl.blog/entry/systemd-service-hardening.html
+
+KeyringMode=
+ProtectControlGroups=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+RestrictSUIDSGID=true
+
+ProtectKernalLogs=true
+ProtectHostname=true
+PrivateTmp=true
+ProtectHome=true
+
+;https://news.ycombinator.com/item?id=29976096
+DevicePolicy=closed
+LockPersonality=true
+NoNewPrivileges=true
+
+RestrictNamespaces=net
+PrivateNetwork=true
+
+; TemporaryFileSystem=/etc
+BindReadOnlyPaths=/etc/nsswitch.conf
+BindReadOnlyPaths=/etc/nsswitch.conf
+BindReadOnlyPaths=/etc/resolv.conf
+BindReadOnlyPaths=/etc/host.conf
+BindReadOnlyPaths=/etc/resolv.conf
+BindReadOnlyPaths=/etc/gai.conf
+BindReadOnlyPaths=/etc/nsswitch.conf
+BindReadOnlyPaths=/etc/resolv.conf
+
+InaccessiblePaths=/usr/bin/at
+InaccessiblePaths=/usr/bin/cron
+InaccessiblePaths=/usr/bin/bash
+InaccessiblePaths=/usr/bin/sh
+InaccessiblePaths=/usr/bin/zsh
+InaccessiblePaths=/usr/bin/wget
+InaccessiblePaths=/usr/bin/curl
+InaccessiblePaths=/usr/bin/ssh
+InaccessiblePaths=/usr/bin/scp
+InaccessiblePaths=/usr/bin/python
+InaccessiblePaths=/usr/bin/perl
+InaccessiblePaths=/usr/local/
+
+MemoryDenyWriteExecute=true
+ProtectHostname=true
+ProtectControlGroups=true
+ProtectKernelTunables=true
+LockPersonality=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+; RestrictAddressFamilies=AF_(INET|INET6)
+
+RuntimeDirectory=spotifyd       # adds /var/run/appname
+StateDirectory=spotifyd          # adds /var/lib/appname
+CacheDirectory=spotifyd          # adds /var/cache/appname
+LogsDirectory=spotifyd           # adds /var/log/appname
+ConfigurationDirectory=spotifyd  # adds /etc/appname
 
 [Install]
 WantedBy=default.target

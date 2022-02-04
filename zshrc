@@ -132,10 +132,13 @@ eval "$(zoxide init zsh)"
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 
+# Bat
+export BAT_THEME=ansi
+
 
 alias luamake=/home/rockerboo/build/lua-language-server/3rd/luamake/luamake
 alias gitlab-run="gitlab-runner exec docker --cache-dir /cache --docker-volumes `pwd`/build-output:/cache"
-alias nvim=/home/rockerboo/build/lua_autocmds/build/bin/nvim
+# alias nvim=/home/rockerboo/build/lua_autocmds/build/bin/nvim
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/vault vault

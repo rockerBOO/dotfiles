@@ -10,19 +10,20 @@ local ensure_packer_installed = function()
 			return false
 		end
 
-		local directory =
-			string.format(
-				"%s/site/pack/packer/opt/",
-				vim.fn.stdpath("data")
-			)
+		local directory = string.format(
+			"%s/site/pack/packer/opt/",
+			vim.fn.stdpath("data")
+		)
 
 		vim.fn.mkdir(directory, "p")
 
-		local out = vim.fn.system(string.format(
-			"git clone %s %s",
-			"https://github.com/wbthomason/packer.nvim",
-			directory .. "/packer.nvim"
-		))
+		local out = vim.fn.system(
+			string.format(
+				"git clone %s %s",
+				"https://github.com/wbthomason/packer.nvim",
+				directory .. "/packer.nvim"
+			)
+		)
 		print(out)
 	end
 
@@ -37,7 +38,11 @@ local setup = function()
 	local packer = require("packer")
 
 	packer.init({
-		package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
+		package_root = require("packer.util").join_paths(
+			vim.fn.stdpath("data"),
+			"site",
+			"pack"
+		),
 	})
 
 	packer.startup(function(use)
@@ -144,7 +149,8 @@ local setup = function()
 		use({ "nvim-lua/plenary.nvim" })
 
 		-- Telescope fuzzy finder
-		use({ "nvim-telescope/telescope.nvim" })
+		-- use({ "nvim-telescope/telescope.nvim" })
+		use({ "~/code/telescope.nvim" })
 		use({
 			"nvim-telescope/telescope-fzf-native.nvim",
 			run = "make",
@@ -202,52 +208,21 @@ local setup = function()
 				},
 				"hrsh7th/cmp-vsnip",
 				"saadparwaiz1/cmp_luasnip",
+				"ray-x/cmp-treesitter",
 			},
 		})
 
 		use({ "~/code/reload-lua" })
 
-		-- used for yarn pnp packaging
+		-- A better annotation generator. Supports multiple languages and annotation conventions.
 		use({
-			"lbrayner/vim-rzip",
+			"danymat/neogen",
 			config = function()
-				vim.cmd([[" Decode URI encoded characters
-function! DecodeURI(uri)
-    return substitute(a:uri, '%\([a-fA-F0-9][a-fA-F0-9]\)', '\=nr2char("0x" . submatch(1))', "g")
-endfunction
-
-" Attempt to clear non-focused buffers with matching name
-function! ClearDuplicateBuffers(uri)
-    " if our filename has URI encoded characters
-    if DecodeURI(a:uri) !=# a:uri
-        " wipeout buffer with URI decoded name - can print error if buffer in focus
-        sil! exe "bwipeout " . fnameescape(DecodeURI(a:uri))
-        " change the name of the current buffer to the URI decoded name
-        exe "keepalt file " . fnameescape(DecodeURI(a:uri))
-        " ensure we don't have any open buffer matching non-URI decoded name
-        sil! exe "bwipeout " . fnameescape(a:uri)
-    endif
-endfunction
-
-function! RzipOverride()
-    " Disable vim-rzip's autocommands
-    autocmd! zip BufReadCmd   zipfile:*,zipfile:*/*
-    exe "au! zip BufReadCmd ".g:zipPlugin_ext
-
-    " order is important here, setup name of new buffer correctly then fallback to vim-rzip's handling
-    autocmd zip BufReadCmd   zipfile:*  call ClearDuplicateBuffers(expand("<amatch>"))
-    autocmd zip BufReadCmd   zipfile:*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
-
-    if has("unix")
-        autocmd zip BufReadCmd   zipfile:*/*  call ClearDuplicateBuffers(expand("<amatch>"))
-        autocmd zip BufReadCmd   zipfile:*/*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
-    endif
-
-    exe "au zip BufReadCmd ".g:zipPlugin_ext."  call rzip#Browse(DecodeURI(expand('<amatch>')))"
-endfunction
-
-autocmd VimEnter * call RzipOverride()]])
+				require("neogen").setup({
+					enabled = true,
+				})
 			end,
+			requires = "nvim-treesitter/nvim-treesitter",
 		})
 
 		-- Tabnine
@@ -301,8 +276,61 @@ autocmd VimEnter * call RzipOverride()]])
 		use({
 			"mfussenegger/nvim-ts-hint-textobject",
 			config = function()
-				require("tsht").config.hint_keys =
-					{ "h", "j", "f", "d", "n", "v", "s", "l", "a" }
+				require("tsht").config.hint_keys = {
+					"h",
+					"j",
+					"f",
+					"d",
+					"n",
+					"v",
+					"s",
+					"l",
+					"a",
+				}
+			end,
+		})
+
+		-- used for yarn pnp packaging
+		use({
+			"lbrayner/vim-rzip",
+			config = function()
+				--  Decode URI encoded characters
+				vim.cmd([[
+function! DecodeURI(uri)
+    return substitute(a:uri, '%\([a-fA-F0-9][a-fA-F0-9]\)', '\=nr2char("0x" . submatch(1))', "g")
+endfunction
+
+" Attempt to clear non-focused buffers with matching name
+function! ClearDuplicateBuffers(uri)
+    " if our filename has URI encoded characters
+    if DecodeURI(a:uri) !=# a:uri
+        " wipeout buffer with URI decoded name - can print error if buffer in focus
+        sil! exe "bwipeout " . fnameescape(DecodeURI(a:uri))
+        " change the name of the current buffer to the URI decoded name
+        exe "keepalt file " . fnameescape(DecodeURI(a:uri))
+        " ensure we don't have any open buffer matching non-URI decoded name
+        sil! exe "bwipeout " . fnameescape(a:uri)
+    endif
+endfunction
+
+function! RzipOverride()
+    " Disable vim-rzip's autocommands
+    autocmd! zip BufReadCmd   zipfile:*,zipfile:*/*
+    exe "au! zip BufReadCmd ".g:zipPlugin_ext
+
+    " order is important here, setup name of new buffer correctly then fallback to vim-rzip's handling
+    autocmd zip BufReadCmd   zipfile:*  call ClearDuplicateBuffers(expand("<amatch>"))
+    autocmd zip BufReadCmd   zipfile:*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
+
+    if has("unix")
+        autocmd zip BufReadCmd   zipfile:*/*  call ClearDuplicateBuffers(expand("<amatch>"))
+        autocmd zip BufReadCmd   zipfile:*/*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
+    endif
+
+    exe "au zip BufReadCmd ".g:zipPlugin_ext."  call rzip#Browse(DecodeURI(expand('<amatch>')))"
+endfunction
+
+autocmd VimEnter * call RzipOverride()]])
 			end,
 		})
 	end)
