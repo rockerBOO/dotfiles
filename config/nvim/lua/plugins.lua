@@ -80,6 +80,8 @@ local setup = function()
 		-- Git commands
 		use({ "tpope/vim-fugitive" })
 
+    use({ "tpope/vim-dadbod"})
+
 		-- Plug 'tpope/vim-sleuth'
 
 		-- Auto-complete ends
@@ -87,6 +89,10 @@ local setup = function()
 
 		-- Dispatch jobs (like make, mix, yarn, tests)
 		-- use({ "tpope/vim-dispatch" })
+
+    use({ "vim-erlang/vim-erlang-runtime" })
+
+		use({ "gleam-lang/gleam.vim" })
 
 		-- sd Sandwich for wrapping variables
 		-- Plug 'mchakann/vim-sandwich'
@@ -175,6 +181,8 @@ local setup = function()
 		-- use({ "simrat39/symbols-outline.nvim" })
 
 		use({ "onsails/lspkind-nvim" })
+
+    use({ "mhartington/formatter.nvim" })
 
 		-- Completion (nvim-cmp)
 		-- use({ "hrsh7th/cmp-buffer" })
@@ -289,6 +297,10 @@ local setup = function()
 				}
 			end,
 		})
+
+		-- Lua/Luv into vimdocs
+		use({ "nanotee/luv-vimdocs" })
+		use({ "milisims/nvim-luaref" })
 
 		-- used for yarn pnp packaging
 		use({

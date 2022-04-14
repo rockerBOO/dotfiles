@@ -65,6 +65,17 @@ local setup = function()
 
 			-- print(string.format("Formatting supported %s", client.name))
 		end
+
+		if client.resolved_capabilities.document_highlight then
+			vim.cmd([[
+        augroup LSPDocumentHighlight
+          au!
+          autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
+          autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+			  augroup END
+      ]])
+		end
 	end
 
 	-- EFM
@@ -84,7 +95,7 @@ local setup = function()
 		},
 	}
 
-	local servers = { "gopls", "cssls", "html", "vimls", "bashls" }
+	local servers = { "gopls", "cssls", "html", "vimls", "bashls", "sqlls" }
 
 	for _, server in ipairs(servers) do
 		config[server].setup(default_lsp_config)
@@ -186,6 +197,11 @@ local setup = function()
 		capabilities = vim.lsp.protocol.make_client_capabilities(),
 	})
 
+	config.erlangls.setup({
+		capabilities = capabilities,
+		on_attach = on_attach_vim,
+	})
+
 	require("nlua.lsp.nvim").setup(config, {
 		cmd = {
 			"/home/rockerboo/build/lua-language-server/bin/Linux/lua-language-server",
@@ -196,17 +212,18 @@ local setup = function()
 	})
 
 	require("lspconfig").ltex.setup({
+		on_attach = on_attach_vim,
 		cmd = { "/home/rockerboo/build/ltex-ls-15.2.0/bin/ltex-ls" },
-    settings = {
-      ltex = {
-        language = 'en',
-        additionalRules = {
-          enablePickyRules = true,
-          motherTongue = 'en',
-          languageModel = '/mnt/900/ngrams/ngrams-en-20150817/'
-        }
-      }
-    }
+		settings = {
+			ltex = {
+				language = "en",
+				additionalRules = {
+					enablePickyRules = true,
+					motherTongue = "en",
+					languageModel = "/mnt/900/ngrams/ngrams-en-20150817/",
+				},
+			},
+		},
 	})
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

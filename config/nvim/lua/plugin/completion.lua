@@ -26,7 +26,7 @@ require("cmp").setup({
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
 		}),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
+		["<c-<CR>>"] = cmp.mapping.confirm({ select = true }),
 	},
 	sources = {
 		{ name = "nvim_lsp" },

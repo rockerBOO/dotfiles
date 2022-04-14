@@ -4,6 +4,23 @@ local mappings = {}
 local n, i, t, c, v, esc = "n", "i", "t", "c", "v", "<esc>"
 local silent = { silent = true }
 
+function Reload(module)
+	require("plenary.reload").reload_module(module)
+end
+
+local plenary_reload = function()
+	require("plenary.reload").reload_module("telescope")
+	require("plenary.reload").reload_module("plenary")
+	require("plenary.reload").reload_module("boo-colorscheme")
+	require("plenary.reload").reload_module("plugin")
+	Reload("lsp_config")
+	Reload("plugin.telescope")
+	-- require("plenary.reload").reload_module("lsp_extensions")
+	require("boo-colorscheme").use({ theme = "sunset_cloud"})
+	require('plugin.telescope').setup_defaults()
+	-- require("setup").setup()
+end
+
 -- @param {table} maps - mode, key, cmd, options
 local maps = {
 	-- Quick pane
@@ -23,9 +40,12 @@ local maps = {
 	{ i, "Jk", esc },
 	{ i, "jK", esc },
 
+  { n, "asdf", plenary_reload },
+
 	-- LSP
 	{ n, "gd", vim.lsp.buf.definition, silent },
 	{ n, "K", vim.lsp.buf.hover, silent },
+	{ n, "c-k", vim.lsp.buf.signature_help, silent },
 
 	{ n, "gD", vim.lsp.buf.implementation, silent },
 	-- { n, "1gD", vim.lsp.buf.type_definition, silent },

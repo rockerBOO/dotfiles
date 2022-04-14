@@ -1,4 +1,5 @@
 local treesitter = {}
+-- local ft_to_parser = require("nvim-treesitter.parser").filetype_to_parsername
 
 treesitter.setup = function()
 	require("nvim-treesitter.configs").setup({
@@ -26,23 +27,23 @@ treesitter.setup = function()
 				[";"] = "textsubjects-container-outer",
 			},
 		},
-		-- textobjects = {
-		-- 	enable = true,
-		-- 	select = {
-		-- 		enable = true,
-		-- 		keymaps = {
-		-- 			["af"] = "@function.outer",
-		-- 			["if"] = "@function.inner",
-		-- 			["ac"] = "@class.outer",
-		-- 			["ic"] = "@class.inner",
-		-- 		},
-		-- 	},
-		-- },
+		textobjects = {
+			enable = true,
+			select = {
+				enable = true,
+				keymaps = {
+					["af"] = "@function.outer",
+					["if"] = "@function.inner",
+					["ac"] = "@class.outer",
+					["ic"] = "@class.inner",
+				},
+			},
+		},
 		playground = {
 			enable = true,
 			disable = {},
 			updatetime = 25,
-			persist_queries = false, 
+			persist_queries = false,
 		},
 		additional_vim_regex_hjighlighting = false,
 	})
@@ -50,23 +51,21 @@ treesitter.setup = function()
 	local parser_config =
 		require("nvim-treesitter.parsers").get_parser_configs()
 
-	parser_config.gleam = {
-		install_info = {
-			url = "~/code/tree-sitter-gleam-gg", -- local path or git repo
-			files = { "src/parser.c" },
-		},
-		filetype = "gleam", -- if filetype does not agrees with parser name
-		used_by = {}, -- additional filetypes that use this parser
-	}
+	-- parser_config.gleam = {
+	-- 	install_info = {
+	-- 		url = "~/code/tree-sitter-gleam", -- local path or git repo
+	-- 		files = { "src/parser.c" },
+	-- 	},
+	-- 	filetype = "gleam", -- if filetype does not agrees with parser name
+	-- }
 
-	parser_config.markdown = {
-		install_info = {
-			url = "~/code/tree-sitter-markdown", -- local path or git repo
-			files = { "src/parser.c" },
-		},
-		filetype = "markdown", -- if filetype does not agrees with parser name
-		used_by = {}, -- additional filetypes that use this parser
-	}
+	-- parser_config.markdown = {
+	-- 	install_info = {
+	-- 		url = "~/code/tree-sitter-markdown", -- local path or git repo
+	-- 		files = { "src/parser.c" },
+	-- 	},
+	-- 	filetype = "markdown", -- if filetype does not agrees with parser name
+	-- }
 
 	parser_config.elixir = {
 		install_info = {
@@ -76,7 +75,7 @@ treesitter.setup = function()
 		},
 		maintainers = { "@nifoc" },
 	}
-	table.insert(parser_config.html.used_by, "ejs")
+	-- ft_to_parser.ejs = "html"
 end
 
 return treesitter

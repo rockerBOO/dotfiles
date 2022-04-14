@@ -22,7 +22,6 @@ local generator = function(_)
 		builtin.make_responsive_file(140, 90),
 		sections.collapse_builtin({ " ", builtin.modified_flag }),
 		sections.split,
-		lsp_statusline.status,
 		lsp_statusline.server_progress,
 		builtin.line,
 		",",

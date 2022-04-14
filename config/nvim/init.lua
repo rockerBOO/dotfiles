@@ -13,7 +13,7 @@ o.showmatch = true
 -- Compositor transparency on pum menus
 o.pumblend = 10
 
-o.laststatus = 2
+o.laststatus = 3 -- only show 1 statusbar
 o.ff = "unix"
 
 -- No show modes twice with status bar
@@ -48,6 +48,8 @@ o.clipboard = "unnamedplus"
 o.scrolloff = 10 -- Leave 10 rows when scrolling
 o.emoji = true -- Use emojis
 
+o.signcolumn = "yes:1"
+
 o.formatoptions = "cqrnj"
 
 -- Completion
@@ -60,6 +62,15 @@ o.termguicolors = true -- Support 24bit colors
 
 opt.lcs = "tab:>-,eol:<,nbsp:%,space:."
 
+-- diff
+opt.diffopt = {
+	"internal",
+	"filler",
+	"closeoff",
+	"hiddenoff",
+	"algorithm:minimal",
+}
+
 -- Tmux support
 g["&t_8f"] = "<Esc>[38;2;%lu;%lu;%lum]"
 g["&t_8b"] = "<Esc>[48;2;%lu;%lu;%lum]"
@@ -67,22 +78,20 @@ g["&t_8b"] = "<Esc>[48;2;%lu;%lu;%lum]"
 -- Plugins
 -- g.loaded_netrwPlugin = 1 -- Don't load netrw
 
-if vim.api.nvim_define_augroup then
-  -- Highlight yank'd text after yankin'
-	vim.api.nvim_define_augroup({ name = "YankHighlight", clear = true })
-	vim.api.nvim_define_autocmd({
+if vim.api.nvim_create_augroup then
+	-- Highlight yank'd text after yankin'
+	vim.api.nvim_create_augroup("YankHighlight", {})
+	vim.api.nvim_create_autocmd("TextYankPost", {
 		group = "YankHighlight",
-		event = "TextYankPost",
 		callback = function()
 			vim.highlight.on_yank({ higroup = "IncSearch", timeout = 1000 })
 		end,
 	})
 
 	-- Reload module after saving
-	vim.api.nvim_define_augroup({ name = "ReloadNeovim", clear = true })
-	vim.api.nvim_define_autocmd({
+	vim.api.nvim_create_augroup("ReloadNeovim", {})
+	vim.api.nvim_create_autocmd("BufWritePost", {
 		group = "ReloadNeovim",
-		event = "BufWritePost",
 		pattern = "~//.config/nvim/./init.lua",
 		callback = function()
 			print("hello")
@@ -91,26 +100,8 @@ if vim.api.nvim_define_augroup then
 	})
 end
 
--- Reload module
-function Reload(module)
-	require("plenary.reload").reload_module(module)
-end
-
--- Require shortcut
 function R(module)
 	return require(module)
-end
-
-function PlenaryReload()
-	local reload = require("plenary.reload").reload_module
-	-- require("plenary.reload").reload_module("telescope")
-	-- require("plenary.reload").reload_module("plenary")
-	-- require("plenary.reload").reload_module("lsp_extensions")
-	reload("boo-colorscheme")
-	reload("plugin")
-	reload("rockerboo")
-	require("telescope.mappings").setup()
-	require("boo-colorscheme").use()
 end
 
 -- Setup all the plugins
@@ -123,6 +114,7 @@ require("mappings").setup()
 require("setup").setup()
 
 -- Colorscheme
--- require("boo-colorscheme").use({})
+-- require("boo-colorscheme").use({ theme = 'radioactive' })
 -- o.colorscheme = "boo"
+-- vim.g.boo_colorscheme_theme = "radioactive"
 cmd([[ colorscheme boo ]])

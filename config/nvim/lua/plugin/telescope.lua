@@ -3,7 +3,11 @@ local themes = require("telescope.themes")
 local utils = require("rockerboo.utils")
 
 local plugins_directory = function()
-	return require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack")
+	return require("packer.util").join_paths(
+		vim.fn.stdpath("data"),
+		"site",
+		"pack"
+	)
 end
 
 local tele = {}
@@ -17,7 +21,7 @@ tele.setup_defaults = function()
 		sorting_strategy = "ascending",
 		winblend = 3,
 
-		prompt_prefix = "> ",
+		prompt_prefix = "⦔ ",
 	}
 
 	telescope.setup({ defaults = telescope_config })
@@ -29,18 +33,20 @@ tele.setup_defaults = function()
 		"n",
 		"<Leader>ca",
 		function()
-			require("telescope.builtin").lsp_code_actions(require("telescope.themes").get_cursor())
+			require("telescope.builtin").lsp_code_actions(
+				require("telescope.themes").get_cursor()
+			)
 		end,
 	})
 	utils.keymap({
 		"n",
 		"<Leader>gt",
-		require'plugin.telescope'.treesitter,
+		require("plugin.telescope").treesitter,
 	})
 	utils.keymap({
 		"n",
 		"<Leader>pl",
-		require'plugin.telescope'.find_files_plugins,
+		require("plugin.telescope").find_files_plugins,
 	})
 
 	require("plugin.telescope.mappings").setup()
@@ -53,27 +59,27 @@ tele.theme = function(opts)
 	local theme = themes.get_dropdown({
 		layout_config = { height = 15 },
 
-			-- borderchars = {
-			--   prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
-			--   results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
-			--   preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-			-- },
-			--
-			-- borderchars = {
-			-- 	prompt = { "▔", "▔", " ", "▎", "▎", "▐", " ", " " },
-			-- 	results = { "▂", "▐", "▂", "▌", "┣", "▅", "▀", "▀" },
-			-- 	preview = { "─", "▍", "▀", "", " ", "▁", "▀", "▀" },
-			-- },
-			-- borderchars = {
-			-- 	prompt = { "░", "░", " ", "░", "░", "░", " ", " " },
-			-- 	results = { "░", "░", "░", "░", "░", "░", "░", "░" },
-			-- 	preview = { "─", "░", "░", "", " ", " ", "░", "░" },
-			-- },
-			-- borderchars = {
-			-- 	prompt = { "▓", "▓", " ", "▓", "▓", "▓", " ", " " },
-			-- 	results = { "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓" },
-			-- 	preview = { "─", "▓", "▓", "", " ", " ", "▓", "▓" },
-			-- },
+		-- borderchars = {
+		--   prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+		--   results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
+		--   preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+		-- },
+		--
+		-- borderchars = {
+		-- 	prompt = { "▔", "▔", " ", "▎", "▎", "▐", " ", " " },
+		-- 	results = { "▂", "▐", "▂", "▌", "┣", "▅", "▀", "▀" },
+		-- 	preview = { "─", "▍", "▀", "", " ", "▁", "▀", "▀" },
+		-- },
+		-- borderchars = {
+		-- 	prompt = { "░", "░", " ", "░", "░", "░", " ", " " },
+		-- 	results = { "░", "░", "░", "░", "░", "░", "░", "░" },
+		-- 	preview = { "─", "░", "░", "", " ", " ", "░", "░" },
+		-- },
+		-- borderchars = {
+		-- 	prompt = { "▓", "▓", " ", "▓", "▓", "▓", " ", " " },
+		-- 	results = { "▓", "▓", "▓", "▓", "▓", "▓", "▓", "▓" },
+		-- 	preview = { "─", "▓", "▓", "", " ", " ", "▓", "▓" },
+		-- },
 	})
 	return vim.tbl_deep_extend("force", theme, opts or {})
 end
@@ -90,7 +96,9 @@ tele.find_files = function(input_opts)
 end
 
 tele.find_files_plugins = function()
-	require("telescope.builtin").find_files(tele.theme({ cwd = plugins_directory() }))
+	require("telescope.builtin").find_files(
+		tele.theme({ cwd = plugins_directory() })
+	)
 end
 
 -- Treesitter
@@ -100,23 +108,5 @@ tele.treesitter = function()
 	return require("telescope.builtin").treesitter(tele.theme())
 end
 
-function Reload(module)
-	require("plenary.reload").reload_module(module)
-end
-
-local plenary_reload = function()
-	require("plenary.reload").reload_module("telescope")
-	require("plenary.reload").reload_module("plenary")
-	require("plenary.reload").reload_module("boo-colorscheme")
-	require("plenary.reload").reload_module("plugin")
-	Reload("lsp_config")
-	Reload("plugin.telescope")
-	-- require("plenary.reload").reload_module("lsp_extensions")
-	require("boo-colorscheme").use()
-	tele.setup_defaults()
-	-- require("setup").setup()
-end
-
-vim.keymap.set("n", "<leader>asdf", plenary_reload)
 
 return tele

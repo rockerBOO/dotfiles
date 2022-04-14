@@ -2,6 +2,7 @@ return {
 	setup = function()
 		require("lsp_config").setup()
 		require("plugin.treesitter").setup()
+		require("plugin.formatter").setup()
 		require("plugin.telescope").setup_defaults()
 		require("plugin.colorizer")
 		require("plugin.expressline")

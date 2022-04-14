@@ -158,6 +158,10 @@ tools:
       - '.prettierrc'
       - '.prettierrc.json'
 
+  gleam-format: &gleam-format
+    format-command: 'gleam format --stdin ${INPUT}'
+    format-stdin: true
+
   php-phpstan: &php-phpstan
     lint-command: \
       './vendor/bin/phpstan analyze --error-format raw --no-progress'
@@ -230,6 +234,7 @@ tools:
   luacheck: &luacheck
     lint-command: 'luacheck --globals vim --filename ${INPUT} --formatter plain -'
     lint-stdin: true
+    lint-ignore-exit-code: false
     lint-formats:
       - '%f:%l:%c: %m'
 
@@ -263,6 +268,9 @@ languages:
 
   vim:
     - <<: *vim-vint
+
+  gleam:
+    - <<: *gleam-format
 
   make:
     - <<: *make-checkmake
