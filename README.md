@@ -11,7 +11,7 @@ Linux
 - Lua Autocmd
 - vim.keymap
 
-![Linux - Neofetch](https://user-images.githubusercontent.com/15027/150073502-185f5e6b-a13f-4927-b4d9-18bdab81efac.png)
+![Linux - Neofetch](https://user-images.githubusercontent.com/15027/165008185-61f42397-57ba-403f-a835-1bfcd1b39e6b.png)
 
 ## Install
 
