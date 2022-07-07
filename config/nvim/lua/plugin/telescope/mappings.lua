@@ -9,7 +9,9 @@ mappings.setup = function()
 			n,
 			"<Leader>en",
 			function()
-				require("telescope.builtin").find_files({ cwd = "/home/rockerboo/.config/nvim" })
+				require("telescope.builtin").find_files({
+					cwd = "~/.config/nvim",
+				})
 			end,
 		},
 		{
@@ -26,9 +28,29 @@ mappings.setup = function()
 		},
 		{
 			n,
+			"<Leader>gd",
+			function()
+				require("telescope.builtin").lsp_dynamic_workspace_symbols({
+					theme = "dropdown",
+				})
+			end,
+		},
+		{
+			n,
+			"<Leader>ds",
+			function()
+				require("telescope.builtin").lsp_document_symbols({
+					theme = "dropdown",
+				})
+			end,
+		},
+		{
+			n,
 			"gW",
 			function()
-				require("telescope.builtin").lsp_workspace_symbols(require("telescope.themes").get_dropdown())
+				require("telescope.builtin").lsp_workspace_symbols(
+					require("telescope.themes").get_dropdown()
+				)
 			end,
 		},
 		{
@@ -41,17 +63,22 @@ mappings.setup = function()
 			n,
 			"<Leader>gp",
 			function()
-				require("telescope.builtin")(string.format(
-					"find_files{ cwd = '%s' }",
-					vim.fn.stdpath("cache")
-				))
+				require("telescope.builtin")(
+					string.format(
+						"find_files{ cwd = '%s' }",
+						vim.fn.stdpath("cache")
+					)
+				)
 			end,
 		},
 		{
 			n,
 			"<Leader>cs",
 			function()
-				require("telescope.builtin").colorscheme({ theme = "dropdown", enable_preview = true })
+				require("telescope.builtin").colorscheme({
+					theme = "dropdown",
+					enable_preview = true,
+				})
 			end,
 		},
 	}

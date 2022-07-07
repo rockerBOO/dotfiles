@@ -21,7 +21,7 @@ tele.setup_defaults = function()
 		sorting_strategy = "ascending",
 		winblend = 3,
 
-		prompt_prefix = "⦔ ",
+		prompt_prefix = " ",
 	}
 
 	telescope.setup({ defaults = telescope_config })
@@ -29,15 +29,6 @@ tele.setup_defaults = function()
 	-- fzf native
 	telescope.load_extension("fzf")
 
-	utils.keymap({
-		"n",
-		"<Leader>ca",
-		function()
-			require("telescope.builtin").lsp_code_actions(
-				require("telescope.themes").get_cursor()
-			)
-		end,
-	})
 	utils.keymap({
 		"n",
 		"<Leader>gt",
@@ -101,7 +92,7 @@ tele.find_files_plugins = function()
 	)
 end
 
--- Treesitter
+-- Tree sitter
 -- >>- ------- -<
 
 tele.treesitter = function()

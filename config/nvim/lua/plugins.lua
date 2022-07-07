@@ -1,7 +1,6 @@
---
+--pl
 -- Setup packer.nvim with all necessary plugins
 --
--- Teej special code I stole :)
 local ensure_packer_installed = function()
 	local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
@@ -70,17 +69,38 @@ local setup = function()
 
 		-- Treesitter
 		use({ "nvim-treesitter/nvim-treesitter" })
-
 		use({ "nvim-treesitter/playground" })
 
-		-- Completion from treesitter
-		-- use({ "nvim-treesitter/completion-treesitter" })
+		use({ "windwp/nvim-ts-autotag" })
+		use({ "RRethy/nvim-treesitter-textsubjects" })
+
+		use({
+			"lewis6991/spellsitter.nvim",
+			config = function()
+				require("spellsitter").setup()
+			end,
+		})
+
 		use({ "~/code/ejs-nvim", opt = true })
 
 		-- Git commands
 		use({ "tpope/vim-fugitive" })
 
-    use({ "tpope/vim-dadbod"})
+		use({
+			"pwntester/octo.nvim",
+			requires = {
+				"nvim-lua/plenary.nvim",
+				"nvim-telescope/telescope.nvim",
+				"kyazdani42/nvim-web-devicons",
+			},
+			config = function()
+				require("octo").setup()
+			end,
+		})
+
+		-- DB
+		use({ "tpope/vim-dadbod" })
+		use({ "kristijanhusak/vim-dadbod-ui" })
 
 		-- Plug 'tpope/vim-sleuth'
 
@@ -90,7 +110,7 @@ local setup = function()
 		-- Dispatch jobs (like make, mix, yarn, tests)
 		-- use({ "tpope/vim-dispatch" })
 
-    use({ "vim-erlang/vim-erlang-runtime" })
+		use({ "vim-erlang/vim-erlang-runtime" })
 
 		use({ "gleam-lang/gleam.vim" })
 
@@ -110,7 +130,7 @@ local setup = function()
 		use({ "JoosepAlviste/nvim-ts-context-commentstring" })
 
 		-- Delve - Go Debugger
-		use({ "sebdah/vim-delve", opt = true })
+		-- use({ "sebdah/vim-delve", opt = true })
 
 		-- Editorconfig support
 		use({ "editorconfig/editorconfig-vim" })
@@ -125,11 +145,38 @@ local setup = function()
 			end,
 		})
 
-		use({ "mfussenegger/nvim-dap" })
+		-- use({ "mfussenegger/nvim-dap" })
+		use({ "~/code/nvim-dap" })
 
 		use({
 			"rcarriga/nvim-dap-ui",
 			requires = { "mfussenegger/nvim-dap" },
+			config = function()
+				require("dapui").setup({
+					layouts = {
+
+						{
+							elements = {
+								"repl",
+								"console",
+							},
+							size = 0.25, -- 25% of total lines
+							position = "bottom",
+						},
+						{
+							elements = {
+								-- Elements can be strings or table with id and size keys.
+								{ id = "scopes", size = 0.25 },
+								"breakpoints",
+								"stacks",
+								"watches",
+							},
+							size = 40, -- 40 columns
+							position = "left",
+						},
+					},
+				})
+			end,
 		})
 
 		use({
@@ -137,29 +184,61 @@ local setup = function()
 			requires = { "mfussenegger/nvim-dap" },
 		})
 
-		-- use({ "David-Kunz/jester" })
-		use({ "~/code/jester" })
+		-- use({ "simrat39/rust-tools.nvim" })
+		use({ "~/code/rust-tools.nvim" })
+
+		use({
+			-- "David-Kunz/jester",
+			"~/code/jester",
+			config = function()
+				require("jester").setup({
+					dap = {
+						type = "yarn",
+					},
+					path_to_jest_debug = "jest",
+					path_to_jest = "jest",
+				})
+			end,
+		})
+		-- use({ "~/code/jester" })
 
 		-- Neovim Lua Development
 		use({ "~/code/nlua.nvim" })
+
+		use({
+			"kyazdani42/nvim-tree.lua",
+			requires = {
+				"kyazdani42/nvim-web-devicons", -- optional, for file icons
+			},
+			config = function()
+				require("nvim-tree").setup()
+			end,
+		})
 
 		-- Colorizer
 		use({ "norcalli/nvim-colorizer.lua" })
 
 		-- LSP Extensions
-		use({ "tjdevries/lsp_extensions.nvim" })
+		-- use({ "tjdevries/lsp_extensions.nvim" })
 
 		use({ "~/code/vim-mjml", opt = true })
+
+		use({ "stevearc/dressing.nvim" })
 
 		use({ "nvim-lua/popup.nvim" })
 		use({ "nvim-lua/plenary.nvim" })
 
 		-- Telescope fuzzy finder
-		-- use({ "nvim-telescope/telescope.nvim" })
-		use({ "~/code/telescope.nvim" })
+		use({ "nvim-telescope/telescope.nvim" })
+		-- use({ "~/code/telescope.nvim" })
 		use({
 			"nvim-telescope/telescope-fzf-native.nvim",
 			run = "make",
+		})
+
+		use({
+			"nvim-telescope/telescope-dap.nvim",
+			require = "nvim-telescope/telescope.nvim",
 		})
 
 		use({ "kyazdani42/nvim-web-devicons" })
@@ -170,7 +249,7 @@ local setup = function()
 		use({ "bluz71/vim-nightfly-guicolors" })
 
 		-- TokyoNight colorscheme
-		use({ "folke/tokyonight.nvim", opt = true })
+		use({ "folke/tokyonight.nvim" })
 
 		-- Emmet helpers for html/css
 		use({ "mattn/emmet-vim" })
@@ -178,11 +257,18 @@ local setup = function()
 		-- Typescript LSP utilties
 		use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
 
-		-- use({ "simrat39/symbols-outline.nvim" })
+		use({ "simrat39/symbols-outline.nvim" })
 
 		use({ "onsails/lspkind-nvim" })
 
-    use({ "mhartington/formatter.nvim" })
+		use({
+			"folke/trouble.nvim",
+			config = function()
+				require("trouble").setup({})
+			end,
+		})
+
+		use({ "mhartington/formatter.nvim" })
 
 		-- Completion (nvim-cmp)
 		-- use({ "hrsh7th/cmp-buffer" })
@@ -261,7 +347,9 @@ local setup = function()
 			opt = true,
 		})
 
-		use({ "lewis6991/impatient.nvim" })
+		-- use({ "lewis6991/impatient.nvim" })
+		-- fork using sqlite
+		use({ "tami5/impatient.nvim", requires = { "tami5/sqlite.lua" } })
 
 		use({
 			"yardnsm/vim-import-cost",
@@ -274,12 +362,9 @@ local setup = function()
 		-- use {'junegunn/fzf', { 'do': { -> fzf#install() } }}
 		-- use { 'junegunn/fzf.vim' }
 
-		use({ "justinmk/vim-dirvish" })
+		-- use({ "justinmk/vim-dirvish" })
 
 		-- use({ "rcarriga/vim-ultest", requires = { { "janko/vim-test" } } })
-
-		use({ "windwp/nvim-ts-autotag" })
-		use({ "RRethy/nvim-treesitter-textsubjects" })
 
 		use({
 			"mfussenegger/nvim-ts-hint-textobject",

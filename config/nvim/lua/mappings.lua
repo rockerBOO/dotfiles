@@ -16,8 +16,8 @@ local plenary_reload = function()
 	Reload("lsp_config")
 	Reload("plugin.telescope")
 	-- require("plenary.reload").reload_module("lsp_extensions")
-	require("boo-colorscheme").use({ theme = "sunset_cloud"})
-	require('plugin.telescope').setup_defaults()
+	require("boo-colorscheme").use({ theme = "sunset_cloud" })
+	require("plugin.telescope").setup_defaults()
 	-- require("setup").setup()
 end
 
@@ -40,7 +40,7 @@ local maps = {
 	{ i, "Jk", esc },
 	{ i, "jK", esc },
 
-  { n, "asdf", plenary_reload },
+	{ n, "asdf", plenary_reload },
 
 	-- LSP
 	{ n, "gd", vim.lsp.buf.definition, silent },
@@ -49,27 +49,34 @@ local maps = {
 
 	{ n, "gD", vim.lsp.buf.implementation, silent },
 	-- { n, "1gD", vim.lsp.buf.type_definition, silent },
-	{ n, "gr", require'telescope.builtin'.lsp_references, silent },
+	{ n, "gr", require("telescope.builtin").lsp_references, silent },
 
 	-- { n, "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", silent },
 	-- { n, "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", silent },
 	{ n, "<Leader>re", vim.lsp.buf.rename, silent },
+	{ n, "<Leader>ca", vim.lsp.buf.code_action, silent },
 
 	{ n, "<c-]>", vim.lsp.buf.declaration, silent },
 	{ n, "<Leader>di", vim.diagnostic.open_float, silent },
 
-  -- Diagnostics movement
-  { n, "<Leader>k", vim.diagnostic.goto_prev },
-  { n, "<Leader>j", vim.diagnostic.goto_next },
+	-- Diagnostics movement
+	{ n, "<Leader>k", vim.diagnostic.goto_prev },
+	{ n, "<Leader>j", vim.diagnostic.goto_next },
 
 	-- { n, "<leader>T", "<cmd>Ultest<cr>" },
 	-- { n, "]t", "<plug>(ultest-next-fail)" },
 	-- { n, "[t", "<plug>(ultest-prev-fail)" },
-  --
+	--
 
-  { n, '<F7>', '<cmd>set list!<cr>' },
-  { i, '<F7>', '<C-o><cmd>set list!<cr>' },
-  { c, '<F7>', '<C-c><cmd>set list!<cr>' },
+	{ n, "<F7>", "<cmd>set list!<cr>" },
+	{ i, "<F7>", "<C-o><cmd>set list!<cr>" },
+	{ c, "<F7>", "<C-c><cmd>set list!<cr>" },
+
+  -- Go to end of line
+	{ n, "gl", "$" },
+
+  -- Go to start of line
+	{ n, "gb", "^" },
 
 	{
 		n,
@@ -104,18 +111,20 @@ local maps = {
 	{ i, "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true } },
 
 	-- nvim-ts-hint-textobject
-	{ v, "m", R('tsht').nodes, { silent = true } },
+	{ v, "m", R("tsht").nodes, { silent = true } },
 
 	-- jester
-	{ n, "<Leader>dt", require('plugin.jester').yarn_debug },
-	{ n, "<Leader>df", require('plugin.jester').yarn_debug_file },
-	{ n, "<Leader>dl", require('plugin.jester').yarn_debug_last },
+	{ n, "<Leader>dt", require("plugin.jester").yarn_debug },
+	{ n, "<Leader>df", require("plugin.jester").yarn_debug_file },
+	{ n, "<Leader>dl", require("plugin.jester").yarn_debug_last },
 
-	{ n, "<Leader>tt", require('plugin.jester').yarn_test },
-	{ n, "<Leader>tf", require('plugin.jester').yarn_test_file },
-	{ n, "<Leader>tl", require('plugin.jester').yarn_test_last },
+	{ n, "<Leader>tt", require("plugin.jester").yarn_test },
+	{ n, "<Leader>tf", require("plugin.jester").yarn_test_file },
+	{ n, "<Leader>tl", require("plugin.jester").yarn_test_last },
 
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
+
+	{ n, "<Leader>ih", "<cmd>RustToggleInlayHints<cr>", silent },
 }
 
 -- Mappings

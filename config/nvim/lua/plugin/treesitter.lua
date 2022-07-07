@@ -45,6 +45,11 @@ treesitter.setup = function()
 			updatetime = 25,
 			persist_queries = false,
 		},
+		query_linter = {
+			enable = true,
+			use_virtual_text = true,
+			lint_events = { "BufWrite", "CursorHold" },
+		},
 		additional_vim_regex_hjighlighting = false,
 	})
 

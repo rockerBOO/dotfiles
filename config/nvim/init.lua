@@ -78,27 +78,25 @@ g["&t_8b"] = "<Esc>[48;2;%lu;%lu;%lum]"
 -- Plugins
 -- g.loaded_netrwPlugin = 1 -- Don't load netrw
 
-if vim.api.nvim_create_augroup then
-	-- Highlight yank'd text after yankin'
-	vim.api.nvim_create_augroup("YankHighlight", {})
-	vim.api.nvim_create_autocmd("TextYankPost", {
-		group = "YankHighlight",
-		callback = function()
-			vim.highlight.on_yank({ higroup = "IncSearch", timeout = 1000 })
-		end,
-	})
+-- Highlight yank'd text after yankin'
+vim.api.nvim_create_augroup("YankHighlight", {})
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = "YankHighlight",
+	callback = function()
+		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 1000 })
+	end,
+})
 
-	-- Reload module after saving
-	vim.api.nvim_create_augroup("ReloadNeovim", {})
-	vim.api.nvim_create_autocmd("BufWritePost", {
-		group = "ReloadNeovim",
-		pattern = "~//.config/nvim/./init.lua",
-		callback = function()
-			print("hello")
-			require("plenary.reload").reload_module("init")
-		end,
-	})
-end
+-- Reload module after saving
+vim.api.nvim_create_augroup("ReloadNeovim", {})
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = "ReloadNeovim",
+	pattern = "~//.config/nvim/./init.lua",
+	callback = function()
+		print("hello")
+		require("plenary.reload").reload_module("init")
+	end,
+})
 
 function R(module)
 	return require(module)

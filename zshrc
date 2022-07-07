@@ -113,8 +113,9 @@ source $HOME/.config/keys/reddit
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias eg="cd ~/code/ecogarden/create"
 alias ecogarden="~/code/ecogarden/create/src-tauri/target/release/ecogarden"
-alias docker=podman
+# alias docker=podman
 alias spot=ncspot
+alias rust-analyzer="rustup run nightly rust-analyzer"
 
 # NVM node version manager
 source /usr/share/nvm/init-nvm.sh
