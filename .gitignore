@@ -4,6 +4,8 @@
 /config/nvim/rplugin/
 /config/nvim/undo/
 
+config/nvim/lua/plugin/dadbod.lua
+
 /bin/exercism
 /bin/pob
 /bin/godot

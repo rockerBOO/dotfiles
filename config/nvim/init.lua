@@ -1,4 +1,4 @@
---
+--ini
 --     Hello
 --
 local g, o, cmd, opt = vim.g, vim.o, vim.cmd, vim.opt
@@ -53,12 +53,14 @@ o.signcolumn = "yes:1"
 o.formatoptions = "cqrnj"
 
 -- Completion
--- o.completeopt = "menuone,noinsert,noselect"
 o.completeopt = "menu,menuone,noselect"
 o.shortmess = "filnxtToOFc" -- Avoid showing extra messages when using completion
 
 -- Colors
 o.termguicolors = true -- Support 24bit colors
+
+-- now enabled by default
+o.mouse = "nv"
 
 opt.lcs = "tab:>-,eol:<,nbsp:%,space:."
 
@@ -83,7 +85,7 @@ vim.api.nvim_create_augroup("YankHighlight", {})
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = "YankHighlight",
 	callback = function()
-		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 1000 })
+		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
 	end,
 })
 
@@ -91,16 +93,28 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_augroup("ReloadNeovim", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
 	group = "ReloadNeovim",
-	pattern = "~//.config/nvim/./init.lua",
+	pattern = "/home/rockerboo/.dotfiles/config/nvim/init.lua",
 	callback = function()
-		print("hello")
-		require("plenary.reload").reload_module("init")
+		package.loaded["/home/rockerboo/.dotfiles/config/nvim/init.lua"] = nil
 	end,
+})
+
+-- autocmd BufRead,BufNewFile *.ex,*.exs,mix.lock set filetype=elixir
+--
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = { "*.eex" },
+  command = "set filetype=elixir"
 })
 
 function R(module)
 	return require(module)
 end
+
+-- configure dianostics
+vim.diagnostic.config({
+	virtual_text = false,
+	update_in_insert = false,
+})
 
 -- Setup all the plugins
 require("plugins").setup()
@@ -112,7 +126,4 @@ require("mappings").setup()
 require("setup").setup()
 
 -- Colorscheme
--- require("boo-colorscheme").use({ theme = 'radioactive' })
--- o.colorscheme = "boo"
--- vim.g.boo_colorscheme_theme = "radioactive"
 cmd([[ colorscheme boo ]])

@@ -72,7 +72,7 @@ ZSH_CUSTOM=~/.local/share/zsh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gh node fd docker fzf tmux rust fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa ripgrep kubectl)
+plugins=(asdf git gh node fd docker fzf tmux rust fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa ripgrep kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -140,8 +140,13 @@ export BAT_THEME=ansi
 alias luamake=/home/rockerboo/build/lua-language-server/3rd/luamake/luamake
 alias gitlab-run="gitlab-runner exec docker --cache-dir /cache --docker-volumes `pwd`/build-output:/cache"
 # alias nvim=/home/rockerboo/build/lua_autocmds/build/bin/nvim
+alias bun="sde -- bun"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/vault vault
 [[ /usr/bin/kubectl ]] && source <(kubectl completion zsh)
 source <(podman completion zsh)
+
+# source /mnt/900/builds/miniconda3/etc/profile.d/conda.sh
+# export PATH="/mnt/900/builds/miniconda3/bin:$PATH"
+

@@ -1,21 +1,16 @@
 local lsp_status = require("lsp-status")
 local utils = require("rockerboo.utils")
+-- utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
 
-local on_attach_buffer = function(client)
+local on_attach_buffer = function(client, bufnr)
 	-- print("'" .. client.name .. "' language server attached")
 
-	-- utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
+	utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
 
-	-- log_capabilities(client.resolved_capabilities)
 	lsp_status.on_attach(client)
 
 	local capLog = utils.log_to_file("/tmp/capabilities.log")
-	capLog(
-		"client.name: "
-			.. client.name
-			.. "\n"
-			.. vim.inspect(client.server_capabilities)
-	)
+	capLog("client.name: " .. client.name .. "\n" .. vim.inspect(client.server_capabilities))
 
 	-- if client.server_capabilities.document_formatting then
 	-- 	utils.keymap({
@@ -37,15 +32,25 @@ local on_attach_buffer = function(client)
 	-- 	-- print(string.format("Formatting supported %s", client.name))
 	-- end
 
-	if client.server_capabilities.document_highlight then
-		vim.cmd([[
-        augroup LSPDocumentHighlight
-          au!
-          autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
-          autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-			  augroup END
-      ]])
+	if client.server_capabilities.documentHighlightProvider then
+		local group = vim.api.nvim_create_augroup("LSPDocumentHighlight", {})
+
+		vim.opt_local.updatetime = 1000
+
+		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+			buffer = bufnr,
+			group = group,
+			callback = function()
+				vim.lsp.buf.document_highlight()
+			end,
+		})
+		vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+			buffer = bufnr,
+			group = group,
+			callback = function()
+				vim.lsp.buf.clear_references()
+			end,
+		})
 	end
 end
 

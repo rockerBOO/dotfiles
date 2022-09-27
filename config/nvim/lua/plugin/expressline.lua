@@ -23,7 +23,7 @@ local generator = function(_)
 		sections.collapse_builtin({ " ", builtin.modified_flag }),
 		sections.split,
 		lsp_statusline.server_progress,
-    require'dap'.status(),
+		require("dap").status(),
 		builtin.line,
 		",",
 		builtin.column,

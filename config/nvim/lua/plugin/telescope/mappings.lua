@@ -16,6 +16,15 @@ mappings.setup = function()
 		},
 		{
 			n,
+			"<Leader>gp",
+			function()
+				require("telescope.builtin").live_grep({
+					cwd = "~/.config/nvim",
+				})
+			end,
+		},
+		{
+			n,
 			"<Leader>f",
 			require("plugin.telescope").find_files,
 		},
@@ -25,6 +34,7 @@ mappings.setup = function()
 			function()
 				require("telescope.builtin").git_files({ theme = "dropdown" })
 			end,
+			{ silent = true },
 		},
 		{
 			n,
@@ -48,9 +58,7 @@ mappings.setup = function()
 			n,
 			"gW",
 			function()
-				require("telescope.builtin").lsp_workspace_symbols(
-					require("telescope.themes").get_dropdown()
-				)
+				require("telescope.builtin").lsp_workspace_symbols(require("telescope.themes").get_dropdown())
 			end,
 		},
 		{
@@ -59,18 +67,18 @@ mappings.setup = function()
 			require("telescope.builtin").lsp_workspace_symbols,
 		},
 		-- {n, "<Leader>gl", builtin .. "live_grep"},
-		{
-			n,
-			"<Leader>gp",
-			function()
-				require("telescope.builtin")(
-					string.format(
-						"find_files{ cwd = '%s' }",
-						vim.fn.stdpath("cache")
-					)
-				)
-			end,
-		},
+		-- {
+		-- 	n,
+		-- 	"<Leader>gp",
+		-- 	function()
+		-- 		require("telescope.builtin")(
+		-- 			string.format(
+		-- 				"find_files{ cwd = '%s' }",
+		-- 				vim.fn.stdpath("cache")
+		-- 			)
+		-- 		)
+		-- 	end,
+		-- },
 		{
 			n,
 			"<Leader>cs",

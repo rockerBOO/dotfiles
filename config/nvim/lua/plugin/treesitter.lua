@@ -1,5 +1,5 @@
 local treesitter = {}
--- local ft_to_parser = require("nvim-treesitter.parser").filetype_to_parsername
+local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
 
 treesitter.setup = function()
 	require("nvim-treesitter.configs").setup({
@@ -51,10 +51,22 @@ treesitter.setup = function()
 			lint_events = { "BufWrite", "CursorHold" },
 		},
 		additional_vim_regex_hjighlighting = false,
+		ensure_installed = {
+			"elixir",
+			"lua",
+			"eex",
+			"html",
+			"css",
+			"typescript",
+			"javascript",
+			"tsx",
+			"rust",
+			"python",
+			"json",
+		},
 	})
 
-	local parser_config =
-		require("nvim-treesitter.parsers").get_parser_configs()
+	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 
 	-- parser_config.gleam = {
 	-- 	install_info = {
@@ -72,15 +84,43 @@ treesitter.setup = function()
 	-- 	filetype = "markdown", -- if filetype does not agrees with parser name
 	-- }
 
-	parser_config.elixir = {
+	-- parser_config.elixir = {
+	-- 	install_info = {
+	-- 		url = "~/code/tree-sitter-elixir-ananthakumaran",
+	-- 		files = { "src/parser.c", "src/scanner.cc" },
+	-- 		requires_generate_from_grammar = true,
+	-- 	},
+	-- 	maintainers = { "@nifoc" },
+	-- }
+	-- parser_config.eex = {
+	-- 	install_info = {
+	-- 		url = "https://github.com/connorlay/tree-sitter-eex",
+	-- 		files = { "src/parser.c" },
+	-- branch = "main"
+	-- 	},
+	-- 	filetype = "eelixir",
+	-- 	maintainers = { "@connorlay" },
+	-- }
+	parser_config.html_eex = {
 		install_info = {
-			url = "~/code/tree-sitter-elixir-ananthakumaran",
+			url = "~/code/others/tree-sitter-html/v0.19.0",
 			files = { "src/parser.c", "src/scanner.cc" },
-			requires_generate_from_grammar = true,
+			-- branch = "",
 		},
-		maintainers = { "@nifoc" },
+		-- filetype = "html_eex",
+		maintainers = { "@connorlay", "@rockerBOO" },
 	}
-	-- ft_to_parser.ejs = "html"
+
+	parser_config.embedded_template = {
+		install_info = {
+			url = "https://github.com/tree-sitter/tree-sitter-embedded-template",
+			files = { "src/parser.c" },
+			-- branch = "",
+		},
+		filetype = { "eex", "html_eex", "eelixir" },
+	}
+	-- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+	ft_to_parser.eelixir = "eex" -- the someft filetype will use the python parser and queries.
 end
 
 return treesitter

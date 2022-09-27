@@ -7,8 +7,7 @@ local M = {}
 M.keymap = function(map)
 	map = map or {}
 	local opts = map[4] or {}
-  vim.keymap.set(map[1], map[2], map[3], opts)
-	-- return vim.api.nvim_set_keymap(map[1], map[2], map[3], opts)
+	vim.keymap.set(map[1], map[2], map[3], opts)
 end
 
 -- @param maps list of keymaps
@@ -54,7 +53,6 @@ M.log_to_file = function(logfile)
 	return function(log_value)
 		local file = io.open(logfile, "a")
 		if not file then
-			file:close()
 			return
 		end
 

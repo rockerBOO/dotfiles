@@ -1,4 +1,6 @@
 local mappings = {}
+local typescript = require("rockerboo.typescript")
+local on_list = typescript.on_list
 
 -- Helper variables
 local n, i, t, c, v, esc = "n", "i", "t", "c", "v", "<esc>"
@@ -13,10 +15,12 @@ local plenary_reload = function()
 	require("plenary.reload").reload_module("plenary")
 	require("plenary.reload").reload_module("boo-colorscheme")
 	require("plenary.reload").reload_module("plugin")
+	require("plenary.reload").reload_module("rust-tools")
+	require("plenary.reload").reload_module("jester")
 	Reload("lsp_config")
 	Reload("plugin.telescope")
 	-- require("plenary.reload").reload_module("lsp_extensions")
-	require("boo-colorscheme").use({ theme = "sunset_cloud" })
+	-- require("boo-colorscheme").use({ theme = "sunset_cloud" })
 	require("plugin.telescope").setup_defaults()
 	-- require("setup").setup()
 end
@@ -43,20 +47,56 @@ local maps = {
 	{ n, "asdf", plenary_reload },
 
 	-- LSP
-	{ n, "gd", vim.lsp.buf.definition, silent },
+	{
+		n,
+		"gd",
+		function()
+			vim.lsp.buf.definition({ on_list = on_list })
+		end,
+		silent,
+	},
 	{ n, "K", vim.lsp.buf.hover, silent },
 	{ n, "c-k", vim.lsp.buf.signature_help, silent },
 
-	{ n, "gD", vim.lsp.buf.implementation, silent },
-	-- { n, "1gD", vim.lsp.buf.type_definition, silent },
-	{ n, "gr", require("telescope.builtin").lsp_references, silent },
+	{
+		n,
+		"gD",
+		function()
+			vim.lsp.buf.implementation({ on_list = on_list })
+		end,
+		silent,
+	},
+	{
+		n,
+		"1gD",
+		function()
+			vim.lsp.buf.type_definition({ on_list = on_list })
+		end,
+		silent,
+	},
+	-- { n, "gr", require("telescope.builtin").lsp_references, silent },
+	{
+		n,
+		"gr",
+		function()
+			vim.lsp.buf.references(nil, { on_list = on_list })
+		end,
+		silent,
+	},
 
 	-- { n, "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", silent },
 	-- { n, "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", silent },
 	{ n, "<Leader>re", vim.lsp.buf.rename, silent },
 	{ n, "<Leader>ca", vim.lsp.buf.code_action, silent },
 
-	{ n, "<c-]>", vim.lsp.buf.declaration, silent },
+	{
+		n,
+		"<c-]>",
+		function()
+			vim.lsp.buf.declaration({ on_list = on_list })
+		end,
+		silent,
+	},
 	{ n, "<Leader>di", vim.diagnostic.open_float, silent },
 
 	-- Diagnostics movement
@@ -72,10 +112,10 @@ local maps = {
 	{ i, "<F7>", "<C-o><cmd>set list!<cr>" },
 	{ c, "<F7>", "<C-c><cmd>set list!<cr>" },
 
-  -- Go to end of line
+	-- Go to end of line
 	{ n, "gl", "$" },
 
-  -- Go to start of line
+	-- Go to start of line
 	{ n, "gb", "^" },
 
 	{
@@ -103,8 +143,8 @@ local maps = {
 	{ n, "<Right>", ":bp<cr>", silent },
 
 	-- Quick quick file/buffer commands
-	{ n, "<Leader>w", ":w<cr>" },
-	{ n, "<Leader>q", ":q<cr>" },
+	{ n, "<Leader>w", ":w<cr>", { silent = true } },
+	{ n, "<Leader>q", ":q<cr>", { silent = true } },
 
 	{ i, "<C-l>", "A<cr>" },
 	{ i, "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true } },
@@ -120,7 +160,14 @@ local maps = {
 
 	{ n, "<Leader>tt", require("plugin.jester").yarn_test },
 	{ n, "<Leader>tf", require("plugin.jester").yarn_test_file },
-	{ n, "<Leader>tl", require("plugin.jester").yarn_test_last },
+	-- j n, "<Leader>tl", require("plugin.jester").yarn_test_last },
+	{
+		n,
+		"<Leader>tl",
+		function()
+			require("jester").run_last()
+		end,
+	},
 
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
 

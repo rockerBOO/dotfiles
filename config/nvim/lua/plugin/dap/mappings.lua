@@ -55,20 +55,8 @@ local maps = {
 					"<Cmd>lua require('dap.ui').trigger_actions({ mode = 'first' })<CR>",
 					{}
 				)
-				api.nvim_buf_set_keymap(
-					buf,
-					"n",
-					"a",
-					"<Cmd>lua require('dap.ui').trigger_actions()<CR>",
-					{}
-				)
-				api.nvim_buf_set_keymap(
-					buf,
-					"n",
-					"o",
-					"<Cmd>lua require('dap.ui').trigger_actions()<CR>",
-					{}
-				)
+				api.nvim_buf_set_keymap(buf, "n", "a", "<Cmd>lua require('dap.ui').trigger_actions()<CR>", {})
+				api.nvim_buf_set_keymap(buf, "n", "o", "<Cmd>lua require('dap.ui').trigger_actions()<CR>", {})
 				api.nvim_buf_set_keymap(
 					buf,
 					"n",
@@ -83,24 +71,17 @@ local maps = {
 			local new_cursor_anchored_float_win = function(buf)
 				vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
 				vim.api.nvim_buf_set_option(buf, "filetype", "dap-float")
-				local opts = vim.lsp.util.make_floating_popup_options(
-					50,
-					30,
-					{ border = false }
-				)
+				local opts = vim.lsp.util.make_floating_popup_options(50, 30, { border = false })
 				local win = vim.api.nvim_open_win(buf, true, opts)
 				vim.api.nvim_win_set_option(win, "scrolloff", 0)
 				return win
 			end
 
-			local widget =
-				widgets.builder(widgets.expression).new_buf(
-					new_buf
-				).new_win(
-					widgets.with_resize(
-						new_cursor_anchored_float_win
-					)
-				).build()
+			local widget = widgets
+				.builder(widgets.expression)
+				.new_buf(new_buf)
+				.new_win(widgets.with_resize(new_cursor_anchored_float_win))
+				.build()
 
 			widget.open()
 			-- widgets.hover("<cexpr>", { border = false })

@@ -1,7 +1,5 @@
 local lsp = require("lsp")
-local capabilities = require("cmp_nvim_lsp").update_capabilities(
-	vim.lsp.protocol.make_client_capabilities()
-)
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 return {
 	setup = function()
 		require("rust-tools").setup({
@@ -30,10 +28,6 @@ return {
 			},
 		})
 
-		vim.keymap.set(
-			"n",
-			"<Leader>tl",
-			require("rust-tools.utils.cache").execute_last_runnable
-		)
+		vim.keymap.set("n", "<Leader>tl", require("rust-tools.runnables").execute_last_runnable)
 	end,
 }

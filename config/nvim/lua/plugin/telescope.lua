@@ -3,11 +3,7 @@ local themes = require("telescope.themes")
 local utils = require("rockerboo.utils")
 
 local plugins_directory = function()
-	return require("packer.util").join_paths(
-		vim.fn.stdpath("data"),
-		"site",
-		"pack"
-	)
+	return require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack")
 end
 
 local tele = {}
@@ -87,9 +83,7 @@ tele.find_files = function(input_opts)
 end
 
 tele.find_files_plugins = function()
-	require("telescope.builtin").find_files(
-		tele.theme({ cwd = plugins_directory() })
-	)
+	require("telescope.builtin").find_files(tele.theme({ cwd = plugins_directory() }))
 end
 
 -- Tree sitter
@@ -98,6 +92,5 @@ end
 tele.treesitter = function()
 	return require("telescope.builtin").treesitter(tele.theme())
 end
-
 
 return tele

@@ -9,19 +9,12 @@ local ensure_packer_installed = function()
 			return false
 		end
 
-		local directory = string.format(
-			"%s/site/pack/packer/opt/",
-			vim.fn.stdpath("data")
-		)
+		local directory = string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
 
 		vim.fn.mkdir(directory, "p")
 
 		local out = vim.fn.system(
-			string.format(
-				"git clone %s %s",
-				"https://github.com/wbthomason/packer.nvim",
-				directory .. "/packer.nvim"
-			)
+			string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", directory .. "/packer.nvim")
 		)
 		print(out)
 	end
@@ -37,11 +30,7 @@ local setup = function()
 	local packer = require("packer")
 
 	packer.init({
-		package_root = require("packer.util").join_paths(
-			vim.fn.stdpath("data"),
-			"site",
-			"pack"
-		),
+		package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
 	})
 
 	packer.startup(function(use)
@@ -59,32 +48,46 @@ local setup = function()
 		use({ "styled-components/vim-styled-components" })
 
 		-- Configure LSP
-		use({ "neovim/nvim-lspconfig" })
+		use({ "~/code/others/nvim-lspconfig" })
+		-- use({ "neovim/nvim-lspconfig" })
 
 		-- LSP Status Bar
-		use({ "nvim-lua/lsp-status.nvim" })
+		-- using temporay branch until deprecated feature is removed
+		-- https://github.com/nvim-lua/lsp-status.nvim/pull/78
+		-- use({ "nvim-lua/lsp-status.nvim" })
+		use({ "tomtomjhj/lsp-status.nvim", branch = "deprecated" })
 
 		-- Express line (status bar)
 		use({ "tjdevries/express_line.nvim" })
 
 		-- Treesitter
 		use({ "nvim-treesitter/nvim-treesitter" })
+		-- use({ "~/code/nvim-treesitter" })
 		use({ "nvim-treesitter/playground" })
 
 		use({ "windwp/nvim-ts-autotag" })
 		use({ "RRethy/nvim-treesitter-textsubjects" })
 
 		use({
-			"lewis6991/spellsitter.nvim",
+			"sindrets/diffview.nvim",
+			requires = "nvim-lua/plenary.nvim",
 			config = function()
-				require("spellsitter").setup()
+				require("diffview").setup({})
 			end,
 		})
 
-		use({ "~/code/ejs-nvim", opt = true })
+		-- Linter
+		use("mfussenegger/nvim-lint")
+
+		-- use({ "~/code/ejs-nvim", opt = true })
 
 		-- Git commands
 		use({ "tpope/vim-fugitive" })
+
+		use({
+			"petertriho/cmp-git",
+			requires = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" },
+		})
 
 		use({
 			"pwntester/octo.nvim",
@@ -102,35 +105,26 @@ local setup = function()
 		use({ "tpope/vim-dadbod" })
 		use({ "kristijanhusak/vim-dadbod-ui" })
 
-		-- Plug 'tpope/vim-sleuth'
-
-		-- Auto-complete ends
-		-- use({ "tpope/vim-endwise" })
-
-		-- Dispatch jobs (like make, mix, yarn, tests)
-		-- use({ "tpope/vim-dispatch" })
-
 		use({ "vim-erlang/vim-erlang-runtime" })
 
 		use({ "gleam-lang/gleam.vim" })
 
 		-- sd Sandwich for wrapping variables
-		-- Plug 'mchakann/vim-sandwich'
 		use({ "tpope/vim-surround" })
 
 		-- Distraction-free writing
 		use({ "junegunn/goyo.vim" })
 
 		use({ "junegunn/limelight.vim" })
-		-- Tooltips
-		-- Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 		-- Comment helpers
-		use({ "tpope/vim-commentary" })
+		use({
+			"numToStr/Comment.nvim",
+			config = function()
+				require("Comment").setup()
+			end,
+		})
 		use({ "JoosepAlviste/nvim-ts-context-commentstring" })
-
-		-- Delve - Go Debugger
-		-- use({ "sebdah/vim-delve", opt = true })
 
 		-- Editorconfig support
 		use({ "editorconfig/editorconfig-vim" })
@@ -147,6 +141,7 @@ local setup = function()
 
 		-- use({ "mfussenegger/nvim-dap" })
 		use({ "~/code/nvim-dap" })
+		use("jbyuki/one-small-step-for-vimkind")
 
 		use({
 			"rcarriga/nvim-dap-ui",
@@ -187,9 +182,21 @@ local setup = function()
 		-- use({ "simrat39/rust-tools.nvim" })
 		use({ "~/code/rust-tools.nvim" })
 
+		-- use({
+		-- 	"David-Kunz/jester",
+		-- 	config = function()
+		-- 		require("jester").setup({
+		-- 			dap = {
+		-- 				type = "yarn",
+		-- 			},
+		-- 			path_to_jest_debug = "jest",
+		-- 			path_to_jest = "jest",
+		-- 		})
+		-- 	end,
+		-- })
 		use({
-			-- "David-Kunz/jester",
 			"~/code/jester",
+
 			config = function()
 				require("jester").setup({
 					dap = {
@@ -200,10 +207,9 @@ local setup = function()
 				})
 			end,
 		})
-		-- use({ "~/code/jester" })
 
 		-- Neovim Lua Development
-		use({ "~/code/nlua.nvim" })
+		-- use({ "~/code/nlua.nvim" })
 
 		use({
 			"kyazdani42/nvim-tree.lua",
@@ -243,6 +249,8 @@ local setup = function()
 
 		use({ "kyazdani42/nvim-web-devicons" })
 
+		use("ThePrimeagen/harpoon")
+
 		use({ "~/code/boo-colorscheme-nvim" })
 
 		-- Nightfly colors
@@ -255,7 +263,29 @@ local setup = function()
 		use({ "mattn/emmet-vim" })
 
 		-- Typescript LSP utilties
-		use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
+		-- use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
+		use({
+			"jose-elias-alvarez/typescript.nvim",
+			config = function()
+				-- local lsp = require("lsp")
+				-- local capabilities =
+				-- 	require("cmp_nvim_lsp").update_capabilities(
+				-- 		vim.lsp.protocol.make_client_capabilities()
+				-- 	)
+
+				-- log_to_file('/tmp/cap.log')(vim.pretty_print(capabilities))
+
+				-- capabilities["textDocument"]["formatting"] = false
+
+				-- require("typescript").setup({
+				-- 	debug = true,
+				-- 	server = {
+				-- 		on_attach = lsp.on_attach_buffer,
+				-- 		capabilities = capabilities,
+				-- 	},
+				-- })
+			end,
+		})
 
 		use({ "simrat39/symbols-outline.nvim" })
 
@@ -268,7 +298,8 @@ local setup = function()
 			end,
 		})
 
-		use({ "mhartington/formatter.nvim" })
+		-- use({ "mhartington/formatter.nvim" })
+		use({ "~/code/others/formatter.nvim" })
 
 		-- Completion (nvim-cmp)
 		-- use({ "hrsh7th/cmp-buffer" })
@@ -290,10 +321,7 @@ local setup = function()
 					ft = "lua",
 					-- this is after/plugin content
 					config = function()
-						require("cmp").register_source(
-							"nvim_lua",
-							require("cmp_nvim_lua").new()
-						)
+						require("cmp").register_source("nvim_lua", require("cmp_nvim_lua").new())
 					end,
 				},
 				{
@@ -320,7 +348,6 @@ local setup = function()
 		})
 
 		-- Tabnine
-		-- use({ "codota/tabnine-vim" })
 		use({
 			"~/build/tabnine-vim",
 			opt = true,
@@ -347,24 +374,13 @@ local setup = function()
 			opt = true,
 		})
 
-		-- use({ "lewis6991/impatient.nvim" })
+		use({ "lewis6991/impatient.nvim" })
 		-- fork using sqlite
-		use({ "tami5/impatient.nvim", requires = { "tami5/sqlite.lua" } })
-
-		use({
-			"yardnsm/vim-import-cost",
-			run = "npm install --production",
-		})
+		-- use({ "tami5/impatient.nvim", requires = { "tami5/sqlite.lua" } })
 
 		use({ "norcalli/nvim-terminal.lua" })
 
 		-- Fuzzy finder
-		-- use {'junegunn/fzf', { 'do': { -> fzf#install() } }}
-		-- use { 'junegunn/fzf.vim' }
-
-		-- use({ "justinmk/vim-dirvish" })
-
-		-- use({ "rcarriga/vim-ultest", requires = { { "janko/vim-test" } } })
 
 		use({
 			"mfussenegger/nvim-ts-hint-textobject",
@@ -386,6 +402,8 @@ local setup = function()
 		-- Lua/Luv into vimdocs
 		use({ "nanotee/luv-vimdocs" })
 		use({ "milisims/nvim-luaref" })
+
+		use("takac/vim-hardtime")
 
 		-- used for yarn pnp packaging
 		use({
@@ -430,6 +448,8 @@ endfunction
 autocmd VimEnter * call RzipOverride()]])
 			end,
 		})
+
+		use("alaviss/nim.nvim")
 	end)
 end
 

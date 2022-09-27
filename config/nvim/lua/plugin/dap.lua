@@ -13,8 +13,7 @@ return {
 				type = "executable",
 				command = "node",
 				args = {
-					os.getenv("HOME")
-						.. "/build/vscode-node-debug2/out/src/nodeDebug.js",
+					os.getenv("HOME") .. "/build/vscode-node-debug2/out/src/nodeDebug.js",
 				},
 			}
 			cb(adapter)
@@ -33,8 +32,7 @@ return {
 			type = "executable",
 			command = "node",
 			args = {
-				os.getenv("HOME")
-					.. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
+				os.getenv("HOME") .. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
 			},
 		}
 
@@ -43,8 +41,7 @@ return {
 			command = "yarn",
 			args = {
 				"node",
-				os.getenv("HOME")
-					.. "/build/vscode-node-debug2/out/src/nodeDebug.js",
+				os.getenv("HOME") .. "/build/vscode-node-debug2/out/src/nodeDebug.js",
 			},
 		}
 
@@ -53,8 +50,7 @@ return {
 			command = "yarn",
 			args = {
 				"node",
-				os.getenv("HOME")
-					.. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
+				os.getenv("HOME") .. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
 			},
 		}
 
@@ -65,8 +61,34 @@ return {
 			name = "lldb",
 		}
 
+		dap.adapters.nlua = function(callback, config)
+			callback({
+				type = "server",
+				host = config.host,
+				port = config.port,
+			})
+		end
+
 		-- LAUNCHERS
 		-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+		local nlua = {
+			type = "nlua",
+			request = "attach",
+			name = "Attach to running Neovim instance",
+			host = function()
+				local value = vim.fn.input("Host [127.0.0.1]: ")
+				if value ~= "" then
+					return value
+				end
+				return "127.0.0.1"
+			end,
+			port = function()
+				local val = tonumber(vim.fn.input("Port: "))
+				assert(val, "Please provide a port number")
+				return val
+			end,
+		}
 
 		local firefox = {
 			name = "Debug with Firefox",
@@ -79,7 +101,7 @@ return {
 			firefoxExecutable = "/usr/bin/firefox",
 		}
 
-		local node = {
+		local node2 = {
 			name = "Launch node",
 			type = "node2",
 			request = "launch",
@@ -123,11 +145,7 @@ return {
 			type = "lldb",
 			request = "launch",
 			program = function()
-				return vim.fn.input(
-					"Path to executable: ",
-					vim.fn.getcwd() .. "/",
-					"file"
-				)
+				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 			end,
 			cwd = "${workspaceFolder}",
 			stopOnEntry = false,
@@ -146,7 +164,7 @@ return {
 			runInTerminal = false,
 		}
 
-    -- WIP does not launch properly, maybe needs a different runtime args
+		-- WIP does not launch properly, maybe needs a different runtime args
 		local deno = {
 			name = "Launch Deno",
 			type = "deno",
@@ -171,18 +189,18 @@ return {
 		-- CONFIGURATIONS
 		-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-		dap.configurations.javascript = { firefox, node, deno, node_attach }
+		dap.configurations.javascript = { firefox, node2, deno, node_attach }
 		dap.configurations.javascriptreact = {
 			firefox,
-			node,
+			node2,
 			deno,
 			node_attach,
 		}
 
-		dap.configurations.typescript = { firefox, node, deno, node_attach }
+		dap.configurations.typescript = { firefox, node2, deno, node_attach }
 		dap.configurations.typescriptreact = {
 			firefox,
-			node,
+			node2,
 			deno,
 			node_attach,
 		}
@@ -191,6 +209,10 @@ return {
 			lldb,
 			tauri_dev,
 			tauri_prod,
+		}
+
+		dap.configurations.lua = {
+			nlua,
 		}
 
 		-- au FileType dap-repl lua require('dap.ext.autocompl').attach()
@@ -203,7 +225,7 @@ return {
 		})
 
 		-- setup extensions
-		require("nvim-dap-virtual-text").setup()
+		-- require("nvim-dap-virtual-text").setup()
 		require("plugin.dap.mappings").setup()
 	end,
 }
