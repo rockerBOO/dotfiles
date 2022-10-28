@@ -66,11 +66,15 @@ local on_attach_buffer = function(client, bufnr)
 			group = augroup,
 			buffer = bufnr,
 			callback = function()
-				vim.lsp.buf.semantic_tokens_full()
+				if vim.lsp.buf.semantic_tokens_full then
+					vim.lsp.buf.semantic_tokens_full()
+				end
 			end,
 		})
-		-- fire it first time on load as well
-		vim.lsp.buf.semantic_tokens_full()
+		if vim.lsp.buf.semantic_tokens_full then
+			-- fire it first time on load as well
+			vim.lsp.buf.semantic_tokens_full()
+		end
 	end
 end
 

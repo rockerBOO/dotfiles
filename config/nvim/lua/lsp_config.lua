@@ -32,7 +32,7 @@ local setup = function()
 	-- EFM
 	--
 
-	capabilities = require("cmp_nvim_lsp").default_capabilities()
+	local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 	-- Support snippets
 	-- capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -235,17 +235,12 @@ local setup = function()
 		},
 	})
 
-	-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	-- 	vim.lsp.diagnostic.on_publish_diagnostics,
-	-- 	{ virtual_text = false, update_in_insert = false }
-	-- )
+	require("lspconfig").markdown_language_server.setup({
+		on_attach = lsp.on_attach_buffer,
+		capabilities = capabilities,
+	})
+
+	require("lspconfig").marksman.setup({})
 end
-
-require("lspconfig").markdown_language_server.setup({
-	on_attach = lsp.on_attach_buffer,
-	capabilities = capabilities,
-})
-
-require("lspconfig").marksman.setup({})
 
 return { setup = setup }
