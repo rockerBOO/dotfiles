@@ -3,7 +3,7 @@ return {
 		require("lsp_config").setup()
 		require("plugin.treesitter").setup()
 		require("plugin.formatter").setup()
-		require("plugin.rust_tools").setup()
+		-- require("plugin.rust_tools").setup()
 		require("plugin.telescope").setup_defaults()
 		require("plugin.dressing")()
 		require("plugin.colorizer")

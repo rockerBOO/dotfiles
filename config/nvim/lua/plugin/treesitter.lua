@@ -103,11 +103,11 @@ treesitter.setup = function()
 	-- }
 	parser_config.html_eex = {
 		install_info = {
-			url = "~/code/others/tree-sitter-html/v0.19.0",
+			url = "https://github.com/rockerBOO/tree-sitter-html-eex",
+			-- url = "/home/rockerboo/code/others/tree-sitter-html-eex",
 			files = { "src/parser.c", "src/scanner.cc" },
-			-- branch = "",
 		},
-		-- filetype = "html_eex",
+		filetype = "html_eex",
 		maintainers = { "@connorlay", "@rockerBOO" },
 	}
 
@@ -117,7 +117,7 @@ treesitter.setup = function()
 			files = { "src/parser.c" },
 			-- branch = "",
 		},
-		filetype = { "eex", "html_eex", "eelixir" },
+		filetype = { "eex",  "eelixir" },
 	}
 	-- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
 	ft_to_parser.eelixir = "eex" -- the someft filetype will use the python parser and queries.

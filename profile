@@ -67,3 +67,11 @@ complete -C /usr/bin/vault vault
 # hardware acceleration in firefox
 export LIBVA_DRIVER_NAME=nvidia
 export MOZ_DISABLE_RDD_SANDBOX=1
+
+export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+export PATH="$PATH:$GEM_HOME/bin"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

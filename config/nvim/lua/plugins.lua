@@ -9,12 +9,17 @@ local ensure_packer_installed = function()
 			return false
 		end
 
-		local directory = string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
+		local directory =
+			string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
 
 		vim.fn.mkdir(directory, "p")
 
 		local out = vim.fn.system(
-			string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", directory .. "/packer.nvim")
+			string.format(
+				"git clone %s %s",
+				"https://github.com/wbthomason/packer.nvim",
+				directory .. "/packer.nvim"
+			)
 		)
 		print(out)
 	end
@@ -30,7 +35,11 @@ local setup = function()
 	local packer = require("packer")
 
 	packer.init({
-		package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
+		package_root = require("packer.util").join_paths(
+			vim.fn.stdpath("data"),
+			"site",
+			"pack"
+		),
 	})
 
 	packer.startup(function(use)
@@ -127,7 +136,8 @@ local setup = function()
 		use({ "JoosepAlviste/nvim-ts-context-commentstring" })
 
 		-- Editorconfig support
-		use({ "editorconfig/editorconfig-vim" })
+		-- use({ "editorconfig/editorconfig-vim" })
+		use({ "gpanders/editorconfig.nvim" })
 
 		use({
 			"kkoomen/vim-doge",
@@ -169,6 +179,23 @@ local setup = function()
 							size = 40, -- 40 columns
 							position = "left",
 						},
+					},
+				})
+			end,
+		})
+
+		use({
+			"theHamsta/nvim-semantic-tokens",
+			config = function()
+				require("nvim-semantic-tokens").setup({
+					preset = "default",
+					-- highlighters is a list of modules following the interface of nvim-semantic-tokens.table-highlighter or
+					-- function with the signature: highlight_token(ctx, token, highlight) where
+					--        ctx (as defined in :h lsp-handler)
+					--        token  (as defined in :h vim.lsp.semantic_tokens.on_full())
+					--        highlight (a helper function that you can call (also multiple times) with the determined highlight group(s) as the only parameter)
+					highlighters = {
+						require("nvim-semantic-tokens.table-highlighter"),
 					},
 				})
 			end,
@@ -321,7 +348,10 @@ local setup = function()
 					ft = "lua",
 					-- this is after/plugin content
 					config = function()
-						require("cmp").register_source("nvim_lua", require("cmp_nvim_lua").new())
+						require("cmp").register_source(
+							"nvim_lua",
+							require("cmp_nvim_lua").new()
+						)
 					end,
 				},
 				{
@@ -405,6 +435,17 @@ local setup = function()
 
 		use("takac/vim-hardtime")
 
+		-- use({
+		-- 	"mhanberg/elixir.nvim",
+		-- 	requires = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" },
+		-- 	config = function()
+		-- 	end,
+		-- })
+		use({
+			"hrsh7th/cmp-nvim-lsp-signature-help",
+			requires = { "hrsh7th/nvim-cmp" },
+		})
+
 		-- used for yarn pnp packaging
 		use({
 			"lbrayner/vim-rzip",
@@ -451,6 +492,18 @@ autocmd VimEnter * call RzipOverride()]])
 
 		use("alaviss/nim.nvim")
 	end)
+
+	local group = vim.api.nvim_create_augroup("packer_user_config", {})
+
+	vim.api.nvim_create_autocmd("BufWritePost", {
+		group = group,
+		pattern = "plugins.lua",
+		callback = function()
+			vim.cmd("source <afile>")
+			require("plugins").setup()
+			vim.cmd("PackerCompile")
+		end,
+	})
 end
 
 return { setup = setup }

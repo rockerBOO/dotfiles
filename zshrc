@@ -150,3 +150,8 @@ source <(podman completion zsh)
 # source /mnt/900/builds/miniconda3/etc/profile.d/conda.sh
 # export PATH="/mnt/900/builds/miniconda3/bin:$PATH"
 
+export PATH="/home/rockerboo/.config/local/share/gem/ruby/3.0.0/bin:$PATH"
+
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

@@ -32,8 +32,7 @@ local setup = function()
 	-- EFM
 	--
 
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+	capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 	-- Support snippets
 	-- capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -83,8 +82,7 @@ local setup = function()
 	-- })
 	--
 	-- local lsp = require("lsp")
-	local tsserver_capabilities =
-		require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+	local tsserver_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 	utils.log_to_file("/tmp/cap.log")(vim.inspect(capabilities))
 
@@ -194,9 +192,9 @@ local setup = function()
 
 		capabilities = capabilities,
 		cmd = {
-			"/home/rockerboo/build/lua-language-server/bin/lua-language-server",
+			"/mnt/900/builds/lua-language-server/bin/lua-language-server",
 			"-E",
-			"/home/rockerboo/build/lua-language-server/main.lua",
+			"/mnt/900/builds/lua-language-server/main.lua",
 		},
 		settings = {
 			Lua = {
@@ -224,7 +222,7 @@ local setup = function()
 	require("lspconfig").ltex.setup({
 		capabilities = capabilities,
 		on_attach = lsp.on_attach_buffer,
-		cmd = { "/home/rockerboo/build/ltex-ls-15.2.0/bin/ltex-ls" },
+		cmd = { "/mnt/900/builds/ltex-ls-15.2.0/bin/ltex-ls" },
 		settings = {
 			ltex = {
 				language = "en",
@@ -247,5 +245,7 @@ require("lspconfig").markdown_language_server.setup({
 	on_attach = lsp.on_attach_buffer,
 	capabilities = capabilities,
 })
+
+require("lspconfig").marksman.setup({})
 
 return { setup = setup }

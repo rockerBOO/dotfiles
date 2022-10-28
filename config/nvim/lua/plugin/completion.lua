@@ -77,6 +77,7 @@ require("cmp").setup({
 		{ name = "cmp_tabnine" },
 		{ name = "luasnip" },
 		{ name = "treesitter" },
+		{ name = "nvim_lsp_signature_help" },
 		-- { name = "buffers" },
 		-- { name = "nvim_lua" },
 	},

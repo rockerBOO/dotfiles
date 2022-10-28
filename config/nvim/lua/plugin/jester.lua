@@ -99,4 +99,28 @@ return {
 			-- },
 		})
 	end,
+
+	mappings = function()
+		local n = "n"
+		local keymaps = {
+			{ n, "<Leader>dt", require("plugin.jester").yarn_debug },
+			{ n, "<Leader>df", require("plugin.jester").yarn_debug_file },
+			{ n, "<Leader>dl", require("plugin.jester").yarn_debug_last },
+
+			{ n, "<Leader>tt", require("plugin.jester").yarn_test },
+			{ n, "<Leader>tf", require("plugin.jester").yarn_test_file },
+			-- j n, "<Leader>tl", require("plugin.jester").yarn_test_last },
+			{
+				n,
+				"<Leader>tl",
+				function()
+					require("jester").run_last()
+				end,
+			},
+		}
+
+		for _, keymap in ipairs(keymaps) do
+			vim.keymap.set(keymap[1], keymap[2], keymap[3], { buffer = true })
+		end
+	end,
 }

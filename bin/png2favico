@@ -1,10 +1,9 @@
 #!/bin/sh
 
 if [ -z "$1" ] || [ -z "$2" ]; then
-	echo "png2ico input output"
-	exit 2	
+	echo "png2favico input output"
+	exit 2
 fi
 
-size=32
 
-convert -resize x$size -gravity center -crop 32x32+0+0 $1 -flatten -colors 256 -background transparent $2 
+convert -resize x$size -gravity center -crop ${size}x${size}+0+0 "$1" -flatten -colors 256 -background transparent "$2"
