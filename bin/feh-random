@@ -1,1 +1,8 @@
-feh --bg-fill --randomize ~/backgrounds/* &
+#!/usr/bin/env bash
+
+feh --bg-max --randomize /home/rockerboo/art/ai-submission-large/*
+
+while sleep 300; do
+	feh --bg-max --randomize /home/rockerboo/art/ai-submission-large/*
+done
+

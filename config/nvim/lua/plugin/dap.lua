@@ -13,7 +13,7 @@ return {
 				type = "executable",
 				command = "node",
 				args = {
-					os.getenv("HOME") .. "/build/vscode-node-debug2/out/src/nodeDebug.js",
+					"/mnt/900/builds/vscode-node-debug2/out/src/nodeDebug.js",
 				},
 			}
 			cb(adapter)
@@ -32,7 +32,8 @@ return {
 			type = "executable",
 			command = "node",
 			args = {
-				os.getenv("HOME") .. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
+				os.getenv("HOME")
+					.. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
 			},
 		}
 
@@ -40,8 +41,19 @@ return {
 			type = "executable",
 			command = "yarn",
 			args = {
-				"node",
-				os.getenv("HOME") .. "/build/vscode-node-debug2/out/src/nodeDebug.js",
+				"run",
+				"--inspect-brk",
+				"/mnt/900/builds/vscode-node-debug2/out/src/nodeDebug.js",
+			},
+		}
+
+		dap.adapters.yarn_jest = {
+			type = "executable",
+			command = "yarn",
+			args = {
+				"run",
+				"--inspect-brk",
+				"jest",
 			},
 		}
 
@@ -50,7 +62,9 @@ return {
 			command = "yarn",
 			args = {
 				"node",
-				os.getenv("HOME") .. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
+				"--inspect-brk",
+				os.getenv("HOME")
+					.. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
 			},
 		}
 
@@ -112,6 +126,17 @@ return {
 			console = "integratedTerminal",
 		}
 
+		local yarn = {
+			name = "Launch node",
+			type = "yarn",
+			request = "launch",
+			program = "${file}",
+			cwd = vim.fn.getcwd(),
+			sourceMaps = true,
+			protocol = "inspector",
+			console = "integratedTerminal",
+		}
+
 		local tauri_dev = {
 			type = "lldb",
 			request = "launch",
@@ -145,7 +170,11 @@ return {
 			type = "lldb",
 			request = "launch",
 			program = function()
-				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+				return vim.fn.input(
+					"Path to executable: ",
+					vim.fn.getcwd() .. "/",
+					"file"
+				)
 			end,
 			cwd = "${workspaceFolder}",
 			stopOnEntry = false,
@@ -199,8 +228,8 @@ return {
 
 		dap.configurations.typescript = { firefox, node2, deno, node_attach }
 		dap.configurations.typescriptreact = {
-			firefox,
 			node2,
+			firefox,
 			deno,
 			node_attach,
 		}

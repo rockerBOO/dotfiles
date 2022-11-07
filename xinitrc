@@ -31,10 +31,10 @@ export WINEFSYNC=1
 export MOZ_USE_XINPUT2=true
 
 # Start dwm slstatus
-~/.bin/dwm_status
+#~/.bin/dwm_status
 
 # Start redshift
-~/.bin/start_redshift
+#~/.bin/start_redshift
 
 # Start dwm
 exec dwm

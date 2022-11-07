@@ -82,19 +82,19 @@ local setup = function()
 	-- })
 	--
 	-- local lsp = require("lsp")
-	local tsserver_capabilities = require("cmp_nvim_lsp").default_capabilities()
+	-- local tsserver_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-	utils.log_to_file("/tmp/cap.log")(vim.inspect(capabilities))
+	-- utils.log_to_file("/tmp/cap.log")(vim.inspect(capabilities))
 
-	tsserver_capabilities["textDocument"]["formatting"] = false
-
-	require("typescript").setup({
-		debug = true,
-		server = {
-			on_attach = lsp.on_attach_buffer,
-			capabilities = tsserver_capabilities,
-		},
-	})
+	-- tsserver_capabilities["textDocument"]["formatting"] = false
+	--
+	-- require("typescript").setup({
+	-- 	debug = true,
+	-- 	server = {
+	-- 		on_attach = lsp.on_attach_buffer,
+	-- 		capabilities = tsserver_capabilities,
+	-- 	},
+	-- })
 
 	config.efm.setup({
 		capabilities = capabilities,
@@ -147,6 +147,8 @@ local setup = function()
 		filetypes = {
 			"javascript",
 			"javascriptreact",
+			"typescript",
+			"typescriptreact",
 			"javascript.jsx",
 			"vue",
 		},

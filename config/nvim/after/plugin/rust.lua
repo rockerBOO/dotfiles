@@ -3,8 +3,6 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 require("rust-tools").setup({
 	tools = {
-		autoSetHints = false,
-		hover_with_actions = true,
 		hover_actions = { border = false },
 		cache = true,
 	},

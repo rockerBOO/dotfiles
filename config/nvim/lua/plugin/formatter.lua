@@ -175,6 +175,11 @@ return {
 					-- require("formatter.filetypes.javascript").prettierd,
 					require("formatter.filetypes.javascript").prettier,
 				},
+				javascriptreact = {
+					-- rome
+					-- require("formatter.filetypes.javascript").prettierd,
+					require("formatter.filetypes.javascript").prettier,
+				},
 				json = {
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,

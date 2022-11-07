@@ -116,6 +116,7 @@ alias ecogarden="~/code/ecogarden/create/src-tauri/target/release/ecogarden"
 # alias docker=podman
 alias spot=ncspot
 alias rust-analyzer="rustup run nightly rust-analyzer"
+alias open="xdg-open"
 
 # NVM node version manager
 source /usr/share/nvm/init-nvm.sh

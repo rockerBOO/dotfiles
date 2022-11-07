@@ -201,8 +201,8 @@ local setup = function()
 			requires = { "mfussenegger/nvim-dap" },
 		})
 
-		-- use({ "simrat39/rust-tools.nvim" })
-		use({ "~/code/rust-tools.nvim" })
+		use({ "simrat39/rust-tools.nvim" })
+		-- use({ "~/code/rust-tools.nvim" })
 
 		-- use({
 		-- 	"David-Kunz/jester",
@@ -219,15 +219,31 @@ local setup = function()
 		use({
 			"~/code/jester",
 
-			config = function()
-				require("jester").setup({
-					dap = {
-						type = "yarn",
-					},
-					path_to_jest_debug = "jest",
-					path_to_jest = "jest",
-				})
-			end,
+			-- config = function()
+				-- require("jester").setup({
+				-- 	-- dap = { -- debug adapter configuration
+				-- 	-- 	type = "node2",
+				-- 	-- 	request = "launch",
+				-- 	-- 	cwd = vim.fn.getcwd(),
+				-- 	-- 	runtimeArgs = {
+				-- 	-- 		"--inspect-brk",
+				-- 	-- 		"$path_to_jest",
+				-- 	-- 		"--no-coverage",
+				-- 	-- 		"-t",
+				-- 	-- 		"$result",
+				-- 	-- 		"--",
+				-- 	-- 		"$file",
+				-- 	-- 	},
+				-- 	-- 	args = { "--no-cache" },
+				-- 	-- 	sourceMaps = false,
+				-- 	-- 	protocol = "inspector",
+				-- 	-- 	skipFiles = { "<node_internals>/**/*.js" },
+				-- 	-- 	console = "integratedTerminal",
+				-- 	-- 	port = 9229,
+				-- 	-- 	disableOptimisticBPs = true,
+				-- 	-- },
+				-- })
+			-- end,
 		})
 
 		-- Neovim Lua Development
@@ -288,25 +304,6 @@ local setup = function()
 		-- use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
 		use({
 			"jose-elias-alvarez/typescript.nvim",
-			config = function()
-				-- local lsp = require("lsp")
-				-- local capabilities =
-				-- 	require("cmp_nvim_lsp").update_capabilities(
-				-- 		vim.lsp.protocol.make_client_capabilities()
-				-- 	)
-
-				-- log_to_file('/tmp/cap.log')(vim.pretty_print(capabilities))
-
-				-- capabilities["textDocument"]["formatting"] = false
-
-				-- require("typescript").setup({
-				-- 	debug = true,
-				-- 	server = {
-				-- 		on_attach = lsp.on_attach_buffer,
-				-- 		capabilities = capabilities,
-				-- 	},
-				-- })
-			end,
 		})
 
 		use({ "simrat39/symbols-outline.nvim" })
