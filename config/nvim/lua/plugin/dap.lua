@@ -234,11 +234,11 @@ return {
 			node_attach,
 		}
 
-		dap.configurations.rust = {
-			lldb,
-			tauri_dev,
-			tauri_prod,
-		}
+		-- dap.configurations.rust = {
+		-- 	lldb,
+		-- 	tauri_dev,
+		-- 	tauri_prod,
+		-- }
 
 		dap.configurations.lua = {
 			nlua,
@@ -253,8 +253,24 @@ return {
 			end,
 		})
 
+		-- require('dap-python').setup('/mnt/900/builds/prs/.virtualenvs/debugpy/bin/python')
+
+		-- prs
+		require("dap-python").setup(
+			"/mnt/900/builds/miniconda3/envs/prs/bin/python"
+		)
+
+		table.insert(require("dap").configurations.python, {
+			type = "python",
+			request = "launch",
+			name = "My custom launch configuration",
+			program = "${file}",
+			justMyCode = false,
+			-- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+		})
+
 		-- setup extensions
-		-- require("nvim-dap-virtual-text").setup()
+		require("nvim-dap-virtual-text").setup()
 		require("plugin.dap.mappings").setup()
 	end,
 }

@@ -50,18 +50,15 @@ local maps = {
 	{ i, "<F7>", "<C-o><cmd>set list!<cr>" },
 	{ c, "<F7>", "<C-c><cmd>set list!<cr>" },
 
-	-- Go to end of line
-	{ n, "gl", "$" },
-
-	-- Go to start of line
-	{ n, "gb", "^" },
-
 	{
 		n,
 		"<leader>hi",
 		[[ <cmd>echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 	-- ]],
 	},
+
+	{ n, "gh", "^" },
+	{ n, "gl", "$" },
 
 	-- Escape for terminal (aka spam escape will get me out)
 	{ t, "<esc><esc>", "<C-\\><C-n>" },
@@ -80,6 +77,15 @@ local maps = {
 	{ i, "<C-l>", "A<cr>" },
 	{ i, "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true } },
 	{ i, "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true } },
+
+	{ n, "<C-d>", "<C-d>zz" },
+	{ n, "<C-u>", "<C-u>zz" },
+
+	{ n, "n", "nzzzv" },
+	{ n, "N", "Nzzzv" },
+
+  -- really cool?
+	-- { "x", "<leader>p", '"_Dp' },
 
 	-- nvim-ts-hint-textobject
 	{ v, "m", R("tsht").nodes, { silent = true } },

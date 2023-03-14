@@ -10,7 +10,10 @@ local local_prettier_d_slim = function()
 			"prettier_d_slim",
 			"--stdin",
 			"--stdin-filepath",
-			string.format('"%s"', util.escape_path(util.get_current_buffer_file_path())),
+			string.format(
+				'"%s"',
+				util.escape_path(util.get_current_buffer_file_path())
+			),
 		},
 		stdin = true,
 	}
@@ -25,13 +28,15 @@ local local_prettier = function(parser)
 				"-s",
 				"prettier",
 				"--stdin-filepath",
-				string.format('"%s"', util.escape_path(util.get_current_buffer_file_path())),
+				string.format(
+					'"%s"',
+					util.escape_path(util.get_current_buffer_file_path())
+				),
 			},
 			stdin = true,
 			try_node_modules = true,
 		}
 	end
-
 	return {
 		exe = "yarn",
 		args = {
@@ -39,7 +44,11 @@ local local_prettier = function(parser)
 			"-s",
 			"prettier",
 			"--stdin-filepath",
-			string.format('"%s"', util.escape_path(util.get_current_buffer_file_path()))("--parser"),
+			string.format(
+				'"%s"',
+				util.escape_path(util.get_current_buffer_file_path())
+			),
+			"--parser",
 			parser,
 		},
 		stdin = true,
@@ -53,8 +62,13 @@ local rome = function()
 		args = {
 			"rome",
 			"format",
-			string.format('"%s"', util.escape_path(util.get_current_buffer_file_path())),
+			"--stdin-file-path",
+			string.format(
+				'"%s"',
+				util.escape_path(util.get_current_buffer_file_path())
+			),
 		},
+		stdin = true,
 	}
 end
 
@@ -64,7 +78,10 @@ local prettier_d_slim = function()
 		args = {
 			"--stdin",
 			"--stdin-filepath",
-			string.format('"%s"', util.escape_path(util.get_current_buffer_file_path())),
+			string.format(
+				'"%s"',
+				util.escape_path(util.get_current_buffer_file_path())
+			),
 		},
 		stdin = true,
 	}
@@ -95,6 +112,7 @@ end
 return {
 	setup = function()
 		require("formatter").setup({
+			logging = true,
 			filetype = {
 				sh = {
 					require("formatter.filetypes.sh").shfmt,
@@ -152,18 +170,19 @@ return {
 					-- require("formatter.filetypes.javascript").prettierd,
 					-- require("formatter.filetypes.javascript").prettier,
 					-- local_prettier_d_slim,
-					require("formatter.filetypes.javascript").prettier,
+					-- require("formatter.filetypes.javascript").prettier,
+					rome,
 				},
 				typescript = {
 					-- prettier_d_slim,
-					-- local_prettier,
-					require("formatter.filetypes.javascript").prettier,
+					local_prettier,
+					-- require("formatter.filetypes.javascript").prettier,
 					-- prettier_d_slim,
 				},
 				html = {
 					-- require("formatter.filetypes.html").prettierd
-					local_prettier_d_slim,
-					-- require("formatter.filetypes.javascript").prettier,
+					-- local_prettier_d_slim,
+					require("formatter.filetypes.javascript").prettier,
 					-- local_prettier
 				},
 				css = {
@@ -171,9 +190,10 @@ return {
 					require("formatter.filetypes.javascript").prettier,
 				},
 				javascript = {
+					local_prettier,
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,
-					require("formatter.filetypes.javascript").prettier,
+					-- require("formatter.filetypes.javascript").prettier,
 				},
 				javascriptreact = {
 					-- rome

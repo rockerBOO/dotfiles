@@ -47,6 +47,15 @@ mappings.setup = function()
 		},
 		{
 			n,
+			"<Leader>dd",
+			function()
+				require("telescope.builtin").diagnostics({
+					theme = "dropdown",
+				})
+			end,
+		},
+		{
+			n,
 			"<Leader>ds",
 			function()
 				require("telescope.builtin").lsp_document_symbols({
@@ -58,7 +67,9 @@ mappings.setup = function()
 			n,
 			"gW",
 			function()
-				require("telescope.builtin").lsp_workspace_symbols(require("telescope.themes").get_dropdown())
+				require("telescope.builtin").lsp_workspace_symbols(
+					require("telescope.themes").get_dropdown()
+				)
 			end,
 		},
 		{
@@ -87,6 +98,25 @@ mappings.setup = function()
 					theme = "dropdown",
 					enable_preview = true,
 				})
+			end,
+		},
+
+		-- help
+		{ n, "<leader>hh", require("telescope.builtin").help_tags },
+
+		{
+			n,
+			"z=",
+			function()
+				require("telescope.builtin").spell_suggest(require(
+					"telescope.themes"
+				).get_dropdown({
+					layout_config = {
+						prompt_position = "top",
+						width = 50,
+						height = 0.7,
+					},
+				}))
 			end,
 		},
 	}

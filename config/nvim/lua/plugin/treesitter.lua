@@ -66,7 +66,8 @@ treesitter.setup = function()
 		},
 	})
 
-	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+	local parser_config =
+		require("nvim-treesitter.parsers").get_parser_configs()
 
 	-- parser_config.gleam = {
 	-- 	install_info = {
@@ -117,10 +118,11 @@ treesitter.setup = function()
 			files = { "src/parser.c" },
 			-- branch = "",
 		},
-		filetype = { "eex",  "eelixir" },
+		filetype = { "eex", "eelixir" },
 	}
+	vim.treesitter.language.register("eelixir", "eex")
 	-- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
-	ft_to_parser.eelixir = "eex" -- the someft filetype will use the python parser and queries.
+	-- ft_to_parser.eelixir = "eex" -- the someft filetype will use the python parser and queries.
 end
 
 return treesitter

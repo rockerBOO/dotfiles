@@ -45,7 +45,16 @@ local setup = function()
 		},
 	}
 
-	local servers = { "gopls", "cssls", "html", "vimls", "bashls", "sqlls" }
+	local servers = {
+		"gopls",
+		"cssls",
+		"html",
+		"vimls",
+		"bashls",
+		"sqlls",
+		"pyright",
+		"gleam",
+	}
 
 	for _, server in ipairs(servers) do
 		config[server].setup(default_lsp_config)
@@ -96,9 +105,23 @@ local setup = function()
 	-- 	},
 	-- })
 
-	config.efm.setup({
+	-- config.efm.setup({
+	-- 	capabilities = capabilities,
+	-- 	on_attach = lsp.on_attach_buffer,
+	-- })
+
+	config.ruff_lsp.setup({
+		cmd = { "/home/rockerboo/code/ruff-lsp/ruff-lsp" },
 		capabilities = capabilities,
 		on_attach = lsp.on_attach_buffer,
+		settings = {
+			["ruff.organizeImports"] = false,
+			["ruff.fixAll"] = false,
+			["source.organizeImports"] = false,
+			["source.fixAll"] = false,
+			["source.organizeImports.ruff"] = false,
+			["source.fixAll.ruff"] = false,
+		},
 	})
 
 	config.jsonls.setup({
@@ -190,7 +213,7 @@ local setup = function()
 	-- 	},
 	-- 	on_attach = lsp.on_attach_buffer,
 	-- })
-	require("lspconfig").sumneko_lua.setup({
+	require("lspconfig").lua_ls.setup({
 
 		capabilities = capabilities,
 		cmd = {
@@ -237,12 +260,21 @@ local setup = function()
 		},
 	})
 
-	require("lspconfig").markdown_language_server.setup({
+	-- require("lspconfig").markdown_language_server.setup({
+	-- 	on_attach = lsp.on_attach_buffer,
+	-- 	capabilities = capabilities,
+	-- })
+
+	require("lspconfig").marksman.setup({
 		on_attach = lsp.on_attach_buffer,
 		capabilities = capabilities,
 	})
 
-	require("lspconfig").marksman.setup({})
+	require("lspconfig").rome.setup({
+		on_attach = lsp.on_attach_buffer,
+		capabilities = capabilities,
+		cmd = { "yarn", "run", "rome", "lsp-proxy" },
+	})
 end
 
 return { setup = setup }

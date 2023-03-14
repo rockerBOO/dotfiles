@@ -79,7 +79,8 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 #
 # https://docs.docker.com/engine/security/rootless/
-export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+# disabling to check root version to be working
+# export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
 export MANPATH="/usr/local/man:$MANPATH"
 
@@ -137,6 +138,8 @@ export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 # Bat
 export BAT_THEME=ansi
 
+# Systemd
+export SYSTEMD_EDITOR=nvim
 
 alias luamake=/home/rockerboo/build/lua-language-server/3rd/luamake/luamake
 alias gitlab-run="gitlab-runner exec docker --cache-dir /cache --docker-volumes `pwd`/build-output:/cache"
@@ -153,6 +156,24 @@ source <(podman completion zsh)
 
 export PATH="/home/rockerboo/.config/local/share/gem/ruby/3.0.0/bin:$PATH"
 
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# Fly
+export FLYCTL_INSTALL="/home/rockerboo/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+# Libtorch
+export LIBTORCH=/mnt/900/builds/libtorch-cxx11-abi-shared-with-deps-1.13.0+cu117/libtorch
+export LD_LIBRARY_PATH=${LIBTORCH}/lib:$LD_LIBRARY_PATH
+
+# LIBTORCH_INCLUDE must contains `include` directory.
+export LIBTORCH_INCLUDE=/mnt/900/builds/libtorch-cxx11-abi-shared-with-deps-1.13.0+cu117/libtorch
+
+# # LIBTORCH_LIB must contains `lib` directory.
+# export LIBTORCH_LIB=/mnt/900/builds/libtorch/libtorch/
+
+alias cr="cargo run && audio-player --volume 0.1 \"$HOME/code/audio-player/output.ogg\" || audio-player --volume 0.1 \"$HOME/code/tmp/error-sounds/priceisright.ogg\""
+alias cb="cargo build && audio-player --volume 0.1 \"$HOME/code/audio-player/output.ogg\" || audio-player --volume 0.1 \"$HOME/code/tmp/error-sounds/priceisright.ogg\""
+alias ct="cargo test && audio-player --volume 0.1 \"$HOME/code/audio-player/output.ogg\" || audio-player --volume 0.1 \"$HOME/code/tmp/error-sounds/priceisright.ogg\""
+

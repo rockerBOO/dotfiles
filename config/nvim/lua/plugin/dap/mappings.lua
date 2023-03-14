@@ -84,7 +84,7 @@ local maps = {
 				.build()
 
 			widget.open()
-			-- widgets.hover("<cexpr>", { border = false })
+			widgets.hover("<cexpr>", { border = false })
 		end,
 		silent,
 	},

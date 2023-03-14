@@ -18,31 +18,36 @@ local on_attach_buffer = function(client, bufnr)
 	)
 
 	-- if client.server_capabilities.document_formatting then
-	-- 	utils.keymap({
-	-- 		"n",
-	-- 		"<Leader>aa",
-	-- 		"<cmd>lua vim.lsp.buf.formatting()<cr>",
-	-- 		{},
-	-- 	})
-	-- 	-- vim.api.nvim_define_augroup({ name = "Format" })
-	-- 	-- vim.api.nvim_define_autocmd({
-	-- 	-- 	group = "Format",
-	-- 	-- 	event = "BufWritePre",
-	-- 	-- 	pattern = "<buffer>",
-	-- 	-- 	callback = function()
-	-- 	-- 		vim.lsp.buf.formatting_seq_sync(nil, 2000, { "efm" })
-	-- 	-- 	end,
-	-- 	-- })
-
-	-- 	-- print(string.format("Formatting supported %s", client.name))
+	-- utils.keymap({
+	-- 	"n",
+	-- 	"<Leader>aa",
+	-- 	"<cmd>lua vim.lsp.buf.formatting()<cr>",
+	-- 	{},
+	-- })
+	-- vim.api.nvim_define_augroup({ name = "Format" })
+	-- vim.api.nvim_define_autocmd({
+	-- 	group = "Format",
+	-- 	event = "BufWritePre",
+	-- 	pattern = "<buffer>",
+	-- 	callback = function()
+	-- 		vim.lsp.buf.format({
+	-- 			timeout_ms = 1000,
+	-- 			filter = function(c)
+	-- 				return c.name ~= "tsserver"
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- })
+	--
+	-- vim.cmd(
+	-- 	"echo " .. string.format("Formatting supported %s", client.name)
+	-- )
 	-- end
 
 	local caps = client.server_capabilities
 
 	if caps.documentHighlightProvider then
 		local group = vim.api.nvim_create_augroup("LSPDocumentHighlight", {})
-
-		vim.opt_local.updatetime = 1000
 
 		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 			buffer = bufnr,

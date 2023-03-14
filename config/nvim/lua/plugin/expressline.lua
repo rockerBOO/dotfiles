@@ -3,7 +3,7 @@ local builtin = require("el.builtin")
 local extensions = require("el.extensions")
 local sections = require("el.sections")
 local subscribe = require("el.subscribe")
-local lsp_statusline = require("el.plugins.lsp_status")
+-- local lsp_statusline = require("el.plugins.lsp_status")
 
 require("el").reset_windows()
 
@@ -22,7 +22,7 @@ local generator = function(_)
 		builtin.make_responsive_file(140, 90),
 		sections.collapse_builtin({ " ", builtin.modified_flag }),
 		sections.split,
-		lsp_statusline.server_progress,
+		-- lsp_statusline.server_progress,
 		require("dap").status(),
 		builtin.line,
 		",",

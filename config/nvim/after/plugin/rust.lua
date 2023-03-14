@@ -17,16 +17,21 @@ require("rust-tools").setup({
 		},
 		settings = {
 			["rust-analyzer"] = {
-				diagnostics = {
-					experimental = true,
+				checkOnSave = {
+					command = "clippy",
 				},
+				-- diagnostics = {
+				-- 	experimental = true,
+				-- },
 			},
 		},
 	},
 })
 
-vim.keymap.set(
-	"n",
-	"<Leader>tl",
-	require("rust-tools.runnables").execute_last_runnable
-)
+if require("rust-tools.runnables").execute_last_runnable then
+	vim.keymap.set(
+		"n",
+		"<Leader>tl",
+		require("rust-tools.runnables").execute_last_runnable
+	)
+end

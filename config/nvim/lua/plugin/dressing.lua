@@ -5,7 +5,9 @@ return function()
 			border = false,
 		},
 		select = {
-			telescope = require("telescope.themes").get_cursor({}),
+			telescope = require("telescope.themes").get_cursor({
+				layout_config = { width = 120 },
+			}),
 		},
 	})
 end

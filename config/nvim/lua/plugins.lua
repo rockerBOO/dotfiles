@@ -57,8 +57,8 @@ local setup = function()
 		use({ "styled-components/vim-styled-components" })
 
 		-- Configure LSP
-		use({ "~/code/others/nvim-lspconfig" })
-		-- use({ "neovim/nvim-lspconfig" })
+		-- use({ "~/code/others/nvim-lspconfig" })
+		use({ "neovim/nvim-lspconfig" })
 
 		-- LSP Status Bar
 		-- using temporay branch until deprecated feature is removed
@@ -201,8 +201,8 @@ local setup = function()
 			requires = { "mfussenegger/nvim-dap" },
 		})
 
-		use({ "simrat39/rust-tools.nvim" })
-		-- use({ "~/code/rust-tools.nvim" })
+		-- use({ "simrat39/rust-tools.nvim" })
+		use({ "~/code/rust-tools.nvim" })
 
 		-- use({
 		-- 	"David-Kunz/jester",
@@ -220,29 +220,29 @@ local setup = function()
 			"~/code/jester",
 
 			-- config = function()
-				-- require("jester").setup({
-				-- 	-- dap = { -- debug adapter configuration
-				-- 	-- 	type = "node2",
-				-- 	-- 	request = "launch",
-				-- 	-- 	cwd = vim.fn.getcwd(),
-				-- 	-- 	runtimeArgs = {
-				-- 	-- 		"--inspect-brk",
-				-- 	-- 		"$path_to_jest",
-				-- 	-- 		"--no-coverage",
-				-- 	-- 		"-t",
-				-- 	-- 		"$result",
-				-- 	-- 		"--",
-				-- 	-- 		"$file",
-				-- 	-- 	},
-				-- 	-- 	args = { "--no-cache" },
-				-- 	-- 	sourceMaps = false,
-				-- 	-- 	protocol = "inspector",
-				-- 	-- 	skipFiles = { "<node_internals>/**/*.js" },
-				-- 	-- 	console = "integratedTerminal",
-				-- 	-- 	port = 9229,
-				-- 	-- 	disableOptimisticBPs = true,
-				-- 	-- },
-				-- })
+			-- require("jester").setup({
+			-- 	-- dap = { -- debug adapter configuration
+			-- 	-- 	type = "node2",
+			-- 	-- 	request = "launch",
+			-- 	-- 	cwd = vim.fn.getcwd(),
+			-- 	-- 	runtimeArgs = {
+			-- 	-- 		"--inspect-brk",
+			-- 	-- 		"$path_to_jest",
+			-- 	-- 		"--no-coverage",
+			-- 	-- 		"-t",
+			-- 	-- 		"$result",
+			-- 	-- 		"--",
+			-- 	-- 		"$file",
+			-- 	-- 	},
+			-- 	-- 	args = { "--no-cache" },
+			-- 	-- 	sourceMaps = false,
+			-- 	-- 	protocol = "inspector",
+			-- 	-- 	skipFiles = { "<node_internals>/**/*.js" },
+			-- 	-- 	console = "integratedTerminal",
+			-- 	-- 	port = 9229,
+			-- 	-- 	disableOptimisticBPs = true,
+			-- 	-- },
+			-- })
 			-- end,
 		})
 
@@ -272,6 +272,13 @@ local setup = function()
 		use({ "nvim-lua/popup.nvim" })
 		use({ "nvim-lua/plenary.nvim" })
 
+		use({
+			"j-hui/fidget.nvim",
+			config = function()
+				require("fidget").setup({})
+			end,
+		})
+
 		-- Telescope fuzzy finder
 		use({ "nvim-telescope/telescope.nvim" })
 		-- use({ "~/code/telescope.nvim" })
@@ -283,6 +290,11 @@ local setup = function()
 		use({
 			"nvim-telescope/telescope-dap.nvim",
 			require = "nvim-telescope/telescope.nvim",
+		})
+
+		use({
+			"mfussenegger/nvim-dap-python",
+			requires = { "nvim-telescope/telescope-dap.nvim" },
 		})
 
 		use({ "kyazdani42/nvim-web-devicons" })
@@ -437,6 +449,9 @@ local setup = function()
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 			requires = { "hrsh7th/nvim-cmp" },
 		})
+
+		-- use({ "nullchilly/fsread.nvim" })
+		use({ "~/code/others/fsread.nvim" })
 
 		-- used for yarn pnp packaging
 		use({
