@@ -1,7 +1,7 @@
 set nocompatible
 
 "call pathogen#runtime_append_all_bundles()
-call pathogen#infect()
+"call pathogen#infect()
 
 
 " ---------------------------------
@@ -10,7 +10,7 @@ call pathogen#infect()
 
 syntax enable
 set background=dark
-colorscheme boo
+"colorscheme boo
 set title
 set titleold=
 set number
@@ -60,17 +60,17 @@ set notimeout
 set clipboard=unnamed
 
 set laststatus=2
-set statusline+=%f
-set statusline+=%=
-set statusline+=%{SyntasticStatuslineFlag()}%*
-set statusline+=\ [
-set statusline+=%{strlen(&ft)?&ft:'none'} "
+"set statusline+=%f
+"set statusline+=%=
+"set statusline+=%{SyntasticStatuslineFlag()}%*
+"set statusline+=\ [
+"set statusline+=%{strlen(&ft)?&ft:'none'} "
 
 " highlight VCS conflicts
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+"match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-let g:rails_statusline=0
-let loaded_matchparen = 1
+"let g:rails_statusline=0
+"let loaded_matchparen = 1
 
 set fo-=r
 
@@ -187,9 +187,9 @@ map <leader>h :CtrlPMRU<CR>
  
 nnoremap Y y$
 
-map <C-U> :silent !syncit<CR>
-"cmap Ws :w | :silent !syncit
-command Ws w | silent !syncit
+"map <C-U> :silent !syncit<CR>
+""cmap Ws :w | :silent !syncit
+"command Ws w | silent !syncit
 
 " insert mode completion
 inoremap <C-L> <C-X><C-L>
@@ -274,17 +274,17 @@ autocmd BufRead *.markdown set filetype=mkd
 autocmd BufRead *.god set filetype=ruby
 autocmd BufRead *.as set filetype=actionscript
 autocmd BufRead *.tsv set filetype=tsv
-au BufNewFile,BufRead *.sls,*.yaml,*.yml so ~/.vim/syntax/yaml.vim
+"au BufNewFile,BufRead *.sls,*.yaml,*.yml so ~/.vim/syntax/yaml.vim
 
 " set completion
-autocmd FileType ruby set omnifunc=rubycomplete#Complete
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
+"autocmd FileType ruby set omnifunc=rubycomplete#Complete
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+"autocmd FileType c set omnifunc=ccomplete#Complete
 
 autocmd Filetype gitcommit set tw=68 spell
 

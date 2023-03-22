@@ -149,8 +149,8 @@ local setup = function()
 			end,
 		})
 
-		-- use({ "mfussenegger/nvim-dap" })
-		use({ "~/code/nvim-dap" })
+		use({ "mfussenegger/nvim-dap" })
+		-- use({ "~/code/nvim-dap" })
 		use("jbyuki/one-small-step-for-vimkind")
 
 		use({
@@ -201,8 +201,8 @@ local setup = function()
 			requires = { "mfussenegger/nvim-dap" },
 		})
 
-		-- use({ "simrat39/rust-tools.nvim" })
-		use({ "~/code/rust-tools.nvim" })
+		use({ "simrat39/rust-tools.nvim" })
+		-- use({ "~/code/rust-tools.nvim" })
 
 		-- use({
 		-- 	"David-Kunz/jester",
@@ -217,33 +217,10 @@ local setup = function()
 		-- 	end,
 		-- })
 		use({
-			"~/code/jester",
-
-			-- config = function()
-			-- require("jester").setup({
-			-- 	-- dap = { -- debug adapter configuration
-			-- 	-- 	type = "node2",
-			-- 	-- 	request = "launch",
-			-- 	-- 	cwd = vim.fn.getcwd(),
-			-- 	-- 	runtimeArgs = {
-			-- 	-- 		"--inspect-brk",
-			-- 	-- 		"$path_to_jest",
-			-- 	-- 		"--no-coverage",
-			-- 	-- 		"-t",
-			-- 	-- 		"$result",
-			-- 	-- 		"--",
-			-- 	-- 		"$file",
-			-- 	-- 	},
-			-- 	-- 	args = { "--no-cache" },
-			-- 	-- 	sourceMaps = false,
-			-- 	-- 	protocol = "inspector",
-			-- 	-- 	skipFiles = { "<node_internals>/**/*.js" },
-			-- 	-- 	console = "integratedTerminal",
-			-- 	-- 	port = 9229,
-			-- 	-- 	disableOptimisticBPs = true,
-			-- 	-- },
-			-- })
-			-- end,
+			"/mnt/500h/rockerboo/code/jester",
+			config = function()
+				require("jester").setup({})
+			end,
 		})
 
 		-- Neovim Lua Development
@@ -265,7 +242,7 @@ local setup = function()
 		-- LSP Extensions
 		-- use({ "tjdevries/lsp_extensions.nvim" })
 
-		use({ "~/code/vim-mjml", opt = true })
+		-- use({ "~/code/vim-mjml", opt = true })
 
 		use({ "stevearc/dressing.nvim" })
 
@@ -301,7 +278,8 @@ local setup = function()
 
 		use("ThePrimeagen/harpoon")
 
-		use({ "~/code/boo-colorscheme-nvim" })
+		use({ "/mnt/500h/rockerboo/code/boo-colorscheme-nvim" })
+		-- use({ "rockerBOO/boo-colorscheme-nvim" })
 
 		-- Nightfly colors
 		use({ "bluz71/vim-nightfly-guicolors" })
@@ -329,8 +307,8 @@ local setup = function()
 			end,
 		})
 
-		-- use({ "mhartington/formatter.nvim" })
-		use({ "~/code/others/formatter.nvim" })
+		use({ "mhartington/formatter.nvim" })
+		-- use({ "~/code/others/formatter.nvim" })
 
 		-- Completion (nvim-cmp)
 		-- use({ "hrsh7th/cmp-buffer" })
@@ -368,7 +346,7 @@ local setup = function()
 			},
 		})
 
-		use({ "~/code/reload-lua" })
+		-- use({ "~/code/reload-lua" })
 
 		-- A better annotation generator. Supports multiple languages and annotation conventions.
 		use({
@@ -451,53 +429,63 @@ local setup = function()
 		})
 
 		-- use({ "nullchilly/fsread.nvim" })
-		use({ "~/code/others/fsread.nvim" })
+		-- use({ "~/code/others/fsread.nvim" })
 
 		-- used for yarn pnp packaging
-		use({
-			"lbrayner/vim-rzip",
-			config = function()
-				--  Decode URI encoded characters
-				vim.cmd([[
-function! DecodeURI(uri)
-    return substitute(a:uri, '%\([a-fA-F0-9][a-fA-F0-9]\)', '\=nr2char("0x" . submatch(1))', "g")
-endfunction
-
-" Attempt to clear non-focused buffers with matching name
-function! ClearDuplicateBuffers(uri)
-    " if our filename has URI encoded characters
-    if DecodeURI(a:uri) !=# a:uri
-        " wipeout buffer with URI decoded name - can print error if buffer in focus
-        sil! exe "bwipeout " . fnameescape(DecodeURI(a:uri))
-        " change the name of the current buffer to the URI decoded name
-        exe "keepalt file " . fnameescape(DecodeURI(a:uri))
-        " ensure we don't have any open buffer matching non-URI decoded name
-        sil! exe "bwipeout " . fnameescape(a:uri)
-    endif
-endfunction
-
-function! RzipOverride()
-    " Disable vim-rzip's autocommands
-    autocmd! zip BufReadCmd   zipfile:*,zipfile:*/*
-    exe "au! zip BufReadCmd ".g:zipPlugin_ext
-
-    " order is important here, setup name of new buffer correctly then fallback to vim-rzip's handling
-    autocmd zip BufReadCmd   zipfile:*  call ClearDuplicateBuffers(expand("<amatch>"))
-    autocmd zip BufReadCmd   zipfile:*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
-
-    if has("unix")
-        autocmd zip BufReadCmd   zipfile:*/*  call ClearDuplicateBuffers(expand("<amatch>"))
-        autocmd zip BufReadCmd   zipfile:*/*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
-    endif
-
-    exe "au zip BufReadCmd ".g:zipPlugin_ext."  call rzip#Browse(DecodeURI(expand('<amatch>')))"
-endfunction
-
-autocmd VimEnter * call RzipOverride()]])
-			end,
-		})
+		-- 		use({
+		-- 			"lbrayner/vim-rzip",
+		-- 			config = function()
+		-- 				--  Decode URI encoded characters
+		-- 				vim.cmd([[
+		-- function! DecodeURI(uri)
+		--     return substitute(a:uri, '%\([a-fA-F0-9][a-fA-F0-9]\)', '\=nr2char("0x" . submatch(1))', "g")
+		-- endfunction
+		--
+		-- " Attempt to clear non-focused buffers with matching name
+		-- function! ClearDuplicateBuffers(uri)
+		--     " if our filename has URI encoded characters
+		--     if DecodeURI(a:uri) !=# a:uri
+		--         " wipeout buffer with URI decoded name - can print error if buffer in focus
+		--         sil! exe "bwipeout " . fnameescape(DecodeURI(a:uri))
+		--         " change the name of the current buffer to the URI decoded name
+		--         exe "keepalt file " . fnameescape(DecodeURI(a:uri))
+		--         " ensure we don't have any open buffer matching non-URI decoded name
+		--         sil! exe "bwipeout " . fnameescape(a:uri)
+		--     endif
+		-- endfunction
+		--
+		-- function! RzipOverride()
+		--     " Disable vim-rzip's autocommands
+		--     autocmd! zip BufReadCmd   zipfile:*,zipfile:*/*
+		--     exe "au! zip BufReadCmd ".g:zipPlugin_ext
+		--
+		--     " order is important here, setup name of new buffer correctly then fallback to vim-rzip's handling
+		--     autocmd zip BufReadCmd   zipfile:*  call ClearDuplicateBuffers(expand("<amatch>"))
+		--     autocmd zip BufReadCmd   zipfile:*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
+		--
+		--     if has("unix")
+		--         autocmd zip BufReadCmd   zipfile:*/*  call ClearDuplicateBuffers(expand("<amatch>"))
+		--         autocmd zip BufReadCmd   zipfile:*/*  call rzip#Read(DecodeURI(expand("<amatch>")), 1)
+		--     endif
+		--
+		--     exe "au zip BufReadCmd ".g:zipPlugin_ext."  call rzip#Browse(DecodeURI(expand('<amatch>')))"
+		-- endfunction
+		--
+		-- autocmd VimEnter * call RzipOverride()]])
+		-- 			end,
+		-- 		})
 
 		use("alaviss/nim.nvim")
+
+		-- use({
+		-- 	"krivahtoo/silicon.nvim",
+		-- 	run = "./install.sh",
+		-- 	config = function()
+		-- 		require("silicon").setup({
+		-- 			font = "Isoveka=16",
+		-- 		})
+		-- 	end,
+		-- })
 	end)
 
 	local group = vim.api.nvim_create_augroup("packer_user_config", {})

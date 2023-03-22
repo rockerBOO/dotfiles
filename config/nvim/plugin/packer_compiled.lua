@@ -88,7 +88,7 @@ _G.packer_plugins = {
   ["boo-colorscheme-nvim"] = {
     loaded = true,
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/boo-colorscheme-nvim",
-    url = "/home/rockerboo/code/boo-colorscheme-nvim"
+    url = "/mnt/500h/rockerboo/code/boo-colorscheme-nvim"
   },
   ["cmp-git"] = {
     loaded = true,
@@ -113,7 +113,7 @@ _G.packer_plugins = {
   ["cmp-tabnine"] = {
     after = { "tabnine-vim" },
     after_files = { "/home/rockerboo/.config/local/share/nvim/site/pack/packer/opt/cmp-tabnine/after/plugin/cmp-tabnine.lua" },
-    config = { "\27LJ\2\n¶\1\0\0\5\0\5\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\0\0'\2\3\0B\0\2\2\18\3\0\0009\1\2\0005\4\4\0B\1\3\1K\0\1\0\1\0\5\rpriority\3ˆ'\tsort\2\29show_prediction_strength\2\20max_num_results\3\20\14max_lines\3è\a\23cmp_tabnine.config\nsetup\16cmp_tabnine\frequire\0" },
+    config = { "\27LJ\2\n¶\1\0\0\5\0\5\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\0\0'\2\3\0B\0\2\2\18\3\0\0009\1\2\0005\4\4\0B\1\3\1K\0\1\0\1\0\5\14max_lines\3è\a\tsort\2\rpriority\3ˆ'\29show_prediction_strength\2\20max_num_results\3\20\23cmp_tabnine.config\nsetup\16cmp_tabnine\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -176,12 +176,7 @@ _G.packer_plugins = {
   ["formatter.nvim"] = {
     loaded = true,
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/formatter.nvim",
-    url = "/home/rockerboo/code/others/formatter.nvim"
-  },
-  ["fsread.nvim"] = {
-    loaded = true,
-    path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/fsread.nvim",
-    url = "/home/rockerboo/code/others/fsread.nvim"
+    url = "https://github.com/mhartington/formatter.nvim"
   },
   ["gleam.vim"] = {
     loaded = true,
@@ -204,9 +199,10 @@ _G.packer_plugins = {
     url = "https://github.com/lewis6991/impatient.nvim"
   },
   jester = {
+    config = { "\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vjester\frequire\0" },
     loaded = true,
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/jester",
-    url = "/home/rockerboo/code/jester"
+    url = "/mnt/500h/rockerboo/code/jester"
   },
   ["limelight.vim"] = {
     loaded = true,
@@ -258,7 +254,7 @@ _G.packer_plugins = {
   ["nvim-dap"] = {
     loaded = true,
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/nvim-dap",
-    url = "/home/rockerboo/code/nvim-dap"
+    url = "https://github.com/mfussenegger/nvim-dap"
   },
   ["nvim-dap-python"] = {
     loaded = true,
@@ -266,7 +262,7 @@ _G.packer_plugins = {
     url = "https://github.com/mfussenegger/nvim-dap-python"
   },
   ["nvim-dap-ui"] = {
-    config = { "\27LJ\2\nü\1\0\0\a\0\v\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\t\0004\3\3\0005\4\4\0005\5\3\0=\5\5\4>\4\1\0035\4\b\0005\5\a\0005\6\6\0>\6\1\5=\5\5\4>\4\2\3=\3\n\2B\0\2\1K\0\1\0\flayouts\1\0\0\1\0\2\tsize\3(\rposition\tleft\1\5\0\0\0\16breakpoints\vstacks\fwatches\1\0\2\aid\vscopes\tsize\4\0€€Àþ\3\relements\1\0\2\tsize\4\0€€Àþ\3\rposition\vbottom\1\3\0\0\trepl\fconsole\nsetup\ndapui\frequire\0" },
+    config = { "\27LJ\2\nü\1\0\0\a\0\v\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\t\0004\3\3\0005\4\4\0005\5\3\0=\5\5\4>\4\1\0035\4\b\0005\5\a\0005\6\6\0>\6\1\5=\5\5\4>\4\2\3=\3\n\2B\0\2\1K\0\1\0\flayouts\1\0\0\1\0\2\rposition\tleft\tsize\3(\1\5\0\0\0\16breakpoints\vstacks\fwatches\1\0\2\aid\vscopes\tsize\4\0€€Àþ\3\relements\1\0\2\rposition\vbottom\tsize\4\0€€Àþ\3\1\3\0\0\trepl\fconsole\nsetup\ndapui\frequire\0" },
     loaded = true,
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/nvim-dap-ui",
     url = "https://github.com/rcarriga/nvim-dap-ui"
@@ -371,15 +367,10 @@ _G.packer_plugins = {
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
-  ["reload-lua"] = {
-    loaded = true,
-    path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/reload-lua",
-    url = "/home/rockerboo/code/reload-lua"
-  },
   ["rust-tools.nvim"] = {
     loaded = true,
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/rust-tools.nvim",
-    url = "/home/rockerboo/code/rust-tools.nvim"
+    url = "https://github.com/simrat39/rust-tools.nvim"
   },
   ["symbols-outline.nvim"] = {
     loaded = true,
@@ -457,12 +448,6 @@ _G.packer_plugins = {
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/vim-hardtime",
     url = "https://github.com/takac/vim-hardtime"
   },
-  ["vim-mjml"] = {
-    loaded = false,
-    needs_bufread = true,
-    path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/opt/vim-mjml",
-    url = "/home/rockerboo/code/vim-mjml"
-  },
   ["vim-moonfly-colors"] = {
     loaded = false,
     needs_bufread = false,
@@ -473,12 +458,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/vim-nightfly-guicolors",
     url = "https://github.com/bluz71/vim-nightfly-guicolors"
-  },
-  ["vim-rzip"] = {
-    config = { "\27LJ\2\n²\f\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0’\ffunction! DecodeURI(uri)\n    return substitute(a:uri, '%\\([a-fA-F0-9][a-fA-F0-9]\\)', '\\=nr2char(\"0x\" . submatch(1))', \"g\")\nendfunction\n\n\" Attempt to clear non-focused buffers with matching name\nfunction! ClearDuplicateBuffers(uri)\n    \" if our filename has URI encoded characters\n    if DecodeURI(a:uri) !=# a:uri\n        \" wipeout buffer with URI decoded name - can print error if buffer in focus\n        sil! exe \"bwipeout \" . fnameescape(DecodeURI(a:uri))\n        \" change the name of the current buffer to the URI decoded name\n        exe \"keepalt file \" . fnameescape(DecodeURI(a:uri))\n        \" ensure we don't have any open buffer matching non-URI decoded name\n        sil! exe \"bwipeout \" . fnameescape(a:uri)\n    endif\nendfunction\n\nfunction! RzipOverride()\n    \" Disable vim-rzip's autocommands\n    autocmd! zip BufReadCmd   zipfile:*,zipfile:*/*\n    exe \"au! zip BufReadCmd \".g:zipPlugin_ext\n\n    \" order is important here, setup name of new buffer correctly then fallback to vim-rzip's handling\n    autocmd zip BufReadCmd   zipfile:*  call ClearDuplicateBuffers(expand(\"<amatch>\"))\n    autocmd zip BufReadCmd   zipfile:*  call rzip#Read(DecodeURI(expand(\"<amatch>\")), 1)\n\n    if has(\"unix\")\n        autocmd zip BufReadCmd   zipfile:*/*  call ClearDuplicateBuffers(expand(\"<amatch>\"))\n        autocmd zip BufReadCmd   zipfile:*/*  call rzip#Read(DecodeURI(expand(\"<amatch>\")), 1)\n    endif\n\n    exe \"au zip BufReadCmd \".g:zipPlugin_ext.\"  call rzip#Browse(DecodeURI(expand('<amatch>')))\"\nendfunction\n\nautocmd VimEnter * call RzipOverride()\bcmd\bvim\0" },
-    loaded = true,
-    path = "/home/rockerboo/.config/local/share/nvim/site/pack/packer/start/vim-rzip",
-    url = "https://github.com/lbrayner/vim-rzip"
   },
   ["vim-styled-components"] = {
     loaded = true,
@@ -493,54 +472,54 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: fidget.nvim
-time([[Config for fidget.nvim]], true)
-try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
-time([[Config for fidget.nvim]], false)
--- Config for: vim-doge
-time([[Config for vim-doge]], true)
-try_loadstring("\27LJ\2\n6\0\0\2\0\3\0\0056\0\0\0009\0\1\0+\1\1\0=\1\2\0K\0\1\0\25doge_enable_mappings\6g\bvim\0", "config", "vim-doge")
-time([[Config for vim-doge]], false)
--- Config for: vim-rzip
-time([[Config for vim-rzip]], true)
-try_loadstring("\27LJ\2\n²\f\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0’\ffunction! DecodeURI(uri)\n    return substitute(a:uri, '%\\([a-fA-F0-9][a-fA-F0-9]\\)', '\\=nr2char(\"0x\" . submatch(1))', \"g\")\nendfunction\n\n\" Attempt to clear non-focused buffers with matching name\nfunction! ClearDuplicateBuffers(uri)\n    \" if our filename has URI encoded characters\n    if DecodeURI(a:uri) !=# a:uri\n        \" wipeout buffer with URI decoded name - can print error if buffer in focus\n        sil! exe \"bwipeout \" . fnameescape(DecodeURI(a:uri))\n        \" change the name of the current buffer to the URI decoded name\n        exe \"keepalt file \" . fnameescape(DecodeURI(a:uri))\n        \" ensure we don't have any open buffer matching non-URI decoded name\n        sil! exe \"bwipeout \" . fnameescape(a:uri)\n    endif\nendfunction\n\nfunction! RzipOverride()\n    \" Disable vim-rzip's autocommands\n    autocmd! zip BufReadCmd   zipfile:*,zipfile:*/*\n    exe \"au! zip BufReadCmd \".g:zipPlugin_ext\n\n    \" order is important here, setup name of new buffer correctly then fallback to vim-rzip's handling\n    autocmd zip BufReadCmd   zipfile:*  call ClearDuplicateBuffers(expand(\"<amatch>\"))\n    autocmd zip BufReadCmd   zipfile:*  call rzip#Read(DecodeURI(expand(\"<amatch>\")), 1)\n\n    if has(\"unix\")\n        autocmd zip BufReadCmd   zipfile:*/*  call ClearDuplicateBuffers(expand(\"<amatch>\"))\n        autocmd zip BufReadCmd   zipfile:*/*  call rzip#Read(DecodeURI(expand(\"<amatch>\")), 1)\n    endif\n\n    exe \"au zip BufReadCmd \".g:zipPlugin_ext.\"  call rzip#Browse(DecodeURI(expand('<amatch>')))\"\nendfunction\n\nautocmd VimEnter * call RzipOverride()\bcmd\bvim\0", "config", "vim-rzip")
-time([[Config for vim-rzip]], false)
 -- Config for: nvim-tree.lua
 time([[Config for nvim-tree.lua]], true)
 try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14nvim-tree\frequire\0", "config", "nvim-tree.lua")
 time([[Config for nvim-tree.lua]], false)
--- Config for: diffview.nvim
-time([[Config for diffview.nvim]], true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rdiffview\frequire\0", "config", "diffview.nvim")
-time([[Config for diffview.nvim]], false)
--- Config for: Comment.nvim
-time([[Config for Comment.nvim]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
-time([[Config for Comment.nvim]], false)
--- Config for: octo.nvim
-time([[Config for octo.nvim]], true)
-try_loadstring("\27LJ\2\n2\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\tocto\frequire\0", "config", "octo.nvim")
-time([[Config for octo.nvim]], false)
 -- Config for: neogen
 time([[Config for neogen]], true)
 try_loadstring("\27LJ\2\nD\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\fenabled\2\nsetup\vneogen\frequire\0", "config", "neogen")
 time([[Config for neogen]], false)
+-- Config for: diffview.nvim
+time([[Config for diffview.nvim]], true)
+try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rdiffview\frequire\0", "config", "diffview.nvim")
+time([[Config for diffview.nvim]], false)
+-- Config for: jester
+time([[Config for jester]], true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vjester\frequire\0", "config", "jester")
+time([[Config for jester]], false)
+-- Config for: Comment.nvim
+time([[Config for Comment.nvim]], true)
+try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
+time([[Config for Comment.nvim]], false)
+-- Config for: nvim-ts-hint-textobject
+time([[Config for nvim-ts-hint-textobject]], true)
+try_loadstring("\27LJ\2\nW\0\0\3\0\5\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\1\4\0=\1\3\0K\0\1\0\1\n\0\0\6h\6j\6f\6d\6n\6v\6s\6l\6a\14hint_keys\vconfig\ttsht\frequire\0", "config", "nvim-ts-hint-textobject")
+time([[Config for nvim-ts-hint-textobject]], false)
+-- Config for: vim-doge
+time([[Config for vim-doge]], true)
+try_loadstring("\27LJ\2\n6\0\0\2\0\3\0\0056\0\0\0009\0\1\0+\1\1\0=\1\2\0K\0\1\0\25doge_enable_mappings\6g\bvim\0", "config", "vim-doge")
+time([[Config for vim-doge]], false)
 -- Config for: trouble.nvim
 time([[Config for trouble.nvim]], true)
 try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
 time([[Config for trouble.nvim]], false)
 -- Config for: nvim-dap-ui
 time([[Config for nvim-dap-ui]], true)
-try_loadstring("\27LJ\2\nü\1\0\0\a\0\v\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\t\0004\3\3\0005\4\4\0005\5\3\0=\5\5\4>\4\1\0035\4\b\0005\5\a\0005\6\6\0>\6\1\5=\5\5\4>\4\2\3=\3\n\2B\0\2\1K\0\1\0\flayouts\1\0\0\1\0\2\tsize\3(\rposition\tleft\1\5\0\0\0\16breakpoints\vstacks\fwatches\1\0\2\aid\vscopes\tsize\4\0€€Àþ\3\relements\1\0\2\tsize\4\0€€Àþ\3\rposition\vbottom\1\3\0\0\trepl\fconsole\nsetup\ndapui\frequire\0", "config", "nvim-dap-ui")
+try_loadstring("\27LJ\2\nü\1\0\0\a\0\v\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\t\0004\3\3\0005\4\4\0005\5\3\0=\5\5\4>\4\1\0035\4\b\0005\5\a\0005\6\6\0>\6\1\5=\5\5\4>\4\2\3=\3\n\2B\0\2\1K\0\1\0\flayouts\1\0\0\1\0\2\rposition\tleft\tsize\3(\1\5\0\0\0\16breakpoints\vstacks\fwatches\1\0\2\aid\vscopes\tsize\4\0€€Àþ\3\relements\1\0\2\rposition\vbottom\tsize\4\0€€Àþ\3\1\3\0\0\trepl\fconsole\nsetup\ndapui\frequire\0", "config", "nvim-dap-ui")
 time([[Config for nvim-dap-ui]], false)
--- Config for: nvim-ts-hint-textobject
-time([[Config for nvim-ts-hint-textobject]], true)
-try_loadstring("\27LJ\2\nW\0\0\3\0\5\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\1\4\0=\1\3\0K\0\1\0\1\n\0\0\6h\6j\6f\6d\6n\6v\6s\6l\6a\14hint_keys\vconfig\ttsht\frequire\0", "config", "nvim-ts-hint-textobject")
-time([[Config for nvim-ts-hint-textobject]], false)
+-- Config for: octo.nvim
+time([[Config for octo.nvim]], true)
+try_loadstring("\27LJ\2\n2\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\tocto\frequire\0", "config", "octo.nvim")
+time([[Config for octo.nvim]], false)
 -- Config for: nvim-semantic-tokens
 time([[Config for nvim-semantic-tokens]], true)
 try_loadstring("\27LJ\2\nª\1\0\0\a\0\6\1\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0004\3\3\0006\4\0\0'\6\4\0B\4\2\0?\4\0\0=\3\5\2B\0\2\1K\0\1\0\17highlighters+nvim-semantic-tokens.table-highlighter\1\0\1\vpreset\fdefault\nsetup\25nvim-semantic-tokens\frequire\3€€À™\4\0", "config", "nvim-semantic-tokens")
 time([[Config for nvim-semantic-tokens]], false)
+-- Config for: fidget.nvim
+time([[Config for fidget.nvim]], true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
+time([[Config for fidget.nvim]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads

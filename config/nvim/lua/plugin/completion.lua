@@ -7,10 +7,10 @@ local cmp = require("cmp")
 
 local source_mapping = {
 	buffer = "[Buffer]",
-	nvim_lsp = "",
+	nvim_lsp = "LSP",
 	nvim_lua = "[Lua]",
-	treesitter = "串",
-	cmp_tabnine = "",
+	treesitter = "Tree",
+	cmp_tabnine = "TN",
 	luasnip = "[LuaSnip]",
 	path = "[Path]",
 	calc = "[calc]",
@@ -81,21 +81,21 @@ require("cmp").setup({
 		-- { name = "buffers" },
 		-- { name = "nvim_lua" },
 	},
-	formatting = {
-		format = function(entry, vim_item)
-			vim_item.kind = lspkind.presets.default[vim_item.kind]
-			local menu = source_mapping[entry.source.name]
-			if
-				entry.source.name == "cmp_tabnine"
-				and entry.completion_item.data ~= nil
-				and entry.completion_item.data.details ~= nil
-			then
-				menu = entry.data.details .. " " .. menu
-			end
-			vim_item.menu = menu
-			return vim_item
-		end,
-	},
+	-- formatting = {
+	-- 	format = function(entry, vim_item)
+	-- 		vim_item.kind = lspkind.presets.default[vim_item.kind]
+	-- 		local menu = source_mapping[entry.source.name]
+	-- 		if
+	-- 			entry.source.name == "cmp_tabnine"
+	-- 			and entry.completion_item.data ~= nil
+	-- 			and entry.completion_item.data.details ~= nil
+	-- 		then
+	-- 			menu = entry.data.details .. " " .. menu
+	-- 		end
+	-- 		vim_item.menu = menu
+	-- 		return vim_item
+	-- 	end,
+	-- },
 	experimental = {
 		native_menu = false,
 		ghost_text = true,

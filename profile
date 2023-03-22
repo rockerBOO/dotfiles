@@ -2,6 +2,17 @@
 
 export PATH="$HOME/.cargo/bin:$PATH"
 export GTK_THEME=Nordic
+export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
 
 #
 # setup ssh-agent
@@ -53,7 +64,7 @@ else
 	start_agent
 fi
 
-source "$HOME/.config/keys/reddit"
+#source "$HOME/.config/keys/reddit"
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -75,3 +86,15 @@ export PATH="$PATH:$GEM_HOME/bin"
 export PATH="$PATH:$HOME/.rvm/bin"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+alias spot=ncspot
+alias rust-analyzer="rustup run nightly rust-analyzer"
+alias open="xdg-open"
+
+# Setup nvidia shader cache 
+export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+export __GL_SHADER_DISK_CACHE_SIZE=1000000000

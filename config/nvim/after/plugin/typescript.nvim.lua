@@ -1,4 +1,4 @@
-local lsp = require("lsp")
+local lsp = require("rockerboo.lsp")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities["textDocument"]["formatting"] = false
 

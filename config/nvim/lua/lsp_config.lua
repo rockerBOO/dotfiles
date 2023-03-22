@@ -1,8 +1,6 @@
-local status = require("rockerboo.lsp_status")
--- local f = require("rockerboo.functional")
 local config = require("lspconfig")
-local lsp = require("lsp")
-local utils = require("rockerboo.utils")
+local status = require("rockerboo.lsp_status")
+local lsp = require("rockerboo.lsp")
 
 local setup = function()
 	status.activate()
@@ -111,7 +109,7 @@ local setup = function()
 	-- })
 
 	config.ruff_lsp.setup({
-		cmd = { "/home/rockerboo/code/ruff-lsp/ruff-lsp" },
+		-- cmd = { "/home/rockerboo/code/ruff-lsp/ruff-lsp" },
 		capabilities = capabilities,
 		on_attach = lsp.on_attach_buffer,
 		settings = {
@@ -216,11 +214,11 @@ local setup = function()
 	require("lspconfig").lua_ls.setup({
 
 		capabilities = capabilities,
-		cmd = {
-			"/mnt/900/builds/lua-language-server/bin/lua-language-server",
-			"-E",
-			"/mnt/900/builds/lua-language-server/main.lua",
-		},
+		-- cmd = {
+		-- 	"/mnt/900/builds/lua-language-server/bin/lua-language-server",
+		-- 	"-E",
+		-- 	"/mnt/900/builds/lua-language-server/main.lua",
+		-- },
 		settings = {
 			Lua = {
 				runtime = {
@@ -270,11 +268,11 @@ local setup = function()
 		capabilities = capabilities,
 	})
 
-	require("lspconfig").rome.setup({
-		on_attach = lsp.on_attach_buffer,
-		capabilities = capabilities,
-		cmd = { "yarn", "run", "rome", "lsp-proxy" },
-	})
+	-- require("lspconfig").rome.setup({
+	-- 	on_attach = lsp.on_attach_buffer,
+	-- 	capabilities = capabilities,
+	-- 	cmd = { "yarn", "run", "rome", "lsp-proxy" },
+	-- })
 end
 
 return { setup = setup }

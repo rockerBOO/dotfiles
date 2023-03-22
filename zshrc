@@ -6,7 +6,7 @@ zstyle :omz:plugins:ssh-agent agent-forwarding on
 zstyle :omz:plugins:ssh-agent lifetime 4h
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.local/share/oh-my-zsh
+# export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -72,9 +72,9 @@ ZSH_CUSTOM=~/.local/share/zsh
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(asdf git gh node fd docker fzf tmux rust fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa ripgrep kubectl)
+plugins=(asdf git gh node docker fzf tmux rust fancy-ctrl-z mix extract archlinux yarn systemd themes ssh-agent zsh-aliases-exa ripgrep kubectl)
 
-source $ZSH/oh-my-zsh.sh
+#source $ZSH/oh-my-zsh.sh
 
 # User configuration
 #
@@ -82,24 +82,13 @@ source $ZSH/oh-my-zsh.sh
 # disabling to check root version to be working
 # export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
-export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
 
 # Starship https://starship.rs/
 eval "$(starship init zsh)"
 
 # Add API keys
-source $HOME/.config/private/keys
-source $HOME/.config/keys/reddit
+#source $HOME/.config/private/keys
+#source $HOME/.config/keys/reddit
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -112,15 +101,15 @@ source $HOME/.config/keys/reddit
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias eg="cd ~/code/ecogarden/create"
-alias ecogarden="~/code/ecogarden/create/src-tauri/target/release/ecogarden"
+#alias eg="cd ~/code/ecogarden/create"
+#alias ecogarden="~/code/ecogarden/create/src-tauri/target/release/ecogarden"
 # alias docker=podman
 alias spot=ncspot
 alias rust-analyzer="rustup run nightly rust-analyzer"
 alias open="xdg-open"
 
 # NVM node version manager
-source /usr/share/nvm/init-nvm.sh
+# source /usr/share/nvm/init-nvm.sh
 
 # Python environment manager
 eval "$(pyenv init -)"
@@ -144,10 +133,10 @@ export SYSTEMD_EDITOR=nvim
 alias luamake=/home/rockerboo/build/lua-language-server/3rd/luamake/luamake
 alias gitlab-run="gitlab-runner exec docker --cache-dir /cache --docker-volumes `pwd`/build-output:/cache"
 # alias nvim=/home/rockerboo/build/lua_autocmds/build/bin/nvim
-alias bun="sde -- bun"
+# alias bun="sde -- bun"
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/vault vault
+# autoload -U +X bashcompinit && bashcompinit
+# complete -o nospace -C /usr/bin/vault vault
 [[ /usr/bin/kubectl ]] && source <(kubectl completion zsh)
 source <(podman completion zsh)
 
@@ -177,3 +166,17 @@ alias cr="cargo run && audio-player --volume 0.1 \"$HOME/code/audio-player/outpu
 alias cb="cargo build && audio-player --volume 0.1 \"$HOME/code/audio-player/output.ogg\" || audio-player --volume 0.1 \"$HOME/code/tmp/error-sounds/priceisright.ogg\""
 alias ct="cargo test && audio-player --volume 0.1 \"$HOME/code/audio-player/output.ogg\" || audio-player --volume 0.1 \"$HOME/code/tmp/error-sounds/priceisright.ogg\""
 
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+source /usr/share/nvm/init-nvm.sh
+
+# bun completions
+[ -s "/home/rockerboo/.bun/_bun" ] && source "/home/rockerboo/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+HISTFILE=~/.zsh_history
+HISTSIZE=999999999
+SAVEHIST=$HISTSIZE

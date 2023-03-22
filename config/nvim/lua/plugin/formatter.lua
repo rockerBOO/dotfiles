@@ -2,18 +2,23 @@ local util = require("formatter.util")
 local defaults = require("formatter.defaults")
 
 local local_prettier_d_slim = function()
-	return {
+	print(vim.inspect({
 		exe = "yarn",
 		args = {
-			"run",
-			"-s",
 			"prettier_d_slim",
 			"--stdin",
 			"--stdin-filepath",
-			string.format(
-				'"%s"',
-				util.escape_path(util.get_current_buffer_file_path())
-			),
+			util.get_current_buffer_file_path(),
+		},
+		stdin = true,
+	}))
+	return {
+		exe = "yarn",
+		args = {
+			"prettier_d_slim",
+			"--stdin",
+			"--stdin-filepath",
+			util.get_current_buffer_file_path(),
 		},
 		stdin = true,
 	}
@@ -25,13 +30,9 @@ local local_prettier = function(parser)
 			exe = "yarn",
 			args = {
 				"run",
-				"-s",
 				"prettier",
 				"--stdin-filepath",
-				string.format(
-					'"%s"',
-					util.escape_path(util.get_current_buffer_file_path())
-				),
+				util.get_current_buffer_file_path(),
 			},
 			stdin = true,
 			try_node_modules = true,
@@ -41,13 +42,9 @@ local local_prettier = function(parser)
 		exe = "yarn",
 		args = {
 			"run",
-			"-s",
 			"prettier",
 			"--stdin-filepath",
-			string.format(
-				'"%s"',
-				util.escape_path(util.get_current_buffer_file_path())
-			),
+			util.get_current_buffer_file_path(),
 			"--parser",
 			parser,
 		},
@@ -78,10 +75,7 @@ local prettier_d_slim = function()
 		args = {
 			"--stdin",
 			"--stdin-filepath",
-			string.format(
-				'"%s"',
-				util.escape_path(util.get_current_buffer_file_path())
-			),
+			util.get_current_buffer_file_path(),
 		},
 		stdin = true,
 	}
@@ -89,7 +83,7 @@ end
 
 local nginxfmt = function()
 	return {
-		exe = "~/build/nginx-config-formatter/nginxfmt.py",
+		exe = "/mnt/900/builds/nginx-config-formatter/nginxfmt.py",
 		args = {
 			"-",
 			-- util.escape_path(util.get_current_buffer_file_path()),
@@ -111,6 +105,7 @@ end
 
 return {
 	setup = function()
+		---@diagnostic disable-next-line: redundant-parameter
 		require("formatter").setup({
 			logging = true,
 			filetype = {
@@ -171,10 +166,11 @@ return {
 					-- require("formatter.filetypes.javascript").prettier,
 					-- local_prettier_d_slim,
 					-- require("formatter.filetypes.javascript").prettier,
-					rome,
+					-- rome,
+					local_prettier,
 				},
 				typescript = {
-					-- prettier_d_slim,
+					-- local_prettier_d_slim,
 					local_prettier,
 					-- require("formatter.filetypes.javascript").prettier,
 					-- prettier_d_slim,
@@ -186,8 +182,8 @@ return {
 					-- local_prettier
 				},
 				css = {
-
-					require("formatter.filetypes.javascript").prettier,
+					-- require("formatter.filetypes.javascript").prettier,
+					local_prettier,
 				},
 				javascript = {
 					local_prettier,
