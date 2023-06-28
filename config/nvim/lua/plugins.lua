@@ -21,6 +21,7 @@ local ensure_packer_installed = function()
 				directory .. "/packer.nvim"
 			)
 		)
+
 		print(out)
 	end
 
@@ -139,6 +140,13 @@ local setup = function()
 		-- use({ "editorconfig/editorconfig-vim" })
 		use({ "gpanders/editorconfig.nvim" })
 
+		use("Samyak2/pest.vim", {
+			branch = "neovim-lsp",
+			config = function()
+				require("pest-vim").setup({})
+			end,
+		})
+
 		use({
 			"kkoomen/vim-doge",
 			config = function()
@@ -201,7 +209,8 @@ local setup = function()
 			requires = { "mfussenegger/nvim-dap" },
 		})
 
-		use({ "simrat39/rust-tools.nvim" })
+		-- use({ "simrat39/rust-tools.nvim" })
+		use("aszalowski/rust-tools.nvim")
 		-- use({ "~/code/rust-tools.nvim" })
 
 		-- use({
@@ -219,7 +228,7 @@ local setup = function()
 		use({
 			"/mnt/500h/rockerboo/code/jester",
 			config = function()
-				require("jester").setup({})
+				require("jester").setup()
 			end,
 		})
 
@@ -252,7 +261,16 @@ local setup = function()
 		use({
 			"j-hui/fidget.nvim",
 			config = function()
-				require("fidget").setup({})
+				require("fidget").setup({
+					sources = { -- Sources to configure
+						itex = { -- Name of source
+							ignore = true, -- Ignore notifications from this source
+						},
+					},
+					-- fmt = {
+					-- 	max_messages = 2,
+					-- },
+				})
 			end,
 		})
 
@@ -360,26 +378,28 @@ local setup = function()
 		})
 
 		-- Tabnine
-		use({
-			"~/build/tabnine-vim",
-			opt = true,
-			as = "codota/tabnine-vim",
-		})
+		-- use({
+		-- 	"~/build/tabnine-vim",
+		-- 	opt = true,
+		-- 	as = "codota/tabnine-vim",
+		-- })
+
+		use({ "codota/tabnine-nvim", run = "./dl_binaries.sh" })
+
 		use({
 			"tzachar/cmp-tabnine",
 			run = "./install.sh",
 			-- after = "hrsh7th/nvim-cmp",
 			event = "InsertEnter",
-			requires = { "hrsh7th/nvim-cmp", "codata/tabnine-vim" },
+			requires = { "hrsh7th/nvim-cmp", "codata/tabnine-nvim" },
 			config = function()
-				require("cmp_tabnine").setup()
-
-				local tabnine = require("cmp_tabnine.config")
-				tabnine:setup({
+				require("tabnine").setup({
 					max_lines = 1000,
 					max_num_results = 20,
 					sort = true,
-					priority = 5000,
+					exclude_filetypes = { "TelescopePrompt" },
+					-- priority = 5000,
+					debounce_ms = 800,
 					show_prediction_strength = true,
 				})
 			end,
@@ -476,6 +496,8 @@ local setup = function()
 		-- 		})
 
 		use("alaviss/nim.nvim")
+
+		use("numToStr/FTerm.nvim")
 
 		-- use({
 		-- 	"krivahtoo/silicon.nvim",

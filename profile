@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-export PATH="$HOME/.cargo/bin:$PATH"
 export GTK_THEME=Nordic
 export MANPATH="/usr/local/man:$MANPATH"
+export WLR_NO_HARDWARE_CURSORS=1
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
@@ -69,15 +69,15 @@ fi
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init --path)"
 
 complete -C /usr/bin/vault vault
 
 # hardware acceleration in firefox
-export LIBVA_DRIVER_NAME=nvidia
-export MOZ_DISABLE_RDD_SANDBOX=1
+# export LIBVA_DRIVER_NAME=nvidia
+# export MOZ_DISABLE_RDD_SANDBOX=1
 
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 export PATH="$PATH:$GEM_HOME/bin"
@@ -98,3 +98,4 @@ alias open="xdg-open"
 # Setup nvidia shader cache 
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export __GL_SHADER_DISK_CACHE_SIZE=1000000000
+. "$HOME/.cargo/env"

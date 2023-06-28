@@ -20,7 +20,8 @@ local plenary_reload = function()
 	Reload("lsp_config")
 	Reload("plugin.telescope")
 	-- require("plenary.reload").reload_module("lsp_extensions")
-	require("boo-colorscheme").use({ theme = "sunset_cloud" })
+	-- require("boo-colorscheme").use({ theme = "sunset_cloud" })
+  require("boo-colorscheme").use({})
 	require("plugin.telescope").setup_defaults()
 	-- require("setup").setup()
 end
@@ -93,6 +94,8 @@ local maps = {
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
 
 	{ n, "<Leader>ih", "<cmd>RustToggleInlayHints<cr>", silent },
+
+  { n, "<leader>r", require('rockerboo.scratch').run_script, silent },
 }
 
 -- Mappings

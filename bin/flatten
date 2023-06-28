@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+import argparse
+import os
+from pathlib import Path
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("file")
+
+args = parser.parse_args()
+
+file = Path(args.file)
+
+new_file = (
+    file.name.replace(" ", "-")
+    .replace("'", "")
+    .replace(",", "-")
+    .replace("[", "")
+    .replace("]", "")
+    .replace("&", "-")
+)
+
+os.rename(file, new_file)

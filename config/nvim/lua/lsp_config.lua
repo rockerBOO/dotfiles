@@ -107,6 +107,11 @@ local setup = function()
 	-- 	capabilities = capabilities,
 	-- 	on_attach = lsp.on_attach_buffer,
 	-- })
+	--
+	config.gdscript.setup({
+		on_attach = lsp.on_attach_buffer,
+		filetypes = { "gd", "gdscript", "gdscript3" },
+	})
 
 	config.ruff_lsp.setup({
 		-- cmd = { "/home/rockerboo/code/ruff-lsp/ruff-lsp" },
@@ -232,10 +237,14 @@ local setup = function()
 				workspace = {
 					-- Make the server aware of Neovim runtime files
 					library = vim.api.nvim_get_runtime_file("", true),
+					checkThirdParty = false,
 				},
 				-- Do not send telemetry data containing a randomized but unique identifier
 				telemetry = {
 					enable = false,
+				},
+				hint = {
+					enable = true,
 				},
 			},
 		},

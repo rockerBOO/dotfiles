@@ -178,8 +178,8 @@ return {
 				html = {
 					-- require("formatter.filetypes.html").prettierd
 					-- local_prettier_d_slim,
-					require("formatter.filetypes.javascript").prettier,
-					-- local_prettier
+					-- require("formatter.filetypes.javascript").prettier,
+					local_prettier
 				},
 				css = {
 					-- require("formatter.filetypes.javascript").prettier,

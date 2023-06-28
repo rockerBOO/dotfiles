@@ -17,6 +17,7 @@
   status = auto
 [diff]
 	tool = nvimdiff 
+	colorMoved = default
 [difftool "nvimdiff"]
 	cmd = "nvim -d -u ~/.config/nvim/init.lua \"$LOCAL\" \"$REMOTE\""
 [help]
@@ -34,13 +35,15 @@
   tool = nvimdiff
 [mergetool]
   prompt = true
+  conflictstyle = diff3
 [mergetool "nvimdiff"]
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [delta]
   line-numbers = true
   syntax-theme = Dracula
-	features = side-by-side line-numbers decorations
+	features = side-by-side line-numbers decorations collared-trogon zebra-dark
 	hyperlinks = true
+  hyperlinks-file-link-format = "file-line://{path}:{line}"
 [delta "decorations"]
 	commit-decoration-style = bold yellow box ul
 	file-style = bold yellow ul
@@ -64,3 +67,5 @@
 	defaultBranch = main
 [commit]
 	gpgsign = true
+[credential]
+	helper = store

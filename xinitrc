@@ -31,6 +31,8 @@ xbindkeys
 
 export QT_QPA_PLATFORMTHEME=qt5ct
 
+export WLR_NO_HARDWARE_CURSORS=1
+
 # Fsync/Futex2
 # export WINEFSYNC=1
 

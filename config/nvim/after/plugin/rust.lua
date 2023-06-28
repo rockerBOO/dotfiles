@@ -5,6 +5,7 @@ require("rust-tools").setup({
 	tools = {
 		hover_actions = { border = false },
 		cache = true,
+    inlay_hints = { auto = false }
 	},
 	server = {
 		on_attach = lsp.on_attach_buffer,

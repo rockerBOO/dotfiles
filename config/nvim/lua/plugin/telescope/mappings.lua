@@ -108,15 +108,15 @@ mappings.setup = function()
 			n,
 			"z=",
 			function()
-				require("telescope.builtin").spell_suggest(require(
-					"telescope.themes"
-				).get_dropdown({
-					layout_config = {
-						prompt_position = "top",
-						width = 50,
-						height = 0.7,
-					},
-				}))
+				require("telescope.builtin").spell_suggest(
+					require("telescope.themes").get_dropdown({
+						layout_config = {
+							prompt_position = "top",
+							width = 50,
+							height = 0.7,
+						},
+					})
+				)
 			end,
 		},
 	}

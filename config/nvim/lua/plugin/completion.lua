@@ -74,12 +74,12 @@ require("cmp").setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
-		{ name = "cmp_tabnine" },
+		-- { name = "cmp_tabnine" },
 		{ name = "luasnip" },
 		{ name = "treesitter" },
 		{ name = "nvim_lsp_signature_help" },
 		-- { name = "buffers" },
-		-- { name = "nvim_lua" },
+		{ name = "nvim_lua" },
 	},
 	-- formatting = {
 	-- 	format = function(entry, vim_item)
