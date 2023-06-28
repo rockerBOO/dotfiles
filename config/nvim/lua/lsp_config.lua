@@ -119,6 +119,11 @@ local setup = function()
 				validate = { enable = true },
 				schemas = require("schemastore").yaml.schemas(),
 			},
+			redhat = {
+				telemetry = {
+					enabled = false,
+				},
+			},
 		},
 	})
 
