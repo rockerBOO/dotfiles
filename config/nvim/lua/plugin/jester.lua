@@ -93,14 +93,9 @@ return {
 		})
 	end,
 
-	setup = function()
-		require("jester").setup({
-			-- dap = {
-			-- 	type = "yarn",
-			-- 	outDir = "${workspaceRoot}",
-			-- },
-		})
-	end,
+	-- setup = function()
+	-- 	require("jester").setup()
+	-- end,
 
 	mappings = function()
 		local n = "n"

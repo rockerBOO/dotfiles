@@ -364,6 +364,8 @@ local setup = function()
 			},
 		})
 
+		use({ "b0o/schemastore.nvim" })
+
 		-- use({ "~/code/reload-lua" })
 
 		-- A better annotation generator. Supports multiple languages and annotation conventions.

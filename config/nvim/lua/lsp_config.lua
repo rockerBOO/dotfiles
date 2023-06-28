@@ -108,6 +108,20 @@ local setup = function()
 	-- 	on_attach = lsp.on_attach_buffer,
 	-- })
 	--
+	config.yamlls.setup({
+		settings = {
+			yaml = {
+				schemaStore = {
+					-- You must disable built-in schemaStore support if you want to use
+					-- this plugin and its advanced options like `ignore`.
+					enable = false,
+				},
+				validate = { enable = true },
+				schemas = require("schemastore").yaml.schemas(),
+			},
+		},
+	})
+
 	config.gdscript.setup({
 		on_attach = lsp.on_attach_buffer,
 		filetypes = { "gd", "gdscript", "gdscript3" },
@@ -132,36 +146,39 @@ local setup = function()
 		on_attach = lsp.on_attach_buffer,
 		settings = {
 			json = {
-				schemas = {
-					{
-						fileMatch = { "package.json" },
-						url = "https://json.schemastore.org/package.json",
-					},
-					{
-						fileMatch = { "tsconfig.json", "tsconfig.*.json" },
-						url = "http://json.schemastore.org/tsconfig",
-					},
-					{
-						fileMatch = { ".eslintrc.json", ".eslintrc" },
-						url = "http://json.schemastore.org/eslintrc",
-					},
-					{
-						fileMatch = {
-							".prettierrc",
-							".prettierrc.json",
-							"prettier.config.json",
-						},
-						url = "http://json.schemastore.org/prettierrc",
-					},
-					{
-						fileMatch = {
-							".stylelintrc",
-							".stylelintrc.json",
-							"stylelint.config.json",
-						},
-						url = "http://json.schemastore.org/stylelintrc",
-					},
-				},
+				-- schemas = {
+				-- 	{
+				-- 		fileMatch = { "package.json" },
+				-- 		url = "https://json.schemastore.org/package.json",
+				-- 	},
+				-- 	{
+				-- 		fileMatch = { "tsconfig.json", "tsconfig.*.json" },
+				-- 		url = "http://json.schemastore.org/tsconfig",
+				-- 	},
+				-- 	{
+				-- 		fileMatch = { ".eslintrc.json", ".eslintrc" },
+				-- 		url = "http://json.schemastore.org/eslintrc",
+				-- 	},
+				-- 	{
+				-- 		fileMatch = {
+				-- 			".prettierrc",
+				-- 			".prettierrc.json",
+				-- 			"prettier.config.json",
+				-- 		},
+				-- 		url = "http://json.schemastore.org/prettierrc",
+				-- 	},
+				-- 	{
+				-- 		fileMatch = {
+				-- 			".stylelintrc",
+				-- 			".stylelintrc.json",
+				-- 			"stylelint.config.json",
+				-- 		},
+				-- 		url = "http://json.schemastore.org/stylelintrc",
+				-- 	},
+				-- },
+
+				schemas = require("schemastore").json.schemas(),
+				validate = { enable = true },
 			},
 		},
 	})
