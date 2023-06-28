@@ -16,8 +16,7 @@ Converts jpg to webp inside the current directory
 fi
 
 main() {
-	$(for file in *.jpg; do cwebp -q 50 "$file" -o "${file%.*}.webp"; done)
+	for file in *.jpg; do cwebp -q 50 "$file" -o "${file%.*}.webp"; done
 }
 
 main "$@"
-

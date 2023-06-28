@@ -9,9 +9,9 @@ function isExcluded() {
         return
     fi
 
-    for i in ${excluded[@]}
+    for i in "${excluded[@]}"
     do
-        if [ $i == $1 ]
+        if [ "$i" == "$1" ]
         then
             return 1
         fi
@@ -20,16 +20,16 @@ function isExcluded() {
     return 0
 }
 
-for path in $dotfiles_dir/*
+for path in "$dotfiles_dir"/*
 do
-    name=`basename $path`
+    name=$(basename "$path")
     target="$HOME/.$name"
 
-    if [ -e $target ]
+    if [ -e "$target" ]
     then
-        if isExcluded $name
+        if isExcluded "$name"
         then
-            if [ -L $target ]
+            if [ -L "$target" ]
             then
                 echo "Removing $target"
                 rm "$target" 
