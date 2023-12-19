@@ -65,29 +65,25 @@ local on_attach_buffer = function(client, bufnr)
 		})
 	end
 	--
-	-- print(
-	-- 	caps.inlayHintProvider,
-	-- 	caps.inlayHintProvider.resolveProvider == true
-	-- )
-	if
-		caps.inlayHintProvider ~= nil
-		and caps.inlayHintProvider.resolveProvider == true
-	then
-		-- vim.cmd("echo attach inlay hints")
-		-- print("attach inlay hints")
-		vim.api.nvim_create_autocmd({ "InsertEnter" }, {
-			buffer = bufnr,
-			callback = function(args)
-				vim.lsp.buf.inlay_hint(args.buf, true)
-			end,
-		})
-		vim.api.nvim_create_autocmd({ "InsertLeave" }, {
-			buffer = bufnr,
-			callback = function(args)
-				vim.lsp.buf.inlay_hint(args.buf, false)
-			end,
-		})
-	end
+	-- if
+	-- 	caps.inlayHintProvider ~= nil
+	-- 	and caps.inlayHintProvider.resolveProvider == true
+	-- then
+	-- 	-- vim.cmd("echo attach inlay hints")
+	-- 	-- print("attach inlay hints")
+	-- 	vim.api.nvim_create_autocmd({ "InsertEnter" }, {
+	-- 		buffer = bufnr,
+	-- 		callback = function(args)
+	-- 			vim.lsp.buf.inlay_hint(args.buf, true)
+	-- 		end,
+	-- 	})
+	-- 	vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+	-- 		buffer = bufnr,
+	-- 		callback = function(args)
+	-- 			vim.lsp.buf.inlay_hint(args.buf, false)
+	-- 		end,
+	-- 	})
+	-- end
 
 	if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
 		local augroup = vim.api.nvim_create_augroup("SemanticTokens", {})

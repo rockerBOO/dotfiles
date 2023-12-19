@@ -1,1 +1,1 @@
-require("plugin.jester").mappings()
+-- require("plugin.jester").mappings()

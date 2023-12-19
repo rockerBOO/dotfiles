@@ -101,9 +101,9 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 -- autocmd BufRead,BufNewFile *.ex,*.exs,mix.lock set filetype=elixir
 --
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-  pattern = { "*.eex" },
-  command = "set filetype=elixir"
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.eex" },
+	command = "set filetype=elixir",
 })
 
 function R(module)

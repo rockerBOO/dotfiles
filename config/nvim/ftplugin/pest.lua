@@ -1,9 +1,7 @@
 vim.lsp.start({
 	name = "pest-language-server",
 	cmd = { "pest-language-server" },
-	root_dir = vim.fs.dirname(
-		vim.fs.find({ "Cargo.toml" }, { upward = true })[1]
-	),
+	root_dir = vim.fs.dirname(vim.fs.find({ "Cargo.toml" }, { upward = true })[1]),
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -14,7 +12,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			end,
 		})
 	end,
-  buffer = 0
+	buffer = 0,
 })
 
 -- Allow access to run the last runnable

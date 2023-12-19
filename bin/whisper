@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+whisper.cpp --model /usr/share/whisper.cpp-model-base.en/base.en.bin "$@"

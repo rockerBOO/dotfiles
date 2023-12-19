@@ -50,7 +50,6 @@ local setup = function()
 		"vimls",
 		"bashls",
 		"sqlls",
-		"pyright",
 		"gleam",
 	}
 
@@ -108,6 +107,22 @@ local setup = function()
 	-- 	on_attach = lsp.on_attach_buffer,
 	-- })
 	--
+
+	config.pyright.setup({
+		settings = {
+			pyright = { disableLanguageServices = true },
+			python = {
+				analysis = {
+					autoSearchPaths = true,
+					-- diagnosticMode = "workspace",
+					useLibraryCodeForTypes = true,
+					diagnosticMode = "openFilesOnly",
+				},
+			},
+		},
+		autostart = false,
+	})
+
 	config.yamlls.setup({
 		settings = {
 			yaml = {
@@ -137,12 +152,8 @@ local setup = function()
 		capabilities = capabilities,
 		on_attach = lsp.on_attach_buffer,
 		settings = {
-			["ruff.organizeImports"] = false,
-			["ruff.fixAll"] = false,
-			["source.organizeImports"] = false,
-			["source.fixAll"] = false,
-			["source.organizeImports.ruff"] = false,
-			["source.fixAll.ruff"] = false,
+			organizeImports = false,
+			fixAll = false,
 		},
 	})
 
@@ -252,13 +263,15 @@ local setup = function()
 					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 					version = "LuaJIT",
 				},
-				diagnostics = {
-					-- Get the language server to recognize the `vim` global
-					globals = { "vim" },
-				},
+				-- diagnostics = {
+				-- 	-- Get the language server to recognize the `vim` global
+				-- 	globals = { "vim" },
+				-- },
 				workspace = {
 					-- Make the server aware of Neovim runtime files
-					library = vim.api.nvim_get_runtime_file("", true),
+					library = { vim.env.VIMRUNTIME },
+					-- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+					-- library = vim.api.nvim_get_runtime_file("", true)
 					checkThirdParty = false,
 				},
 				-- Do not send telemetry data containing a randomized but unique identifier
@@ -271,6 +284,9 @@ local setup = function()
 			},
 		},
 		on_attach = lsp.on_attach_buffer,
+		on_init = function(client)
+			client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+		end,
 	})
 
 	require("lspconfig").ltex.setup({

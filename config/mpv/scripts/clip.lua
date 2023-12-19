@@ -13,13 +13,12 @@
 -- You should have received a copy of the GNU General Public License
 -- along with Parabot.  If not, see <http://www.gnu.org/licenses/>.
 
-
 -- Encode a clip of the current file
 
-local mp = require 'mp'
-local options = require 'mp.options'
+local mp = require("mp")
+local options = require("mp.options")
 
-require 'os'
+require("os")
 
 -- Options
 local o = {
@@ -37,7 +36,7 @@ local o = {
 	video_crf = "24",
 	video_pixel_format = "yuv420p10",
 	video_width = "", -- source width if not specified
-	video_height= "", -- source height if not specified
+	video_height = "", -- source height if not specified
 	video_upscale = false, -- upscale if video res is lower than desired res
 
 	-- Misc settings
@@ -45,7 +44,7 @@ local o = {
 	output_directory = "/tmp",
 	clear_start_stop_on_encode = true,
 	block_exit = false, -- stop mpv from quitting before the encode finished, if false…
-		-- …mpv will quit but ffmpeg will be kept alive
+	-- …mpv will quit but ffmpeg will be kept alive
 }
 options.read_options(o)
 
@@ -54,7 +53,7 @@ local start_frame = nil
 local stop_frame = nil
 
 function encode()
-	if not start_frame then 
+	if not start_frame then
 		mp.osd_message("No start frame set!")
 		return
 	end
@@ -67,9 +66,15 @@ function encode()
 	end
 
 	local path = mp.get_property("path")
-	local out = o.output_directory.."/"..mp.get_property("media-title").."-clip-"..start_frame..
-		"-"..stop_frame..".mkv"
-	
+	local out = o.output_directory
+		.. "/"
+		.. mp.get_property("media-title")
+		.. "-clip-"
+		.. start_frame
+		.. "-"
+		.. stop_frame
+		.. ".mkv"
+
 	local width = mp.get_property("width")
 	local height = mp.get_property("height")
 	if o.video_width ~= "" and (o.video_width < width or o.video_upscale) then
@@ -88,28 +93,48 @@ function encode()
 
 	local preset = ""
 	if o.encoding_preset ~= "" then
-		preset = "-preset "..o.encoding_preset
+		preset = "-preset " .. o.encoding_preset
 	end
 
 	-- Check if ytdl is needed
 	local input
-	if not os.execute('ffprobe "'..path..'"') then
-		input = 'youtube-dl "'..path..'" -o - | ffmpeg -i -'
+	if not os.execute('ffprobe "' .. path .. '"') then
+		input = 'youtube-dl "' .. path .. '" -o - | ffmpeg -i -'
 	else
-		input = 'ffmpeg -i "'..path..'"'
+		input = 'ffmpeg -i "' .. path .. '"'
 	end
 
 	-- FIXME: Map metadata properly, like chapters or embedded fonts
-	local command = input.." -ss "..saf.." -t "..sof-saf..
-		" -c:a "..o.audio_codec.." -b:a "..o.audio_bitrate.." -c:v "..o.video_codec..
-		" -pix_fmt "..o.video_pixel_format.." -crf "..o.video_crf.." -s "..width.."x"..
-		height.." "..preset..' "'..out..'"'
+	local command = input
+		.. " -ss "
+		.. saf
+		.. " -t "
+		.. sof - saf
+		.. " -c:a "
+		.. o.audio_codec
+		.. " -b:a "
+		.. o.audio_bitrate
+		.. " -c:v "
+		.. o.video_codec
+		.. " -pix_fmt "
+		.. o.video_pixel_format
+		.. " -crf "
+		.. o.video_crf
+		.. " -s "
+		.. width
+		.. "x"
+		.. height
+		.. " "
+		.. preset
+		.. ' "'
+		.. out
+		.. '"'
 	local time = os.time()
 
-	mp.osd_message("Starting encode from "..saf.." to "..sof.." into "..out, 3.5)
+	mp.osd_message("Starting encode from " .. saf .. " to " .. sof .. " into " .. out, 3.5)
 	if o.block_exit then
 		os.execute(command)
-		mp.osd_message("Finished encode of "..out.." in "..os.time()-time.." seconds", 3.5)
+		mp.osd_message("Finished encode of " .. out .. " in " .. os.time() - time .. " seconds", 3.5)
 	else
 		-- FIXME: Won't work on Windows, because of special snowflake pipe naming
 		local ipc = mp.get_property("input-ipc-server")
@@ -117,42 +142,46 @@ function encode()
 		if ipc == "" then
 			ipc = os.tmpname()
 			mp.set_property("input-ipc-server", ipc)
-			del_tmp = " && lua -e 'os.remove(\""..ipc.."\")'"
+			del_tmp = " && lua -e 'os.remove(\"" .. ipc .. "\")'"
 		end
-		os.execute(command..' && echo "{ \\"command\\": [\\"show-text\\", \\"Finished encode of \''
-			..out..'\' in $(lua -e "print(os.time()-'..time..')") seconds\\", 3500] }" | socat - '
-			..ipc..del_tmp.." &")
+		os.execute(
+			command
+				.. ' && echo "{ \\"command\\": [\\"show-text\\", \\"Finished encode of \''
+				.. out
+				.. "' in $(lua -e \"print(os.time()-"
+				.. time
+				.. ')") seconds\\", 3500] }" | socat - '
+				.. ipc
+				.. del_tmp
+				.. " &"
+		)
 	end
 end
 
 -- Start frame key binding
-mp.add_key_binding(o.key_set_start_frame, "clip-start",
-	function()
-		start_frame = mp.get_property("playback-time")
-		if not start_frame then
-			start_frame = 0
-		end
-		mp.osd_message("Clip start at "..start_frame.."s")
-	end)
+mp.add_key_binding(o.key_set_start_frame, "clip-start", function()
+	start_frame = mp.get_property("playback-time")
+	if not start_frame then
+		start_frame = 0
+	end
+	mp.osd_message("Clip start at " .. start_frame .. "s")
+end)
 -- Stop frame key binding
-mp.add_key_binding(o.key_set_stop_frame, "clip-end",
-	function()
-		stop_frame = mp.get_property("playback-time")
-		if not stop_frame then
-			mp.osd_message("playback-time is nil! (file not yet loaded?)")
-		else
-			mp.osd_message("Clip end at "..stop_frame.."s")
-		end
-	end)
+mp.add_key_binding(o.key_set_stop_frame, "clip-end", function()
+	stop_frame = mp.get_property("playback-time")
+	if not stop_frame then
+		mp.osd_message("playback-time is nil! (file not yet loaded?)")
+	else
+		mp.osd_message("Clip end at " .. stop_frame .. "s")
+	end
+end)
 -- Start encode key binding
-mp.add_key_binding(o.key_start_encode, "clip-encode",
-	function()
-		encode()	
-	end)
+mp.add_key_binding(o.key_start_encode, "clip-encode", function()
+	encode()
+end)
 
 -- Reset start/stop frame when a new file is loaded
-mp.register_event("start-file",
-	function()
-		start_frame = nil
-		stop_frame = nil
-	end)
+mp.register_event("start-file", function()
+	start_frame = nil
+	stop_frame = nil
+end)

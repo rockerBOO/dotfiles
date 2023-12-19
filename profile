@@ -98,3 +98,6 @@ alias open="xdg-open"
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 # . "$HOME/.cargo/env"
+#
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cuda-11.7/lib64
+# export PATH=$PATH:/cuda-11.7/bin

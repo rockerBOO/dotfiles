@@ -5,9 +5,9 @@ treesitter.setup = function()
 	require("nvim-treesitter.configs").setup({
 		-- modules and its options go here
 		highlight = { enable = true },
-		context_commentstring = {
-			enable = true,
-		},
+		-- context_commentstring = {
+		-- 	enable = true,
+		-- },
 		incremental_selection = {
 			enable = true,
 			keymaps = {
@@ -66,8 +66,11 @@ treesitter.setup = function()
 		},
 	})
 
-	local parser_config =
-		require("nvim-treesitter.parsers").get_parser_configs()
+	-- Not quite sure but deprecated module said to use this
+	require("ts_context_commentstring").setup({})
+	vim.g.skip_ts_context_commentstring_module = true
+
+	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 
 	-- parser_config.gleam = {
 	-- 	install_info = {

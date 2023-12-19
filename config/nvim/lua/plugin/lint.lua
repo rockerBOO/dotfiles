@@ -2,10 +2,13 @@ return {
 	setup = function()
 		require("lint").linters_by_ft = {
 			markdown = { "vale" },
-			elixir = { "credo" }
+			elixir = { "credo" },
+			python = { "ruff", "flake8" },
+			-- gdscript = { "gdlint" },
 		}
 
-		vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
+		-- "InsertLeave"
+		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 			callback = function()
 				require("lint").try_lint()
 			end,

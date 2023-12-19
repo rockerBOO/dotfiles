@@ -9,17 +9,12 @@ local ensure_packer_installed = function()
 			return false
 		end
 
-		local directory =
-			string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
+		local directory = string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
 
 		vim.fn.mkdir(directory, "p")
 
 		local out = vim.fn.system(
-			string.format(
-				"git clone %s %s",
-				"https://github.com/wbthomason/packer.nvim",
-				directory .. "/packer.nvim"
-			)
+			string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", directory .. "/packer.nvim")
 		)
 
 		print(out)
@@ -36,11 +31,7 @@ local setup = function()
 	local packer = require("packer")
 
 	packer.init({
-		package_root = require("packer.util").join_paths(
-			vim.fn.stdpath("data"),
-			"site",
-			"pack"
-		),
+		package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
 	})
 
 	packer.startup(function(use)
@@ -210,7 +201,10 @@ local setup = function()
 		})
 
 		-- use({ "simrat39/rust-tools.nvim" })
-		use("aszalowski/rust-tools.nvim")
+		-- use("aszalowski/rust-tools.nvim")
+
+		use({ "/home/rockerboo/code/rust-tools.nvim" })
+		-- use("Ciel-MC/rust-tools.nvim")
 		-- use({ "~/code/rust-tools.nvim" })
 
 		-- use({
@@ -225,12 +219,12 @@ local setup = function()
 		-- 		})
 		-- 	end,
 		-- })
-		use({
-			"/mnt/500h/rockerboo/code/jester",
-			config = function()
-				require("jester").setup()
-			end,
-		})
+		-- use({
+		-- 	"/mnt/500h/rockerboo/code/jester",
+		-- 	config = function()
+		-- 		require("jester").setup()
+		-- 	end,
+		-- })
 
 		-- Neovim Lua Development
 		-- use({ "~/code/nlua.nvim" })
@@ -260,6 +254,7 @@ local setup = function()
 
 		use({
 			"j-hui/fidget.nvim",
+			tag = "legacy",
 			config = function()
 				require("fidget").setup({
 					sources = { -- Sources to configure
@@ -348,10 +343,7 @@ local setup = function()
 					ft = "lua",
 					-- this is after/plugin content
 					config = function()
-						require("cmp").register_source(
-							"nvim_lua",
-							require("cmp_nvim_lua").new()
-						)
+						require("cmp").register_source("nvim_lua", require("cmp_nvim_lua").new())
 					end,
 				},
 				{
@@ -386,27 +378,27 @@ local setup = function()
 		-- 	as = "codota/tabnine-vim",
 		-- })
 
-		use({ "codota/tabnine-nvim", run = "./dl_binaries.sh" })
+		-- use({ "codota/tabnine-nvim", run = "./dl_binaries.sh" })
 
-		use({
-			"tzachar/cmp-tabnine",
-			run = "./install.sh",
-			-- after = "hrsh7th/nvim-cmp",
-			event = "InsertEnter",
-			requires = { "hrsh7th/nvim-cmp", "codata/tabnine-nvim" },
-			config = function()
-				require("tabnine").setup({
-					max_lines = 1000,
-					max_num_results = 20,
-					sort = true,
-					exclude_filetypes = { "TelescopePrompt" },
-					-- priority = 5000,
-					debounce_ms = 800,
-					show_prediction_strength = true,
-				})
-			end,
-			opt = true,
-		})
+		-- use({
+		-- 	"tzachar/cmp-tabnine",
+		-- 	run = "./install.sh",
+		-- 	-- after = "hrsh7th/nvim-cmp",
+		-- 	event = "InsertEnter",
+		-- 	requires = { "hrsh7th/nvim-cmp", "codata/tabnine-nvim" },
+		-- 	config = function()
+		-- 		require("tabnine").setup({
+		-- 			max_lines = 1000,
+		-- 			max_num_results = 20,
+		-- 			sort = true,
+		-- 			exclude_filetypes = { "TelescopePrompt" },
+		-- 			-- priority = 5000,
+		-- 			debounce_ms = 800,
+		-- 			show_prediction_strength = true,
+		-- 		})
+		-- 	end,
+		-- 	opt = true,
+		-- })
 
 		use({ "lewis6991/impatient.nvim" })
 		-- fork using sqlite
@@ -499,7 +491,12 @@ local setup = function()
 
 		use("alaviss/nim.nvim")
 
-		use("numToStr/FTerm.nvim")
+		-- use("numToStr/FTerm.nvim")
+
+		-- use({
+		-- 	"chrisgrieser/nvim-puppeteer",
+		-- 	requires = "nvim-treesitter/nvim-treesitter",
+		-- })
 
 		-- use({
 		-- 	"krivahtoo/silicon.nvim",

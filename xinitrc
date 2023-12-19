@@ -29,7 +29,11 @@ xbindkeys
 #
 #
 
-export QT_QPA_PLATFORMTHEME=qt5ct
+# export QT_QPA_PLATFORMTHEME=qt5ct
+
+# Scale screen UI elements (mostly for lmms)
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_SCREEN_SCALE_FACTORS=1.275
 
 export WLR_NO_HARDWARE_CURSORS=1
 

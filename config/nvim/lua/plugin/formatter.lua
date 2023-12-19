@@ -60,10 +60,7 @@ local rome = function()
 			"rome",
 			"format",
 			"--stdin-file-path",
-			string.format(
-				'"%s"',
-				util.escape_path(util.get_current_buffer_file_path())
-			),
+			string.format('"%s"', util.escape_path(util.get_current_buffer_file_path())),
 		},
 		stdin = true,
 	}
@@ -103,6 +100,13 @@ local google_yamlfmt = function()
 	}
 end
 
+local gdformat = function()
+	return {
+		exe = "gdformat",
+		stdin = false,
+	}
+end
+
 return {
 	setup = function()
 		---@diagnostic disable-next-line: redundant-parameter
@@ -123,6 +127,9 @@ return {
 							stdin = true,
 						}
 					end,
+				},
+				gdscript = {
+					gdformat,
 				},
 
 				elixir = {
@@ -150,10 +157,23 @@ return {
 
 				python = {
 					-- Configuration for psf/black
+					-- function()
+					-- 	return {
+					-- 		exe = "black", -- this should be available on your $PATH
+					-- 		args = { "-" },
+					-- 		stdin = true,
+					-- 	}
+					-- end,
+					-- Configuration for ruff
 					function()
 						return {
-							exe = "black", -- this should be available on your $PATH
-							args = { "-" },
+							exe = "ruff",
+							args = {
+								"format",
+								"--stdin-filename",
+								util.get_current_buffer_file_path(),
+							},
+
 							stdin = true,
 						}
 					end,
@@ -178,18 +198,18 @@ return {
 				html = {
 					-- require("formatter.filetypes.html").prettierd
 					-- local_prettier_d_slim,
-					-- require("formatter.filetypes.javascript").prettier,
-					local_prettier
+					require("formatter.filetypes.javascript").prettier,
+					-- local_prettier,
 				},
 				css = {
-					-- require("formatter.filetypes.javascript").prettier,
-					local_prettier,
+					require("formatter.filetypes.javascript").prettier,
+					-- local_prettier,
 				},
 				javascript = {
 					local_prettier,
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,
-					-- require("formatter.filetypes.javascript").prettier,
+					require("formatter.filetypes.javascript").prettier,
 				},
 				javascriptreact = {
 					-- rome
