@@ -9,61 +9,63 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
+	export EDITOR='nvim'
 else
-  export EDITOR='nvim'
+	export EDITOR='nvim'
 fi
 
 #
 # setup ssh-agent
 #
 
-shopt -s extglob
+#shopt -s extglob
 # set environment variables if user's agent already exists
-[ -z "$SSH_AUTH_SOCK" ] && SSH_AUTH_SOCK=$(ls -l /tmp/ssh-*/agent.* 2>/dev/null | grep $(whoami) | awk '{print $9}')
-[ -z "$SSH_AGENT_PID" ] && [ -z $(echo "$SSH_AUTH_SOCK" | cut -d. -f2) ] && SSH_AGENT_PID=$(($(echo "$SSH_AUTH_SOCK" | cut -d. -f2) + 1))
-[ -n "$SSH_AUTH_SOCK" ] && export SSH_AUTH_SOCK
-[ -n "$SSH_AGENT_PID" ] && export SSH_AGENT_PID
-
-# start agent if necessary
-if [ -z "$SSH_AGENT_PID" ] && [ -z "$SSH_TTY" ]; then # if no agent & not in ssh
-	eval $(ssh-agent -s) >/dev/null
-fi
-
-# setup addition of keys when needed
-if [ -z "$SSH_TTY" ]; then # if not using ssh
-	ssh-add -l >/dev/null     # check for keys
-	if [ $? -ne 0 ]; then
-		alias ssh='ssh-add -l > /dev/null || ssh-add && unalias ssh ; ssh'
-		if [ -f "/usr/lib/ssh/x11-ssh-askpass" ]; then
-			SSH_ASKPASS="/usr/lib/ssh/x11-ssh-askpass"
-			export SSH_ASKPASS
-		fi
-	fi
-fi
-
-SSH_ENV="$HOME/.ssh/environment"
-
-function start_agent {
-	echo "Initialising new SSH agent..."
-	/usr/bin/ssh-agent | sed 's/^echo/#echo/' >"${SSH_ENV}"
-	echo succeeded
-	chmod 600 "${SSH_ENV}"
-	. "${SSH_ENV}" >/dev/null
-	/usr/bin/ssh-add
-}
-
-# Source SSH settings, if applicable
-
-if [ -f "${SSH_ENV}" ]; then
-	. "${SSH_ENV}" >/dev/null
-	#ps ${SSH_AGENT_PID} doesn't work under cywgin
-	pgrep ssh-agent >/dev/null || {
-		start_agent
-	}
-else
-	start_agent
-fi
+# [ -z "$SSH_AUTH_SOCK" ] && SSH_AUTH_SOCK=$(ls -l /tmp/ssh-*/agent.* 2>/dev/null | grep $(whoami) | awk '{print $9}')
+# [ -z "$SSH_AGENT_PID" ] && [ -z $(echo "$SSH_AUTH_SOCK" | cut -d. -f2) ] && SSH_AGENT_PID=$(($(echo "$SSH_AUTH_SOCK" | cut -d. -f2) + 1))
+# [ -n "$SSH_AUTH_SOCK" ] && export SSH_AUTH_SOCK
+# [ -n "$SSH_AGENT_PID" ] && export SSH_AGENT_PID
+#
+# # start agent if necessary
+# if [ -z "$SSH_AGENT_PID" ] && [ -z "$SSH_TTY" ]; then # if no agent & not in ssh
+# 	eval $(ssh-agent -s) >/dev/null
+# fi
+#
+# if [ "$XDG_SESSION_TYPE" = "xorg" ]; then
+# 	# setup addition of keys when needed
+# 	if [ -z "$SSH_TTY" ]; then # if not using ssh
+# 		ssh-add -l >/dev/null     # check for keys
+# 		if [ $? -ne 0 ]; then
+# 			alias ssh='ssh-add -l > /dev/null || ssh-add && unalias ssh ; ssh'
+# 			if [ -f "/usr/lib/ssh/x11-ssh-askpass" ]; then
+# 				SSH_ASKPASS="/usr/lib/ssh/x11-ssh-askpass"
+# 				export SSH_ASKPASS
+# 			fi
+# 		fi
+# 	fi
+# fi
+#
+# SSH_ENV="$HOME/.ssh/environment"
+#
+# function start_agent {
+# 	echo "Initialising new SSH agent..."
+# 	/usr/bin/ssh-agent | sed 's/^echo/#echo/' >"${SSH_ENV}"
+# 	echo succeeded
+# 	chmod 600 "${SSH_ENV}"
+# 	. "${SSH_ENV}" >/dev/null
+# 	/usr/bin/ssh-add
+# }
+#
+# # Source SSH settings, if applicable
+#
+# if [ -f "${SSH_ENV}" ]; then
+# 	. "${SSH_ENV}" >/dev/null
+# 	#ps ${SSH_AGENT_PID} doesn't work under cywgin
+# 	pgrep ssh-agent >/dev/null || {
+# 		start_agent
+# 	}
+# else
+# 	start_agent
+# fi
 
 export NVM_DIR="$HOME/.config/nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -86,18 +88,41 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
+if [ -d "$HOME/.local/bin" ]; then
+	PATH="$HOME/.local/bin:$PATH"
 fi
 
 alias spot=ncspot
 alias rust-analyzer="rustup run nightly rust-analyzer"
 alias open="xdg-open"
 
-# Setup nvidia shader cache 
+# Setup nvidia shader cache
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 # . "$HOME/.cargo/env"
 #
 # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cuda-11.7/lib64
 # export PATH=$PATH:/cuda-11.7/bin
+
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+	export MOZ_ENABLE_WAYLAND=1
+	# export WLR_NO_HARDWARE_CURSORS=1
+	export WLR_NO_HARDWARE_CURSORS=0
+	export XDG_CURRENT_DESKTOP=dwl
+	export QT_QPA_PLATFORM=wayland
+	export QT_QPA_PLATFORMTHEME=qt6ct
+
+	# https://github.com/Vladimir-csp/uwsm?tab=readme-ov-file#3-applications-and-slices
+	export UWSM_USE_SESSION_SLICE=true
+
+	systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP 
+
+	if which dbus-update-activation-environment >/dev/null 2>&1; then
+		dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+	fi
+	wlr-randr --output DP-3 --mode 2560x1440@143.964005  --adaptive-sync enabled
+fi
+
+if [ "$XDG_SESSION_TYPE" = "tty" ]; then
+	export XDG_CURRENT_DESKTOP=dwm
+fi

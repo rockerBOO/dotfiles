@@ -21,7 +21,7 @@ local plenary_reload = function()
 	Reload("plugin.telescope")
 	-- require("plenary.reload").reload_module("lsp_extensions")
 	-- require("boo-colorscheme").use({ theme = "sunset_cloud" })
-	require("boo-colorscheme").use({})
+	-- require("boo-colorscheme").use({})
 	require("plugin.telescope").setup_defaults()
 	require("mappings").setup()
 	-- require("setup").setup()
@@ -34,6 +34,12 @@ local maps = {
 	{ n, "<c-h>", "<c-w>h" },
 	{ n, "<c-j>", "<c-w>j" },
 	{ n, "<c-k>", "<c-w>k" },
+
+	-- Resize the panes
+	-- { n, "<down>", ":resize +2<cr>" },
+	-- { n, "<up>", ":resize -2<cr>" },
+	-- { n, "<right>", ":vertical resize +2<cr>" },
+	-- { n, "<left>", ":vertical resize -2<cr>" },
 
 	-- Treesitter quickfix
 	{ n, "<leader><c-w>", ":write | edit | TSBufEnable highlight<cr><cr>" },
@@ -73,8 +79,8 @@ local maps = {
 	{ n, "<Right>", ":bp<cr>", silent },
 
 	-- Quick quick file/buffer commands
-	{ n, "<Leader>w", ":w<cr>", { silent = true } },
-	{ n, "<Leader>q", ":q<cr>", { silent = true } },
+	{ n, "<Leader>w", ":w<cr>", silent },
+	{ n, "<Leader>q", ":q<cr>", silent },
 
 	{ i, "<C-l>", "A<cr>" },
 	{ i, "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true } },
@@ -96,57 +102,15 @@ local maps = {
 	-- nvim-ts-hint-textobject
 	{ v, "m", R("tsht").nodes, silent },
 
+	{
+		n,
+		"<leader>pp",
+		function()
+			require("player").select()
+		end,
+	},
+
 	{ n, "<Leader>gh", "<cmd>TSHighlightCapturesUnderCursor<cr>", silent },
-
-	-- { n, "<leader>r", require('rockerboo.scratch').run_script, silent },
-
-	-- { n, "<leader>rr", "<cmd>:sp<CR>:term python %<CR>", silent },
-	{ n, "<leader>rr", "<cmd>:RustLastRun<CR>", silent },
-	-- { n, "<leader>rr", "<cmd>:sp<CR>:term source .env && accelerate launch %<CR>", silent },
-	-- { n, "<leader>rr", "<cmd>:sp<CR>:term bun %<CR>", silent },
-	{
-		n,
-		"<leader>ts",
-		"<cmd>:sp<CR>:term source /home/rockerboo/code/others/VALL-E-X/.env && python /home/rockerboo/code/others/VALL-E-X/test.py --file % && audio-player -v 0.2 /home/rockerboo/code/others/VALL-E-X/completed-compiling.wav<CR>",
-		silent,
-	},
-	{
-		n,
-		"<leader>tr",
-		"<cmd>:sp<cr>:term cd /home/rockerboo/code/others/VALL-E-X && source /home/rockerboo/code/others/VALL-E-X/.env && python /home/rockerboo/code/others/VALL-E-X/test.py --file % && audio-player -v 0.2 completed-compiling.wav<cr>",
-		silent,
-	},
-	{
-		v,
-		"tr",
-		function()
-			local utils = require("rockerboo.utils")
-			local x = utils.get_visual()
-			vim.cmd("sp")
-			vim.cmd(
-				'term cd /home/rockerboo/code/others/VALL-E-X && source /home/rockerboo/code/others/VALL-E-X/.env && python /home/rockerboo/code/others/VALL-E-X/test.py --text "'
-					.. table.concat(x, " ")
-					.. '" && audio-player -v 0.2 /home/rockerboo/code/others/VALL-E-X/completed-compiling.wav'
-			)
-		end,
-		silent,
-	},
-	{
-		n,
-		"<leader>ss",
-		function()
-			local datetime = vim.fn.strftime("%Y-%m-%d-%H%M%S")
-			vim.system({
-				"cp",
-				"/home/rockerboo/code/others/VALL-E-X/completed-compiling.wav",
-				"/home/rockerboo/code/others/VALL-E-X/long/" .. datetime .. ".wav",
-			})
-		end,
-		silent,
-	},
-
-	-- { n, "<leader>rr", "<cmd>:sp<CR>:term node %<CR>", silent },
-	{ n, "<leader>ra", "<cmd>:sp<CR>:term accelerate launch %<CR>", silent },
 }
 
 -- Mappings

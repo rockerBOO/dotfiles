@@ -3,6 +3,9 @@
 --
 local g, o, cmd, opt = vim.g, vim.o, vim.cmd, vim.opt
 
+-- Colors
+o.termguicolors = true -- Support 24bit colors
+
 g.mapleader = " "
 
 o.splitbelow = true -- Default split below
@@ -55,9 +58,6 @@ o.formatoptions = "cqrnj"
 -- Completion
 o.completeopt = "menu,menuone,noselect"
 o.shortmess = "filnxtToOFc" -- Avoid showing extra messages when using completion
-
--- Colors
-o.termguicolors = true -- Support 24bit colors
 
 -- now enabled by default
 o.mouse = "nv"
@@ -116,14 +116,18 @@ vim.diagnostic.config({
 	update_in_insert = false,
 })
 
--- Setup all the plugins
-require("plugins").setup()
+require("plugins_init")
 
 -- Setup key mappings
 require("mappings").setup()
 
 -- Configure plugins
 require("setup").setup()
+
+cmd([[ aunmenu PopUp.How-to\ disable\ mouse ]])
+cmd([[ aunmenu PopUp.-1- ]])
+
+cmd([[ set mousemodel=extend ]])
 
 -- Colorscheme
 cmd([[ colorscheme boo ]])

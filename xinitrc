@@ -51,3 +51,4 @@ export MOZ_USE_XINPUT2=true
 
 # Start dwm
 exec dwm
+#dwl

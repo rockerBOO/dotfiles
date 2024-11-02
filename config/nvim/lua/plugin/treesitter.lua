@@ -1,5 +1,5 @@
 local treesitter = {}
-local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
+-- local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
 
 treesitter.setup = function()
 	require("nvim-treesitter.configs").setup({
@@ -39,12 +39,12 @@ treesitter.setup = function()
 				},
 			},
 		},
-		playground = {
-			enable = true,
-			disable = {},
-			updatetime = 25,
-			persist_queries = false,
-		},
+		-- playground = {
+		-- 	enable = true,
+		-- 	disable = {},
+		-- 	updatetime = 25,
+		-- 	persist_queries = false,
+		-- },
 		query_linter = {
 			enable = true,
 			use_virtual_text = true,
@@ -70,7 +70,8 @@ treesitter.setup = function()
 	require("ts_context_commentstring").setup({})
 	vim.g.skip_ts_context_commentstring_module = true
 
-	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+	local parser_config =
+		require("nvim-treesitter.parsers").get_parser_configs()
 
 	-- parser_config.gleam = {
 	-- 	install_info = {
@@ -123,9 +124,34 @@ treesitter.setup = function()
 		},
 		filetype = { "eex", "eelixir" },
 	}
+	parser_config.gotmpl = {
+	  install_info = {
+	    url = "https://github.com/ngalaiko/tree-sitter-go-template",
+	    files = {"src/parser.c"}
+	  },
+	  filetype = "gotmpl",
+	  -- used_by = {"gohtmltmpl", "gotexttmpl", "gotmpl", "yaml"}
+	}
 	vim.treesitter.language.register("eelixir", "eex")
 	-- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
 	-- ft_to_parser.eelixir = "eex" -- the someft filetype will use the python parser and queries.
+	vim.filetype.add({
+		extension = {
+			gotmpl = "gotmpl",
+		},
+		pattern = {
+			["layouts/.*%.html"] = "gotmpl",
+			[".*/templates/.*%.tpl"] = "helm",
+			[".*/templates/.*%.ya?ml"] = "helm",
+			["helmfile.*%.ya?ml"] = "helm",
+		},
+	})
+
+	vim.treesitter.query.set(
+		"gotmpl",
+		"injections",
+		"(define_action (text) @html)"
+	)
 end
 
 return treesitter

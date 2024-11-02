@@ -1,42 +1,88 @@
---pl
+--
 -- Setup packer.nvim with all necessary plugins
 --
-local ensure_packer_installed = function()
-	local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
+-- local ensure_packer_installed = function()
+-- 	local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
+--
+-- 	if not packer_exists then
+-- 		if vim.fn.input("Download Packer? (y for yes)") ~= "y" then
+-- 			return false
+-- 		end
+--
+-- 		local directory =
+-- 			string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
+--
+-- 		vim.fn.mkdir(directory, "p")
+--
+-- 		local out = vim.fn.system(
+-- 			string.format(
+-- 				"git clone %s %s",
+-- 				"https://github.com/wbthomason/packer.nvim",
+-- 				directory .. "/packer.nvim"
+-- 			)
+-- 		)
+--
+-- 		print(out)
+-- 	end
+--
+-- 	return true
+-- end
 
-	if not packer_exists then
-		if vim.fn.input("Download Packer? (y for yes)") ~= "y" then
-			return false
-		end
-
-		local directory = string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
-
-		vim.fn.mkdir(directory, "p")
-
-		local out = vim.fn.system(
-			string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", directory .. "/packer.nvim")
-		)
-
-		print(out)
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"--branch=stable",
+		lazyrepo,
+		lazypath,
+	})
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
 	end
-
-	return true
 end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+	spec = {
+		-- import your plugins
+		{ import = "plugins" },
+	},
+	reset_packpath = false,
+	-- Configure any other settings here. See the documentation for more details.
+	-- colorscheme that will be used when installing plugins.
+	-- install = { colorscheme = { "habamax" } },
+	-- -- automatically check for plugin updates
+	-- checker = { enabled = true },
+})
 
 local setup = function()
-	if not ensure_packer_installed() then
-		return
-	end
+	-- if not ensure_packer_installed() then
+	-- 	return
+	-- end
+	--
+	-- local packer = require("packer")
 
-	local packer = require("packer")
-
-	packer.init({
-		package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
-	})
+	-- packer.init({
+	-- 	package_root = require("packer.util").join_paths(
+	-- 		vim.fn.stdpath("data"),
+	-- 		"site",
+	-- 		"pack"
+	-- 	),
+	-- })
 
 	packer.startup(function(use)
-		-- Packer can manage itself as an optional plugin
-		use({ "wbthomason/packer.nvim", opt = true })
+		-- -- Packer can manage itself as an optional plugin
+		-- use({ "wbthomason/packer.nvim", opt = true })
 
 		-- Plug 'arcticicestudio/nord-vim', { 'on': 'NERDTreeToggle' }
 		use({ "bluz71/vim-moonfly-colors", opt = true })
@@ -56,10 +102,11 @@ local setup = function()
 		-- using temporay branch until deprecated feature is removed
 		-- https://github.com/nvim-lua/lsp-status.nvim/pull/78
 		-- use({ "nvim-lua/lsp-status.nvim" })
-		use({ "tomtomjhj/lsp-status.nvim", branch = "deprecated" })
+		-- use({ "tomtomjhj/lsp-status.nvim", branch = "deprecated" })
 
 		-- Express line (status bar)
-		use({ "tjdevries/express_line.nvim" })
+		-- use({ "tjdevries/express_line.nvim" })
+		use({ "~/code/express_line.nvim" })
 
 		-- Treesitter
 		use({ "nvim-treesitter/nvim-treesitter" })
@@ -69,16 +116,25 @@ local setup = function()
 		use({ "windwp/nvim-ts-autotag" })
 		use({ "RRethy/nvim-treesitter-textsubjects" })
 
-		use({
-			"sindrets/diffview.nvim",
-			requires = "nvim-lua/plenary.nvim",
-			config = function()
-				require("diffview").setup({})
-			end,
-		})
+		-- use({
+		-- 	"sindrets/diffview.nvim",
+		-- 	requires = "nvim-lua/plenary.nvim",
+		-- 	config = function()
+		-- 		require("diffview").setup({})
+		-- 	end,
+		-- })
+
+		--  use({
+		--    "lewis6991/diffview.nvim",
+		--    branch = "fixdepr",
+		-- requires = "nvim-lua/plenary.nvim",
+		-- config = function()
+		-- 	require("diffview").setup({})
+		-- end,
+		--  })
 
 		-- Linter
-		use("mfussenegger/nvim-lint")
+		use({ "mfussenegger/nvim-lint" })
 
 		-- use({ "~/code/ejs-nvim", opt = true })
 
@@ -95,7 +151,8 @@ local setup = function()
 			requires = {
 				"nvim-lua/plenary.nvim",
 				"nvim-telescope/telescope.nvim",
-				"kyazdani42/nvim-web-devicons",
+				-- "kyazdani42/nvim-web-devicons",
+				"nvim-tree/nvim-web-devicons",
 			},
 			config = function()
 				require("octo").setup()
@@ -108,7 +165,7 @@ local setup = function()
 
 		use({ "vim-erlang/vim-erlang-runtime" })
 
-		use({ "gleam-lang/gleam.vim" })
+		-- use({ "gleam-lang/gleam.vim" })
 
 		-- sd Sandwich for wrapping variables
 		use({ "tpope/vim-surround" })
@@ -116,7 +173,7 @@ local setup = function()
 		-- Distraction-free writing
 		use({ "junegunn/goyo.vim" })
 
-		use({ "junegunn/limelight.vim" })
+		-- use({ "junegunn/limelight.vim" })
 
 		-- Comment helpers
 		use({
@@ -148,13 +205,20 @@ local setup = function()
 			end,
 		})
 
-		use({ "mfussenegger/nvim-dap" })
-		-- use({ "~/code/nvim-dap" })
 		use("jbyuki/one-small-step-for-vimkind")
 
+		-- use({ "nvim-neotest/nvim-nio" })
+		use({ "~/code/others/nvim-nio" })
+		use({ "mfussenegger/nvim-dap" })
+		-- use({ "~/code/nvim-dap" })
+
 		use({
-			"rcarriga/nvim-dap-ui",
-			requires = { "mfussenegger/nvim-dap" },
+			-- "rcarriga/nvim-dap-ui",
+			"~/code/others/nvim-dap-ui",
+			requires = {
+				"mfussenegger/nvim-dap",
+				-- "nvim-neotest/nvim-nio",
+			},
 			config = function()
 				require("dapui").setup({
 					layouts = {
@@ -207,18 +271,19 @@ local setup = function()
 		-- use("Ciel-MC/rust-tools.nvim")
 		-- use({ "~/code/rust-tools.nvim" })
 
-		-- use({
-		-- 	"David-Kunz/jester",
-		-- 	config = function()
-		-- 		require("jester").setup({
-		-- 			dap = {
-		-- 				type = "yarn",
-		-- 			},
-		-- 			path_to_jest_debug = "jest",
-		-- 			path_to_jest = "jest",
-		-- 		})
-		-- 	end,
-		-- })
+		use({
+			"David-Kunz/jester",
+			config = function()
+				require("jester").setup({
+					dap = {
+						type = "yarn",
+					},
+					path_to_jest_debug = "test",
+					path_to_jest_run = "test",
+					-- cmd = "test -t '$result' -- $file", -- run command
+				})
+			end,
+		})
 		-- use({
 		-- 	"/mnt/500h/rockerboo/code/jester",
 		-- 	config = function()
@@ -232,7 +297,8 @@ local setup = function()
 		use({
 			"kyazdani42/nvim-tree.lua",
 			requires = {
-				"kyazdani42/nvim-web-devicons", -- optional, for file icons
+				-- "kyazdani42/nvim-web-devicons", -- optional, for file icons
+				"nvim-tree/nvim-web-devicons",
 			},
 			config = function()
 				require("nvim-tree").setup()
@@ -240,7 +306,8 @@ local setup = function()
 		})
 
 		-- Colorizer
-		use({ "norcalli/nvim-colorizer.lua" })
+		-- use({ "norcalli/nvim-colorizer.lua" })
+		use({ "~/code/nvim-colorizer.lua" })
 
 		-- LSP Extensions
 		-- use({ "tjdevries/lsp_extensions.nvim" })
@@ -287,7 +354,8 @@ local setup = function()
 			requires = { "nvim-telescope/telescope-dap.nvim" },
 		})
 
-		use({ "kyazdani42/nvim-web-devicons" })
+		-- use({ "kyazdani42/nvim-web-devicons" })
+		use({ "nvim-tree/nvim-web-devicons" })
 
 		use("ThePrimeagen/harpoon")
 
@@ -309,7 +377,10 @@ local setup = function()
 			"jose-elias-alvarez/typescript.nvim",
 		})
 
-		use({ "simrat39/symbols-outline.nvim" })
+		-- use({ "simrat39/symbols-outline.nvim" })
+
+		-- use({ "rockerBOO/symbols-outline.nvim"})
+		use({ "~/code/symbols-outline.nvim" })
 
 		use({ "onsails/lspkind-nvim" })
 
@@ -343,7 +414,10 @@ local setup = function()
 					ft = "lua",
 					-- this is after/plugin content
 					config = function()
-						require("cmp").register_source("nvim_lua", require("cmp_nvim_lua").new())
+						require("cmp").register_source(
+							"nvim_lua",
+							require("cmp_nvim_lua").new()
+						)
 					end,
 				},
 				{
@@ -490,6 +564,60 @@ local setup = function()
 		-- 		})
 
 		use("alaviss/nim.nvim")
+
+		use({ "MunifTanjim/nui.nvim" })
+
+		use({
+			"yetone/avante.nvim",
+			config = function()
+				local opts = {
+					provider = "ollama",
+					ollama = {
+						["local"] = true,
+						endpoint = "127.0.0.1:11434/v1",
+						-- model = "codegemma",
+						model = "llama3.1:latest",
+						parse_curl_args = function(opts, code_opts)
+							return {
+								url = opts.endpoint .. "/chat/completions",
+								headers = {
+									["Accept"] = "application/json",
+									["Content-Type"] = "application/json",
+								},
+								body = {
+									model = opts.model,
+									messages = require("avante.providers").copilot.parse_message(
+										code_opts
+									), -- you can make your own message, but this is very advanced
+									max_tokens = 2048,
+									stream = true,
+								},
+							}
+						end,
+						parse_response_data = function(
+							data_stream,
+							event_state,
+							opts
+						)
+							require("avante.providers").openai.parse_response(
+								data_stream,
+								event_state,
+								opts
+							)
+						end,
+					},
+				}
+				require("avante.config").setup(opts)
+			end,
+		})
+
+		use({
+			"MeanderingProgrammer/render-markdown.nvim",
+			-- opts = {
+			-- 	file_types = { "markdown", "Avante" },
+			-- },
+			-- ft = { "markdown", "Avante" },
+		})
 
 		-- use("numToStr/FTerm.nvim")
 

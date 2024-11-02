@@ -16,6 +16,9 @@
   diff = auto
   status = auto
 [diff]
+	# https://matklad.github.io/2023/12/31/git-things.html#Git-Things
+  colormoved = "default"
+  colormovedws = "allow-indentation-change"
 	tool = nvimdiff 
 	colorMoved = default
 [difftool "nvimdiff"]

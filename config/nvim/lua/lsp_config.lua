@@ -1,9 +1,9 @@
 local config = require("lspconfig")
-local status = require("rockerboo.lsp_status")
+-- local status = require("rockerboo.lsp_status")
 local lsp = require("rockerboo.lsp")
 
 local setup = function()
-	status.activate()
+	-- status.activate()
 
 	-- local log_capabilities = function(capabilities)
 	-- 	-- @param filter = table {"hover"}
@@ -39,7 +39,7 @@ local setup = function()
 		on_attach = lsp.on_attach_buffer,
 		capabilities = capabilities,
 		flags = {
-			debounce_text_changes = 30,
+			debounce_text_changes = 50,
 		},
 	}
 
@@ -51,6 +51,10 @@ local setup = function()
 		"bashls",
 		"sqlls",
 		"gleam",
+		"superhtml",
+		-- "pylsp",
+		-- "biome",
+		-- "pylyzer",
 	}
 
 	for _, server in ipairs(servers) do
@@ -108,20 +112,22 @@ local setup = function()
 	-- })
 	--
 
-	config.pyright.setup({
-		settings = {
-			pyright = { disableLanguageServices = true },
-			python = {
-				analysis = {
-					autoSearchPaths = true,
-					-- diagnosticMode = "workspace",
-					useLibraryCodeForTypes = true,
-					diagnosticMode = "openFilesOnly",
-				},
-			},
-		},
-		autostart = false,
-	})
+	config.biome.setup({ cmd = { "yarn", "biome", "lsp-proxy" } })
+
+	-- config.pyright.setup({
+	-- 	settings = {
+	-- 		-- pyright = { disableLanguageServices = true },
+	-- 		python = {
+	-- 			analysis = {
+	-- 				autoSearchPaths = true,
+	-- 				diagnosticMode = "workspace",
+	-- 				useLibraryCodeForTypes = true,
+	-- 				-- diagnosticMode = "openFilesOnly",
+	-- 			},
+	-- 		},
+	-- 	},
+	-- 	-- autostart = false,
+	-- })
 
 	config.yamlls.setup({
 		settings = {
@@ -142,20 +148,36 @@ local setup = function()
 		},
 	})
 
+	config.pylsp.setup({
+		on_attach = lsp.on_attach_buffer,
+		capabilities = capabilities,
+		flags = {
+			debounce_text_changes = 200,
+		},
+		settings = {
+			plugins = {
+				rope_completion = { enabled = true },
+				rope_autoimport = {
+					enabled = true,
+				},
+			},
+		},
+	})
+
 	config.gdscript.setup({
 		on_attach = lsp.on_attach_buffer,
 		filetypes = { "gd", "gdscript", "gdscript3" },
 	})
 
-	config.ruff_lsp.setup({
-		-- cmd = { "/home/rockerboo/code/ruff-lsp/ruff-lsp" },
-		capabilities = capabilities,
-		on_attach = lsp.on_attach_buffer,
-		settings = {
-			organizeImports = false,
-			fixAll = false,
-		},
-	})
+	-- config.ruff_lsp.setup({
+	-- 	-- cmd = { "/home/rockerboo/code/ruff-lsp/ruff-lsp" },
+	-- 	capabilities = capabilities,
+	-- 	on_attach = lsp.on_attach_buffer,
+	-- 	settings = {
+	-- 		organizeImports = false,
+	-- 		fixAll = false,
+	-- 	},
+	-- })
 
 	config.jsonls.setup({
 		capabilities = capabilities,
@@ -249,61 +271,102 @@ local setup = function()
 	-- 	},
 	-- 	on_attach = lsp.on_attach_buffer,
 	-- })
+	-- require("lspconfig").lua_ls.setup({
+	--
+	-- 	capabilities = capabilities,
+	-- 	-- cmd = {
+	-- 	-- 	"/mnt/900/builds/lua-language-server/bin/lua-language-server",
+	-- 	-- 	"-E",
+	-- 	-- 	"/mnt/900/builds/lua-language-server/main.lua",
+	-- 	-- },
+	-- 	settings = {
+	-- 		Lua = {
+	-- 			runtime = {
+	-- 				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+	-- 				version = "LuaJIT",
+	-- 			},
+	-- 			-- diagnostics = {
+	-- 			-- 	-- Get the language server to recognize the `vim` global
+	-- 			-- 	globals = { "vim" },
+	-- 			-- },
+	-- 			workspace = {
+	-- 				-- Make the server aware of Neovim runtime files
+	-- 				library = { vim.env.VIMRUNTIME },
+	-- 				-- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+	-- 				-- library = vim.api.nvim_get_runtime_file("", true)
+	-- 				checkThirdParty = false,
+	-- 			},
+	-- 			-- Do not send telemetry data containing a randomized but unique identifier
+	-- 			telemetry = {
+	-- 				enable = false,
+	-- 			},
+	-- 			hint = {
+	-- 				enable = true,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- 	on_attach = lsp.on_attach_buffer,
+	-- 	on_init = function(client)
+	-- 		client.notify(
+	-- 			"workspace/didChangeConfiguration",
+	-- 			{ settings = client.config.settings }
+	-- 		)
+	-- 	end,
+	-- })
 	require("lspconfig").lua_ls.setup({
-
-		capabilities = capabilities,
-		-- cmd = {
-		-- 	"/mnt/900/builds/lua-language-server/bin/lua-language-server",
-		-- 	"-E",
-		-- 	"/mnt/900/builds/lua-language-server/main.lua",
-		-- },
-		settings = {
-			Lua = {
-				runtime = {
-					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-					version = "LuaJIT",
-				},
-				-- diagnostics = {
-				-- 	-- Get the language server to recognize the `vim` global
-				-- 	globals = { "vim" },
-				-- },
-				workspace = {
-					-- Make the server aware of Neovim runtime files
-					library = { vim.env.VIMRUNTIME },
-					-- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-					-- library = vim.api.nvim_get_runtime_file("", true)
-					checkThirdParty = false,
-				},
-				-- Do not send telemetry data containing a randomized but unique identifier
-				telemetry = {
-					enable = false,
-				},
-				hint = {
-					enable = true,
-				},
-			},
-		},
 		on_attach = lsp.on_attach_buffer,
 		on_init = function(client)
-			client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-		end,
-	})
+			if client.workspace_folders then
+				local path = client.workspace_folders[1].name
+				if
+					vim.uv.fs_stat(path .. "/.luarc.json")
+					or vim.uv.fs_stat(path .. "/.luarc.jsonc")
+				then
+					return
+				end
+			end
 
-	require("lspconfig").ltex.setup({
-		capabilities = capabilities,
-		on_attach = lsp.on_attach_buffer,
-		cmd = { "/mnt/900/builds/ltex-ls-15.2.0/bin/ltex-ls" },
+			client.config.settings.Lua =
+				vim.tbl_deep_extend("force", client.config.settings.Lua, {
+					runtime = {
+						-- Tell the language server which version of Lua you're using
+						-- (most likely LuaJIT in the case of Neovim)
+						version = "LuaJIT",
+					},
+					-- Make the server aware of Neovim runtime files
+					workspace = {
+						checkThirdParty = false,
+						library = {
+							vim.env.VIMRUNTIME,
+							-- Depending on the usage, you might want to add additional paths here.
+							-- "${3rd}/luv/library"
+							-- "${3rd}/busted/library",
+						},
+						-- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+						-- library = vim.api.nvim_get_runtime_file("", true)
+					},
+				})
+		end,
 		settings = {
-			ltex = {
-				language = "en",
-				additionalRules = {
-					enablePickyRules = true,
-					motherTongue = "en",
-					languageModel = "/mnt/900/ngrams/ngrams-en-20150817/",
-				},
-			},
+			Lua = {},
 		},
 	})
+
+	-- require("lspconfig").ltex.setup({
+	-- 	capabilities = capabilities,
+	-- 	on_attach = lsp.on_attach_buffer,
+	-- 	cmd = { "/mnt/900/builds/ltex-ls-15.2.0/bin/ltex-ls" },
+	-- 	settings = {
+	-- 		ltex = {
+	-- 			language = "en",
+	-- 			additionalRules = {
+	-- 				enablePickyRules = true,
+	-- 				motherTongue = "en",
+	-- 				languageModel = "/mnt/900/ngrams/ngrams-en-20150817/",
+	-- 			},
+	-- 		},
+	-- 	},
+	-- })
 
 	-- require("lspconfig").markdown_language_server.setup({
 	-- 	on_attach = lsp.on_attach_buffer,
@@ -314,6 +377,17 @@ local setup = function()
 		on_attach = lsp.on_attach_buffer,
 		capabilities = capabilities,
 	})
+
+	-- vim.api.nvim_create_autocmd("Filetype", {
+	-- 	pattern = { "html", "shtml", "htm" },
+	-- 	callback = function()
+	-- 		vim.lsp.start({
+	-- 			name = "superhtml",
+	-- 			cmd = { "superhtml", "lsp" },
+	-- 			root_dir = vim.fs.root(0, { ".git" }),
+	-- 		})
+	-- 	end,
+	-- })
 
 	-- require("lspconfig").rome.setup({
 	-- 	on_attach = lsp.on_attach_buffer,

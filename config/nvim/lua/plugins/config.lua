@@ -1,0 +1,1 @@
+return { "gpanders/editorconfig.nvim" }

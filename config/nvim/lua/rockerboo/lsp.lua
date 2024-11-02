@@ -1,4 +1,4 @@
-local lsp_status = require("lsp-status")
+-- local lsp_status = require("lsp-status")
 local utils = require("rockerboo.utils")
 -- utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
 
@@ -7,7 +7,7 @@ local on_attach_buffer = function(client, bufnr)
 
 	utils.log_to_file("/tmp/nvim-lsp-client.log")(vim.inspect(client))
 
-	lsp_status.on_attach(client)
+	-- lsp_status.on_attach(client)
 
 	-- local capLog = utils.log_to_file("/tmp/capabilities.log")
 	-- capLog(

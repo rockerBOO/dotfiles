@@ -1,8 +1,6 @@
-local typescript = require("rockerboo.typescript")
-local on_list = typescript.on_list
+-- local on_list = typescript.on_list
 
 local set = vim.keymap.set
-local del = vim.keymap.del
 local n = "n"
 
 local group = vim.api.nvim_create_augroup("LspMappings", { clear = true })
@@ -13,33 +11,45 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local opts = { buffer = args.buf, silent = true }
 
 		set(n, "gd", function()
-			vim.lsp.buf.definition({ on_list = on_list })
+			-- vim.lsp.buf.definition({ on_list = on_list })
+			vim.lsp.buf.definition({})
 		end, opts)
 		set(n, "K", vim.lsp.buf.hover, opts)
 		set(n, "<c-s-K>", vim.lsp.buf.signature_help, opts)
 
 		set(n, "gD", function()
-			vim.lsp.buf.implementation({ on_list = on_list })
+			-- vim.lsp.buf.implementation({ on_list = on_list })
+			vim.lsp.buf.implementation({})
 		end, opts)
 
 		set(n, "1gD", function()
-			vim.lsp.buf.type_definition({ on_list = on_list })
+			-- vim.lsp.buf.type_definition({ on_list = on_list })
+			vim.lsp.buf.type_definition({})
 		end, opts)
 		set(n, "gr", function()
 			vim.lsp.buf.references()
 		end, opts)
 
 		set(n, "<c-]>", function()
-			vim.lsp.buf.declaration({ on_list = on_list })
+			-- vim.lsp.buf.declaration({ on_list = on_list })
+			vim.lsp.buf.declaration({})
 		end, opts)
 
 		set(n, "<Leader>re", vim.lsp.buf.rename, opts)
 		set(n, "<Leader>ca", vim.lsp.buf.code_action, opts)
 
+		set(n, "<Leader>ih", function()
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		end, opts)
+
 		-- diagnostics
 		set(n, "<Leader>di", vim.diagnostic.open_float, opts)
-		set(n, "<Leader>k", vim.diagnostic.goto_prev, opts)
-		set(n, "<Leader>j", vim.diagnostic.goto_next, opts)
+		set(n, "<Leader>k", function()
+			vim.diagnostic.jump({ float = true, count = -1 })
+		end, opts)
+		set(n, "<Leader>j", function()
+			vim.diagnostic.jump({ float = true, count = 1 })
+		end, opts)
 	end,
 })
 

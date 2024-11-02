@@ -60,7 +60,23 @@ local rome = function()
 			"rome",
 			"format",
 			"--stdin-file-path",
-			string.format('"%s"', util.escape_path(util.get_current_buffer_file_path())),
+			string.format(
+				'"%s"',
+				util.escape_path(util.get_current_buffer_file_path())
+			),
+		},
+		stdin = true,
+	}
+end
+
+local mixformat = function()
+	return {
+		exe = "mix",
+		args = {
+			"format",
+			"--stdin-filename",
+			util.get_current_buffer_file_path(),
+			"-",
 		},
 		stdin = true,
 	}
@@ -107,6 +123,18 @@ local gdformat = function()
 	}
 end
 
+local dprint = function()
+	return {
+		exe = "dprint",
+		args = {
+			"fmt",
+			"--stdin",
+			util.get_current_buffer_file_path(),
+		},
+		stdin = true,
+	}
+end
+
 return {
 	setup = function()
 		---@diagnostic disable-next-line: redundant-parameter
@@ -131,26 +159,26 @@ return {
 				gdscript = {
 					gdformat,
 				},
+				gotmpl = {
+					-- require("formatter.filetypes.html").prettierd
+					-- local_prettier_d_slim,
+					-- require("formatter.filetypes.javascript").prettier,
+					local_prettier,
+				},
 
 				elixir = {
-					-- function()
-					-- 	return {
-					-- 		exe = "mix",
-					-- 		args = {
-					-- 			"format",
-					-- "-",
-					-- 		},
-					-- 		stdin = true,
-					-- 	}
-					-- end,
-					require("formatter.filetypes.elixir").mixformat,
+					mixformat,
 				},
 
 				eelixir = {
-					util.withl(defaults.prettier, "html"),
+					mixformat,
 				},
 				html_eex = {
-					util.withl(defaults.prettier, "html"),
+					mixformat,
+				},
+
+				heex = {
+					mixformat,
 				},
 
 				lua = { require("formatter.filetypes.lua").stylua },
@@ -187,7 +215,8 @@ return {
 					-- local_prettier_d_slim,
 					-- require("formatter.filetypes.javascript").prettier,
 					-- rome,
-					local_prettier,
+					-- local_prettier,
+          dprint
 				},
 				typescript = {
 					-- local_prettier_d_slim,
@@ -201,12 +230,18 @@ return {
 					require("formatter.filetypes.javascript").prettier,
 					-- local_prettier,
 				},
+				htmlangular = {
+					-- require("formatter.filetypes.html").prettierd
+					-- local_prettier_d_slim,
+					-- require("formatter.filetypes.javascript").prettier,
+					local_prettier,
+				},
 				css = {
 					require("formatter.filetypes.javascript").prettier,
 					-- local_prettier,
 				},
 				javascript = {
-					local_prettier,
+					-- local_prettier,
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,
 					require("formatter.filetypes.javascript").prettier,
@@ -219,16 +254,25 @@ return {
 				json = {
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,
-					require("formatter.filetypes.javascript").prettier,
+					dprint,
+					-- require("formatter.filetypes.javascript").prettier,
+				},
+				jsonc = {
+					-- rome
+					-- require("formatter.filetypes.javascript").prettierd,
+					dprint,
+					-- require("formatter.filetypes.javascript").prettier,
 				},
 				markdown = {
 					-- local_prettier_d_slim,
+					dprint,
 					require("formatter.filetypes.html").prettier,
 					-- prettier_d_slim,
 					-- require("formatter.filetypes.html").prettierd
 					-- prettier_d_slim,
 					-- local_prettier,
 				},
+				toml = { dprint },
 				rust = { require("formatter.filetypes.rust").rustfmt },
 				nginx = { nginxfmt },
 				-- yaml = { google_yamlfmt }
