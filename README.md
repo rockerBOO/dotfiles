@@ -34,3 +34,7 @@ $ ~/.dotfiles/scripts/uninstall.sh
 ```
 
 This will only remove files of interest from `$HOME` that are symlinks.
+
+## Font
+
+- [ioveskaBOO](https://github.com/rockerBOO/IosevkaBOO) - Customized version of Ioveska
