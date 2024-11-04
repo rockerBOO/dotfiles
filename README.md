@@ -37,4 +37,4 @@ This will only remove files of interest from `$HOME` that are symlinks.
 
 ## Font
 
-- [ioveskaBOO](https://github.com/rockerBOO/IosevkaBOO) - Customized version of Ioveska
+- [ioveskaBOO](https://github.com/rockerBOO/IosevkaBOO/releases/tag/1.0) - Customized version of Ioveska
