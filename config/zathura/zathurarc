@@ -1,0 +1,4 @@
+set synctex true
+# set synctex-editor-command "texlab inverse-search -i %{input} -l %{line}"
+set synctex-editor-command "nvim --headless -c \"VimtexInverseSearch %{line} '%{input}'\""
+set selection-clipboard clipboard

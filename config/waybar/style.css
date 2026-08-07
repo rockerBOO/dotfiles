@@ -1,0 +1,166 @@
+@define-color bg-color rgb(68, 71, 90); /* #3C413C */
+@define-color bg-color-tray rgb(40, 42, 54); /* #3C4144 */
+@define-color bg-color-0 rgb (40, 42, 54); /* #3C4144 */
+@define-color bg-color-1 rgb(40, 42, 54); /* #475f94 */
+@define-color bg-color-2 rgb(40, 42, 54); /* #107AB0 */
+@define-color bg-color-3 rgb(40, 42, 54); /* #017374 */
+@define-color bg-color-4 rgb(40, 42, 54); /* #1F3B4D */
+@define-color bg-color-5 rgb(40, 42, 54); /* #10A674 */
+@define-color bg-color-6 rgb(40, 42, 54); /* #4984B8 */
+@define-color bg-color-7 rgb(40, 42, 54); /* #000133 */
+@define-color bg-color-8 rgb(40, 42, 54); /* #08787F */
+@define-color bg-color-9 rgb(40, 42, 54); /* #214761 */
+@define-color bg-color-10 rgb(40, 42, 54); /* #6C3461 */
+@define-color bg-color-11 rgb(40, 42, 54); /* #005249 */
+@define-color bg-color-12 rgb(40, 42, 54); /* #31668A */
+@define-color bg-color-13 rgb(40, 42, 54); /* #6A6E09 */
+@define-color bg-color-14 rgb(40, 42, 54); /* #5B7C99 */
+@define-color bg-color-15 rgb(40, 42, 54); /* #1D2021 */
+@define-color bg-color-16 rgb(40, 42, 54); /* #29293D  */
+
+@define-color fg-color rgb (248, 248, 242); /* #f3f4f5 */
+@define-color alert-bg-color rgb (255, 85, 85); /* #bd2c40 */
+@define-color alert-fg-color rgb (248, 248, 242); /* #FFFFFF */
+@define-color inactive-fg-color rgb(144, 153, 162); /* #9099a2 */
+@define-color inactive-bg-color rgb(68, 71, 90); /* #404552 */
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: monospace;
+  font-size: 16px;
+  min-height: 0;
+  opacity: 1;
+}
+
+window#waybar {
+  background-color: rgba(40, 42, 54, 0.5);
+  border-bottom: none;
+  color: @fg-color;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+window#waybar.hidden {
+  opacity: 0.4;
+}
+
+window#waybar.termite {
+  background-color: @bg-color;
+}
+
+window#waybar.chromium {
+  background-color: @bg-color;
+  border: none;
+}
+
+box#window.horizontal.module  {
+	padding: 0 10px;
+}
+
+/* span { */
+/* 	padding: 0 20px; */
+/* } */
+
+
+/* mango/workspaces (formerly dwl/tags).
+   Class mapping vs old dwl:  .occupied -> :not(.empty)   .focused -> .active */
+#workspaces button {
+	padding: 5px 15px;
+	background-color: @bg-color-tray;
+	color: #d4f3fc;
+	border: 2px solid @bg-color;
+}
+
+/* tags that contain windows (occupied) */
+#workspaces button:not(.empty) {
+	border: 2px solid #71dcfc;
+	border-bottom: 2px solid @bg-color;
+	border-left: 2px solid @bg-color;
+	border-right: 2px solid @bg-color;
+}
+
+/* selected / focused tag */
+#workspaces button.active {
+	background-color: #64629F;
+	border: 2px solid #71dcfc;
+	border-bottom: 2px solid transparent;
+	border-left: 2px solid transparent;
+	border-right: 2px solid transparent;
+}
+
+#workspaces button.urgent {
+	background-color: #10A674;
+}
+
+#workspaces button:hover {
+	background: rgba(0, 0, 0, 0.2);
+	box-shadow: inherit;
+}
+
+/* mango/layout indicator block */
+#layout {
+	padding: 5px 15px;
+	background-color: #3C4144;
+	color: #d4f3fc;
+}
+
+#mode {
+  padding: 0 10px;
+  margin: 0 4px;
+  background-color: @bg-color;
+  border-bottom: 3px solid @fg-color;
+}
+
+#tray {
+  padding: 0 10px;
+  margin: 0 4px;
+  background-color: @bg-color-tray;
+  color: @fg-color;
+}
+
+#clock {
+  padding: 0 10px;
+  margin: 0 4px;
+  background-color: @bg-color-1;
+  color: @fg-color;
+}
+
+/* window#waybar.background.top..mode-default.DP-2:dir(ltr) */
+/*   decoration:dir(ltr) */
+/*   box.horizontal:dir(ltr) */
+/*     box.horizontal.modules-left:dir(ltr) */
+/*       widget:dir(ltr) */
+/*         label#custom-dwl.module.DP-2:dir(ltr) */
+/*     box.horizontal.modules-center:dir(ltr) */
+/*     box.horizontal.modules-right:dir(ltr) */
+/*       widget:dir(ltr) */
+/*         label#clock.module:dir(ltr) */
+/*       widget:dir(ltr) */
+/*         box#tray.horizontal.module:dir(ltr) */
+/**/
+/* [2024-07-15 18:27:22.569] [debug] GTK widget tree: */
+/* window#waybar.background.top.HDMI-A-1..mode-default:dir(ltr) */
+/*   decoration:dir(ltr) */
+/*   box.horizontal:dir(ltr) */
+/*     box.horizontal.modules-left:dir(ltr) */
+/*       widget:dir(ltr) */
+/*         label#custom-dwl.HDMI-A-1.module:dir(ltr) */
+/*     box.horizontal.modules-center:dir(ltr) */
+/*     box.horizontal.modules-right:dir(ltr) */
+/*       widget:dir(ltr) */
+/*         label#clock.module:dir(ltr) */
+/*       widget:dir(ltr) */
+/*         box#tray.horizontal.module:dir(ltr) */
+
+@keyframes blink {
+  to {
+    background-color: @fg-color;
+    color: @bg-color;
+  }
+}
+
+label:focus {
+  background-color: @bg-color;
+}
+

@@ -1,0 +1,18 @@
+style = 'DeepSea'
+language = 'EN'
+
+[notifications]
+volume = 60
+
+[notifications.packets_notification]
+sound = 'Gulp'
+previous_threshold = 750
+
+[notifications.bytes_notification]
+byte_multiple = 'KB'
+sound = 'Pop'
+previous_threshold = 800000
+
+[notifications.favorite_notification]
+notify_on_favorite = false
+sound = 'Swhoosh'

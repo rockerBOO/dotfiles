@@ -1,0 +1,4 @@
+profile {
+    output "AOC Q27G3XMN 1APR7UA003377" mode 2560x1440@180.001999Hz position 1920,0 scale 1 adaptive_sync on
+    output "Ancor Communications Inc VG248 D9LMQS129643" mode 1920x1080@60Hz position 0,0 scale 1
+}
