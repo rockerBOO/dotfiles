@@ -81,3 +81,52 @@ add-zsh-hook precmd _load_ssh_agent
 
 alias pob="env -u WAYLAND_DISPLAY -u GDK_BACKEND QT_QPA_PLATFORM=\"xcb\" PathOfBuildingCommunity"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Switch the active CUDA toolkit for this shell: cuda-use 12.4 | 11.8 | system
+cuda-use() {
+    setopt local_options nullglob
+    local version="$1"
+
+    if [ -z "$version" ]; then
+        echo "Usage: cuda-use <version>"
+        echo "Available:"
+        for d in /usr/local/cuda-* /usr/local/cuda_* /opt/cuda; do
+            [ -d "$d" ] || continue
+            case "$d" in
+                /opt/cuda) echo "  system" ;;
+                *) echo "  ${${d#/usr/local/cuda[-_]}//_/.}" ;;
+            esac
+        done
+        return 1
+    fi
+
+    local target
+    case "$version" in
+        system|opt) target=/opt/cuda ;;
+        *)
+            if [ -d "/usr/local/cuda-$version" ]; then
+                target="/usr/local/cuda-$version"
+            else
+                target="/usr/local/cuda_${version//./_}"
+            fi
+            ;;
+    esac
+
+    if [ ! -d "$target" ]; then
+        echo "cuda-use: $target not found" >&2
+        return 1
+    fi
+
+    # Capture the pre-cuda-use PATH/LD_LIBRARY_PATH once so repeated
+    # switches don't stack duplicate entries from previous versions.
+    export _CUDA_USE_BASE_PATH="${_CUDA_USE_BASE_PATH:-$PATH}"
+    export _CUDA_USE_BASE_LD="${_CUDA_USE_BASE_LD:-$LD_LIBRARY_PATH}"
+
+    export CUDA_HOME="$target"
+    export CUDA_PATH="$target"
+    export PATH="$target/bin:$_CUDA_USE_BASE_PATH"
+    export LD_LIBRARY_PATH="$target/lib64:$_CUDA_USE_BASE_LD"
+
+    echo "cuda-use: now using $target"
+    "$target/bin/nvcc" --version 2>/dev/null | tail -1
+}
