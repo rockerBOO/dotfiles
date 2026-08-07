@@ -135,6 +135,33 @@ local dprint = function()
 	}
 end
 
+local typstyle = function()
+  return {
+    exe = "typstyle",
+    stdin = true,
+  }
+end
+
+local biome = function()
+	return {
+		exe = "biome",
+		args = {
+			"format",
+			"--stdin-file-path",
+			util.get_current_buffer_file_path(),
+		},
+		stdin = true,
+	}
+end
+
+local dockerfmt = function()
+	return {
+		exe = "dockerfmt",
+		args = {},
+		stdin = true,
+	}
+end
+
 return {
 	setup = function()
 		---@diagnostic disable-next-line: redundant-parameter
@@ -146,6 +173,9 @@ return {
 				},
 				bash = {
 					require("formatter.filetypes.sh").shfmt,
+				},
+				dockerfile = {
+					dockerfmt,
 				},
 				gleam = {
 					function()
@@ -206,6 +236,9 @@ return {
 						}
 					end,
 				},
+				css = {
+					biome,
+				},
 				typescriptreact = {
 					-- prettier_d_slim,
 					-- local_prettier,
@@ -216,13 +249,15 @@ return {
 					-- require("formatter.filetypes.javascript").prettier,
 					-- rome,
 					-- local_prettier,
-          dprint
+					-- dprint,
+					biome,
 				},
 				typescript = {
 					-- local_prettier_d_slim,
-					local_prettier,
+					-- local_prettier,
 					-- require("formatter.filetypes.javascript").prettier,
 					-- prettier_d_slim,
+					biome,
 				},
 				html = {
 					-- require("formatter.filetypes.html").prettierd
@@ -244,24 +279,27 @@ return {
 					-- local_prettier,
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,
-					require("formatter.filetypes.javascript").prettier,
+					-- require("formatter.filetypes.javascript").prettier,
+					biome,
 				},
 				javascriptreact = {
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,
-					require("formatter.filetypes.javascript").prettier,
+					-- require("formatter.filetypes.javascript").prettier,
+					biome,
 				},
 				json = {
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,
-					dprint,
+					-- dprint,
+					biome,
 					-- require("formatter.filetypes.javascript").prettier,
 				},
 				jsonc = {
 					-- rome
 					-- require("formatter.filetypes.javascript").prettierd,
-					dprint,
-					-- require("formatter.filetypes.javascript").prettier,
+					-- biome,
+					require("formatter.filetypes.javascript").prettier,
 				},
 				markdown = {
 					-- local_prettier_d_slim,
@@ -272,10 +310,16 @@ return {
 					-- prettier_d_slim,
 					-- local_prettier,
 				},
+				tex = { require("formatter.filetypes.latex").latexindent },
 				toml = { dprint },
+        typst = { typstyle },
 				rust = { require("formatter.filetypes.rust").rustfmt },
 				nginx = { nginxfmt },
 				-- yaml = { google_yamlfmt }
+
+				go = {
+					require("formatter.filetypes.go").gofmt,
+				},
 			},
 		})
 

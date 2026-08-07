@@ -11,7 +11,7 @@ return {
 		require("plugin.nvim-dap-ui").setup()
 		-- require("plugin.dap").setup()
 		require("plugin.lint").setup()
-		require("rockerboo.tests").setup()
+		-- require("rockerboo.tests").setup()
 		require("nvim-ts-autotag").setup()
 
 		require("plugin.completion")

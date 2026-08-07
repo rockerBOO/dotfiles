@@ -72,7 +72,8 @@ dap.adapters.firefox = {
 	type = "executable",
 	command = "node",
 	args = {
-		os.getenv("HOME") .. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
+		os.getenv("HOME")
+			.. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
 	},
 }
 
@@ -102,14 +103,15 @@ dap.adapters.yarn_firefox = {
 	args = {
 		"node",
 		"--inspect-brk",
-		os.getenv("HOME") .. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
+		os.getenv("HOME")
+			.. "/build/vscode-firefox-debug/dist/adapter.bundle.js",
 	},
 }
 
 -- lldb/rust
 dap.adapters.lldb = {
 	type = "executable",
-	command = "/usr/bin/lldb-vscode", -- adjust as needed
+	command = "codelldb", -- adjust as needed
 	name = "lldb",
 }
 
@@ -209,7 +211,11 @@ local lldb = {
 	type = "lldb",
 	request = "launch",
 	program = function()
-		return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+		return vim.fn.input(
+			"Path to executable: ",
+			vim.fn.getcwd() .. "/",
+			"file"
+		)
 	end,
 	cwd = "${workspaceFolder}",
 	stopOnEntry = false,
@@ -287,20 +293,3 @@ vim.api.nvim_create_autocmd("FileType", {
 		require("dap.ext.autocompl").attach()
 	end,
 })
-
--- require('dap-python').setup('/mnt/900/builds/prs/.virtualenvs/debugpy/bin/python')
-
--- prs
-require("dap-python").setup("/mnt/900/builds/miniconda3/envs/prs/bin/python")
-
-table.insert(require("dap").configurations.python, {
-	type = "python",
-	request = "launch",
-	name = "My custom launch configuration",
-	program = "${file}",
-	justMyCode = false,
-	-- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
-})
-
--- setup extensions
-require("nvim-dap-virtual-text").setup()

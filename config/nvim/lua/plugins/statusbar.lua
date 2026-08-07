@@ -1,3 +1,3 @@
 return {
-  { dir = "~/code/express_line.nvim" }
+	{ dir = "~/code/express_line.nvim" },
 }

@@ -3,17 +3,18 @@ return {
 	-- 	"yetone/avante.nvim",
 	-- 	event = "VeryLazy",
 	-- 	lazy = false,
-	-- 	build = ":AvanteBuild source=false",
+	-- 	version = false,
+	-- 	build = "make BUILD_FROM_SOURCE=true",
 	-- 	opts = {
 	-- 		provider = "ollama",
 	-- 		vendors = {
-	-- 			---@type AvanteProvider
 	-- 			ollama = {
-	-- 				["local"] = true,
-	-- 				endpoint = "127.0.0.1:11434/v1",
-	-- 				-- model = "gemma2:2b",
- --          model = "example:latest",
-	-- 				-- model = "llama3.1:latest",
+	-- 				api_key_name = false,
+	-- 				-- endpoint = "127.0.0.1:11434/v1",
+	-- 				endpoint = "127.0.0.1:5000/v1",
+	-- 				model = "gemma2:2b",
+	-- 				-- model = "hf.co/TheBloke/dolphin-2.6-mistral-7B-dpo-laser-GGUF:dolphin-2.6-mistral-7b-dpo-laser.Q4_K_M.gguf",
+	-- 				-- model = "llama3.2:latest",
 	-- 				parse_curl_args = function(opts, code_opts)
 	-- 					return {
 	-- 						url = opts.endpoint .. "/chat/completions",
@@ -23,7 +24,7 @@ return {
 	-- 						},
 	-- 						body = {
 	-- 							model = opts.model,
-	-- 							messages = require("avante.providers").copilot.parse_message(
+	-- 							messages = require("avante.providers").openai.parse_messages(
 	-- 								code_opts
 	-- 							), -- you can make your own message, but this is very advanced
 	-- 							max_tokens = 2048,
@@ -44,14 +45,20 @@ return {
 	-- 				end,
 	-- 			},
 	-- 		},
-	-- 		hints = {
-	-- 			enabled = false,
+	-- 		-- behavior = {
+	-- 		-- 	auto_suggestions = true,
+	-- 		-- },
+	-- 		mappings = {
+	-- 			ask = "<leader>ua", -- ask
+	-- 			edit = "<leader>ue", -- edit
+	-- 			refresh = "<leader>ur", -- refresh
 	-- 		},
-	-- 	},
-	-- 	cmd = {
-	-- 		"AvanteAsk",
+	-- 		-- hints = {
+	-- 		-- 	enabled = false,
+	-- 		-- },
 	-- 	},
 	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
 	-- 		"stevearc/dressing.nvim",
 	-- 		"nvim-lua/plenary.nvim",
 	-- 		"MunifTanjim/nui.nvim",
@@ -84,5 +91,31 @@ return {
 	-- 			ft = { "markdown", "Avante" },
 	-- 		},
 	-- 	},
+	-- },
+	-- {
+	-- 	"dlants/magenta.nvim",
+	-- 	lazy = false, -- you could also bind to <leader>mt
+	-- 	build = "npm install --frozen-lockfile",
+	-- 	opts = {},
+	-- },
+	-- llama.vim is blocking on input so it makes it really hard to use like this
+	-- {
+	-- 	-- "ggml-org/llama.vim",
+	-- 	dir = "~/code/others/llama.vim",
+	--
+	-- 	-- "pnb/llama.vim",
+	-- 	config = function()
+	-- 		local llama_config = vim.g.llama_config
+	-- 		llama_config.show_info = 0
+	-- 		llama_config.keymap_trigger = "<C-F>"
+	-- 		llama_config.keymap_accept_full = "<C-k>"
+	-- 		llama_config.keymap_accept_line = "<C-l>"
+	-- 		llama_config.keymap_accept_word = "<C-B>"
+	-- 		llama_config.keymap_debug_toggle = "<leader>lld"
+	-- 		vim.g.llama_config = llama_config
+	-- 	end,
+	-- },
+	-- {
+	-- 	"ggml-org/llama.vim",
 	-- },
 }

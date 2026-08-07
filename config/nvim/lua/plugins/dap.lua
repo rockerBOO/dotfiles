@@ -1,9 +1,10 @@
 return {
 	"mfussenegger/nvim-dap",
-  "nvim-neotest/nvim-nio",
+	"nvim-neotest/nvim-nio",
 	{
 		"rcarriga/nvim-dap-ui",
-    dev = true,
+		lazy = true,
+		dev = true,
 		dir = "~/code/others/nvim-dap-ui",
 		dependencies = {
 			"mfussenegger/nvim-dap",
@@ -12,7 +13,6 @@ return {
 		config = function()
 			require("dapui").setup({
 				layouts = {
-
 					{
 						elements = {
 							"repl",
@@ -34,16 +34,47 @@ return {
 					},
 				},
 			})
+
+			local dap, dapui = require("dap"), require("dapui")
+			dap.listeners.after.event_initialized["dapui_config"] = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited["dapui_config"] = function()
+				dapui.close()
+			end
 		end,
 	},
 
 	{
 		"theHamsta/nvim-dap-virtual-text",
+		lazy = true,
 		dependencies = { "mfussenegger/nvim-dap" },
+		config = function()
+			require("nvim-dap-virtual-text").setup()
+		end,
 	},
 
-{
-			"mfussenegger/nvim-dap-python",
-			dependencies = { "nvim-telescope/telescope-dap.nvim" },
-}
+	{
+		"mfussenegger/nvim-dap-python",
+		dependencies = { "nvim-telescope/telescope-dap.nvim" },
+		config = function()
+			require("dap-python").setup("uv")
+			-- require("dap-python").setup(
+			-- 	"/mnt/900/builds/miniconda3/envs/prs/bin/python"
+			-- )
+
+			table.insert(require("dap").configurations.python, {
+				type = "python",
+				request = "launch",
+				name = "My custom launch configuration",
+				program = "${file}",
+				justMyCode = false,
+				-- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+			})
+			-- setup extensions
+		end,
+	},
 }

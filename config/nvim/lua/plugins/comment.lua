@@ -5,5 +5,5 @@ return {
 			require("Comment").setup()
 		end,
 	},
-	"JoosepAlviste/nvim-ts-context-commentstring",
+	"b0o/nvim-ts-context-commentstring",
 }

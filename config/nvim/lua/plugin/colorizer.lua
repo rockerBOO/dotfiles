@@ -1,1 +1,6 @@
-require("colorizer").setup()
+-- require("colorizer").setup({
+-- 	"scss",
+-- 	"html",
+-- 	css = { rgb_fn = true },
+-- 	javascript = { no_names = true },
+-- })

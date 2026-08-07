@@ -104,8 +104,8 @@ return {
 			{ n, "<Leader>df", require("plugin.jester").yarn_debug_file },
 			{ n, "<Leader>dl", require("plugin.jester").yarn_debug_last },
 
-			{ n, "<Leader>tt", require("plugin.jester").yarn_test },
-			{ n, "<Leader>tf", require("plugin.jester").yarn_test_file },
+			-- { n, "<Leader>tt", require("plugin.jester").yarn_test },
+			-- { n, "<Leader>tf", require("plugin.jester").yarn_test_file },
 			-- j n, "<Leader>tl", require("plugin.jester").yarn_test_last },
 			{
 				n,

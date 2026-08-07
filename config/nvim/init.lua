@@ -7,6 +7,7 @@ local g, o, cmd, opt = vim.g, vim.o, vim.cmd, vim.opt
 o.termguicolors = true -- Support 24bit colors
 
 g.mapleader = " "
+g.maplocalleader = ","
 
 o.splitbelow = true -- Default split below
 o.splitright = true -- Default split right
@@ -50,6 +51,8 @@ o.expandtab = false
 o.clipboard = "unnamedplus"
 o.scrolloff = 10 -- Leave 10 rows when scrolling
 o.emoji = true -- Use emojis
+
+o.cmdheight = 0
 
 o.signcolumn = "yes:1"
 
@@ -109,6 +112,13 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 function R(module)
 	return require(module)
 end
+
+local orig_jobstart = vim.fn.jobstart
+vim.fn.jobstart = function(cmd, opts)
+  vim.notify("JOB STARTED: " .. vim.inspect(cmd), vim.log.levels.WARN)
+  return orig_jobstart(cmd, opts)
+end
+
 
 -- configure dianostics
 vim.diagnostic.config({

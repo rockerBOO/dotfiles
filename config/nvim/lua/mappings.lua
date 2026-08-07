@@ -16,7 +16,7 @@ local plenary_reload = function()
 	require("plenary.reload").reload_module("boo-colorscheme")
 	require("plenary.reload").reload_module("plugin")
 	require("plenary.reload").reload_module("rust-tools")
-	require("plenary.reload").reload_module("jester")
+	-- require("plenary.reload").reload_module("jester")
 	Reload("lsp_config")
 	Reload("plugin.telescope")
 	-- require("plenary.reload").reload_module("lsp_extensions")
@@ -42,7 +42,17 @@ local maps = {
 	-- { n, "<left>", ":vertical resize -2<cr>" },
 
 	-- Treesitter quickfix
-	{ n, "<leader><c-w>", ":write | edit | TSBufEnable highlight<cr><cr>" },
+	-- { n, "<leader><c-w>", ":write | edit | TSBufEnable highlight<cr><cr>" },
+	{
+		"n",
+		"<leader><c-w>",
+		function()
+			vim.cmd("write")
+			vim.cmd("edit")
+			vim.treesitter.stop(0)
+			vim.treesitter.start(0)
+		end,
+	},
 
 	-- {n, "<leader>hhi", ":TSPlaygroundToggle<cr>"},
 
@@ -100,7 +110,7 @@ local maps = {
 	-- { "x", "<leader>p", '"_Dp' },
 
 	-- nvim-ts-hint-textobject
-	{ v, "m", R("tsht").nodes, silent },
+	-- { v, "m", R("tsht").nodes, silent },
 
 	{
 		n,

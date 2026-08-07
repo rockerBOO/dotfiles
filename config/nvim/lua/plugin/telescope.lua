@@ -3,7 +3,7 @@ local themes = require("telescope.themes")
 local utils = require("rockerboo.utils")
 
 local plugins_directory = function()
-	return require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack")
+  return vim.fn.stdpath("data") .. "/lazy"
 end
 
 local tele = {}
