@@ -18,29 +18,35 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		set(n, "<c-s-K>", vim.lsp.buf.signature_help, opts)
 
 		set(n, "gD", function()
-			-- vim.lsp.buf.implementation({ on_list = on_list })
 			vim.lsp.buf.implementation({})
 		end, opts)
 
 		set(n, "1gD", function()
-			-- vim.lsp.buf.type_definition({ on_list = on_list })
 			vim.lsp.buf.type_definition({})
 		end, opts)
 		set(n, "gr", function()
-			vim.lsp.buf.references()
+			-- vim.lsp.buf.references()
+			require("telescope.builtin").lsp_references()
 		end, opts)
 
 		set(n, "<c-]>", function()
-			-- vim.lsp.buf.declaration({ on_list = on_list })
 			vim.lsp.buf.declaration({})
 		end, opts)
 
-		set(n, "<Leader>re", vim.lsp.buf.rename, opts)
+		-- set(n, "<Leader>re", vim.lsp.buf.rename, opts)
+		local rename_opts = { buffer = args.buf, silent = true, expr = true }
+		set(n, "<Leader>re", function()
+			return ":IncRename " .. vim.fn.expand("<cword>")
+		end, rename_opts)
 		set(n, "<Leader>ca", vim.lsp.buf.code_action, opts)
 
 		set(n, "<Leader>ih", function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 		end, opts)
+
+    set(n, "<Leader>co", function()
+      vim.lsp.document_color.color_presentation()
+    end, opts)
 
 		-- diagnostics
 		set(n, "<Leader>di", vim.diagnostic.open_float, opts)

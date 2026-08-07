@@ -1,135 +1,73 @@
-local config = require("lspconfig")
--- local status = require("rockerboo.lsp_status")
 local lsp = require("rockerboo.lsp")
 
 local setup = function()
-	-- status.activate()
+	local capabilities = {
+		textDocument = {
+			foldingRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			},
+		},
+	}
+	-- require("blink.cmp").get_lsp_capabilities(capabilities)
+	-- capabilities = vim.lsp.get_lsp_capabilities(capabilities)
 
-	-- local log_capabilities = function(capabilities)
-	-- 	-- @param filter = table {"hover"}
-	-- 	local reduce = function(filter)
-	-- 		local result = {}
-	-- 		for k, _ in pairs(capabilities) do
-	-- 			table.insert(
-	-- 				result,
-	-- 				f.map(function(v)
-	-- 					return { v = capabilities[v] }
-	-- 				end)(f.filter(f.contains(k))(filter))
-	-- 			)
-	-- 		end
-	-- 		return f.flatten(result)
-	-- 	end
-
-	-- 	-- local log = utils.log_to_file("/tmp/neovim-lsp-capabilities.log")
-	-- 	-- log(vim.inspect(reduce(capabilities)))
-	-- end
-
-	--- Language servers
-	-- local on_attach_vim =
-
-	-- EFM
-	--
-
-	local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-	-- Support snippets
-	-- capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-	local default_lsp_config = {
+	vim.lsp.config("*", {
 		on_attach = lsp.on_attach_buffer,
 		capabilities = capabilities,
+		root_markers = { ".git" },
 		flags = {
 			debounce_text_changes = 50,
 		},
-	}
+	})
 
-	local servers = {
-		"gopls",
-		"cssls",
-		"html",
-		"vimls",
-		"bashls",
-		"sqlls",
-		"gleam",
-		"superhtml",
-		-- "pylsp",
-		-- "biome",
-		-- "pylyzer",
-	}
+	-- Support snippets
+	-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+	vim.lsp.config("biome", {
+		-- cmd = { "yarn", "biome", "lsp-proxy" },
+		cmd = { "biome", "lsp-proxy" },
 
-	for _, server in ipairs(servers) do
-		config[server].setup(default_lsp_config)
-	end
+		on_attach = function(client, bufnr)
+			lsp.on_attach_buffer(client, bufnr)
 
-	-- local tsserver_capabilities = capabilities
+			-- Apply all Biome fixes on save
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				buffer = bufnr,
+				callback = function()
+					local diagnostics = vim.diagnostic.get(bufnr)
+					local has_biome_issues = false
+					local lsp_diagnostics = {}
 
-	-- utils.log_to_file(vim.lsp.get_log_path())(vim.inspect(tsserver_capabilities))
-	-- tsserver_capabilities["textDocument"]["formatting"] = false
+					-- Convert to LSP format
+					for _, diagnostic in ipairs(diagnostics) do
+						if
+							diagnostic.source == "biome"
+							and diagnostic.user_data
+							and diagnostic.user_data.lsp
+						then
+							has_biome_issues = true
+							table.insert(
+								lsp_diagnostics,
+								diagnostic.user_data.lsp
+							)
+						end
+					end
 
-	-- config["tsserver"].setup({
-	-- 	cmd = {
-	-- 		"typescript-language-server",
-	-- 		"--stdio",
-	-- 		"--log-level=4",
-	-- 		"--tsserver-log-file=/tmp/tsserver.log",
-	-- 	},
-	-- 	capabilities = tsserver_capabilities,
-	-- 	init_options = require("nvim-lsp-ts-utils").init_options,
-	-- 	on_attach = function(client)
-	-- 		client.server_capabilities.document_formatting = false
+					if has_biome_issues then
+						vim.lsp.buf.code_action({
+							context = {
+								only = { "source.fixAll.biome" },
+								diagnostics = lsp_diagnostics,
+							},
+							apply = true,
+						})
+					end
+				end,
+			})
+		end,
+	})
 
-	-- 		require("nvim-lsp-ts-utils").setup({
-	-- 			eslint_enable_code_actions = false,
-	-- 			eslint_enable_diagnostics = false,
-	-- 			signature_help_in_parens = true,
-	-- 			auto_inlay_hints = false,
-	-- 		})
-
-	-- 		require("nvim-lsp-ts-utils").setup_client(client)
-
-	-- 		return lsp.on_attach_buffer(client)
-	-- 	end,
-	-- })
-	--
-	-- local lsp = require("lsp")
-	-- local tsserver_capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-	-- utils.log_to_file("/tmp/cap.log")(vim.inspect(capabilities))
-
-	-- tsserver_capabilities["textDocument"]["formatting"] = false
-	--
-	-- require("typescript").setup({
-	-- 	debug = true,
-	-- 	server = {
-	-- 		on_attach = lsp.on_attach_buffer,
-	-- 		capabilities = tsserver_capabilities,
-	-- 	},
-	-- })
-
-	-- config.efm.setup({
-	-- 	capabilities = capabilities,
-	-- 	on_attach = lsp.on_attach_buffer,
-	-- })
-	--
-
-	config.biome.setup({ cmd = { "yarn", "biome", "lsp-proxy" } })
-
-	-- config.pyright.setup({
-	-- 	settings = {
-	-- 		-- pyright = { disableLanguageServices = true },
-	-- 		python = {
-	-- 			analysis = {
-	-- 				autoSearchPaths = true,
-	-- 				diagnosticMode = "workspace",
-	-- 				useLibraryCodeForTypes = true,
-	-- 				-- diagnosticMode = "openFilesOnly",
-	-- 			},
-	-- 		},
-	-- 	},
-	-- 	-- autostart = false,
-	-- })
-
-	config.yamlls.setup({
+	vim.lsp.config("yamlls", {
 		settings = {
 			yaml = {
 				schemaStore = {
@@ -148,252 +86,94 @@ local setup = function()
 		},
 	})
 
-	config.pylsp.setup({
-		on_attach = lsp.on_attach_buffer,
-		capabilities = capabilities,
-		flags = {
-			debounce_text_changes = 200,
-		},
-		settings = {
-			plugins = {
-				rope_completion = { enabled = true },
-				rope_autoimport = {
-					enabled = true,
-				},
-			},
-		},
-	})
-
-	config.gdscript.setup({
+	vim.lsp.config("gdscript", {
 		on_attach = lsp.on_attach_buffer,
 		filetypes = { "gd", "gdscript", "gdscript3" },
 	})
 
-	-- config.ruff_lsp.setup({
-	-- 	-- cmd = { "/home/rockerboo/code/ruff-lsp/ruff-lsp" },
-	-- 	capabilities = capabilities,
-	-- 	on_attach = lsp.on_attach_buffer,
-	-- 	settings = {
-	-- 		organizeImports = false,
-	-- 		fixAll = false,
-	-- 	},
-	-- })
-
-	config.jsonls.setup({
+	vim.lsp.config("jsonls", {
 		capabilities = capabilities,
 		on_attach = lsp.on_attach_buffer,
 		settings = {
 			json = {
-				-- schemas = {
-				-- 	{
-				-- 		fileMatch = { "package.json" },
-				-- 		url = "https://json.schemastore.org/package.json",
-				-- 	},
-				-- 	{
-				-- 		fileMatch = { "tsconfig.json", "tsconfig.*.json" },
-				-- 		url = "http://json.schemastore.org/tsconfig",
-				-- 	},
-				-- 	{
-				-- 		fileMatch = { ".eslintrc.json", ".eslintrc" },
-				-- 		url = "http://json.schemastore.org/eslintrc",
-				-- 	},
-				-- 	{
-				-- 		fileMatch = {
-				-- 			".prettierrc",
-				-- 			".prettierrc.json",
-				-- 			"prettier.config.json",
-				-- 		},
-				-- 		url = "http://json.schemastore.org/prettierrc",
-				-- 	},
-				-- 	{
-				-- 		fileMatch = {
-				-- 			".stylelintrc",
-				-- 			".stylelintrc.json",
-				-- 			"stylelint.config.json",
-				-- 		},
-				-- 		url = "http://json.schemastore.org/stylelintrc",
-				-- 	},
-				-- },
-
 				schemas = require("schemastore").json.schemas(),
 				validate = { enable = true },
 			},
 		},
 	})
 
-	-- Using typescript plugin for eslint?
-	config.eslint.setup({
-		on_attach = lsp.on_attach_buffer,
-		capabilities = capabilities,
-		filetypes = {
-			"javascript",
-			"javascriptreact",
-			"typescript",
-			"typescriptreact",
-			"javascript.jsx",
-			"vue",
-		},
-		settings = {
-			["eslint.packageManager"] = "yarn",
-			["eslint.debug"] = true,
-		},
-	})
-
-	config.elixirls.setup({
+	vim.lsp.config("elixirls", {
 		cmd = { "elixir-ls" },
 		capabilities = capabilities,
 		on_attach = lsp.on_attach_buffer,
 	})
 
-	-- using rust-tools.nvim to connect
-	-- config.rust_analyzer.setup({
-	-- 	on_attach = on_attach_vim,
-	-- 	capabilities = vim.lsp.protocol.make_client_capabilities(),
-	-- 	settings = {
-	-- 		["rust-analyzer"] = {
-	-- 			diagnostics = {
-	-- 				experimental = true,
-	-- 			},
-	-- 		},
-	-- 	},
-	-- })
-
-	config.erlangls.setup({
+	vim.lsp.config("erlangls", {
 		capabilities = capabilities,
 		on_attach = lsp.on_attach_buffer,
 	})
 
-	-- require("nlua.lsp.nvim").setup(config, {
-	-- 	cmd = {
-	-- 		"/home/rockerboo/build/lua-language-server/bin/lua-language-server",
-	-- 		"-E",
-	-- 		"/home/rockerboo/build/lua-language-server/main.lua",
-	-- 	},
-	-- 	on_attach = lsp.on_attach_buffer,
-	-- })
-	-- require("lspconfig").lua_ls.setup({
-	--
-	-- 	capabilities = capabilities,
-	-- 	-- cmd = {
-	-- 	-- 	"/mnt/900/builds/lua-language-server/bin/lua-language-server",
-	-- 	-- 	"-E",
-	-- 	-- 	"/mnt/900/builds/lua-language-server/main.lua",
-	-- 	-- },
-	-- 	settings = {
-	-- 		Lua = {
-	-- 			runtime = {
-	-- 				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-	-- 				version = "LuaJIT",
-	-- 			},
-	-- 			-- diagnostics = {
-	-- 			-- 	-- Get the language server to recognize the `vim` global
-	-- 			-- 	globals = { "vim" },
-	-- 			-- },
-	-- 			workspace = {
-	-- 				-- Make the server aware of Neovim runtime files
-	-- 				library = { vim.env.VIMRUNTIME },
-	-- 				-- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-	-- 				-- library = vim.api.nvim_get_runtime_file("", true)
-	-- 				checkThirdParty = false,
-	-- 			},
-	-- 			-- Do not send telemetry data containing a randomized but unique identifier
-	-- 			telemetry = {
-	-- 				enable = false,
-	-- 			},
-	-- 			hint = {
-	-- 				enable = true,
-	-- 			},
-	-- 		},
-	-- 	},
-	-- 	on_attach = lsp.on_attach_buffer,
-	-- 	on_init = function(client)
-	-- 		client.notify(
-	-- 			"workspace/didChangeConfiguration",
-	-- 			{ settings = client.config.settings }
-	-- 		)
-	-- 	end,
-	-- })
-	require("lspconfig").lua_ls.setup({
+	vim.lsp.config("marksman", {
 		on_attach = lsp.on_attach_buffer,
-		on_init = function(client)
-			if client.workspace_folders then
-				local path = client.workspace_folders[1].name
-				if
-					vim.uv.fs_stat(path .. "/.luarc.json")
-					or vim.uv.fs_stat(path .. "/.luarc.jsonc")
-				then
-					return
-				end
-			end
+		capabilities = capabilities,
+	})
 
-			client.config.settings.Lua =
-				vim.tbl_deep_extend("force", client.config.settings.Lua, {
-					runtime = {
-						-- Tell the language server which version of Lua you're using
-						-- (most likely LuaJIT in the case of Neovim)
-						version = "LuaJIT",
+	vim.lsp.config("texlab", {
+		setting = {
+			texlab = {
+				forwardSearch = {
+					executable = "zathura",
+					args = {
+						"--synctex-editor-command",
+						[[nvim-texlabconfig -file '%%%{input}' -line %%%{line} -server ]]
+							.. vim.v.servername,
+						"--synctex-forward",
+						"%l:1:%f",
+						"%p",
 					},
-					-- Make the server aware of Neovim runtime files
-					workspace = {
-						checkThirdParty = false,
-						library = {
-							vim.env.VIMRUNTIME,
-							-- Depending on the usage, you might want to add additional paths here.
-							-- "${3rd}/luv/library"
-							-- "${3rd}/busted/library",
-						},
-						-- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
-						-- library = vim.api.nvim_get_runtime_file("", true)
-					},
-				})
-		end,
-		settings = {
-			Lua = {},
+				},
+			},
 		},
 	})
 
-	-- require("lspconfig").ltex.setup({
-	-- 	capabilities = capabilities,
-	-- 	on_attach = lsp.on_attach_buffer,
-	-- 	cmd = { "/mnt/900/builds/ltex-ls-15.2.0/bin/ltex-ls" },
-	-- 	settings = {
-	-- 		ltex = {
-	-- 			language = "en",
-	-- 			additionalRules = {
-	-- 				enablePickyRules = true,
-	-- 				motherTongue = "en",
-	-- 				languageModel = "/mnt/900/ngrams/ngrams-en-20150817/",
-	-- 			},
-	-- 		},
-	-- 	},
-	-- })
+	local servers = {
+		"gopls",
+		"cssls",
+		"html",
+		"vimls",
+		"bashls",
+		"sqlls",
+		"gleam",
+		"superhtml",
+		"ts_ls",
+		"crystalline",
+		"pyright",
+		"terraformls",
+		"gdscript",
+		-- "vale_ls",
+		"clangd",
+		"tinymist",
+		-- "biome",
+		-- "lua_ls",
+		-- "texlab"
+		-- "pylsp",
+		-- "biome",
+		-- "pylyzer",
+	}
 
-	-- require("lspconfig").markdown_language_server.setup({
-	-- 	on_attach = lsp.on_attach_buffer,
-	-- 	capabilities = capabilities,
-	-- })
+	-- for i in pairs(servers) do
+	-- 	config[servers[i]].setup({})
+	-- end
+	vim.lsp.enable(servers)
 
-	require("lspconfig").marksman.setup({
-		on_attach = lsp.on_attach_buffer,
-		capabilities = capabilities,
-	})
+	local native_servers = {
+		-- "pyright",
+		"ruff",
+		-- "ty",
+		-- "lua_ls",
+	}
 
-	-- vim.api.nvim_create_autocmd("Filetype", {
-	-- 	pattern = { "html", "shtml", "htm" },
-	-- 	callback = function()
-	-- 		vim.lsp.start({
-	-- 			name = "superhtml",
-	-- 			cmd = { "superhtml", "lsp" },
-	-- 			root_dir = vim.fs.root(0, { ".git" }),
-	-- 		})
-	-- 	end,
-	-- })
-
-	-- require("lspconfig").rome.setup({
-	-- 	on_attach = lsp.on_attach_buffer,
-	-- 	capabilities = capabilities,
-	-- 	cmd = { "yarn", "run", "rome", "lsp-proxy" },
-	-- })
+	vim.lsp.enable(native_servers)
 end
 
 return { setup = setup }
