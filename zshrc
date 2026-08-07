@@ -90,12 +90,9 @@ cuda-use() {
     if [ -z "$version" ]; then
         echo "Usage: cuda-use <version>"
         echo "Available:"
-        for d in /usr/local/cuda-* /usr/local/cuda_* /opt/cuda; do
+        for d in /usr/local/cuda-* /opt/cuda; do
             [ -d "$d" ] || continue
-            case "$d" in
-                /opt/cuda) echo "  system" ;;
-                *) echo "  ${${d#/usr/local/cuda[-_]}//_/.}" ;;
-            esac
+            [ "$d" = "/opt/cuda" ] && echo "  system" || echo "  ${d#/usr/local/cuda-}"
         done
         return 1
     fi
@@ -103,13 +100,7 @@ cuda-use() {
     local target
     case "$version" in
         system|opt) target=/opt/cuda ;;
-        *)
-            if [ -d "/usr/local/cuda-$version" ]; then
-                target="/usr/local/cuda-$version"
-            else
-                target="/usr/local/cuda_${version//./_}"
-            fi
-            ;;
+        *) target="/usr/local/cuda-$version" ;;
     esac
 
     if [ ! -d "$target" ]; then
