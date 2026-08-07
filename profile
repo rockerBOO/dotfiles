@@ -97,10 +97,6 @@ if [ -d "$HOME/.local/bin" ]; then
 	PATH="$HOME/.local/bin:$PATH"
 fi
 
-alias spot=ncspot
-alias rust-analyzer="rustup run nightly rust-analyzer"
-alias open="xdg-open"
-
 # Setup nvidia shader cache
 # export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 # export __GL_SHADER_DISK_CACHE_SIZE=1000000000
