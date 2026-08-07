@@ -3,7 +3,7 @@
 # Move a configuration to the dotfiles config and make a link to it.
 
 dotfile=~/$1
-postdotfile=~/.dotfiles/${1:1} # remove the dot
+postdotfile=~/dotfiles/${1:1} # remove the dot
 
 echo "$dotfile $postdotfile moving..."
 
