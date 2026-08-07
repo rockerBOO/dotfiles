@@ -1,0 +1,157 @@
+-- local function check_test_lib_type(callback)
+-- 	-- Track detection results
+-- 	local detected = {}
+--
+-- 	-- Process check results
+-- 	local function process_results()
+-- 		if detected.jest then
+-- 			callback("jest")
+-- 			print("jest")
+-- 		elseif detected.ava then
+-- 			callback("ava")
+-- 			print("ava")
+-- 		else
+-- 			callback(nil)
+-- 		end
+-- 	end
+--
+-- 	-- Create handlers for each test framework
+-- 	local function check_framework(name)
+-- 		return function(obj)
+-- 			-- obj.code == 0 means grep found a match (framework exists)
+-- 			detected[name] = (obj.code == 0)
+--
+-- 			-- If both checks completed, process the results
+-- 			if detected.jest ~= nil and detected.ava ~= nil then
+-- 				process_results()
+-- 			end
+-- 		end
+-- 	end
+--
+-- 	-- Check for Jest
+-- 	vim.system({
+-- 		"sh",
+-- 		"-c",
+-- 		"npm list --depth=0 | grep -q 'jest@'",
+-- 	}, { text = true }, check_framework("jest"))
+--
+-- 	-- Check for AVA
+-- 	vim.system({
+-- 		"sh",
+-- 		"-c",
+-- 		"npm list --depth=0 | grep -q 'ava@'",
+-- 	}, { text = true }, check_framework("ava"))
+-- end
+--
+-- -- @param function callback
+-- local function detect_package_manager(callback)
+-- 	local uv = vim.uv or vim.loop -- For compatibility with older Neovim versions
+--
+-- 	local function check_directory(current_dir)
+-- 		-- Path to check for package manager files
+-- 		local yarn_path = current_dir .. "/yarn.lock"
+-- 		local npm_path = current_dir .. "/package-lock.json"
+--
+-- 		-- Check if yarn.lock exists
+-- 		uv.fs_stat(yarn_path, function(err, stat)
+-- 			if not err and stat then
+-- 				-- Found yarn.lock
+-- 				callback("yarn")
+-- 				return
+-- 			end
+--
+-- 			-- Check if package-lock.json exists
+-- 			uv.fs_stat(npm_path, function(npm_err, npm_stat)
+-- 				if not npm_err and npm_stat then
+-- 					-- Found package-lock.json
+-- 					callback("npm")
+-- 					return
+-- 				end
+--
+-- 				-- Get parent directory
+-- 				local parent_dir = vim.fn.fnamemodify(current_dir, ":h")
+--
+-- 				-- Stop if we've reached the root directory
+-- 				if parent_dir == current_dir then
+-- 					callback(nil) -- No package manager found
+-- 					return
+-- 				end
+--
+-- 				-- Continue checking with parent directory
+-- 				check_directory(parent_dir)
+-- 			end)
+-- 		end)
+-- 	end
+--
+-- 	-- Start checking from current directory
+-- 	check_directory(vim.fn.getcwd())
+-- end
+--
+-- local filetype_group =
+-- 	vim.api.nvim_create_augroup("filetype_specific", { clear = true })
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = { "javascript", "typescript" },
+-- 	callback = function()
+-- 		detect_package_manager(function(package_manager)
+-- 			vim.b.package_manager = package_manager
+-- 		end)
+-- 		check_test_lib_type(function(t)
+-- 			vim.b.test_lib = t
+--
+-- 			local n = "n"
+-- 			local keymaps = {
+-- 				{
+-- 					n,
+-- 					"<Leader>tt",
+-- 					function()
+-- 						if t == "jest" then
+-- 							require("plugin.jester").yarn_test()
+-- 						end
+-- 					end,
+-- 				},
+-- 				{
+-- 					n,
+-- 					"<Leader>tf",
+-- 					function()
+-- 						if t == "jest" then
+-- 							require("plugin.jester").yarn_test_file()
+-- 						end
+-- 					end,
+-- 				},
+-- 				{
+-- 					n,
+-- 					"<Leader>tl",
+--
+-- 					function()
+-- 						if t == "jest" then
+-- 							require("plugin.jester").yarn_test_last()
+-- 						end
+-- 					end,
+-- 				},
+-- 			}
+-- 			if not vim.in_fast_event() then
+-- 				for _, keymap in ipairs(keymaps) do
+-- 					vim.keymap.set(
+-- 						keymap[1],
+-- 						keymap[2],
+-- 						keymap[3],
+-- 						{ buffer = true }
+-- 					)
+-- 				end
+-- 			else
+-- 				vim.schedule(function()
+-- 					for _, keymap in ipairs(keymaps) do
+-- 						vim.keymap.set(
+-- 							keymap[1],
+-- 							keymap[2],
+-- 							keymap[3],
+-- 							{ buffer = true }
+-- 						)
+-- 					end
+-- 				end)
+-- 			end
+-- 		end)
+-- 	end,
+-- 	group = filetype_group,
+-- })

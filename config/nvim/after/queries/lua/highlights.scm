@@ -1,3 +1,3 @@
 ;; extends
 
-(("return" @return) (#set! conceal "ƒ"))
+; (("return" @return) (#set! conceal "ƒ"))
