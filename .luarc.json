@@ -1,0 +1,8 @@
+{
+    "diagnostics.globals": [
+        "vim",
+        "generate_output_filename",
+        "save_clip",
+        "mp"
+    ]
+}

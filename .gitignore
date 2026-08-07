@@ -1,4 +1,6 @@
 .DS_Store
+*.bak
+*.tar.gz
 
 /config/nvim/plugged/
 /config/nvim/rplugin/

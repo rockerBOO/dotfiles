@@ -14,6 +14,11 @@ else
 	export EDITOR='nvim'
 fi
 
+export OLLAMA_MODELS=/mnt/500c/models/llm/ollama
+export LLAMA_CACHE=/mnt/2t870/cache/llama.cpp-cache/
+
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
+
 #
 # setup ssh-agent
 #
@@ -81,10 +86,10 @@ export NVM_DIR="$HOME/.config/nvm"
 # export MOZ_DISABLE_RDD_SANDBOX=1
 
 # export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-export PATH="$PATH:$GEM_HOME/bin"
+# export PATH="$PATH:$GEM_HOME/bin"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+# export PATH="$PATH:$HOME/.rvm/bin"
 
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
@@ -97,8 +102,8 @@ alias rust-analyzer="rustup run nightly rust-analyzer"
 alias open="xdg-open"
 
 # Setup nvidia shader cache
-export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
-export __GL_SHADER_DISK_CACHE_SIZE=1000000000
+# export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+# export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 # . "$HOME/.cargo/env"
 #
 # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cuda-11.7/lib64
@@ -107,7 +112,7 @@ export __GL_SHADER_DISK_CACHE_SIZE=1000000000
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
 	export MOZ_ENABLE_WAYLAND=1
 	# export WLR_NO_HARDWARE_CURSORS=1
-	export WLR_NO_HARDWARE_CURSORS=0
+	# export WLR_NO_HARDWARE_CURSORS=0
 	export XDG_CURRENT_DESKTOP=dwl
 	export QT_QPA_PLATFORM=wayland
 	export QT_QPA_PLATFORMTHEME=qt6ct
@@ -115,14 +120,20 @@ if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
 	# https://github.com/Vladimir-csp/uwsm?tab=readme-ov-file#3-applications-and-slices
 	export UWSM_USE_SESSION_SLICE=true
 
-	systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP 
+	systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
 	if which dbus-update-activation-environment >/dev/null 2>&1; then
 		dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 	fi
-	wlr-randr --output DP-3 --mode 2560x1440@143.964005  --adaptive-sync enabled
+	# wlr-randr --output DP-3 --mode 2560x1440@143.964005 --adaptive-sync enabled --pos 1920,0
+	wlr-randr --output HDMI-A-1 --pos 0,0
 fi
 
 if [ "$XDG_SESSION_TYPE" = "tty" ]; then
 	export XDG_CURRENT_DESKTOP=dwm
 fi
+
+# VLLM
+export VLLM_NO_USAGE_STATS=1
+export DO_NOT_TRACK=1
+export SAM_CLI_TELEMETRY=0

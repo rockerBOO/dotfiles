@@ -17,3 +17,23 @@ disabled = true
 
 [docker_context]
 format = "via [🐋 $context](blue bold)"
+
+[battery]
+full_symbol = "• "
+charging_symbol = "⇡ "
+discharging_symbol = "⇣ "
+unknown_symbol = "❓ "
+empty_symbol = "❗ "
+
+[erlang]
+symbol = "ⓔ "
+
+[nodejs]
+symbol = "[⬢](bold green) "
+
+[pulumi]
+symbol = "🧊 "
+
+# Unknown key?
+# [typst]
+# symbol = "t "
